@@ -6,18 +6,17 @@ Steps to implement LoginRadius Asp.Net SDK:
 
 Step 1: Add SDK file reference and LoginRadiusSDKv2 Namespace
 
-        Add SDK references in web project or LoginRadiusSDK.dll, LoginRadiusDataObject.dll and Newtonsoft.Json.dll to the bin directory (in visual studio website project).
-        Add namespace in the code behind file 
+        Download and Add SDK's DLL files (LoginRadiusSDKv2.dll, LoginRadiusDataObject.dll and Newtonsoft.Json.dll) to your .Net project and references. Then Add namespace in the code behind file. 
         For C#.Net : using LoginRadiusSDKv2;
         For VB.Net : Imports LoginRadiusSDKv2
         
-Step 2: Validate, authenticate and store data from LoginRadius [This step is same for ASP.Net webform as well as MVC pattern]
+Step 2: Create LoginRadius object in your code behind file.
 
         On the page load event of your callback page, create an object of LoginRadius by passing your unique secret key.
         For C#.Net: LoginRadius loginradius = new LoginRadius('Your API Secret key goes here');
         For VB.Net: Dim loginradius As New LoginRadius('Your API Secret key goes here')
 
-Step 3: Validate LoginRadius 'IsAuthenticated' property. After successful validation, access user profile data such as ID, FirstName, Email, LastName, BirthDate, Country, NickName, Gender, ProfileName, etc. using GetBasicUserProfile() method.
+Step 3: Validate LoginRadius 'IsAuthenticated' property. After successful validation, access user profile data such as ID, FirstName, Email, LastName, BirthDate, Country, NickName, Gender, ProfileName, etc. using GetBasicUserProfile() method. [This step is same for ASP.Net webform as well as MVC pattern]
 
 For C#.Net:
 
