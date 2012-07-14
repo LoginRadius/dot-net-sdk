@@ -18,8 +18,9 @@ Step 2: Validate, authenticate and store data from LoginRadius [This step is sam
         For VB.Net: Dim loginradius As New LoginRadius('Your API Secret key goes here')
 
 Step 3: Validate LoginRadius 'IsAuthenticated' property. After successful validation, access user profile data such as ID, FirstName, Email, LastName, BirthDate, Country, NickName, Gender, ProfileName, etc. using GetBasicUserProfile() method.
-        For C#.Net: 
-        
+
+For C#.Net:
+
         LoginRadiusSDKv2.LoginRadius loginradius = new LoginRadiusSDKv2.LoginRadius("Your API Secret key goes here");
         if (loginradius.IsAuthenticated) {  
               LoginRadiusDataModal.LoginRadiusDataObject.Objects.BasicUserLoginRadiusUserProfile userprofile = loginradius.GetBasicUserProfile();  
@@ -54,8 +55,8 @@ Step 3: Validate LoginRadius 'IsAuthenticated' property. After successful valida
               //userprofile.Suffix -- suffix of user's name  
           }
 
-          For VB.Net:
-          
+For VB.Net:
+
           Dim loginradius As New LoginRadiusSDKv2.LoginRadius("Your API Secret key goes here")    
           If loginradius.IsAuthenticated Then
                Dim userprofile As LoginRadiusDataModal.LoginRadiusDataObject.Objects.BasicUserLoginRadiusUserProfile = loginradius.GetBasicUserProfile()  
@@ -90,6 +91,7 @@ Step 3: Validate LoginRadius 'IsAuthenticated' property. After successful valida
               'userprofile.Provider -- provider name from where user has authenticated   
               'userprofile.Suffix -- suffix of user's name  
           End If
+          
 Note: Few providers like Twitter, LinkedIn, etc. doesn't provide email address with User Profile data, so you need to handle these cases in your callback page.
 
 These are the quick and easy steps to integrate Social Login on your ASP.Net website, if you have any questions or need a further assistance please contact us at hello@loginradius.com.
