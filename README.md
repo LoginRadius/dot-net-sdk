@@ -16,7 +16,9 @@ Step 2: Create LoginRadius object in your code behind file.
         For C#.Net: LoginRadius loginradius = new LoginRadius('Your API Secret key goes here');
         For VB.Net: Dim loginradius As New LoginRadius('Your API Secret key goes here')
 
-Step 3: Validate LoginRadius 'IsAuthenticated' property. After successful validation, access user profile data such as ID, FirstName, Email, LastName, BirthDate, Country, NickName, Gender, ProfileName, etc. using GetBasicUserProfile() method. [This step is same for ASP.Net webform as well as MVC pattern]
+Step 3: Validate, authenticate and store data from LoginRadius:
+
+Validate LoginRadius 'IsAuthenticated' property. After successful validation, access user profile data such as ID, FirstName, Email, LastName, BirthDate, Country, NickName, Gender, ProfileName, etc. using GetBasicUserProfile() method. [This step is same for ASP.Net webform as well as MVC pattern]
 
 For C#.Net:
 
