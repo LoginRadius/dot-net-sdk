@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Dot-net-sdk by LoginRadius</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Dot-net-sdk</h1>
+        <p>LoginRadius .NET SDK is a development kit that lets you integrate Social Login such as Facebook, Google, Twitter and over 20 more on a ASP.Net website. The SDK also fetches user profile data and can be customized from your LoginRadius user account. Ex: social icon sets, login interface, provider settings, etc. The SDK works with C#.Net and VB.Net both languages. You can also use the SDK for your Asp.Net MVC websites.</p>
+
+        <p class="view"><a href="https://github.com/LoginRadius/Dot-Net-SDK">View the Project on GitHub <small>LoginRadius/Dot-Net-SDK</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/LoginRadius/Dot-Net-SDK/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/LoginRadius/Dot-Net-SDK/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/LoginRadius/Dot-Net-SDK">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>LoginRadius's Dot Net SDK is used to implement Social Login on your ASP.Net website</h1>
+
+<p>Description: LoginRadius's Dot net SDK is a development kit that lets you integrate Social Login through providers such as Facebook, Google, Twitter, and over 20 more on a ASP.Net website. The SDK also fetches user profile data and can be customized from your LoginRadius user account. Ex: social icon sets, login interface, provider settings, etc. The SDK works with C#.Net and VB.Net both languages. You can also use the SDK for your Asp.Net MVC websites.</p>
+
+<p>Download <a href="https://github.com/downloads/LoginRadius/Dot-Net-SDK/LoginRadius-Dot-Net-SDK-v2.zip">Social Login for ASP.Net</a></p>
+
+<h1>Steps to implement LoginRadius Asp.Net SDK</h1>
+
+<p>Step 1: Add SDK file reference and LoginRadiusSDKv2 Namespace</p>
+
+<p>Download and Add SDK's DLL files (LoginRadiusSDKv2.dll, LoginRadiusDataObject.dll and Newtonsoft.Json.dll) to your .Net project and references. Then Add namespace in the code behind file. </p>
+
+<pre><code>    For C#.Net : using LoginRadiusSDKv2;
+
+    For VB.Net : Imports LoginRadiusSDKv2
+</code></pre>
+
+<p>Step 2: Create LoginRadius object in your code behind file.</p>
+
+<p>On the page load event of your callback page, create an object of LoginRadius by passing your unique secret key.</p>
+
+<pre><code>    For C#.Net: LoginRadius loginradius = new LoginRadius('Your API Secret key goes here');
+
+    For VB.Net: Dim loginradius As New LoginRadius('Your API Secret key goes here')
+</code></pre>
+
+<p>Step 3: Validate, authenticate and store data from LoginRadius:</p>
+
+<p>Validate LoginRadius 'IsAuthenticated' property. After successful validation, access user profile data such as ID, FirstName, Email, LastName, BirthDate, Country, NickName, Gender, ProfileName, etc. using GetBasicUserProfile() method. [This step is same for ASP.Net webform as well as MVC pattern]</p>
+
+<p>For C#.Net:</p>
+
+<pre><code>    LoginRadiusSDKv2.LoginRadius loginradius = new LoginRadiusSDKv2.LoginRadius("Your API Secret key goes here");
+    if (loginradius.IsAuthenticated) {  
+          LoginRadiusDataModal.LoginRadiusDataObject.Objects.BasicUserLoginRadiusUserProfile userprofile = loginradius.GetBasicUserProfile();  
+          //fetch all properties like  
+          //userprofile.BirthDate -- Birth date of user  
+          //if (userprofile.Country != null)  
+          //{  
+          //    userprofile.Country.Code - country code  
+          //    userprofile.Country.Name - country name  
+          //}  
+          //  
+          //Email id generic list   
+          //if (userprofile.Email != null)   
+          //{  
+          //    foreach (var email in userprofile.Email)  
+          //    {   
+          //        email.Type -- email type (like Primary , Secondary)  
+          //        email.Value -- email ID  
+          //    }  
+          //}  
+
+          //userprofile.FirstName -- first name of user  
+          //userprofile.FullName -- full name of user   
+          //userprofile.Gender -- gender of user  
+          //userprofile.ID -- ID of user on provider   
+          //userprofile.LastName -- last name of user  
+          //userprofile.MiddleName -- middle name of user  
+          //userprofile.NickName -- nick name of user  
+          //userprofile.Prefix -- prefix of user's name  
+          //userprofile.ProfileName -- screenname/username of user   
+          //userprofile.Provider -- provider name from where user has authenticated   
+          //userprofile.Suffix -- suffix of user's name  
+      }
+</code></pre>
+
+<p>For VB.Net:</p>
+
+<pre><code>      Dim loginradius As New LoginRadiusSDKv2.LoginRadius("Your API Secret key goes here")    
+      If loginradius.IsAuthenticated Then
+           Dim userprofile As LoginRadiusDataModal.LoginRadiusDataObject.Objects.BasicUserLoginRadiusUserProfile = loginradius.GetBasicUserProfile()  
+          'fetch all properties like  
+          'userprofile.BirthDate -- Birth date of user  
+          'If userprofile.Country != null  
+          '  
+          '    userprofile.Country.Code - country code  
+          '    userprofile.Country.Name - country name  
+          'End If  
+          '  
+          'Email id generic list   
+          'If userprofile.Email != null   
+          '  
+          '    For Each email In userprofile.Email  
+          '       
+          '        email.Type -- email type (like Primary , Secondary)  
+          '        email.Value -- email ID  
+          '    Next email     
+          '      
+          'End If  
+
+          'userprofile.FirstName -- first name of user  
+          'userprofile.FullName -- full name of user   
+          'userprofile.Gender -- gender of user  
+          'userprofile.ID -- ID of user on provider   
+          'userprofile.LastName -- last name of user  
+          'userprofile.MiddleName -- middle name of user  
+          'userprofile.NickName -- nick name of user  
+          'userprofile.Prefix -- prefix of user's name  
+          'userprofile.ProfileName -- screenname/username of user   
+          'userprofile.Provider -- provider name from where user has authenticated   
+          'userprofile.Suffix -- suffix of user's name  
+      End If
+</code></pre>
+
+<p>Note: Few providers like Twitter, LinkedIn, etc. doesn't provide email address with User Profile data, so you need to handle these cases in your callback page.</p>
+
+<p>These are the quick and easy steps to integrate Social Login on your ASP.Net website, if you have any questions or need a further assistance please contact us at <a href="mailto:hello@loginradius.com">hello@loginradius.com</a>.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/LoginRadius">LoginRadius</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-22321867-5");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
