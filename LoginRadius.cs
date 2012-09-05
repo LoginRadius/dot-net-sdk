@@ -4,7 +4,6 @@
 
 using System;
 using System.Net;
-using System.Text.RegularExpressions;
 using System.Web;
 using LoginRadiusDataModal.LoginRadiusDataObject.Factory;
 using LoginRadiusDataModal.LoginRadiusDataObject.Objects;
@@ -105,12 +104,8 @@ namespace LoginRadiusSDK {
         /// <param name="candidate">string to validate</param>
         /// <returns>boolean</returns>
         private static bool IsGuid(string candidate) {
-            try {
-                Regex guid = new Regex(@"^(\{){0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}(\}){0,1}$", RegexOptions.Compiled);
-                if (candidate != null && guid.IsMatch(candidate)) return true;
-            }
-            catch (Exception) { throw; }
-            return false;
+            Guid output;
+            return Guid.TryParse(candidate, out output);
         }
     }
 }
