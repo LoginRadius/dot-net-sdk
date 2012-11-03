@@ -42,18 +42,18 @@ Download <a href="https://github.com/downloads/LoginRadius/Dot-Net-SDK/LoginRadi
 
 <p>Download and Add SDK's DLL files (LoginRadiusSDKv2.dll, LoginRadiusDataObject.dll and Newtonsoft.Json.dll) to your .Net project and references. Then Add namespace in the code behind file. </p>
 
-<pre><code>    For C#.Net : using LoginRadiusSDKv2;
+<pre><code>    For C#.Net : using LoginRadiusSDK;
 
-    For VB.Net : Imports LoginRadiusSDKv2
+    For VB.Net : Imports LoginRadiusSDK
 </code></pre>
 
 <p>Step 2: Create LoginRadius object in your code behind file.</p>
 
 <p>On the page load event of your callback page, create an object of LoginRadius by passing your unique secret key.</p>
 
-<pre><code>    For C#.Net: LoginRadius loginradius = new LoginRadius('Your API Secret key goes here');
+<pre><code>    For C#.Net: LoginRadius loginradius = new LoginRadius('Your LoginRadius API Secret key goes here');
 
-    For VB.Net: Dim loginradius As New LoginRadius('Your API Secret key goes here')
+    For VB.Net: Dim loginradius As New LoginRadius('Your LoginRadius API Secret key goes here')
 </code></pre>
 
 <p>Step 3: Validate, authenticate and store data from LoginRadius:</p>
@@ -62,7 +62,7 @@ Download <a href="https://github.com/downloads/LoginRadius/Dot-Net-SDK/LoginRadi
 
 <p>For C#.Net:</p>
 
-<pre><code>    LoginRadiusSDKv2.LoginRadius loginradius = new LoginRadiusSDKv2.LoginRadius("Your API Secret key goes here");
+<pre><code>    LoginRadiusSDK.LoginRadius loginradius = new LoginRadiusSDK.LoginRadius("Your LoginRadius API Secret key goes here");
     if (loginradius.IsAuthenticated) {  
           LoginRadiusDataModal.LoginRadiusDataObject.Objects.BasicUserLoginRadiusUserProfile userprofile = loginradius.GetBasicUserProfile();  
           //fetch all properties like  
@@ -99,7 +99,7 @@ Download <a href="https://github.com/downloads/LoginRadius/Dot-Net-SDK/LoginRadi
 
 <p>For VB.Net:</p>
 
-<pre><code>      Dim loginradius As New LoginRadiusSDKv2.LoginRadius("Your API Secret key goes here")    
+<pre><code>      Dim loginradius As New LoginRadiusSDK.LoginRadius("Your LoginRadius API Secret key goes here")    
       If loginradius.IsAuthenticated Then
            Dim userprofile As LoginRadiusDataModal.LoginRadiusDataObject.Objects.BasicUserLoginRadiusUserProfile = loginradius.GetBasicUserProfile()  
           'fetch all properties like  
