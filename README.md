@@ -3,7 +3,10 @@ LoginRadius's DOT Net SDK is used to implement Social Login on your ASP.Net webs
 
 Description: LoginRadius's DOT net SDK is a development kit that lets you integrate Social Login through providers such as Facebook, Google, Twitter, and over 20 more on a ASP.Net website. The SDK also fetches user profile data and can be customized from your LoginRadius user account. Ex: social icon sets, login interface, provider settings, etc. The SDK works with C#.Net and VB.Net both languages. You can also use the SDK for your Asp.Net MVC websites.
 
-Download <a href="https://github.com/downloads/LoginRadius/Dot-Net-SDK/LoginRadius-Dot-Net-SDK-v2.zip">Social Login for ASP.Net </a>
+Download <a href="https://github.com/downloads/LoginRadius/Dot-Net-SDK/LoginRadiusSDKv3.0.NET%202.0.zip">Social Login for ASP.Net-2.0</a><br>
+Download <a href="https://github.com/downloads/LoginRadius/Dot-Net-SDK/LoginRadiusSDKv3.0.NET%203.5.zip">Social Login for ASP.Net-3.5</a><br>
+Download <a href="https://github.com/downloads/LoginRadius/Dot-Net-SDK/LoginRadiusSDKv3.0.NET%204.0.zip">Social Login for ASP.Net-4.0</a><br>
+
 
 Steps to implement LoginRadius Asp.Net SDK
 ===
