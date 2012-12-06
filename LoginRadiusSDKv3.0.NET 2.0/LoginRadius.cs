@@ -25,7 +25,7 @@ namespace LoginRadiusSDK
         public string Resonsetoken { get; set; }
         public const string TOKEN = "token";
         public const string Providertoken = "providertoken";
-
+        public string Token { get; set; }
         /// <summary>
         /// Connstructor Create environment for LoginRadius API
         /// </summary>
@@ -42,9 +42,11 @@ namespace LoginRadiusSDK
                     WebClient wc = new WebClient();
 
 
-                    string validateUrl = string.Format(Requesturl.url+ "/userprofile.ashx?token={0}&apisecrete={1}", request[TOKEN], apiSecrete);
+                    string validateUrl = string.Format(Requesturl.url + "/userprofile.ashx?token={0}&apisecrete={1}", request[TOKEN], apiSecrete);
+                    wc.Encoding = System.Text.Encoding.UTF8;
                     Resonse = wc.DownloadString(validateUrl);
                     Resonsetoken = validateUrl;
+                    Token = request[TOKEN];
                     IsAuthenticated = true;
                 }
             }

@@ -1,8 +1,0 @@
-F:\Loginradius\SDKs\LoginRadiusDemo\LoginRadiusSDKv3.0.NET 2.0\bin\Debug\LoginRadiusSDKv3.0.dll
-F:\Loginradius\SDKs\LoginRadiusDemo\LoginRadiusSDKv3.0.NET 2.0\bin\Debug\LoginRadiusSDKv3.0.pdb
-F:\Loginradius\SDKs\LoginRadiusDemo\LoginRadiusSDKv3.0.NET 2.0\bin\Debug\LoginRadiusDataObject.dll
-F:\Loginradius\SDKs\LoginRadiusDemo\LoginRadiusSDKv3.0.NET 2.0\bin\Debug\Newtonsoft.Json.Net20.dll
-F:\Loginradius\SDKs\LoginRadiusDemo\LoginRadiusSDKv3.0.NET 2.0\bin\Debug\LoginRadiusDataObject.pdb
-F:\Loginradius\SDKs\LoginRadiusDemo\LoginRadiusSDKv3.0.NET 2.0\obj\Debug\ResolveAssemblyReference.cache
-F:\Loginradius\SDKs\LoginRadiusDemo\LoginRadiusSDKv3.0.NET 2.0\obj\Debug\LoginRadiusSDKv3.0.dll
-F:\Loginradius\SDKs\LoginRadiusDemo\LoginRadiusSDKv3.0.NET 2.0\obj\Debug\LoginRadiusSDKv3.0.pdb
