@@ -1,11 +1,11 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="Utility.cs" company="">
-// TODO: Update copyright text.
+// <copyright file="Utility.cs" company="LoginRadius Inc.">
+// Copyright LoginRadius.com 2013
+// This file is part of the LoginRadius SDK package.
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace LoginRadiusSDK
-{
+namespace LoginRadiusSDK {
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -13,30 +13,30 @@ namespace LoginRadiusSDK
     using System.Text.RegularExpressions;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// LoginRadius Utility Class for common functions
     /// </summary>
-    public class Utility
-    {
+    public class Utility {
         /// <summary>
-        /// validate GIUD
+        /// Validate string for GUID format
         /// </summary>
-        /// <param name="candidate">string to validate</param>
-        /// <returns>boolean</returns>
-        public static bool IsGuid(string candidate)
-        {
+        /// <param name="candidate">String to validate for GUID</param>
+        /// <returns>true/false</returns>
+        public static bool IsGuid(string candidate) {
             Regex guid = new Regex(@"^(\{){0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}(\}){0,1}$", RegexOptions.Compiled);
-            if (candidate != null)
-            {
-                if (guid.IsMatch(candidate))
-                {
+            if (candidate != null) {
+                if (guid.IsMatch(candidate)) {
                     return true;
                 }
             }
             return false;
         }
     }
-    public class Requesturl
-    {
+
+    /// <summary>
+    /// LoginRadius End Point
+    /// </summary>
+    /// <returns>string</returns>
+    public class Requesturl {
         public const string url = "https://hub.loginradius.com";
     }
 }

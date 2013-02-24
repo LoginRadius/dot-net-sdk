@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("LoginRadiusSDKv3.0")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("LoginRadius, Inc.")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("LoginRadiusSDKv3.0")]
 [assembly: AssemblyCopyright("Copyright ©  2012")]
 [assembly: AssemblyTrademark("")]

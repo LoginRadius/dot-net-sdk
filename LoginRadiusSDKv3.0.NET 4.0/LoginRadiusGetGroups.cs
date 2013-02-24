@@ -1,6 +1,7 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="LoginRadiusGetCompaines.cs" company="">
-// TODO: Update copyright text.
+// <copyright file="LoginRadiusGetGroups.cs" company="LoginRadius Inc.">
+// Copyright LoginRadius.com 2013
+// This file is part of the LoginRadius SDK package.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -8,25 +9,30 @@ namespace LoginRadiusSDK
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Net;
-    using System.Web;
     using LoginRadiusDataModal.LoginRadiusDataObject.LoginRadiusDataObject.Groups;
 
+
     /// <summary>
-    /// 
+    /// LoginRadius class to get user's groups 
     /// </summary>
     public class LoginRadiusGetGroups
     {
         string _token;
         string _secret;
-        public string Resonse { get; set; }
+
         /// <summary>
-        /// Initialize Loginradius status api wrapper
+        /// Raw JSON response for groups data returned from LoginRadius API
         /// </summary>
-        /// <param name="_token">token for current user</param>
-        /// <param name="_secret">seceret of loginradius api</param>
+        public string Response { get; set; }
+
+
+        /// <summary>
+        /// Connstructor to create environment for LoginRadius API
+        /// It validates the GUID format of current user's token and LoginRadius secret. 
+        /// </summary>
+        /// <param name="token">Token for current user</param>
+        /// <param name="secret">API Secret of LoginRadius App</param>
         public LoginRadiusGetGroups(string token, string secret)
         {
             if (Utility.IsGuid(token) && Utility.IsGuid(secret))
@@ -40,6 +46,15 @@ namespace LoginRadiusSDK
             }
         }
 
+
+        /// <summary>
+        /// GetGroups function is use to get User's Groups in list format
+        /// LoginRadius Rest API for getting user groups list
+        /// <![CDATA[
+        /// https://hub.loginradius.com/GetGroups/{yourapisecret}/{yourtoken}
+        /// ]]>
+        /// </summary>
+        /// <returns>Returns User's Groups in List format</returns>
         public List<LoginRadiusGroups> GetGroups()
         {
             List<LoginRadiusGroups> groups = new List<LoginRadiusGroups>();
@@ -50,9 +65,9 @@ namespace LoginRadiusSDK
                 WebClient wc = new WebClient();
 
                 string validateUrl = string.Format(Requesturl.url + "/GetGroups/{0}/{1}", _secret, _token);
-
-                Resonse = wc.DownloadString(validateUrl);
-                groups = (List<LoginRadiusGroups>)Newtonsoft.Json.JsonConvert.DeserializeObject(Resonse, typeof(List<LoginRadiusGroups>));
+                wc.Encoding = System.Text.Encoding.UTF8;
+                Response = wc.DownloadString(validateUrl);
+                groups = (List<LoginRadiusGroups>)Newtonsoft.Json.JsonConvert.DeserializeObject(Response, typeof(List<LoginRadiusGroups>));
                 return groups;
             }
             catch

@@ -1,32 +1,38 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="LoginRadiusGetCompaines.cs" company="">
-// TODO: Update copyright text.
+// <copyright file="LoginRadiusPosts.cs" company="LoginRadius Inc.">
+// Copyright LoginRadius.com 2013
+// This file is part of the LoginRadius SDK package.
 // </copyright>
 // -----------------------------------------------------------------------
+
 
 namespace LoginRadiusSDK
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Net;
-    using System.Web;
     using LoginRadiusDataModal.LoginRadiusDataObject.LoginRadiusDataObject.PostComman;
 
     /// <summary>
-    /// 
+    /// LoginRadius class to get user's posts
     /// </summary>
     public class  LoginRadiusPosts
     {
         string _token;
         string _secret;
-        public string Resonse { get; set; }
+
         /// <summary>
-        /// Initialize Loginradius status api wrapper
+        /// Raw JSON response for posts data returned from LoginRadius API
         /// </summary>
-        /// <param name="_token">token for current user</param>
-        /// <param name="_secret">seceret of loginradius api</param>
+        public string Response { get; set; }
+
+
+        /// <summary>
+        /// Connstructor to create environment for LoginRadius API
+        /// It validates the GUID format of current user's token and LoginRadius secret. 
+        /// </summary>
+        /// <param name="token">Token for current user</param>
+        /// <param name="secret">API Secret of LoginRadius App</param>
         public LoginRadiusPosts(string token, string secret)
         {
             if (Utility.IsGuid(token) && Utility.IsGuid(secret))
@@ -40,6 +46,15 @@ namespace LoginRadiusSDK
             }
         }
 
+
+        /// <summary>
+        /// GetPosts function is use to get User's Posts in list format
+        /// LoginRadius Rest API for getting user Posts list
+        /// <![CDATA[
+        /// https://www.hub.loginradius.com/GetPosts/{yourapisecret}/{yourtoken}
+        /// ]]>
+        /// </summary>
+        /// <returns>Returns Posts in List Format</returns>
         public List<LoginRadiusPost> GetPosts()
         {
             List<LoginRadiusPost> posts = new List<LoginRadiusPost>();
@@ -50,9 +65,9 @@ namespace LoginRadiusSDK
                 WebClient wc = new WebClient();
 
                 string validateUrl = string.Format(Requesturl.url + "/GetPosts/{0}/{1}", _secret, _token);
-
-                Resonse = wc.DownloadString(validateUrl);
-                posts = (List<LoginRadiusPost>)Newtonsoft.Json.JsonConvert.DeserializeObject(Resonse, typeof(List<LoginRadiusPost>));
+                wc.Encoding = System.Text.Encoding.UTF8;
+                Response = wc.DownloadString(validateUrl);
+                posts = (List<LoginRadiusPost>)Newtonsoft.Json.JsonConvert.DeserializeObject(Response, typeof(List<LoginRadiusPost>));
                 return posts;
             }
             catch

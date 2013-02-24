@@ -1,6 +1,7 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="LoginRadius.cs" company="LoginRadius">
-// Copyright Loginradius 2011-2012
+// <copyright file="LoginRadius.cs" company="LoginRadius Inc.">
+// Copyright LoginRadius.com 2011-2013
+// This file is part of the LoginRadius SDK package.
 // </copyright>
 // -----------------------------------------------------------------------
 
@@ -27,13 +28,16 @@ namespace LoginRadiusSDK
         public const string Providertoken = "providertoken";
         public string Token { get; set; }
         /// <summary>
-        /// Connstructor Create environment for LoginRadius API
+        /// Connstructor to create the environment for LoginRadius API. It would first validate the API key format and
+        /// then get user profile data (Basic or Exteneded) from loginradius rest api and set IsAuthenticated true 
+        /// The following Rest API is used to get user profile data 
+        /// https://www.hub.loginradius.com/userprofile.ashx?token={yourtoken}&apisecrete={yourapisecret}
         /// </summary>
-        /// <param name="ApiSecrete">Your API Secrete</param>
+        /// <param name="ApiSecret">LoginRadius API Secret</param>
         public LoginRadius(string apiSecrete)
         {
             IsAuthenticated = false;
-            if (Extensions.IsGuid(apiSecrete))
+            if (Utility.IsGuid(apiSecrete))
             {
                 request = HttpContext.Current.Request;
 
@@ -42,7 +46,7 @@ namespace LoginRadiusSDK
                     WebClient wc = new WebClient();
 
 
-                    string validateUrl = string.Format(Requesturl.url + "/userprofile.ashx?token={0}&apisecrete={1}", request[TOKEN], apiSecrete);
+                    string validateUrl = string.Format(Requesturl.url+ "/userprofile.ashx?token={0}&apisecrete={1}", request[TOKEN], apiSecrete);
                     wc.Encoding = System.Text.Encoding.UTF8;
                     Resonse = wc.DownloadString(validateUrl);
                     Resonsetoken = validateUrl;
@@ -55,11 +59,10 @@ namespace LoginRadiusSDK
                 throw new Exception("Invalid API key");
             }
         }
-
         /// <summary>
-        /// Call Basic user it returns Premium user profile.
+        /// GetBasicUserProfile function, returns basic user profile data for user.
         /// </summary>
-        /// <returns>returns PremiumUserLoginRadiusUserProfile</returns>
+        /// <returns>returns BasicUserLoginRadiusUserProfile</returns>
         public BasicUserLoginRadiusUserProfile GetBasicUserProfile()
         {
             BasicUserLoginRadiusUserProfile userprofile = (BasicUserLoginRadiusUserProfile)Newtonsoft.Json.JsonConvert.DeserializeObject(Resonse, typeof(BasicUserLoginRadiusUserProfile));
@@ -67,8 +70,9 @@ namespace LoginRadiusSDK
             return userprofile;
         }
 
+
         /// <summary>
-        /// Call Premium user it returns Premium user profile. if you are not Premium user then you will get null fields
+        /// Call GetPremiumUserProfile function it returns Premium user profile. if you are not Premium user then you will get null fields
         /// </summary>
         /// <returns>returns PremiumUserLoginRadiusUserProfile</returns>
         public PremiumUserLoginRadiusUserProfile GetPremiumUserProfile()
@@ -79,7 +83,7 @@ namespace LoginRadiusSDK
         }
 
         /// <summary>
-        /// Call ultimate user it returns ultimate user profile. if you are not ultiamte user then you will get null fields
+        /// Call GetUltimateUserProfile it returns ultimate user profile. if you are not ultiamte user then you will get null fields
         /// </summary>
         /// <returns>returns UltimateUserLoginRadiusUserProfile</returns>
         public UltimateUserLoginRadiusUserProfile GetUltimateUserProfile()
@@ -90,7 +94,7 @@ namespace LoginRadiusSDK
         }
 
         /// <summary>
-        /// set is authenicated property 
+        /// set is authenicated property
         /// </summary>
         /// <param name="userprofile"></param>
         private void SetIsAuthenticated(IBasicUserLoginRadiusUserProfile userprofile)
