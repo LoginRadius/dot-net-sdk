@@ -3,17 +3,12 @@ LoginRadius's DOT Net SDK is used to implement Social Login on your ASP.Net webs
 
 Description: LoginRadius's DOT net SDK is a development kit that lets you integrate Social Login through providers such as Facebook, Google, Twitter, and over 20 more on a ASP.Net website. The SDK also fetches user profile data and can be customized from your LoginRadius user account. Ex: social icon sets, login interface, provider settings, etc. The SDK works with C#.Net and VB.Net both languages. You can also use the SDK for your Asp.Net MVC websites.
 
-Download <a href="https://github.com/downloads/LoginRadius/Dot-Net-SDK/LoginRadiusSDKv3.0.NET%202.0.zip">Social Login for ASP.Net-2.0</a><br>
-Download <a href="https://github.com/downloads/LoginRadius/Dot-Net-SDK/LoginRadiusSDKv3.0.NET%203.5.zip">Social Login for ASP.Net-3.5</a><br>
-Download <a href="https://github.com/downloads/LoginRadius/Dot-Net-SDK/LoginRadiusSDKv3.0.NET%204.0.zip">Social Login for ASP.Net-4.0</a><br>
-
-
 Steps to implement LoginRadius Asp.Net SDK
 ===
 
-Step 1: Add SDK file reference and LoginRadiusSDKv2 Namespace
+Step 1: Add SDK file reference and LoginRadiusSDKv3 Namespace
 
-Download and Add SDK's DLL files (LoginRadiusSDKv2.dll, LoginRadiusDataObject.dll and Newtonsoft.Json.dll) to your .Net project and references. Then Add namespace in the code behind file. 
+Download and Add SDK's DLL files (LoginRadiusSDKv3.dll, LoginRadiusDataObject.dll and Newtonsoft.Json.dll) to your .Net project and references. Then Add namespace in the code behind file. 
 
         For C#.Net : using LoginRadiusSDK;
         
@@ -104,6 +99,8 @@ For VB.Net:
               'userprofile.Suffix -- suffix of user's name  
           End If
           
-Note: Few providers like Twitter, LinkedIn, etc. doesn't provide email address with User Profile data, so you need to handle these cases in your callback page.
+Note: Few providers like Twitter doesn't provide email address with User Profile data, so you need to handle these cases in your callback page.
+
+Complete API Documentation: http://support.loginradius.com/customer/portal/articles/984976-asp-net-sdk-documentation-to-access-loginradius-unified-social-api
 
 These are the quick and easy steps to integrate Social Login on your ASP.Net website, if you have any questions or need a further assistance please contact us at hello@loginradius.com.
