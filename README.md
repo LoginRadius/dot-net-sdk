@@ -20,7 +20,7 @@ Steps to call the library:
 
 **C#.Net**
 
-        using LoginRadiusSDK          //Import the library reference
+    using LoginRadiusSDK          //Import the library reference
 
 	LoginRadius _loginradius = new LoginRadius("Your-LoginRadius-API-Secret-key"); 
     if(_loginradius.IsAuthenticated) {
@@ -57,38 +57,38 @@ Steps to call the library:
 
 **VB .Net**
 
-	Imports LoginRadiusSDK         //Import the library reference
+    Imports LoginRadiusSDK         'Import the library reference
+    Dim _loginradius As New LoginRadius("Your-LoginRadius-API-Secret-key")
     If _loginradius.IsAuthenticated Then
-	    Dim userprofile As LoginRadiusBasicUserProfile = _loginradius.GetBasicUserProfile()
-	     //fetch user profile properties  
-          //userprofile.BirthDate -- Birth date of user  
-          //if (userprofile.Country != null)  
-          //{  
-          //    userprofile.Country.Code - country code  
-          //    userprofile.Country.Name - country name  
-          //}  
-          //  
-          //Email id generic list   
-          //if (userprofile.Email != null)   
-          //{  
-          //    foreach (var email in userprofile.Email)  
-          //    {   
-          //        email.Type -- email type (like Primary , Secondary)  
-          //        email.Value -- email ID  
-          //    }  
-          //}  
-
-          //userprofile.FirstName -- first name of user  
-          //userprofile.FullName -- full name of user   
-          //userprofile.Gender -- gender of user  
-          //userprofile.ID -- ID of user on provider   
-          //userprofile.LastName -- last name of user  
-          //userprofile.MiddleName -- middle name of user  
-          //userprofile.NickName -- nick name of user  
-          //userprofile.Prefix -- prefix of user's name  
-          //userprofile.ProfileName -- screenname/username of user   
-          //userprofile.Provider -- provider name from where user has authenticated   
-          //userprofile.Suffix -- suffix of user's name
+    		'fetch all properties for profile data  
+    		'userprofile.BirthDate -- Birth date of user  
+    		'if (userprofile.Country != null)  
+    		'{  
+    		'    userprofile.Country.Code - country code  
+    		'    userprofile.Country.Name - country name  
+    		'}  
+    		'  
+    		'Email id generic list   
+    		'if (userprofile.Email != null)   
+    		'{  
+    		'    foreach (var email in userprofile.Email)  
+    		'    {   
+    		'        email.Type -- email type (like Primary , Secondary)  
+    		'        email.Value -- email ID  
+    		'    }  
+    		'} 
+    		'userprofile.FirstName -- first name of user  
+    		'userprofile.FullName -- full name of user   
+    		'userprofile.Gender -- gender of user  
+    		'userprofile.ID -- ID of user on provider   
+    		'userprofile.LastName -- last name of user  
+    		'userprofile.MiddleName -- middle name of user  
+    		'userprofile.NickName -- nick name of user  
+    		'userprofile.Prefix -- prefix of user's name  
+    		'userprofile.ProfileName -- screenname/username of user   
+    		'userprofile.Provider -- provider name from where user has authenticated   
+    		'userprofile.Suffix -- suffix of user's name
+    	Dim userprofile As LoginRadiusBasicUserProfile = _loginradius.GetBasicUserProfile()
     End If
 
 **Sample code to get Extended user profile (Only for Paid plans - Premium)**
@@ -104,7 +104,7 @@ Steps to call the library:
     	Dim userprofile As LoginRadiusUltimateUserProfile = _loginradius.GetUltimateUserProfile()
     End If
 
-**Tip-1:** If you are using MVC then use Post attribute in Action.
+**Tip-1:** If you are using MVC then use Post attribute on Action.
 
 **Tip-2:** Few providers like Twitter doesn't provide email address with User Profile data, so you need to handle these cases in your callback page.
 
@@ -138,14 +138,14 @@ You can use this API to fetch contacts from users social networks/email clients 
                    	}
               }
 
-**​VB.Net**
+**?VB.Net**
 
     Dim LRContacts As New LoginRadiusSDK.LoginRadiusGetContacts
     ("-LoginRadius-Session-Token--","-Your-LoginRadius-Secret-Key-")
     Dim contactlist As LoginRadiusSDK.LoginRadiusGetContacts = 
     LRContacts.Getcontacts()
     If (contactlist.IsNot Nothing) Then
-    	For Each contact As String In contactlist
+    	For Each contact As LoginRadiusContact In contactlist
     	      'contact.ID  - Contact ID
       	      'contact.Name - Contact Name
               'contact.EmailID - Contact EmailId
@@ -168,34 +168,13 @@ You can use this API to Post data to users social networks/email - Facebook, Twi
 
 **C#.Net**
 
-    LoginRadiusSDK.LoginRadiusStatus
-    lrstatusmessage = new LoginRadiusSDK.LoginRadiusStatus
-    ('LoginRadius-session-token', 'Your-LoginRadius-Secret-key');
-    
-     bool directmessage = lrstatusmessage.UpdateStatus(“To”,”Title”,”Url”,”imageurl-”,”status”,”caption”,”description”);
-     string success =””;
-            if (directmessage) {
-              	 success = "Your message has send successfully.";
-       		}
-          	else {
-               	 success = "Message sending failed.";
-       		}
+     LoginRadiusSDK.LoginRadiusStatus lrstatusmessage = new LoginRadiusSDK.LoginRadiusStatus("LoginRadius-session-token", "Your-LoginRadius-Secret-key");
+     bool isstatusposted = lrstatusmessage.UpdateStatus("To","Title","Url","imageurl-","status","caption","description");
 
 **VB .Net**
 
-    Dim lrstatusmessage As New LoginRadiusSDK.LoginRadiusStatus  (‘LoginRadius-session-token’,'Your-LoginRadius-Secret-Key')
-    
-    Dim contactlist As LoginRadiusSDK.LoginRadiusStatus = lrContect.Getcontacts()
-               	If (contactlist.IsNot Nothing) then
-    For Each contact As String In contactlist
-     bool directmessage = lrstatusmessage.UpdateStatus(“To”,”Title”,”Url”,”imageurl-”,”status”,”-caption-”,”-description-”) string success =””;
-          If directmessage.IsNot Nothing Then
-     	if directmessage = true Then
-              success = "Your message has send successfully."
-          	Else
-              success = "Message sending failed."
-            End If
-          End If
+    Dim lrstatusmessage As New LoginRadiusSDK.LoginRadiusStatus("LoginRadius-session-token", "Your-LoginRadius-Secret-key")
+    Dim directmessage As Boolean = lrstatusmessage.UpdateStatus("To", "Title", "Url", "imageurl-", "status", "caption", "description")
 
 
 Get Posts
@@ -234,7 +213,7 @@ You can use this API to get posts from users social network - Facebook
     Dim lrPost As LoginRadiusSDK.LoginRadiusPosts = lrContect.GetPosts()	
     	If (PostList.IsNot Nothing) then
                'fetch all properties like
-    	   For Each itemPost As String In PostList
+    	   For Each itemPost As LoginRadiusPost In PostList
     		'itemPost.ID -- id of Post
     		'itemPost.Place -- Place of Post
     		'itemPost.Name  -- Name of Post
@@ -287,7 +266,7 @@ You can use this API to get mentions from users social network - Twitter.
     Dim MentionList As LoginRadiusSDK.LoginRadiusGetMention = lrMention.GetMention ()
      If (MentionList.IsNot Nothing) then
        'fetch all properties like
-        For Each itemMention As String In MentionList
+        For Each itemMention As LoginRadiusPost In MentionList
          itemMention.ID  -- id of Mention
          itemMention.Place -- Place of Mention
          itemMention.Name -- Name of Mention
@@ -318,10 +297,10 @@ You can use this API to get groups from users social network - Facebook.
     	If (GroupList!= null)
             {
                //fetch all properties like
-    	   foreach (var itemGroups in GroupList)
+    	       foreach (var itemGroups in GroupList)
                {
-    		// itemEvent.ID -- id of event
-    		// itemEvent.Name -- Name of Event
+    		     // itemEvent.ID -- id of event
+    		     // itemEvent.Name -- Name of Event
                }
             }
 
@@ -332,10 +311,10 @@ You can use this API to get groups from users social network - Facebook.
     Dim GroupList As LoginRadiusSDK.LoginRadiusGetGroups = lrGroups.GetGroups ()
       If (GroupList.IsNot Nothing) then
            'fetch all properties like
-    	For Each itemGroups As String In GroupList
-    		'itemEvent.ID -- id of event
+    	   For Each itemGroups As LoginRadiusGroups In GroupList
+    		 'itemEvent.ID -- id of event
                     'itemEvent.Name -- Name of Event
-            Next
+             Next
       End if
 
 
@@ -354,7 +333,7 @@ You can use this API to get followed companies list from users social network - 
       {
          foreach (var followcompany in companylist)
          {
-    	//followcompany.ID  - followcompany ID
+    	    //followcompany.ID  - followcompany ID
             //followcompany.Name – followcompany Name	
          }
        }
@@ -364,7 +343,7 @@ You can use this API to get followed companies list from users social network - 
     Dim lrfollowcompanies As New LoginRadiusSDK.LoginRadiusGetCompaines  ("LoginRadius-session-Token","Your-LoginRadius-Secret-key")
     Dim companylist As LoginRadiusSDK.LoginRadiusGetCompaines = lrfollowcompanies.GetFollowCompaines()
       If (companylist.IsNot Nothing) then
-    	For Each followcompany As String In companylist
+    	For Each followcompany As LoginRadiusCompanyFollow In companylist
                 'followcompany.ID  - followcompany ID
                 'followcompany.Name - followcompany Name	
             Next
@@ -388,11 +367,11 @@ You can use this API to get events from users social network - Facebook.
            //fetch all properties like
            foreach (var itemEvent in EventList)
            {
-     	  //itemEvent.ID     	-- id of event
-     	 //itemEvent.Location   -- location of event
-            //itemEvent.Name   	-- Name of Event
-            //itemEvent.RsvpStatus -– Status of event
-            //itemEvent.StartTime  -- Start Time of Event
+     	     //itemEvent.ID     	-- id of event
+     	     //itemEvent.Location   -- location of event
+             //itemEvent.Name   	-- Name of Event
+             //itemEvent.RsvpStatus -– Status of event
+             //itemEvent.StartTime  -- Start Time of Event
                     	
             }
         }
@@ -402,8 +381,8 @@ You can use this API to get events from users social network - Facebook.
     Dim lrEvent As New LoginRadiusSDK.LoginRadiusGetEvents  ("LoginRadius-session-Token","Your-LoginRadius-Secret-key")   
     Dim EventList As LoginRadiusSDK.LoginRadiusGetEvents = lrEvent.GetEvents ()
     	If (EventList.IsNot Nothing) then
-               'fetch all properties like
-    	   For Each itemEvent As String In EventList
+           'fetch all properties like
+    	   For Each itemEvent As LoginRadiusEvents In EventList
     		'itemEvent.ID -- id of event
     		'itemEvent.Location -- location of event
     		'itemEvent.Name -- Name of Event
@@ -426,13 +405,13 @@ You can use this API to get status messages from users social network - Facebook
              If (statuslist!= null)
              {
                foreach (var status in statuslist)
-      	   {
-                 // status.ID  - status ID
-                 // status.ImageUrl– status Image Url  
-    	    // status.Likes – status Likes
+      	       {
+                // status.ID  - status ID
+                // status.ImageUrl– status Image Url  
+    	        // status.Likes – status Likes
                 // status.Text – status Text
                 // status.LinkUrl – status LinkUrl
-    	    // status.Place – status place
+    	        // status.Place – status place
                 // status.Source – status source
                        	
                }
@@ -443,11 +422,11 @@ You can use this API to get status messages from users social network - Facebook
     Dim lrstatus As New LoginRadiusSDK.LoginRadiusStatus  ("LoginRadius-session-Token","Your-LoginRadius-Secret-key")
     Dim lrstatusAs LoginRadiusSDK.LoginRadiusStatus =lrstatus. GetStatuses ()
        If (statuslist.IsNot Nothing) then
-    	For Each status As String In statuslist
-                 'status.ID  - status ID
-                 'status.ImageUrl- status Image Url  
+    	For Each status As LoginRadiusStatuses In statuslist
+             'status.ID  - status ID
+             'status.ImageUrl- status Image Url  
     	     'status.Likes - status Likes
-     'status.Text - status Text
+             'status.Text - status Text
      	     'status.LinkUrl - status LinkUrl
     	     'status.Place - status place
     	     'status.Source - status source	
@@ -468,13 +447,13 @@ Saved/Get Your LoginRadius Token That LoginRadius Provide You When You Login   ,
             {
               foreach (var timeline in timelinelist)
               {
-    		// timeline.ID  - timeline ID
-    		// timeline.ImageUrl– timeline Image Url  	
-    		// timeline.Likes – timeline Likes
-    	 	// timeline.Text – timeline Text
-    		// timeline.LinkUrl – timeline LinkUrl
-    		// timeline.Place – timeline place
-    		// timeline.Source – timeline source
+    		    // timeline.ID  - timeline ID
+    		    // timeline.ImageUrl– timeline Image Url  	
+    		    // timeline.Likes – timeline Likes
+    	 	    // timeline.Text – timeline Text
+    		    // timeline.LinkUrl – timeline LinkUrl
+    		    // timeline.Place – timeline place
+    		    // timeline.Source – timeline source
                }
             }
 
@@ -484,15 +463,32 @@ Saved/Get Your LoginRadius Token That LoginRadius Provide You When You Login   ,
     
     Dim timelinelist As LoginRadiusSDK.LoginRadiusGetTimeLine =  lrtimeline.GetTimeLine()
            If (timelinelist.IsNot Nothing) then
-           	For Each timeline As String In timelinelist
-    	   'timeline.ID  - timeline ID
-     	   'timeline.ImageUrl- timeline Image Url  	
-    	   'timeline.Likes - timeline Likes
-    	   'timeline.Text - timeline Text
-    	   'timeline.LinkUrl - timeline LinkUrl
-     	   'timeline.Place - timeline place
-    	   'timeline.Source - timeline source
+           	For Each timeline As LoginRadiusStatuses In timelinelist
+    	      'timeline.ID  - timeline ID
+     	      'timeline.ImageUrl- timeline Image Url  	
+    	      'timeline.Likes - timeline Likes
+    	      'timeline.Text - timeline Text
+    	      'timeline.LinkUrl - timeline LinkUrl
+    	      'timeline.Place - timeline place
+    	      'timeline.Source - timeline source
              Next
            End If
 
 **Request:** Please let us know your feedback and comments. If you have any questions or need a further assistance please contact us at hello@loginradius.com.
+
+Direct Message API
+---
+You can use this API to send direct message to currect user's friend - Twitter, LinkedIn.
+
+> LoginRadius generate a unique session token, when user logs in with
+> any of social network. The lifetime of LoginRadius token is 15 mins, get/Save this Token to call this API.
+
+**C#.Net**
+
+     LoginRadiusSDK.LoginRadiusSendDirectMessgae directmessage = new LoginRadiusSDK.LoginRadiusSendDirectMessgae("LoginRadius-session-token", "Your-LoginRadius-Secret-key");
+     bool ismessagesent = directmessage.SendDirectMessgae("sendto", "subject", "message");
+
+**VB .Net**
+
+    Dim directmessage As New LoginRadiusSDK.LoginRadiusSendDirectMessgae("LoginRadius-session-token", "Your-LoginRadius-Secret-key")
+    Dim ismessagesent As Boolean = directmessage.SendDirectMessgae("sendto", "subject", "message")
