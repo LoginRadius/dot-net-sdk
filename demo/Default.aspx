@@ -24,7 +24,7 @@
 </script>
 
 <%--LoginRadius custom interface js libraray--%>
- <script src="//hub.loginradius.com/cdn/Include/src/CustomeInterface.2.js" type="text/javascript"></script>
+ <script src="//cdn.loginradius.com/hub/prod/js/CustomInterface.2.js" type="text/javascript"></script>
 
 <script type="text/javascript">
     var cache = {};
@@ -49,6 +49,7 @@
 
         var options = {};
         options.apikey = '<%=ApiKey %>';
+
         options.templatename = "loginradiuscustom_tmpl";
         $LRIC.renderInterface("interfacecontainerdiv", options);
     });
