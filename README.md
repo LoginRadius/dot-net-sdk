@@ -30,7 +30,7 @@ library
 
 ## Documentation
 
-* [Getting Started](http://apidocs.loginradius.com/docs/asp-net-library-user-registration-service) - Everything you need to begin using this SDK.
+* [Getting Started](http://apidocs.loginradius.com/docs/aspnet) - Everything you need to begin using this SDK.
 
 * To install LoginRadius - Customer Registration SDK, run the following command in the NuGet Package Manager Console.
 ![Home Image](https://www.filepicker.io/api/file/MHpeRcZGQRyH4K7iMfSZ)
