@@ -39,6 +39,8 @@ In order to configure the LoginRadius Demo Application and SDK, set your LoginRa
 
 NuGet is required to acquire any .NET assembly dependency, You need to restore/download the rest of the demo dependencies via NuGet, as they are not yet part of the Demo. These NuGet dependencies contain facades (type forwarders) that point to mscorlib and Libraries.
 
+Right click on Solution in Solution Explorer and click on "Restore Nuget Packages"
+
 ## Documentation
 
 * [Getting Started](http://apidocs.loginradius.com/docs/aspnet) - Everything you need to begin using this SDK.
