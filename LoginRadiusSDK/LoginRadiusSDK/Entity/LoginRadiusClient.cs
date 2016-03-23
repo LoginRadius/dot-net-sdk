@@ -61,13 +61,20 @@ namespace LoginRadiusSDK.Entity
             {
                 using (var re = e.Response)
                 {
-                    using (var data = re.GetResponseStream())
+                    if (re != null)
                     {
-                        if (data != null)
+                        using (var data = re.GetResponseStream())
                         {
-                            var text = new StreamReader(data).ReadToEnd();
-                            throw new LoginRadiusException("LoginRadius API Exception", e, text);
+                            if (data != null)
+                            {
+                                var text = new StreamReader(data).ReadToEnd();
+                                throw new LoginRadiusException("LoginRadius API Exception", e, text);
+                            }
                         }
+                    }
+                    else
+                    {
+                        throw new LoginRadiusException("Unable to connect through the Internet", e);
                     }
                 }
             }

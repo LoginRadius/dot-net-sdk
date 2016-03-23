@@ -149,15 +149,21 @@ namespace LoginRadiusSDK.Utility.Http
             req.Accept = accept;
             req.ContentType = contentType;
             req.Method = method;
-
-            if (!string.IsNullOrEmpty(requestData))
+            try
             {
-                var bytes = Encoding.ASCII.GetBytes(requestData);
-                req.ContentLength = bytes.Length;
+                if (!string.IsNullOrEmpty(requestData))
+                {
+                    var bytes = Encoding.ASCII.GetBytes(requestData);
+                    req.ContentLength = bytes.Length;
 
-                var os = req.GetRequestStream();
-                os.Write(bytes, 0, bytes.Length);
-                os.Close();
+                    var os = req.GetRequestStream();
+                    os.Write(bytes, 0, bytes.Length);
+                    os.Close();
+                }
+            }
+            catch (WebException exception)
+            {
+                throw new LoginRadiusException("Unable to connect through the Internet", exception);
             }
 
             try
@@ -173,13 +179,20 @@ namespace LoginRadiusSDK.Utility.Http
             {
                 using (var re = e.Response)
                 {
-                    using (var data = re.GetResponseStream())
+                    if (re != null)
                     {
-                        if (data != null)
+                        using (var data = re.GetResponseStream())
                         {
-                            var text = new StreamReader(data).ReadToEnd();
-                            throw new LoginRadiusException("LoginRadius API Exception",e,text);
+                            if (data != null)
+                            {
+                                var text = new StreamReader(data).ReadToEnd();
+                                throw new LoginRadiusException("LoginRadius API Exception", e, text);
+                            }
                         }
+                    }
+                    else
+                    {
+                        throw new LoginRadiusException("LoginRadius API Exception", e);
                     }
                 }
             }
