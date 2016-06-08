@@ -396,10 +396,7 @@ namespace LoginRadiusSDK.Entity
         public LoginRadiusPostResponse UpsertCustomObject(string accountId, string objectId,string customObject)
         {
             _validate.Validate(_valuesToCheck = new ArrayList() { objectId, accountId, customObject }, "UpsertCustomObject");
-            var postRequest = new HttpRequestParameter
-            {
-                {"customobject", customObject.Serialize()}
-            };
+            var postRequest = "{\"Custom Object\":" + customObject + "}";
             var getRequest = new HttpRequestParameter
             {
                 {"accountid", accountId},
