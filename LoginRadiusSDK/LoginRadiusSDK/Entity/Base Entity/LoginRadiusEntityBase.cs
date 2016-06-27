@@ -1,6 +1,4 @@
-﻿using System;
-using System.Configuration;
-using System.Threading.Tasks;
+﻿using System.Configuration;
 using LoginRadiusSDK.Utility.Http;
 
 namespace LoginRadiusSDK.Entity
@@ -43,10 +41,12 @@ namespace LoginRadiusSDK.Entity
         {
             return string.Format("https://api.loginradius.com/raas/v1/{0}", api);
         }
+
         /// <summary>
         /// The GET method sends the encoded user information appended to the page request.
         /// </summary>
         /// <param name="@object"></param>
+        /// <param name="object"></param>
         /// <returns></returns>
         public string Get(LoginRadiusObject @object)
         {
@@ -72,10 +72,12 @@ namespace LoginRadiusSDK.Entity
             var response = _httpClient.HttpGet(GetEndpoint(@object.ObjectName), parameter);
             return response.ResponseContent;
         }
+
         /// <summary>
         /// The GET method sends the encoded user information appended to the page request with specified headers.
         /// </summary>
         /// <param name="@object"></param>
+        /// <param name="object"></param>
         /// <param name="accept">Headers which is to be send in HTTP GET request.</param>
         /// <returns></returns>
         public string Get(LoginRadiusObject @object, string accept)
@@ -89,6 +91,7 @@ namespace LoginRadiusSDK.Entity
         /// The POST method transfers information via HTTP headers. The information is encoded as described in case of GET method and put into a header called QUERY_STRING.
         /// </summary>
         /// <param name="@object"></param>
+        /// <param name="object"></param>
         /// <param name="json"></param>
         /// <returns></returns>
         public string Post(LoginRadiusObject @object, string json)

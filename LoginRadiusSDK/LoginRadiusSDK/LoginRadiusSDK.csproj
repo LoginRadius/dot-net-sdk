@@ -12,6 +12,8 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\demo\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,7 +42,9 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Web" />
+    <Reference Include="System.Web">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Web.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
@@ -70,10 +74,16 @@
     <Compile Include="API\UserProfileAPI.cs" />
     <Compile Include="API\VideoAPI.cs" />
     <Compile Include="Entity\Constants.cs" />
-    <Compile Include="Entity\AccountEntity.cs" />
-    <Compile Include="Entity\LoginRadiusEntityBase.cs" />
+    <Compile Include="Entity\APIs Entity\LoginRadiusAccountEntity.cs" />
+    <Compile Include="Entity\APIs Entity\LoginRadiusCloudStorageEntity.cs" />
+    <Compile Include="Entity\APIs Entity\LoginRadiusCustomObjectEntity.cs" />
+    <Compile Include="Entity\Base Entity\LoginRadiusEntityBase.cs" />
     <Compile Include="Entity\LoginRadiusObject.cs" />
-    <Compile Include="Entity\UserprofileEntity.cs" />
+    <Compile Include="Entity\APIs Entity\LoginRadiusUserProfileEntity.cs" />
+    <Compile Include="Entity\Base Entity\LoginRadiusV2EntityBase.cs" />
+    <Compile Include="Models\CloudStorageModel\LoginRadiusIdentityModel.cs" />
+    <Compile Include="Models\CloudStorageModel\LoginRadiusQueryDataModel.cs" />
+    <Compile Include="Models\LoginRadiusBlockUnblockModel.cs" />
     <Compile Include="Models\UserProfile\LoginRadiusProfileImageUrls.cs" />
     <Compile Include="Models\UserRegistrationAuthentication.cs" />
     <Compile Include="Entity\LoginRadiusCallback.cs" />
@@ -98,7 +108,7 @@
     <Compile Include="Models\Object\CustomObjectResponse.cs" />
     <Compile Include="Models\Object\CustomObjectStats.cs" />
     <Compile Include="Models\Object\HashPassword.cs" />
-    <Compile Include="Models\Object\RaasUserprofile.cs" />
+    <Compile Include="Models\UserProfile\RaasUserprofile.cs" />
     <Compile Include="Models\Object\User.cs" />
     <Compile Include="Models\Page\LoginRadiusCountryCodeName.cs" />
     <Compile Include="Models\Page\LoginRadiusPage.cs" />
@@ -170,6 +180,13 @@
     <None Include="sink.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

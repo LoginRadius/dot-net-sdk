@@ -21,14 +21,14 @@ namespace LoginRadiusSDK.Utility
                 {
                     if (string.IsNullOrEmpty(arg as string))
                     {
-                        throw new ArgumentNullException(name + "Value(s) cannot be null or empty");
+                        throw new ArgumentNullException(name + "method's value(s) cannot be null or empty.");
                     }
                 }
                 else if (arg is int)
                 {
                     if (argument == null)
                     {
-                        throw new ArgumentNullException(name + " Value(s) cannot be null");
+                        throw new ArgumentNullException(name + "method's value(s) cannot be null.");
                     }
                 }
             }

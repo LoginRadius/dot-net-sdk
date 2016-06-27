@@ -153,7 +153,7 @@ namespace LoginRadiusSDK.Utility.Http
             {
                 if (!string.IsNullOrEmpty(requestData))
                 {
-                    var bytes = Encoding.ASCII.GetBytes(requestData);
+                    var bytes = Encoding.UTF8.GetBytes(requestData);
                     req.ContentLength = bytes.Length;
 
                     var os = req.GetRequestStream();
@@ -169,7 +169,6 @@ namespace LoginRadiusSDK.Utility.Http
             try
             {
                 var resp = req.GetResponse();
-
                 var sr = new StreamReader(resp.GetResponseStream());
                 response.HttpHeader = resp.Headers.ToHttpHeader();
                 response.StatusCode = HttpStatusCode.OK;
@@ -264,7 +263,7 @@ namespace LoginRadiusSDK.Utility.Http
             req.ContentType = "application/x-www-form-urlencoded";
             req.Method = "POST";
 
-            var bytes = Encoding.ASCII.GetBytes(parameters);
+            var bytes = Encoding.UTF8.GetBytes(parameters);
             req.ContentLength = bytes.Length;
 
             Stream os = req.GetRequestStream();

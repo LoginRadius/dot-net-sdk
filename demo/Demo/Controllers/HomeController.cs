@@ -19,6 +19,7 @@ using LoginRadiusSDK.Models.Object;
 using LoginRadiusSDK.Models.Photo;
 using LoginRadiusSDK.Models.Post;
 using LoginRadiusSDK.Models.Status;
+using LoginRadiusSDK.Models.UserProfile;
 using LoginRadiusSDK.Models.Video;
 using LoginRadiusSDK.Utility.Serialization;
 
@@ -81,7 +82,7 @@ namespace Demo.Controllers
             //Set Password and Traditional profile registration process for social user accounts.
             else if (HttpContext.Request.Params["password"] != null && HttpContext.Request.Params["confirmpassword"] != null && HttpContext.Request.Params["emailid"] != null)
             {
-                var _object = new UserprofileEntity();
+                var _object = new LoginRadiusAccountEntity();
                 var userid = (string)System.Web.HttpContext.Current.Session["Uid"];
                 _object.UserCreateRegistrationProfile(userid, HttpContext.Request.Params["emailid"], HttpContext.Request.Params["password"]);
                 return Content("<script language='javascript' type='text/javascript'>alert('Password has been set !'); window.location.href =window.location.href;</script>");
@@ -92,7 +93,7 @@ namespace Demo.Controllers
             {
                 try
                 {
-                    var _object = new UserprofileEntity();
+                    var _object = new LoginRadiusUserProfileEntity();
                     _object.ChangePassword(HttpContext.Request.Params["raasid"], HttpContext.Request.Params["oldpassword"], HttpContext.Request.Params["newpassword"]);
                     return Content("<script language='javascript' type='text/javascript'>alert('Password has been Changed successfully !'); window.location.href =window.location.href;</script>");
                 }
@@ -110,7 +111,7 @@ namespace Demo.Controllers
                 var client = new LoginRadiusClient(accessToken);
                 var userprofile = new UserProfileApi();
                 var userProfileData = client.GetResponse<RaasUserprofile>(userprofile);
-                var _object = new AccountEntity();
+                var _object = new LoginRadiusAccountEntity();
                 var userid = (string)System.Web.HttpContext.Current.Session["Uid"];
                 try
                 {
@@ -128,7 +129,7 @@ namespace Demo.Controllers
             {
                 try
                 {
-                    var _object = new AccountEntity();
+                    var _object = new LoginRadiusAccountEntity();
                     var userid = (string)System.Web.HttpContext.Current.Session["Uid"];
                     var status = _object.UnlinkAccount(userid, HttpContext.Request.Params["accountunlinkname"], HttpContext.Request.Params["accountunlinkid"]);
                     return Content(status.isPosted ? "<script language='javascript' type='text/javascript'>alert( 'Social Account has been unlinked !' ); window.location.href =window.location.href; </script>" : "<script language='javascript' type='text/javascript'>alert( 'Social Account can not be unlinked !' ); window.location.href = window.location.href; </script>");
@@ -202,8 +203,8 @@ namespace Demo.Controllers
             try
             {
                 var userProfileData = (RaasUserprofile)Session["userprofile"];
-                var _object = new UserprofileEntity();
-                var response = _object.EditUser(userProfileData.ID, user);
+                var _object = new LoginRadiusUserProfileEntity();
+                var response = _object.UpdateUser(userProfileData.ID, user);
                 UserProfiledata(System.Web.HttpContext.Current.Session["access_token"].ToString());
                 return Content(response.isPosted ? "<script language='javascript' type='text/javascript'>alert( 'Profile has been updated !!' ); window.location.href ='/Home/Welcome'; </script>" : "<script language='javascript' type='text/javascript'>alert( 'Profile cannot be updated ,Please check parameters again !' ); window.location.href = '/Home/Welcome'; </script>");
             }

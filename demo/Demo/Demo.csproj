@@ -49,7 +49,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="LoginRadiusSDK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d59db55b4c4b52d7, processorArchitecture=MSIL">
-      <HintPath>..\packages\LoginRadiusSDK.NET.3.0.2\lib\LoginRadiusSDK.dll</HintPath>
+      <HintPath>..\packages\LoginRadiusSDK.NET.3.1.0\lib\LoginRadiusSDK.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">

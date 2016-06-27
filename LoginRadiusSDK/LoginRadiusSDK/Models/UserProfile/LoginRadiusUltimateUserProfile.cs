@@ -23,7 +23,6 @@ namespace LoginRadiusSDK.Models.UserProfile
         public string Website { get; set; }
         public List<LoginRadiusEmail> Email { get; set; }
         public LoginRadiusCountry Country { get; set; }
-
         public string ThumbnailImageUrl { get; set; }
         public string ImageUrl { get; set; }
         public string Favicon { get; set; }
@@ -36,24 +35,18 @@ namespace LoginRadiusSDK.Models.UserProfile
         public string TimeZone { get; set; }
         public string LocalLanguage { get; set; }
         public string CoverPhoto { get; set; }
-        public string TagLine { get; set; }
-        
+        public string TagLine { get; set; }       
         public string Language { get { return LocalLanguage; } }
         public string Verified { get; set; }
         public string UpdatedTime { get; set; }
-
         public List<LoginRadiusPosition> Positions { get; set; }
         public List<LoginRadiusEducation> Educations { get; set; }
         public List<LoginRadiusPhoneNumber> PhoneNumbers { get; set; }
         public List<LoginRadiusIMAccount> IMAccounts { get; set; }
-
         public List<LoginRadiusAddress> Addresses { get; set; }
         public string MainAddress { get; set; }
         public string Created { get; set; }
-
         public string LocalCity { get; set; }
-
-        
         public string ProfileCity
         {
             get
@@ -62,18 +55,14 @@ namespace LoginRadiusSDK.Models.UserProfile
             }
         }
         public string LocalCountry { get; set; }
-
-  
         public string ProfileCountry
         {
             get; set;
         }
-
-       
- 
         public bool IsProtected { get; set; }
         public string RelationshipStatus { get; set; }
         public string Quota { get; set; }
+        public string Quote { get; set; }
         public List<string> InterestedIn { get; set; }
         public List<LoginRadiusInterest> Interests { get; set; }
         public string Religion { get; set; }
@@ -100,14 +89,12 @@ namespace LoginRadiusSDK.Models.UserProfile
 
         public List<LoginRadiusProject> Projects { get; set; }
         public List<LoginRadiusGame> Games { get; set; }
-
         public List<LoginRadiusFamily> Family { get; set; }
         public List<LoginRadiusTelevisionShow> TeleVisionShow { get; set; }
         public List<LoginRadiusMutualFriend> MutualFriends { get; set; }
         public List<LoginRadiusMovie> Movies { get; set; }
         public List<LoginRadiusBook> Books { get; set; }
         public LoginRadiusAgeRange AgeRange { get; set; }
-        
         public string PublicRepository { get; set; }
         public Boolean Hireable { get; set; }
         public string RepositoryUrl { get; set; }
@@ -118,21 +105,13 @@ namespace LoginRadiusSDK.Models.UserProfile
         public ProviderAccessCredential ProviderAccessCredential { get; set; }
         public List<LoginRadiusRelatedProfileViews> RelatedProfileViews { get; set; }
         public LoginRadiusKloutProfile KloutScore { get; set; }
-
         public string LRUserID { get; set; }
         public List<LoginRadiusPlaceLived> PlacesLived { get; set; }
-
         public List<LoginRadiusPublication> Publications { get; set; }
-
         public List<LoginRadiusJobBookmark> JobBookmarks { get; set; }
-
         public LoginRadiusSuggestion Suggestions { get; set; }
-
         public List<LoginRadiusBadge> Badges { get; set; }
-
         public List<LoginRadiusMemberUrlResource> MemberUrlResources { get; set; }
-
-
         public int TotalPrivateRepository { get; set; }
         public string Currency { get; set; }
         public string StarredUrl { get; set; }
@@ -142,13 +121,16 @@ namespace LoginRadiusSDK.Models.UserProfile
         public LoginRadiusUserSubscription Subscription { get; set; }
         public string PasswordExpirationDate { get; set; }
         public string IsActive { get; set; }
-        public List<CustomObjectResponse> CustomFields { get; set; }
+        public Dictionary<string,string> CustomFields { get; set; }
         public string IsEmailSubscribed { get; set; }
         public string UserName { get; set; }
         public string Company { get; set; }
         public string GravatarImageUrl { get; set; }
         public LoginRadiusProfileImageUrls ProfileImageUrls { get; set; }
         public string WebProfiles { get; set; }
+        public List<string> PreviousUids { get; set; }
+        int PinsCount { get; set; }
+        int BoardsCount { get; set; }
+        int LikesCount { get; set; }
     }
-
 }
