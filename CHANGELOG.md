@@ -16,3 +16,12 @@ Released on **June 27,  2016**
 ##### Bug Fixes
 
   - Custom Object Upsert bug fix.
+  
+  
+### Version 3.1.2
+Released on **March 15,  2017**
+
+##### Bug Fixes
+
+  - Added missing parameter in register API.
+  - Added email verification

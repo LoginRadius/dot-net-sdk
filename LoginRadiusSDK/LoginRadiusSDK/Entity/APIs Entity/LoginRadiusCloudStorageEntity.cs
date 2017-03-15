@@ -13,6 +13,17 @@ namespace LoginRadiusSDK.Entity
         private readonly LoginRadiusObject _object = new LoginRadiusObject("identity");
         private ArrayList _valuesToCheck;
 
+<<<<<<< HEAD
+=======
+        public LoginRadiusCloudStorageEntity()
+        {
+        }
+        public LoginRadiusCloudStorageEntity(string apikey, string apisecret)
+            : base(apikey,apisecret)
+        {
+        }
+
+>>>>>>> master
         /// <summary>
         /// This API allows you to query your LoginRadius Cloud Storage and retrieve up to 20 user records.
         /// </summary>

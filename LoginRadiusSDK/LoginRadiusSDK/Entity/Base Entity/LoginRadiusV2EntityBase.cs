@@ -3,15 +3,21 @@ using LoginRadiusSDK.Utility.Http;
 
 namespace LoginRadiusSDK.Entity
 {
+<<<<<<< HEAD
     public class LoginRadiusV2EntityBase
     {
         private readonly HttpClient _httpClient = new HttpClient();
         private readonly HttpRequestParameter _commHttpRequestParameter;
 
+=======
+    public abstract class LoginRadiusV2EntityBase:LoginRadiusEntity
+    {
+>>>>>>> master
         /// <summary>
         /// LoginRadius Api and Secret key. 
         /// </summary>
         protected LoginRadiusV2EntityBase()
+<<<<<<< HEAD
             : this(new UserRegistrationAuthentication()
             {
                 UserRegistrationKey = ConfigurationManager.AppSettings["loginradius:apikey"],
@@ -83,6 +89,25 @@ namespace LoginRadiusSDK.Entity
 
             var response = _httpClient.HttpPostJson(GetEndpoint(@object.ObjectName), getParams, postParams);
             return response.ResponseContent;
+=======
+            : this(ConfigurationManager.AppSettings["loginradius:apikey"],
+                ConfigurationManager.AppSettings["loginradius:apisecret"])
+        {
+        }
+
+        protected LoginRadiusV2EntityBase(string apikey, string apisecret)
+        {
+            _commHttpRequestParameter = new HttpRequestParameter()
+            {
+                {"key", apikey},
+                {"secret", apisecret}
+            };
+        }
+
+        protected override string GetEndpoint(string api)
+        {
+            return $"https://api.loginradius.com/api/v2/{api}";
+>>>>>>> master
         }
     }
 }

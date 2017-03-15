@@ -73,17 +73,31 @@
     <Compile Include="API\StatusUpdateAPI.cs" />
     <Compile Include="API\UserProfileAPI.cs" />
     <Compile Include="API\VideoAPI.cs" />
+<<<<<<< HEAD
+=======
+    <Compile Include="Entity\APIs Entity\LoginRadiusClientAuthenticationEntity.cs" />
+    <Compile Include="Entity\Base Entity\LoginRadiusClientEntity.cs" />
+    <Compile Include="Entity\Base Entity\LoginRadiusEntity.cs" />
+>>>>>>> master
     <Compile Include="Entity\Constants.cs" />
     <Compile Include="Entity\APIs Entity\LoginRadiusAccountEntity.cs" />
     <Compile Include="Entity\APIs Entity\LoginRadiusCloudStorageEntity.cs" />
     <Compile Include="Entity\APIs Entity\LoginRadiusCustomObjectEntity.cs" />
+<<<<<<< HEAD
     <Compile Include="Entity\Base Entity\LoginRadiusEntityBase.cs" />
+=======
+    <Compile Include="Entity\Base Entity\LoginRadiusServerEntity.cs" />
+>>>>>>> master
     <Compile Include="Entity\LoginRadiusObject.cs" />
     <Compile Include="Entity\APIs Entity\LoginRadiusUserProfileEntity.cs" />
     <Compile Include="Entity\Base Entity\LoginRadiusV2EntityBase.cs" />
     <Compile Include="Models\CloudStorageModel\LoginRadiusIdentityModel.cs" />
     <Compile Include="Models\CloudStorageModel\LoginRadiusQueryDataModel.cs" />
     <Compile Include="Models\LoginRadiusBlockUnblockModel.cs" />
+<<<<<<< HEAD
+=======
+    <Compile Include="Models\Object\UserRegistrationModel.cs" />
+>>>>>>> master
     <Compile Include="Models\UserProfile\LoginRadiusProfileImageUrls.cs" />
     <Compile Include="Models\UserRegistrationAuthentication.cs" />
     <Compile Include="Entity\LoginRadiusCallback.cs" />
