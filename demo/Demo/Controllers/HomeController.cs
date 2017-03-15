@@ -53,11 +53,7 @@ namespace Demo.Controllers
                 var lrCallback = new LoginRadiusCallback();
                 if (lrCallback.IsCallback)
                 {
-<<<<<<< HEAD
-                    var accesstoken = lrCallback.GetAccessToken(WebConfigurationManager.AppSettings["loginradius:apisecret"]);
-=======
                     var accesstoken = lrCallback.GetAccessToken();
->>>>>>> master
                     Session["access_token"] = accesstoken.access_token;
                     //create client with the help of access token as parameter
                     var client = new LoginRadiusClient(accesstoken);

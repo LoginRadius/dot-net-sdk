@@ -9,19 +9,13 @@ namespace LoginRadiusSDK.Models.Object
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Gender { get; set; }
-<<<<<<< HEAD
-=======
 
->>>>>>> master
         public string BirthDate
         {
             get { return _birthDate; }
             set { _birthDate = !string.IsNullOrEmpty(value) ? value.Replace("/", "-") : value; }
         }
-<<<<<<< HEAD
-=======
 
->>>>>>> master
         public string City { get; set; }
         public string State { get; set; }
         public string Phonenumber { get; set; }
@@ -47,10 +41,7 @@ namespace LoginRadiusSDK.Models.Object
         public string Webprofiles { get; set; }
         public string Type { get; set; }
         public string Country { get; set; }
-<<<<<<< HEAD
-=======
 
         
->>>>>>> master
     }
 }

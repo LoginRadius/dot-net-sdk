@@ -26,14 +26,17 @@ namespace LoginRadiusSDK.Entity
         /// <param name="vtoken">Uniquely generated identifier key by LoginRadius.</param>
         /// <param name="url">URL on which page user landed</param>
         /// <param name="welcomeEmailTemplate">Name of email template</param>
-        public LoginRadiusPostResponse VerifyEmail(string vtoken, string url, string welcomeEmailTemplate)
+        public LoginRadiusPostResponse VerifyEmail(string vtoken, string url=null, string welcomeEmailTemplate=null)
         {
             _valuesToCheck = new ArrayList { vtoken, url };
             _validate.Validate(_valuesToCheck, "Verify Email");
-            var getRequest = new HttpRequestParameter
+
+            var getRequest = new HttpRequestParameter { { "vtoken", vtoken } };
+            if(!string.IsNullOrWhiteSpace(url))
             {
-                { "vtoken", vtoken }, { "url", url }
+                getRequest.Add("url",url);
             };
+            
             if (!string.IsNullOrWhiteSpace(welcomeEmailTemplate))
             {
                 getRequest.Add("welcomeEmailTemplate", welcomeEmailTemplate);

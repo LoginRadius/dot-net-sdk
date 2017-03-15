@@ -9,18 +9,12 @@ using LoginRadiusSDK.Models.UserProfile;
 using LoginRadiusSDK.Utility;
 namespace LoginRadiusSDK.Entity
 {
-<<<<<<< HEAD
-    public class LoginRadiusAccountEntity : LoginRadiusEntityBase
-=======
     public class LoginRadiusAccountEntity : LoginRadiusServerEntity
->>>>>>> master
     {
         readonly LoginRadiusArgumentValidator _validate=new LoginRadiusArgumentValidator();
         private readonly LoginRadiusObject _object = new LoginRadiusObject("account");
         private ArrayList _valuesToCheck;
 
-<<<<<<< HEAD
-=======
         public LoginRadiusAccountEntity()
         {
         }
@@ -29,7 +23,6 @@ namespace LoginRadiusSDK.Entity
         {
         }
 
->>>>>>> master
         /// <summary>
         /// Method which is used to link a social account with a specified provider user account.
         /// </summary>

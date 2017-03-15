@@ -9,18 +9,12 @@ using LoginRadiusSDK.Utility.Serialization;
 
 namespace LoginRadiusSDK.Entity
 {
-<<<<<<< HEAD
-    public class LoginRadiusCustomObjectEntity : LoginRadiusEntityBase
-=======
     public class LoginRadiusCustomObjectEntity : LoginRadiusServerEntity
->>>>>>> master
     {
         private readonly LoginRadiusObject _object = new LoginRadiusObject("user/customObject");
         private readonly LoginRadiusArgumentValidator _validate = new LoginRadiusArgumentValidator();
         private ArrayList _valuesToCheck;
 
-<<<<<<< HEAD
-=======
         public LoginRadiusCustomObjectEntity()
         {
         }
@@ -29,7 +23,6 @@ namespace LoginRadiusSDK.Entity
         {
         }
 
->>>>>>> master
         /// <summary>
         /// Method is used to write information in JSON format to the custom object for the specified account.
         /// </summary>

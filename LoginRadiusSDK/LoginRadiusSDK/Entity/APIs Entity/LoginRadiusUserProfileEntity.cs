@@ -8,18 +8,12 @@ using LoginRadiusSDK.Utility;
 
 namespace LoginRadiusSDK.Entity
 {
-<<<<<<< HEAD
-    public class LoginRadiusUserProfileEntity : LoginRadiusEntityBase
-=======
     public class LoginRadiusUserProfileEntity : LoginRadiusServerEntity
->>>>>>> master
     {
         private readonly LoginRadiusObject _object = new LoginRadiusObject("user");
         private readonly LoginRadiusArgumentValidator _validate = new LoginRadiusArgumentValidator();
         private ArrayList _valuesToCheck;
 
-<<<<<<< HEAD
-=======
         public LoginRadiusUserProfileEntity()
         {
         }
@@ -28,7 +22,6 @@ namespace LoginRadiusSDK.Entity
         {
         }
 
->>>>>>> master
         /// <summary>
         /// Method to authenticate users and returns the profile data associated with the authenticated user.
         /// </summary>
@@ -124,11 +117,7 @@ namespace LoginRadiusSDK.Entity
         /// Represents a method to register a new user profile with required parameters into your Cloud Storage and triggers the email verification process.
         /// </summary>
         /// <param name="user">User is a set of parameters used for registering a user.</param>
-<<<<<<< HEAD
-        public LoginRadiusPostResponse RegisterUser(User user)
-=======
         public LoginRadiusPostResponse RegisterUser(UserRegistrationModel user)
->>>>>>> master
         {
             _valuesToCheck = new ArrayList {user.EmailId, user.Password};
             _validate.Validate(_valuesToCheck, "RegisterUser");
