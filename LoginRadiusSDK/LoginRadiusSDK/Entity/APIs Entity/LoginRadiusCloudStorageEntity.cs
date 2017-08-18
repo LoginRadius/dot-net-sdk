@@ -38,7 +38,7 @@ namespace LoginRadiusSDK.Entity
             {
                 {"From", string.IsNullOrWhiteSpace(from)?"users":from}
             };
-            if (!string.IsNullOrWhiteSpace(select)) { postRequest.Add("Select",select); }
+            if (!string.IsNullOrWhiteSpace(select)) { postRequest.Add("Select", select); }
             if (!string.IsNullOrWhiteSpace(where)) { postRequest.Add("Where", where); }
             if (!string.IsNullOrWhiteSpace(orderBy)) { postRequest.Add("OrderBy", orderBy); }
             if (!string.IsNullOrWhiteSpace(skip)) { postRequest.Add("Skip", skip); }
@@ -46,6 +46,8 @@ namespace LoginRadiusSDK.Entity
             var response = Post(_object, postRequest);
             return response.Deserialize<List<LoginRadiusIdentityModel>>();
         }
+
+
         /// <summary>
         /// This API is used to query the aggregation data from your LoginRadius cloud storage.
         /// </summary>
@@ -56,10 +58,10 @@ namespace LoginRadiusSDK.Entity
         /// <returns></returns>
         public LoginRadiusQueryDataModel GetQueryAggregationData(string from, string to, string firstDatapoint, string statsType)
         {
-            _validate.Validate(_valuesToCheck = new ArrayList() { from,to,firstDatapoint,statsType }, "Get Hash Password");
-            var getRequest=new HttpRequestParameter
+            _validate.Validate(_valuesToCheck = new ArrayList() { from, to, firstDatapoint, statsType }, "Get Hash Password");
+            var getRequest = new HttpRequestParameter
             {
-                {"from",from},{"to",to}  
+                {"from",from},{"to",to}
             };
             var postRequest = new HttpRequestParameter
             {

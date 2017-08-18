@@ -14,7 +14,7 @@ namespace LoginRadiusSDK.Models
 
     public class LoginRadiusForgotPasswordTokenResponse
     {
-         public string Giud { get; set;}
+         public string Guid { get; set;}
          public List<string> Providers { get; set; }
     }
 

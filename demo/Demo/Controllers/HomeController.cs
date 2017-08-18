@@ -30,6 +30,10 @@ namespace Demo.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            // To Set LoginRadius App Credentials or this could be set in config file.
+            AppCredentials.AppSettingInitialization("LoginRadius App Key", "LoginRadius Site Secret", "LoginRadius App Name");
+            // To set Http Server Proxy Configuration
+            // AppCredentials.AppSettingInitialization("LoginRadius App Key", "LoginRadius Site Secret", "LoginRadius App Name", "Absolute HTTP Proxy URI", "Http Proxy Credential(Username:Password)");
             return View();
         }
 

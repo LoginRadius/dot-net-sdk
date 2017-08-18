@@ -1,6 +1,8 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net;
 using System.Text;
+using LoginRadiusSDK.Entity;
 using LoginRadiusSDK.Exception;
 
 namespace LoginRadiusSDK.Utility.Http
@@ -146,6 +148,7 @@ namespace LoginRadiusSDK.Utility.Http
             {
                 req.Headers = Headers.ToWebHeaderCollection();
             }
+            CheckForProxy(req);
             req.Accept = accept;
             req.ContentType = contentType;
             req.Method = method;
@@ -215,30 +218,18 @@ namespace LoginRadiusSDK.Utility.Http
                 _params = parameter.ToString();
             }
 
-
             if (method == HttpMethod.GET)
             {
-                if (url.Contains("?"))
-                {
-                    url = url + "&" + _params;
-                }
-                else
-                {
-                    url = url + "?" + _params;
-                }
-
+                url = url.Contains("?") ? url + "&" + _params : url + "?" + _params;
                 return HttpGet(url, headers);
             }
-            else
-            {
-                return HttpPost(url, _params, headers);
-            }
+            return HttpPost(url, _params, headers);
         }
 
         private static string HttpGet(string uri, HttpHeader headers)
         {
-            var req = WebRequest.Create(uri);
-
+            var req = (HttpWebRequest)WebRequest.Create(uri);
+            CheckForProxy(req);
             var resp = req.GetResponse();
 
             if (headers != null)
@@ -253,13 +244,13 @@ namespace LoginRadiusSDK.Utility.Http
 
         private string HttpPost(string uri, string parameters, HttpHeader headers)
         {
-            var req = WebRequest.Create(uri);
+            var req = (HttpWebRequest)WebRequest.Create(uri);
 
             if (headers != null)
             {
                 req.Headers = headers.ToWebHeaderCollection();
             }
-
+            CheckForProxy(req);
             req.ContentType = "application/x-www-form-urlencoded";
             req.Method = "POST";
 
@@ -275,6 +266,27 @@ namespace LoginRadiusSDK.Utility.Http
             var sr = new StreamReader(resp.GetResponseStream());
 
             return sr.ReadToEnd().Trim();
+        }
+
+        private static void CheckForProxy(HttpWebRequest req)
+        {
+            Uri proxyUri;
+            // Set request proxy for tunnelling http requests via a proxy server
+            if (!string.IsNullOrWhiteSpace(AppCredentials.HttpProxyAddress) &&
+                Uri.TryCreate(AppCredentials.HttpProxyAddress, UriKind.Absolute, out proxyUri))
+            {
+                WebProxy requestProxy = new WebProxy { Address = proxyUri };
+                if (!string.IsNullOrWhiteSpace(AppCredentials.HttpProxyCredential))
+                {
+                    string proxyCredentials = AppCredentials.HttpProxyCredential;
+                    string[] proxyDetails = proxyCredentials.Split(':');
+                    if (proxyDetails.Length == 2)
+                    {
+                        requestProxy.Credentials = new NetworkCredential(proxyDetails[0], proxyDetails[1]);
+                    }
+                }
+                req.Proxy = requestProxy;
+            }
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Configuration;
-using LoginRadiusSDK.Utility.Http;
+﻿using LoginRadiusSDK.Utility.Http;
 
 namespace LoginRadiusSDK.Entity
 {
@@ -13,13 +12,13 @@ namespace LoginRadiusSDK.Entity
         /// LoginRadius Api. 
         /// </summary>
         protected LoginRadiusClientEntity()
-            : this(ConfigurationManager.AppSettings["loginradius:apikey"])
+            : this(AppCredentials.AppKey )
         {
         }
 
         protected LoginRadiusClientEntity(string apikey)
         {
-            _commHttpRequestParameter = new HttpRequestParameter()
+            CommHttpRequestParameter = new HttpRequestParameter()
             {
                 {"apikey", apikey}
             };

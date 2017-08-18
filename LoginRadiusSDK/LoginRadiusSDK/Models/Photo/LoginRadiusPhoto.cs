@@ -1,4 +1,6 @@
-﻿namespace LoginRadiusSDK.Models.Photo
+﻿using System.Collections.Generic;
+
+namespace LoginRadiusSDK.Models.Photo
 {
     public class LoginRadiusPhoto
     {
@@ -79,5 +81,7 @@
             get;
             set;
         }
+        public List<FacebookAlbumImages> Images { get; set; }
     }
+   
 }

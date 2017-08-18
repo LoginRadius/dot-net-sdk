@@ -1,4 +1,4 @@
-# LoginRadius .NET SDK
+# LoginRadius V1 .NET SDK
 
 
 ![Home Image](http://docs.lrcontent.com/resources/github/banner-1544x500.png)
@@ -23,16 +23,28 @@ Please visit [here](http://www.loginradius.com/) for more information.
 
 ## Contents ##
 
-* [Demo Application](https://github.com/LoginRadius/dot-net-sdk/tree/master/demo): It contains a basic demo of the SDK
+* [Demo Application](https://github.com/LoginRadius/dot-net-sdk/tree/api-v1/demo): It contains a basic demo of the SDK
 library
-* [SDK](https://github.com/LoginRadius/dot-net-sdk/tree/master/LoginRadiusSDK): It contains all the sourced compiled SDK.
+* [SDK](https://github.com/LoginRadius/dot-net-sdk/tree/api-v1/LoginRadiusSDK): It contains all the sourced compiled SDK.
 
 ## Demo Application
 
 In order to configure the LoginRadius Demo Application and SDK, set your LoginRadius API Key and Secret to **Web.config**.
 ```
-   <add key="loginradius:apikey" value="LoginRadius API Key"/>
-   <add key="loginradius:apisecret" value="LoginRadius API Secret"/>
+   <appSettings>
+    <add key="loginradius:apikey" value="Your LoginRadius_API_Key"/>
+    <add key="loginradius:apisecret" value="Your LoginRadius_API_Secret"/>
+    <add key="loginradius:sitename" value="Your LoginRadius_Site_Name"/>
+    <add key="loginradius:httpProxyCredential" value="Absolute_HTTP_Proxy_URI"/>
+    <add key="loginradius:httpProxyAddress" value="Http_Proxy_Credential"/>
+</appSettings>
+```
+or
+
+```
+AppCredentials.AppSettingInitialization("key", "secret", "siteName"); 
+// Or if you need to set Http Server Proxy Configuration
+AppCredentials.AppSettingInitialization("key", "secret", "siteName", "Absolute HTTP Proxy URI", "Http Proxy Credential(Username:Password)");
 ```
 
 #### Restore NuGet Packages
@@ -43,10 +55,12 @@ Right click on Solution in Solution Explorer and click on "Restore Nuget Package
 
 ## Documentation
 
-* [Getting Started](http://apidocs.loginradius.com/docs/aspnet) - Everything you need to begin using this SDK.
+* [Getting Started](https://docs.loginradius.com/api/v1/sdk-libraries/aspnet) - Everything you need to begin using this SDK.
 
 * To install LoginRadius - Customer Registration SDK, run the following command in the NuGet Package Manager Console.
 
-![Home Image](https://www.filepicker.io/api/file/MHpeRcZGQRyH4K7iMfSZ)
+```
+PM> Install-Package LoginRadiusSDK.V1.NET -Version 3.2.0
+```
 
 General documentation regarding the DotNet REST API and related flows can be found on the [LoginRadius API Documentations](http://apidocs.loginradius.com/) site. 

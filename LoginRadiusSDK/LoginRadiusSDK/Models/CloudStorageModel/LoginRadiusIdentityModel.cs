@@ -1,5 +1,4 @@
-﻿using LoginRadiusSDK.Models.Object;
-using LoginRadiusSDK.Models.UserProfile;
+﻿using LoginRadiusSDK.Models.UserProfile;
 
 namespace LoginRadiusSDK.Models.CloudStorageModel
 {

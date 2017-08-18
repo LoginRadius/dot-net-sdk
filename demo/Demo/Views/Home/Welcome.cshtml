@@ -20,6 +20,35 @@
 
     <link href="~/assets/css/social-icons.css" rel="stylesheet"/>
     <link rel="shortcut icon" href="/assets/images/favicon.ico">
+    <style type="text/css">
+        .btn-primary {
+            color: #fff;
+            background-color: #337ab7;
+            border-color: #2e6da4;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-image: none;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+    </style>
     <script type="text/html" id="loginradiuscustom_tmpl">
         <# if(isLinked) { #>
         <div class="lr-linked">
@@ -29,7 +58,7 @@
                         </span>
                     </span>
                 <span class="lr-linked-label"><#= Name #> is connected</span>
-                <span class="lr-unlink lr-pull-right lr-tooltip" data-title="Unlink" onclick='return unLinkAccount("<#= Name.toLowerCase() #>", "<#= providerId #>");'>&#215;</span>
+                <span class="lr-unlink lr-pull-right lr-tooltip btn btn-primary" data-title="Unlink" onclick='return unLinkAccount("<#= Name.toLowerCase() #>", "<#= providerId #>");'>Disconnect </span>
             </div>
         </div>
         <# } else {#>
@@ -474,7 +503,7 @@
         });
         var raasoption = {};
 
-        raasoption.apikey = "@WebConfigurationManager.AppSettings["loginradius:apikey"].ToString()";
+        raasoption.apikey = "@LoginRadiusSDK.Entity.AppCredentials.AppKey";
         raasoption.templatename = "loginradiuscustom_tmpl";
         raasoption.hashTemplate = true;
         raasoption.inFormvalidationMessage = true;

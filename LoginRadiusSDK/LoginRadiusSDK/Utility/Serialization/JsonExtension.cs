@@ -1,10 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="JsonExtension.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-using System.Web.Script.Serialization;
+﻿using System.Web.Script.Serialization;
 
 namespace LoginRadiusSDK.Utility.Serialization
 {

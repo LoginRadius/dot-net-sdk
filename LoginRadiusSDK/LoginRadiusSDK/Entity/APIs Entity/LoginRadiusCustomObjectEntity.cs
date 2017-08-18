@@ -136,10 +136,9 @@ namespace LoginRadiusSDK.Entity
             var getRequest = new HttpRequestParameter
             {
                 {"objectid", objectId},
-                {"q", query},
+                {"query", query},
                 {"cursor", cursor}
             };
-
             var response = Get(_object, getRequest);
             return response.Deserialize<List<CustomObjectResponse>>();
         }

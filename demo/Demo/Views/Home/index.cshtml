@@ -120,41 +120,42 @@
 <script>
     var lrThemeSettings = {
         raasoption: {
-            apikey :  "@WebConfigurationManager.AppSettings["loginradius:apikey"]",
-            appname : "@WebConfigurationManager.AppSettings["loginradius:appname"]",
+            apikey: "@LoginRadiusSDK.Entity.AppCredentials.AppKey",
+            appname: "@LoginRadiusSDK.Entity.AppCredentials.AppName",
             forgotPasswordUrl: "@HttpContext.Current.Request.Url.ToString()",
-            emailVerificationUrl : "@HttpContext.Current.Request.Url.ToString()"
-        },
+            emailVerificationUrl: "@HttpContext.Current.Request.Url.ToString()"
+    },
         logo: {
-            logo_image_path: "", /* Your logo image path, must be 28px * 28px */
-            logo_alt_text: "" /* Alternative text for Image */
+        logo_image_path: "", /* Your logo image path, must be 28px * 28px */
+        logo_alt_text: "" /* Alternative text for Image */
         },
-        caption_message: {
+    caption_message: {
             register: "Register",
             login: "Login",
             forgot_password: "Forgot Password",
             reset_password: "Reset Password",
             fields_missing: "One Step Left"
-        },
-        success_message: {
+    },
+    success_message: {
             register: "Succeed, a verification email has been sent to your email address",
             login: "Login succeed",
             social_login: "Social login succeed", /* Or maybe go check your emails to verify for Twitter */
             email_verified: "Email verified successfully, you can login now",
             forgot_password: "A reset link has been sent to your email address, click to reset your email",
             reset_password: "Your password has been reset,you may login now!"
-        },
-        form_render_submit_hook: {
-            start: function(){
+    },
+    form_render_submit_hook: {
+            start: function () {
                 // console.log( 'start' );
             },
-            end: function(){
+            end: function () {
                 // console.log( 'end' );
             }
-        },
-        reset_form_after_close_popup: true,
+    },
+    reset_form_after_close_popup: true,
         auto_login_after_verify_email: false
     }
+     
 </script>
 
 	<script src="//hub.loginradius.com/include/js/LoginRadius.js"></script>

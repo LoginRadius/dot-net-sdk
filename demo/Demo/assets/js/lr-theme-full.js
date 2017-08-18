@@ -13,7 +13,7 @@ if(navigator.userAgent.match("CriOS")){
 }
 raasoption.hashTemplate = true;
 raasoption.V2Recaptcha = true;
-raasoption.V2RecaptchaSiteKey = '6LdQVwwTAAAAAIxz5rbzNdwoEHDL-1pypzwXxAa_';
+raasoption.V2RecaptchaSiteKey = '';
 if (lrThemeSettings.auto_login_after_verify_email) {
 	raasoption.enableLoginOnEmailVerification = true;
 }else {

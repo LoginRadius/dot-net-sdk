@@ -5,6 +5,7 @@ using LoginRadiusSDK.Models;
 using LoginRadiusSDK.Models.Object;
 using LoginRadiusSDK.Models.UserProfile;
 using LoginRadiusSDK.Utility;
+using System.Collections.Generic;
 
 namespace LoginRadiusSDK.Entity
 {
@@ -82,7 +83,7 @@ namespace LoginRadiusSDK.Entity
         {
             _valuesToCheck = new ArrayList {emailId};
             _validate.Validate(_valuesToCheck, "Check User Email");
-            var getRequest = new HttpRequestParameter { { "email", emailId } };
+            var getRequest = new HttpRequestParameter { { "emailid", emailId } };
             var response = Get(_object.ChildObject("checkemail"), getRequest);
             return response.Deserialize<LoginRadiusEmailResponse>();
         }
@@ -104,13 +105,13 @@ namespace LoginRadiusSDK.Entity
         /// Represents a method that retrieves the profile data associated with the specific user using the passing in email address.
         /// </summary>
         /// <param name="emailId">An email is an unique set of characters and numerics that uniquely identifies a user or email address.</param>
-        public RaasUserprofile GetUserbyEmail(string emailId)
+        public List<RaasUserprofile> GetUserbyEmail(string emailId)
         {
             _valuesToCheck = new ArrayList {emailId};
             _validate.Validate(_valuesToCheck, "Get User by Email");
             var getRequest = new HttpRequestParameter { { "emailId", emailId } };
             var response = Get(_object, getRequest);
-            return response.Deserialize<RaasUserprofile>();
+            return response.Deserialize<List<RaasUserprofile>>();
         }
 
         /// <summary>

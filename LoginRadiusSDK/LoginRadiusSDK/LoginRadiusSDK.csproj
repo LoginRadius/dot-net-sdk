@@ -74,6 +74,7 @@
     <Compile Include="API\UserProfileAPI.cs" />
     <Compile Include="API\VideoAPI.cs" />
     <Compile Include="Entity\APIs Entity\LoginRadiusClientAuthenticationEntity.cs" />
+    <Compile Include="Entity\AppCredentials.cs" />
     <Compile Include="Entity\Base Entity\LoginRadiusClientEntity.cs" />
     <Compile Include="Entity\Base Entity\LoginRadiusEntity.cs" />
     <Compile Include="Entity\Constants.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Models\CloudStorageModel\LoginRadiusQueryDataModel.cs" />
     <Compile Include="Models\LoginRadiusBlockUnblockModel.cs" />
     <Compile Include="Models\Object\UserRegistrationModel.cs" />
+    <Compile Include="Models\Photo\FacebookAlbumImages.cs" />
     <Compile Include="Models\UserProfile\LoginRadiusProfileImageUrls.cs" />
     <Compile Include="Models\UserRegistrationAuthentication.cs" />
     <Compile Include="Entity\LoginRadiusCallback.cs" />

@@ -48,10 +48,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LoginRadiusSDK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d59db55b4c4b52d7, processorArchitecture=MSIL">
-      <HintPath>..\packages\LoginRadiusSDK.NET.3.1.0\lib\LoginRadiusSDK.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -143,6 +139,13 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\test\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\LoginRadiusSDK\LoginRadiusSDK\LoginRadiusSDK.csproj">
+      <Project>{477259b0-a033-450b-99b4-1799e45e8e08}</Project>
+      <Name>LoginRadiusSDK</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

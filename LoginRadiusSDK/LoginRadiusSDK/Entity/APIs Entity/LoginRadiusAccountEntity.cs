@@ -15,13 +15,13 @@ namespace LoginRadiusSDK.Entity
         private readonly LoginRadiusObject _object = new LoginRadiusObject("account");
         private ArrayList _valuesToCheck;
 
-        public LoginRadiusAccountEntity()
-        {
-        }
-        public LoginRadiusAccountEntity(string apikey, string apisecret)
-            : base(apikey,apisecret)
-        {
-        }
+        //public LoginRadiusAccountEntity()
+        //{
+        //}
+        //public LoginRadiusAccountEntity(string apikey, string apisecret)
+        //    : base(apikey,apisecret)
+        //{
+        //}
 
         /// <summary>
         /// Method which is used to link a social account with a specified provider user account.

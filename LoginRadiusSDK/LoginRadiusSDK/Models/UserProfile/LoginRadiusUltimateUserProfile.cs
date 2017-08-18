@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using LoginRadiusSDK.Models.Object;
 
 namespace LoginRadiusSDK.Models.UserProfile
 {
