@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using LoginRadiusSDK.V2
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -14,8 +15,8 @@
 
 
         var commonOptions = {};
-        commonOptions.apiKey = "@LoginradiusSdk.Entity.AppSettings.LoginRadiusAppSettings.AppKey";
-        commonOptions.appName = "@LoginradiusSdk.Entity.AppSettings.LoginRadiusAppSettings.AppName";
+        commonOptions.apiKey = "@LoginRadiusSdkGlobalConfig.ApiKey";
+        commonOptions.appName = "@LoginRadiusSdkGlobalConfig.AppName";
         commonOptions.sott = "";
 
         commonOptions.hashTemplate = true;

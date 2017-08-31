@@ -1,14 +1,8 @@
 ﻿using System.Collections;
 using LoginRadiusSDK.V2.Entity;
 using LoginRadiusSDK.V2.Models;
-using LoginRadiusSDK.V2.Models.UserProfile;
 using LoginRadiusSDK.V2.Util;
 using static LoginRadiusSDK.V2.Util.LoginRadiusArgumentValidator;
-using LoginRadiusSDK.V2.Models.Social.Password;
-using LoginRadiusSDK.V2.Models.CustomerAuthentication._2FA;
-using System.Web.Script.Serialization;
-using LoginRadiusSDK.V2.Models.Backup;
-using System.Collections.Generic;
 
 namespace LoginRadiusSDK.V2.Api
 {

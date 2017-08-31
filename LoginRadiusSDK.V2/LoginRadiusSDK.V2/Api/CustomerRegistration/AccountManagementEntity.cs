@@ -7,8 +7,6 @@ using LoginRadiusSDK.V2.Util;
 using static LoginRadiusSDK.V2.Util.LoginRadiusArgumentValidator;
 using LoginRadiusSDK.V2.Models.CustomerManagement.Identity;
 using LoginRadiusSDK.V2.Models.Social.Password;
-using static LoginRadiusSDK.V2.Api.LoginRadiusResource;
-using System.Collections.Generic;
 using LoginRadiusSDK.V2.Models.Password;
 
 namespace LoginRadiusSDK.V2.Api

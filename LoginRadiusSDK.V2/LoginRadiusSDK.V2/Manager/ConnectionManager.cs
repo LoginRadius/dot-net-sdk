@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using LoginRadiusSDK.V2.Exception;
 
-namespace LoginRadiusSDK.V2.Manager
+namespace LoginRadiusSDK.V2
 {
     /// <summary>
     ///  ConnectionManager retrieves HttpConnection objects used by API service
@@ -51,7 +51,10 @@ namespace LoginRadiusSDK.V2.Manager
             httpRequest.Timeout = connectionTimeout;
 
             // Set request proxy for tunnelling http requests via a proxy server
-            if (config.ContainsKey(BaseConstants.HttpProxyAddressConfig))
+            Uri proxyUri;
+            if (config.ContainsKey(BaseConstants.HttpProxyAddressConfig) &&
+                !string.IsNullOrWhiteSpace(config[BaseConstants.HttpProxyAddressConfig]) &&
+                Uri.TryCreate(config[BaseConstants.HttpProxyAddressConfig], UriKind.Absolute, out proxyUri))
             {
                 WebProxy requestProxy = new WebProxy {Address = new Uri(config[BaseConstants.HttpProxyAddressConfig])};
                 if (config.ContainsKey(BaseConstants.HttpProxyCredentialConfig))
@@ -66,8 +69,7 @@ namespace LoginRadiusSDK.V2.Manager
                 httpRequest.Proxy = requestProxy;
             }
 
-            // Don't set the Expect: 100-continue header as it's not supported
-            // well by Akamai and can negatively impact performance.
+            // Don't set the Expect: 100-continue header as it's not supported and can negatively impact performance.
             httpRequest.ServicePoint.Expect100Continue = false;
             return httpRequest;
         }

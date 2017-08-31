@@ -1,24 +1,10 @@
-﻿using LoginradiusSdk.Entity.AppSettings;
-using LoginRadiusSDK.V2.Api;
-using LoginRadiusSDK.V2.Api.AdvancedSocial;
-using LoginRadiusSDK.V2.Api.CustomerRegistrationAuth;
+﻿using LoginRadiusSDK.V2.Api;
 using LoginRadiusSDK.V2.Api.Social;
-using LoginRadiusSDK.V2.Api.Webhook;
 using LoginRadiusSDK.V2.Models;
-using LoginRadiusSDK.V2.Models.CustomerAuthentication._2FA;
-using LoginRadiusSDK.V2.Models.Email;
-using LoginRadiusSDK.V2.Models.Following;
 using LoginRadiusSDK.V2.Models.Password;
 using LoginRadiusSDK.V2.Models.UserProfile;
-using LoginRadiusSDK.V2.Models.webhook;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
+using LoginRadiusSDK.V2;
 
 namespace Demo.Controllers
 {
@@ -28,9 +14,10 @@ namespace Demo.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            LoginRadiusAppSettings.AppKey = "";
-            LoginRadiusAppSettings.AppSecret = "";
-            LoginRadiusAppSettings.AppName = "";
+            LoginRadiusSdkGlobalConfig.ApiKey = "";
+            LoginRadiusSdkGlobalConfig.ApiSecret = "";
+            LoginRadiusSdkGlobalConfig.AppName = "";
+            LoginRadiusSdkGlobalConfig.RequestRetries = 3;
             return View();
         }
 
@@ -40,10 +27,10 @@ namespace Demo.Controllers
             return "HI";
         }
 
-        public void GetAccessToken(string Token)
+        public void GetAccessToken(string token)
         {
-            var apiResponse = _social.GetAccessToken(Token);
-            if (apiResponse.Response != null && apiResponse != null)
+            var apiResponse = _social.GetAccessToken(token);
+            if (apiResponse != null && apiResponse.Response != null)
             {
                 Session["access_token"] = apiResponse.Response.access_token;
             }
@@ -54,8 +41,8 @@ namespace Demo.Controllers
 
         public JsonResult GetAlbumData()
         {
-            string AccessToken = Session["access_token"].ToString();
-            var apiResponse = _social.GetAlbumData(AccessToken);
+            string accessToken = Session["access_token"].ToString();
+            var apiResponse = _social.GetAlbumData(accessToken);
             return Json(apiResponse, JsonRequestBehavior.AllowGet);
         }
 
@@ -163,7 +150,7 @@ namespace Demo.Controllers
 
         public void PostMessage()
         {
-            string To = "707922929368946";
+            string To = "******";
             string Subject = "Subject";
             string Message = "Message";
             var apiResponse = _social.PostMessage(Session["access_token"].ToString(), To, Subject, Message);
@@ -192,24 +179,27 @@ namespace Demo.Controllers
                 if (response.Response.IsDeleted)
                     Session.Clear();
             }
-            catch { }
+            catch
+            {
+                // ignored
+            }
 
             return Json(response, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-        public JsonResult SetAccountPassword(string Password)
+        public JsonResult SetAccountPassword(string password)
         {
-            var response = new AccountManagementEntity().SetAccountPassword(Session["UID"].ToString(), Password);
+            var response = new AccountManagementEntity().SetAccountPassword(Session["UID"].ToString(), password);
             return Json(response, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public JsonResult ChangePassword(string OldPassword, string NewPassword)
+        public JsonResult ChangePassword(string oldPassword, string newPassword)
         {
             ChangePasswordModel model = new ChangePasswordModel();
-            model.OldPassword = OldPassword;
-            model.NewPassword = NewPassword;
+            model.OldPassword = oldPassword;
+            model.NewPassword = newPassword;
             var response = new PasswordEntity().ChangePassword(Session["access_token"].ToString(), model);
             return Json(response, JsonRequestBehavior.AllowGet);
         }
@@ -220,42 +210,41 @@ namespace Demo.Controllers
 
         public JsonResult Register(UserIdentityCreateModel identityCreateModel)
         {
-            identityCreateModel.PhoneId = "+919667286111";
+            identityCreateModel.PhoneId = "+91*******";
             identityCreateModel.IsTwoFactorAuthenticationEnabled = true;
-            identityCreateModel.Password = "123123";
-            identityCreateModel.UserName = "ankurv";
+            identityCreateModel.Password = "P@$$w0rd";
+            identityCreateModel.UserName = "UserName";
 
-            foreach (var item in identityCreateModel.Email)
+            SottDetails sottDetails = new SottDetails
             {
-                var Type = item.Type;
-
-                var Value = item.Value;
-            }
-            SottDetails _SottDetails = new SottDetails();
-            _SottDetails.Sott = new Sott();
+                Sott = new Sott
+                {
+                    StartTime = null,
+                    EndTime = null,
+                    TimeDifference = "10"
+                }
+            };
             //_SottDetails.Sott.StartTime = DateTime.UtcNow.ToString();
             //_SottDetails.Sott.EndTime = DateTime.UtcNow.AddMinutes(10).ToString();
-            _SottDetails.Sott.StartTime = null;
-            _SottDetails.Sott.EndTime = null;
-            _SottDetails.Sott.TimeDifference = "10";
 
-            var apiResponse = new RegisterEntity().RegisterCustomer(identityCreateModel, _apiOptionalParams, _SottDetails);
+            var apiResponse = new RegisterEntity().RegisterCustomer(identityCreateModel, _apiOptionalParams, sottDetails);
             _apiOptionalParams.VerificationUrl = "VerificationUrl";
             return Json(apiResponse, JsonRequestBehavior.AllowGet);
         }
 
-        LoginRadiusApiOptionalParams _apiOptionalParams = new LoginRadiusApiOptionalParams();
+        readonly LoginRadiusApiOptionalParams _apiOptionalParams = new LoginRadiusApiOptionalParams();
 
         [HttpPost]
-        public JsonResult Login(string email, string password, string g_recaptcha_response)
+        public JsonResult Login(string email, string password, string gRecaptchaResponse)
         {
+            LoginRadiusApiOptionalParams loginRadiusApiOptionalParams = new LoginRadiusApiOptionalParams
+            {
+                LoginUrl = "https://www.google.co.in",
+                VerificationUrl = "http://localhost:58955/Home/EmailVerificationToken",
+                EmailTemplate = "https://www.google.co.in"
+            };
 
-            LoginRadiusApiOptionalParams _LoginRadiusApiOptionalParams = new LoginRadiusApiOptionalParams();
-            _LoginRadiusApiOptionalParams.LoginUrl = "https://www.google.co.in";
-            _LoginRadiusApiOptionalParams.VerificationUrl = "http://localhost:58955/Home/EmailVerificationToken";
-            _LoginRadiusApiOptionalParams.EmailTemplate = "https://www.google.co.in";
-
-            var response = new LoginEntity().LoginByEmail(email, password, _LoginRadiusApiOptionalParams);
+            var response = new LoginEntity().LoginByEmail(email, password, loginRadiusApiOptionalParams);
             if (response.Response != null)
             {
                 Session["UID"] = response.Response.Profile.Uid;
@@ -267,8 +256,8 @@ namespace Demo.Controllers
 
         public JsonResult accountlink(string candidateToken)
         {
-            SocialIdentityEntity _SocialIdentityEntity = new SocialIdentityEntity();
-            var response = _SocialIdentityEntity.LinkAccount(Session["access_token"].ToString(), candidateToken);
+            SocialIdentityEntity socialIdentityEntity = new SocialIdentityEntity();
+            var response = socialIdentityEntity.LinkAccount(Session["access_token"].ToString(), candidateToken);
             return Json(response, JsonRequestBehavior.AllowGet);
         }
 
@@ -281,17 +270,19 @@ namespace Demo.Controllers
 
         public JsonResult EmailVerificationToken(string vtype, string vtoken)
         {
-            var apiResponse = new EmailEntity().VerifyEmail(vtoken, "http://localhost:58955", "");
+            var apiResponse = new EmailEntity().VerifyEmail(vtoken, "http://localhost:58955");
             return Json(apiResponse, JsonRequestBehavior.AllowGet);
         }
 
 
-        public JsonResult forgotpassword(string Email, string resetPasswordUrl)
+        public JsonResult forgotpassword(string email, string resetPasswordUrl)
         {
-            LoginRadiusApiOptionalParams _apiOptionalParams = new LoginRadiusApiOptionalParams();
-            _apiOptionalParams.ResetPasswordUrl = resetPasswordUrl;
-            _apiOptionalParams.EmailTemplate = "emailTemplate";
-            var apiResponse = new PasswordEntity().ForgotPassword(Email, _apiOptionalParams);
+            LoginRadiusApiOptionalParams apiOptionalParams = new LoginRadiusApiOptionalParams
+            {
+                ResetPasswordUrl = resetPasswordUrl,
+                EmailTemplate = "emailTemplate"
+            };
+            var apiResponse = new PasswordEntity().ForgotPassword(email, apiOptionalParams);
 
             return Json(apiResponse, JsonRequestBehavior.AllowGet);
         }

@@ -1,5 +1,4 @@
-﻿using LoginRadiusSDK.V2.Util;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace LoginRadiusSDK.V2.Models
 {

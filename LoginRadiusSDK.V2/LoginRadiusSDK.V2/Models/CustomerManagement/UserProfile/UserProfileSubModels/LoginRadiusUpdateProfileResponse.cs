@@ -1,9 +1,6 @@
 ﻿using LoginRadiusSDK.V2.Models.UserProfile;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LoginRadiusSDK.V2.Models.CustomerManagement.UserProfile.UserProfileSubModels
 {

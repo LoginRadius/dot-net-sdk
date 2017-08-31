@@ -1,5 +1,4 @@
-﻿using LoginRadiusSDK.V2.Util;
-using LoginRadiusSDK.V2.Util.Serialization;
+﻿using LoginRadiusSDK.V2.Util.Serialization;
 
 namespace LoginRadiusSDK.V2.Models
 {

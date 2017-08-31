@@ -1,10 +1,13 @@
 ﻿namespace LoginRadiusSDK.V2
 {
-    public class LoginRadiusSdkGlobalConfig
+    public static class LoginRadiusSdkGlobalConfig
     {
-        public string ProxyAddress { get; set; }
-        public string ProxyCredentials { get; set; }
-        public int ConnectionTimeout { get; set; }
-        public int RequestRetries { get; set; }
+        public static string ProxyAddress { get; set; }
+        public static string ProxyCredentials { get; set; }
+        public static int ConnectionTimeout { get; set; }
+        public static int RequestRetries { get; set; }
+        public static string ApiKey { get; set; }
+        public static string ApiSecret { get; set; }
+        public static string AppName { get; set; }
     }
 }

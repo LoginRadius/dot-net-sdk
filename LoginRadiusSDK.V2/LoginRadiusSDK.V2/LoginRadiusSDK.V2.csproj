@@ -31,7 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\demo\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -46,9 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\AdvancedSocial\AdvancedSocialEntity.cs" />
-    <Compile Include="Api\AppSettings\LoginRadiusAppSettings.cs" />
     <Compile Include="Api\CustomerRegistrationAuth\AccessToken.cs" />
-    <Compile Include="Api\CustomerRegistrationAuth\AccountEntity - Copy.cs" />
+    <Compile Include="Api\CustomerRegistrationAuth\AccountEntity.cs" />
     <Compile Include="Api\CustomerRegistrationAuth\OneCLickAuth.cs" />
     <Compile Include="Api\CustomerRegistrationAuth\CustomObjectEntity.cs" />
     <Compile Include="Api\CustomerRegistrationAuth\EmailEntity.cs" />
@@ -80,6 +79,7 @@
     <Compile Include="LoginRadiusSDKGlobalConfig.cs" />
     <Compile Include="Manager\ConfigManager.cs" />
     <Compile Include="Manager\ConnectionManager.cs" />
+    <Compile Include="Manager\SDKConfigHandler.cs" />
     <Compile Include="Models\AdvancedSocial\TrackableStatusPostResponse.cs" />
     <Compile Include="Models\ApiOptionalParamsModel.cs" />
     <Compile Include="Models\ApiResponse.cs" />
@@ -214,9 +214,7 @@
     <Compile Include="Util\Serialization\LoginRadiusSerializableObject.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

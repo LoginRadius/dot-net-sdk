@@ -4,7 +4,6 @@ using LoginRadiusSDK.V2.Entity;
 using LoginRadiusSDK.V2.Models;
 using LoginRadiusSDK.V2.Models.Object;
 using LoginRadiusSDK.V2.Util;
-using LoginRadiusSDK.V2.Util.Serialization;
 using static LoginRadiusSDK.V2.Util.LoginRadiusArgumentValidator;
 
 namespace LoginRadiusSDK.V2.Api

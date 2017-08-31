@@ -1,7 +1,4 @@
-﻿using LoginRadiusSDK.V2.Util.Serialization;
-using System.Collections.Generic;
-
-namespace LoginRadiusSDK.V2.Models.Photo
+﻿namespace LoginRadiusSDK.V2.Models.Photo
 {
     public class FacebookAlbumImages
     {

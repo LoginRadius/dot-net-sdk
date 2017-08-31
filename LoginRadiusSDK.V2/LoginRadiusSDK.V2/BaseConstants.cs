@@ -28,6 +28,16 @@ namespace LoginRadiusSDK.V2
         public const string HttpConnectionRetryConfig = "requestRetries";
 
         /// <summary>
+        /// Configuration LoginRadius API Key
+        /// </summary>
+        public const string LoginRadiusApiKey = "apiKey";
+
+        /// <summary>
+        /// Configuration LoginRadius API Secret
+        /// </summary>
+        public const string LoginRadiusApiSecret = "apiSecret";
+
+        /// <summary>
         /// Content Type HTTP Header
         /// </summary>
         public const string ContentTypeHeader = "Content-Type";

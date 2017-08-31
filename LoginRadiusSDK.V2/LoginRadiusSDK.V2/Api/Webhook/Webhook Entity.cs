@@ -1,12 +1,6 @@
 ﻿using LoginRadiusSDK.V2.Models;
 using LoginRadiusSDK.V2.Models.webhook;
 using LoginRadiusSDK.V2.Util;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static LoginRadiusSDK.V2.Api.LoginRadiusResource;
 
 namespace LoginRadiusSDK.V2.Api.Webhook
 {

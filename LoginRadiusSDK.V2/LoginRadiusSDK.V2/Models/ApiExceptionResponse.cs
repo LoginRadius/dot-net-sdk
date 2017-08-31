@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace LoginRadiusSDK.V2.Models
+﻿namespace LoginRadiusSDK.V2.Models
 {
     public class ApiExceptionResponse
     {

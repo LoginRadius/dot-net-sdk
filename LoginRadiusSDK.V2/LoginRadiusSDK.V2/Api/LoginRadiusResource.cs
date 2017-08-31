@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
 using System.Threading;
 using LoginRadiusSDK.V2.Exception;
 using LoginRadiusSDK.V2.Http;
-using LoginRadiusSDK.V2.Manager;
 using LoginRadiusSDK.V2.Models;
 using LoginRadiusSDK.V2.Util;
 using LoginRadiusSDK.V2.Util.Serialization;
 using Newtonsoft.Json;
-using LoginRadiusSDK.V2.Entity;
-using LoginradiusSdk.Entity.AppSettings;
 
 namespace LoginRadiusSDK.V2.Api
 {
@@ -93,6 +88,9 @@ namespace LoginRadiusSDK.V2.Api
             /// </summary>
             AdvancedSharing,
 
+            /// <summary>
+            /// 
+            /// </summary>
             AccessToken,
 
             /// <summary>
@@ -100,7 +98,14 @@ namespace LoginRadiusSDK.V2.Api
             /// </summary>
             IdentityAuth,
 
+            /// <summary>
+            /// 
+            /// </summary>
             ServerInfo,
+
+            /// <summary>
+            /// 
+            /// </summary>
             Webhook
         }
 
@@ -124,15 +129,16 @@ namespace LoginRadiusSDK.V2.Api
         /// </summary>
         private CustomerRegistrationAuthentication Authentication { get; set; }
 
+        internal static Dictionary<string, string> ConfigDictionary;
+
         /// <summary>
         /// LoginRadius Api and Secret key. 
         /// </summary>
-        protected LoginRadiusResource()
-            : this(new CustomerRegistrationAuthentication
+        protected LoginRadiusResource(): this(new CustomerRegistrationAuthentication
             {
-                UserRegistrationKey = LoginRadiusAppSettings.AppKey,
-                UserRegistrationSecret = LoginRadiusAppSettings.AppSecret
-            })
+                UserRegistrationKey = ConfigDictionary[BaseConstants.LoginRadiusApiKey],
+                UserRegistrationSecret = ConfigDictionary[BaseConstants.LoginRadiusApiSecret]
+        })
         {
         }
 
@@ -153,6 +159,7 @@ namespace LoginRadiusSDK.V2.Api
         {
             LastRequestDetails = new ThreadLocal<RequestDetails>();
             LastResponseDetails = new ThreadLocal<ResponseDetails>();
+            ConfigDictionary = ConfigManager.GetConfiguration();
         }
 
         /// <summary>
@@ -236,17 +243,16 @@ namespace LoginRadiusSDK.V2.Api
                     uniformResourceIdentifier = baseUri;
                 }
 
-                var config = GetConfiguration();
-
                 // Create the HttpRequest object that will be used to send the HTTP request.
+                ConfigDictionary = ConfigManager.GetConfiguration();
                 var connMngr = ConnectionManager.Instance;
-                var httpRequest = ConnectionManager.GetConnection(config, uniformResourceIdentifier.ToString());
+                var httpRequest = ConnectionManager.GetConnection(ConfigDictionary, uniformResourceIdentifier.ToString());
                 httpRequest.Method = httpMethod.ToString();
 
                 httpRequest.ContentType = BaseConstants.ContentTypeHeaderJson;
 
                 // Execute call
-                var connectionHttp = new HttpConnection(config);
+                var connectionHttp = new HttpConnection(ConfigDictionary);
 
                 // Setup the last request & response details.
                 LastRequestDetails.Value = connectionHttp.RequestDetails;
@@ -274,7 +280,7 @@ namespace LoginRadiusSDK.V2.Api
                     return new ApiResponse<T>
                     {
                         _ApiExceptionResponse =
-                            JsonConvert.DeserializeObject<ApiExceptionResponse>(((ConnectionException) ex).Response)
+                            JsonConvert.DeserializeObject<ApiExceptionResponse>(ex.Response)
                     };
                 }
                 catch
@@ -297,12 +303,6 @@ namespace LoginRadiusSDK.V2.Api
         {
             QueryParameters requestParameter;
             string baseEndPoint;
-            var q = new QueryParameters
-            {
-                ["apikey"] = LoginRadiusAppSettings.AppKey,
-                ["apisecret"] = LoginRadiusAppSettings.AppSecret
-            };
-            _commHttpRequestParameter = q;
 
             switch (type)
             {
@@ -311,8 +311,7 @@ namespace LoginRadiusSDK.V2.Api
                     baseEndPoint = BaseConstants.RestAuthApiEndpoint;
                     break;
                 case RequestType.Social:
-                    //requestParameter = _commHttpRequestParameter;
-                    requestParameter = new QueryParameters { };
+                    requestParameter = new QueryParameters();
                     baseEndPoint = BaseConstants.RestApiEndpoint;
                     break;
                 case RequestType.AccessToken:
@@ -396,20 +395,6 @@ namespace LoginRadiusSDK.V2.Api
             return string.IsNullOrWhiteSpace(apiPath)
                 ? $"{baseEndPoint}{additionalParameters.ToUrlFormattedString()}"
                 : $"{baseEndPoint}{apiPath}{additionalParameters.ToUrlFormattedString()}";
-        }
-
-        private static Dictionary<string, string> GetConfiguration()
-        {
-            var config = typeof(LoginRadiusSdkGlobalConfig) as IDictionary<string, string>;
-            var dictionary = new Dictionary<string, string>();
-            if (config != null)
-            {
-                foreach (var prop in config.Where(prop => !string.IsNullOrWhiteSpace(prop.Value)))
-                {
-                    dictionary.Add(prop.Key, prop.Value);
-                }
-            }
-            return dictionary;
         }
     }
 }

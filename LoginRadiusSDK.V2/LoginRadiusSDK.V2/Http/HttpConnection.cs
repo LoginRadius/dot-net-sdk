@@ -4,7 +4,6 @@ using System.Globalization;
 using System.IO;
 using System.Net;
 using LoginRadiusSDK.V2.Exception;
-using LoginRadiusSDK.V2.Manager;
 
 namespace LoginRadiusSDK.V2.Http
 {
@@ -180,6 +179,7 @@ namespace LoginRadiusSDK.V2.Http
         /// </summary>
         /// <param name="payLoad"></param>
         /// <param name="httpRequest"></param>
+        /// <param name="contentLength"></param>
         /// <returns>A string containing the response from the remote host.</returns>
         public string Execute(string payLoad, HttpWebRequest httpRequest, int contentLength)
         {

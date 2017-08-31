@@ -3,7 +3,6 @@ using LoginRadiusSDK.V2.Entity;
 using LoginRadiusSDK.V2.Models;
 using LoginRadiusSDK.V2.Util;
 using static LoginRadiusSDK.V2.Util.LoginRadiusArgumentValidator;
-using System.Collections.Generic;
 
 namespace LoginRadiusSDK.V2.Api
 {

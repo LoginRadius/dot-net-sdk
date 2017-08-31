@@ -202,38 +202,14 @@ namespace LoginRadiusSDK.V2.Api
         }
 
 
-        public ApiResponse<object> Remove_Reset_Google_SMS_Authenticator_By_UID(string uid, bool otpauthenticator)
-        {
-            Validate(new ArrayList { uid, otpauthenticator });
-            var query = new QueryParameters { ["uid"] = uid };
-            var body = new BodyParameters { ["otpauthenticator"] = otpauthenticator.ToString() };
-
-            return ConfigureAndExecute
-                <object>(
-                    RequestType.Identity,
-                    HttpMethod.Delete, "2fa/authenticator", query, body.ConvertToJson());
-        }
-
-        public ApiResponse<string> Remove_Reset_Google_SMS_Authenticator_By_Token(string access_token,
-            string otpauthenticator)
-        {
-            Validate(new ArrayList { access_token, otpauthenticator });
-            var query = new QueryParameters { ["access_token"] = access_token };
-            var body = new BodyParameters { ["otpauthenticator"] = otpauthenticator };
-
-            return ConfigureAndExecute
-                <string>(RequestType.Identity, HttpMethod.Delete, "2fa/authenticator", query, body.ConvertToJson());
-        }
-
-
         public ApiResponse<LoginRadiusPostResponse> AutoLoginbyUserName(string username, string clientguid,
             string autologinemailtemplate, string welcomeemailtemplate)
         {
             Validate(new ArrayList { username, clientguid });
             var additionalparams = new QueryParameters { ["username"] = username, ["clientguid"] = clientguid };
-            if (string.IsNullOrEmpty(autologinemailtemplate))
+            if (!string.IsNullOrEmpty(autologinemailtemplate))
                 additionalparams.Add("autologinemailtemplate", autologinemailtemplate);
-            if (string.IsNullOrEmpty(welcomeemailtemplate))
+            if (!string.IsNullOrEmpty(welcomeemailtemplate))
                 additionalparams.Add("welcomeemailtemplate", welcomeemailtemplate);
             return ConfigureAndExecute
                 <LoginRadiusPostResponse>(RequestType.Authentication, HttpMethod.Get, "login/autologin",
@@ -247,10 +223,10 @@ namespace LoginRadiusSDK.V2.Api
             Validate(new ArrayList { email, clientguid });
             var additionalparams = new QueryParameters { ["email"] = email, ["clientguid"] = clientguid };
 
-            if (string.IsNullOrEmpty(autologinemailtemplate))
+            if (!string.IsNullOrEmpty(autologinemailtemplate))
                 additionalparams.Add("autologinemailtemplate", autologinemailtemplate);
 
-            if (string.IsNullOrEmpty(welcomeemailtemplate))
+            if (!string.IsNullOrEmpty(welcomeemailtemplate))
                 additionalparams.Add("welcomeemailtemplate", welcomeemailtemplate);
             return ConfigureAndExecute
                 <LoginRadiusPostResponse>(RequestType.Authentication, HttpMethod.Get, "login/autologin",

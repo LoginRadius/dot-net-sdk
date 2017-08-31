@@ -1,31 +1,29 @@
-﻿using LoginradiusSdk.Entity.AppSettings;
-using LoginRadiusSDK.V2.Models;
+﻿using LoginRadiusSDK.V2.Models;
 using System;
-using System.Configuration;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using LoginRadiusSDK.V2.Api;
 
 namespace LoginRadiusSDK.V2.Entity
 {
-    public class LoginRadiusSecureOneTimeToken
+    public static class LoginRadiusSecureOneTimeToken
     {
-        public static string GetSott(SottDetails _SottDetails)
+        public static string GetSott(SottDetails sottDetails)
         {
-            string secret = LoginRadiusAppSettings.AppSecret;
-            string key = LoginRadiusAppSettings.AppKey;
+            string secret = LoginRadiusResource.ConfigDictionary[BaseConstants.LoginRadiusApiKey];
+            string key = LoginRadiusResource.ConfigDictionary[BaseConstants.LoginRadiusApiSecret];
 
             if (!string.IsNullOrWhiteSpace(secret) && !string.IsNullOrWhiteSpace(key))
             {
-                string tempToken = string.Empty;
+                string tempToken;
 
-                if (_SottDetails.Sott.StartTime != null && _SottDetails.Sott.EndTime != null)
+                if (sottDetails.Sott.StartTime != null && sottDetails.Sott.EndTime != null)
                 {
-                    tempToken = Convert.ToDateTime(_SottDetails.Sott.StartTime)
+                    tempToken = Convert.ToDateTime(sottDetails.Sott.StartTime)
                                     .ToString("yyyy/M/d H:m:s", CultureInfo.InvariantCulture) + "#" + key + "#" +
-                                Convert.ToDateTime(_SottDetails.Sott.EndTime)
+                                Convert.ToDateTime(sottDetails.Sott.EndTime)
                                     .ToString("yyyy/M/d H:m:s", CultureInfo.InvariantCulture);
                 }
                 else
