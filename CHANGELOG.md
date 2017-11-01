@@ -1,29 +1,37 @@
 > **LoginRadius .NET SDK Change Log** provides information regarding what has changed, more specifically what changes, improvements and bug fix has been made to the SDK. For more details please refer to the [LoginRadius API Documention](https://docs.loginradius.com/api/v2/sdk-libraries/aspnet)
 
-Version 4.0.2
+### Version 4.0.4
+Release on **Nov 1, 2017**
 
-Released on May 25, 2017
+##### Enhancements
+
+  - Significantly improved code performance.
+  - Added a new LoginRadius JS driven sample project. 
+  
+##### Bug Fixes
+
+  - Config read fix
+  - SOTT build fix
+
+  
+### Version 4.0.2
+Released on **May 25, 2017**
 
 - Bug Fixes.
 - Performance improvement.
+- See the documentation [here](https://docs.loginradius.com/api/v2/sdk-libraries/aspnet)
 
 
-<br>
-See the documentation [here](https://docs.loginradius.com/api/v2/sdk-libraries/aspnet)
-
-=============================================================
-Version 4.0.1
-
-Released on May 15, 2017
+### Version 4.0.1
+Released on **May 15, 2017**
 
 - Bug Fixes.
 
 
-Version 4.0.0
+### Version 4.0.0
+Released on **May 15, 2017**
 
-Released on May 15, 2017
-
-Enhancements
+##### Enhancements
 
 Updated with V2 APIs
 - Added new multiple APIs for better user experience.
