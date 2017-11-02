@@ -14,7 +14,7 @@ namespace LoginRadiusSDK.V2
         /// </summary>
         private readonly Dictionary<string, string> _configValues;
 
-        static SDKConfigHandler _sdkConfigHandler = new SDKConfigHandler();
+        private static readonly SDKConfigHandler SdkConfigHandler;
 
         private static readonly Dictionary<string, string> DefaultConfig;
 
@@ -32,7 +32,7 @@ namespace LoginRadiusSDK.V2
 
             try
             {
-                _sdkConfigHandler = ConfigurationManager.GetSection("loginradius") as SDKConfigHandler;
+                SdkConfigHandler = ConfigurationManager.GetSection("loginradius") as SDKConfigHandler ?? new SDKConfigHandler();
             }
             catch (System.Exception ex)
             {
@@ -111,38 +111,38 @@ namespace LoginRadiusSDK.V2
             var configDic = new Dictionary<string, string>();
 
             var valStr = string.IsNullOrWhiteSpace(LoginRadiusSdkGlobalConfig.ApiKey)
-                ? _sdkConfigHandler.Setting(BaseConstants.LoginRadiusApiKey)
+                ? SdkConfigHandler.Setting(BaseConstants.LoginRadiusApiKey)
                 : LoginRadiusSdkGlobalConfig.ApiKey;
             configDic.Add(BaseConstants.LoginRadiusApiKey, valStr);
 
             valStr = string.IsNullOrWhiteSpace(LoginRadiusSdkGlobalConfig.ApiSecret)
-                ? _sdkConfigHandler.Setting(BaseConstants.LoginRadiusApiSecret)
+                ? SdkConfigHandler.Setting(BaseConstants.LoginRadiusApiSecret)
                 : LoginRadiusSdkGlobalConfig.ApiSecret;
             configDic.Add(BaseConstants.LoginRadiusApiSecret, valStr);
 
             valStr = string.IsNullOrWhiteSpace(LoginRadiusSdkGlobalConfig.ProxyAddress)
-                ? _sdkConfigHandler.Setting(BaseConstants.HttpProxyAddressConfig)
+                ? SdkConfigHandler.Setting(BaseConstants.HttpProxyAddressConfig)
                 : LoginRadiusSdkGlobalConfig.ProxyAddress;
             configDic.Add(BaseConstants.HttpProxyAddressConfig, valStr);
 
 
             valStr = string.IsNullOrWhiteSpace(LoginRadiusSdkGlobalConfig.ProxyCredentials)
-                ? _sdkConfigHandler.Setting(BaseConstants.HttpProxyCredentialConfig)
+                ? SdkConfigHandler.Setting(BaseConstants.HttpProxyCredentialConfig)
                 : LoginRadiusSdkGlobalConfig.ProxyCredentials;
             configDic.Add(BaseConstants.HttpProxyCredentialConfig, valStr);
 
             valStr = LoginRadiusSdkGlobalConfig.ConnectionTimeout <= 0
-                ? _sdkConfigHandler.Setting(BaseConstants.HttpProxyCredentialConfig)
+                ? SdkConfigHandler.Setting(BaseConstants.HttpProxyCredentialConfig)
                 : LoginRadiusSdkGlobalConfig.ConnectionTimeout.ToString();
             configDic.Add(BaseConstants.HttpConnectionTimeoutConfig, valStr);
 
             valStr = LoginRadiusSdkGlobalConfig.RequestRetries <= 0
-                ? _sdkConfigHandler.Setting(BaseConstants.HttpConnectionRetryConfig)
+                ? SdkConfigHandler.Setting(BaseConstants.HttpConnectionRetryConfig)
                 : LoginRadiusSdkGlobalConfig.RequestRetries.ToString();
             configDic.Add(BaseConstants.HttpConnectionRetryConfig, valStr);
 
             valStr = string.IsNullOrWhiteSpace(LoginRadiusSdkGlobalConfig.AppName)
-                ? _sdkConfigHandler.Setting(BaseConstants.LoginRadiusAppName)
+                ? SdkConfigHandler.Setting(BaseConstants.LoginRadiusAppName)
                 : LoginRadiusSdkGlobalConfig.AppName;
             configDic.Add(BaseConstants.LoginRadiusAppName, valStr);
 
