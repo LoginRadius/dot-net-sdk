@@ -18,4 +18,8 @@ Please visit [here](http://www.loginradius.com/) for more information.
 
 ## Prerequisites
 
-* .NET 4.0 or later
+* .NET 4.0 or later / .NetStandard 1.3 or later
+
+## Getting Started
+
+* Everything you need begin using this SDK: [LoginRadius Developer documentation](https://docs.loginradius.com/api/v2/sdk-libraries/aspnet)

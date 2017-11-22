@@ -1,0 +1,114 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard1.3;netstandard2.0;net45;net40</TargetFrameworks>
+    
+    <Authors>LoginRadius Inc.</Authors>
+    <RequireLicenseAcceptance>false</RequireLicenseAcceptance>
+    <Language>en-US</Language>
+    <AssemblyName>LoginRadiusSDK.V2</AssemblyName>
+    <AssemblyTitle>LoginRadiusSDK.V2</AssemblyTitle>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <PackageId>LoginRadiusSDK.NET</PackageId>
+    <RootNamespace>LoginRadiusSDK.V2</RootNamespace>
+    <Title>LoginRadius - User Registration V2 SDK</Title>
+    <Description>Portable class library for the LoginRadius V2 APIs is a library to work with LoginRadius APIs and Services.</Description>
+    <Summary>LoginRadius is an Customer Identity Management Platform (cIAM) that simplifies user registration and increases conversion with Social Login.</Summary>
+    <PackageCopyright>Copyright © LoginRadius Inc. 2017</PackageCopyright>
+    <PackageTags> LoginRadius UserRegistration SocialLogin SDK SDK.NET registration sdk CustomerRegistration LoginRadiusV2 V2SDK </PackageTags>
+    <PackageReleaseNotes>See here:https://github.com/LoginRadius/dot-net-sdk/blob/master/CHANGELOG.md</PackageReleaseNotes>
+    <PackageIconUrl>https://3wcmm13zx3fn2h5mb93jvvkr-wpengine.netdna-ssl.com/wp-content/themes/LoginRadius-2017/assets/img/logo.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/LoginRadius/dot-net-sdk</PackageProjectUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
+    <AllowUnsafeBlocks></AllowUnsafeBlocks>
+    <Copyright>Copyright © LoginRadius Inc. 2017</Copyright>
+    <RepositoryType>Github</RepositoryType>
+    <Company>LoginRadius Inc.</Company>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>5.0.0</Version>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
+    <FileVersion>5.0.0.0</FileVersion>
+    <RepositoryUrl>https://github.com/LoginRadius/dot-net-sdk</RepositoryUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <DefineConstants>TRACE;DEBUG;</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <NoWarn>$(NoWarn);CS1591;CS1572;CS1573</NoWarn>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IncludeSymbols>true</IncludeSymbols>
+    <DefineConstants>RELEASE</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.1" />
+  </ItemGroup>
+  
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">
+    <DefineConstants>NETCORE;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.3'">
+    <DefineConstants>NETSTANDARD1_3;NETSTANDARD</DefineConstants>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(TargetFramework)'=='net45'">
+    <DefineConstants>NetFramework;NET45</DefineConstants>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(TargetFramework)'=='net40'">
+    <DefineConstants>NetFramework;NET_40</DefineConstants>
+  </PropertyGroup>
+  
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+  </ItemGroup>
+  
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0' OR '$(TargetFramework)' == 'netstandard1.3'">
+    <PackageReference Include="System.Net.Http" Version="4.3.3" />
+    <PackageReference Include="System.Net.Requests" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="1.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="1.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="1.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="1.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="1.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="1.1.2" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.0.0" />
+  </ItemGroup>
+</Project>
