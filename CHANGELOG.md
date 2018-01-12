@@ -1,7 +1,14 @@
 > **LoginRadius .NET SDK Change Log** provides information regarding what has changed, more specifically what changes, improvements and bug fix has been made to the SDK. For more details please refer to the [LoginRadius API Documention](https://docs.loginradius.com/api/v2/sdk-libraries/aspnet)
 
+### Version 5.0.1
+Release on **Jan 12, 2018**
+
+##### Bug Fixes
+
+  - Parsing issue fixed in custom object API.
+  
 ### Version 5.0.0
-Release on **Nov 22, 2017**
+Release on **Nov 21, 2017**
 
 > **Note: The version contains several breaking changes.**
 
@@ -51,7 +58,7 @@ Updated with V2 APIs
 - Improved structure and naming convention
 - Improved security feature
 - Added Phone Authentication APIs to handle phone login,registration and verification etc.
-- Added APIs for two factor authentication
+- Added APIs for two factore authentication
 - Added web hook APIs
 - Add start and end time for SOTT to validate it for long time frame.
 - Add API to get server time for SOTT if don't pass the start and end time.

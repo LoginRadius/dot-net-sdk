@@ -11,7 +11,7 @@ namespace LoginRadiusSDK.V2.Models.Object
         public DateTime DateModified { get; set; }
         public bool ?IsDeleted { get; set; }
         public string Uid { get; set; }
-        public Dictionary<string, string> CustomObject { get; set; }
+        public object CustomObject { get; set; }
     }
 
     public class CustomObjectResponse
