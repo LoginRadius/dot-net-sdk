@@ -12,16 +12,16 @@
     <PackageId>LoginRadiusSDK.NET</PackageId>
     <RootNamespace>LoginRadiusSDK.V2</RootNamespace>
     <Title>LoginRadius - User Registration V2 SDK</Title>
-    <Description>Portable class library for the LoginRadius V2 APIs is a library to work with LoginRadius APIs and Services.</Description>
-    <Summary>LoginRadius is an Customer Identity Management Platform (cIAM) that simplifies user registration and increases conversion with Social Login.</Summary>
-    <PackageCopyright>Copyright © LoginRadius Inc. 2017</PackageCopyright>
+    <Description>Portable class library for the LoginRadius V2 APIs to work with LoginRadius APIs and Services. The LoginRadius REST API uses HTTP verbs and a RESTful endpoint structure. Request and response payloads are formatted as JSON.</Description>
+    <Summary>Portable class library for the LoginRadius V2 APIs to work with LoginRadius APIs and Services.</Summary>
+    <PackageCopyright>Copyright © LoginRadius Inc. 2018</PackageCopyright>
     <PackageTags> LoginRadius UserRegistration SocialLogin SDK SDK.NET registration sdk CustomerRegistration LoginRadiusV2 V2SDK </PackageTags>
     <PackageReleaseNotes>See here:https://github.com/LoginRadius/dot-net-sdk/blob/master/CHANGELOG.md</PackageReleaseNotes>
     <PackageIconUrl>https://3wcmm13zx3fn2h5mb93jvvkr-wpengine.netdna-ssl.com/wp-content/themes/LoginRadius-2017/assets/img/logo.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/LoginRadius/dot-net-sdk</PackageProjectUrl>
     <PackageLicenseUrl></PackageLicenseUrl>
     <AllowUnsafeBlocks></AllowUnsafeBlocks>
-    <Copyright>Copyright © LoginRadius Inc. 2017</Copyright>
+    <Copyright>Copyright © LoginRadius Inc. 2018</Copyright>
     <RepositoryType>Github</RepositoryType>
     <Company>LoginRadius Inc.</Company>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
