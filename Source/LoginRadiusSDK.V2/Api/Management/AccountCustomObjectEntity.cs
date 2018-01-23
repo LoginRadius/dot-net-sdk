@@ -23,26 +23,24 @@ namespace LoginRadiusSDK.V2.Api
         }
 
         public ApiResponse<CustomObjectprop> UpdateAccountCustomObjectbyUID(string uId, string objectRecordId,
-           string objectname, string customObject)
+           string objectname, string customObject,bool? fullReplace=false)
         {
             Validate(new [] { uId, objectRecordId, customObject });
             var pattern = _resoucePath.ChildObject("{1}").ObjectName;
             var additionalparams = new QueryParameters { ["objectname"] = objectname };
+            if (fullReplace.HasValue && fullReplace.Value)
+            {
+                additionalparams.Add("updateType", "Replace");
+            }
+            else
+            {
+                additionalparams.Add("updateType", "PartialReplace");
+            }
             var resourcePath = SDKUtil.FormatURIPath(pattern, new object[] { uId, objectRecordId });
             return ConfigureAndExecute<CustomObjectprop>(RequestType.Identity, HttpMethod.Put, resourcePath, additionalparams,
                 customObject);
         }
 
-
-
-        public ApiResponse<CustomObjectprop> UpdateAccountCustomObjectbytoken(string access_token, string objectRecordId, string objectname, string customObject)
-        {
-            Validate(new [] { objectRecordId, objectname, access_token });
-            var additionalparams = new QueryParameters { ["objectname"] = objectname, ["access_token"] = access_token };
-            var resourcePath = SDKUtil.FormatURIPath(("customobject/{0}"), new object[] { objectRecordId });
-            return ConfigureAndExecute<CustomObjectprop>(RequestType.Authentication, HttpMethod.Put, resourcePath, additionalparams,
-                customObject);
-        }
 
         public ApiResponse<CustomObjectResponse> GetAccountCustomObject(string uId, string objectname)
         {

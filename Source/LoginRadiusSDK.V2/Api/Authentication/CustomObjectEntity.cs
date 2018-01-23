@@ -21,12 +21,20 @@ namespace LoginRadiusSDK.V2.Api
                 additionalQueryParams, customObject);
         }
 
-        public ApiResponse<CustomObjectprop> UpdateCustomObjectbyObjectRecordId(string accessToken, string objectRecordId, string objectName,
-            string customObject)
+        public ApiResponse<CustomObjectprop> UpdateCustomObjectbyAccessToken(string accessToken, string objectRecordId, string objectName,
+            string customObject, bool? fullReplace = false)
         {
             Validate(new [] { objectName, accessToken });
             var additionalQueryParams =
                 new QueryParameters { ["access_token"] = accessToken, ["objectName"] = objectName };
+            if (fullReplace.HasValue && fullReplace.Value)
+            {
+                additionalQueryParams.Add("updateType", "Replace");
+            }
+            else
+            {
+                additionalQueryParams.Add("updateType", "PartialReplace");
+            }
             var resourcePath = SDKUtil.FormatURIPath(_resoucePath.ChildObject("{0}").ToString(),
                 new object[] { objectRecordId });
             return ConfigureAndExecute<CustomObjectprop>(RequestType.Authentication, HttpMethod.Put, resourcePath,
