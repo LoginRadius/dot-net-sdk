@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using LoginRadiusSDK.V2.Entity;
+﻿using LoginRadiusSDK.V2.Entity;
 using LoginRadiusSDK.V2.Models;
 using LoginRadiusSDK.V2.Models.Object;
 using LoginRadiusSDK.V2.Util;
@@ -12,6 +11,13 @@ namespace LoginRadiusSDK.V2.Api
         private readonly LoginRadiusArgumentValidator _validate = new LoginRadiusArgumentValidator();
         private readonly LoginRadiusResoucePath _resoucePath = new LoginRadiusResoucePath("{0}/CustomObject");
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uId"></param>
+        /// <param name="objectname"></param>
+        /// <param name="customObject"></param>
+        /// <returns></returns>
         public ApiResponse<CustomObjectprop> CreateAccountCustomObject(string uId, string objectname,
             string customObject)
         {
@@ -22,6 +28,15 @@ namespace LoginRadiusSDK.V2.Api
                 additionalParameter, customObject);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uId"></param>
+        /// <param name="objectRecordId"></param>
+        /// <param name="objectname"></param>
+        /// <param name="customObject"></param>
+        /// <param name="fullReplace"></param>
+        /// <returns></returns>
         public ApiResponse<CustomObjectprop> UpdateAccountCustomObjectbyUID(string uId, string objectRecordId,
            string objectname, string customObject,bool? fullReplace=false)
         {
@@ -41,7 +56,12 @@ namespace LoginRadiusSDK.V2.Api
                 customObject);
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uId"></param>
+        /// <param name="objectname"></param>
+        /// <returns></returns>
         public ApiResponse<CustomObjectResponse> GetAccountCustomObject(string uId, string objectname)
         {
             Validate(new [] { uId });
@@ -59,6 +79,13 @@ namespace LoginRadiusSDK.V2.Api
         //    return ConfigureAndExecute<CustomObjectResponse>(RequestType.Identity, HttpMethod.Get, resourcePath);
         //}
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uId"></param>
+        /// <param name="objectRecordId"></param>
+        /// <param name="objectname"></param>
+        /// <returns></returns>
         public ApiResponse<LoginRadiusDeleteResponse> DeleteAccountCustomObject(string uId, string objectRecordId, string objectname)
         {
             Validate(new [] { uId, objectRecordId });
@@ -69,7 +96,13 @@ namespace LoginRadiusSDK.V2.Api
                 resourcePath, additionalparams);
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="access_token"></param>
+        /// <param name="objectname"></param>
+        /// <param name="objectrecordid"></param>
+        /// <returns></returns>
         public ApiResponse<CustomObjectprop> CustombyObjectRecordIdandToken(string access_token, string objectname, string objectrecordid)
         {
             Validate(new [] { access_token, objectname });
@@ -81,7 +114,6 @@ namespace LoginRadiusSDK.V2.Api
             };
             return ConfigureAndExecute<CustomObjectprop>(RequestType.Authentication, HttpMethod.Get,
                 resourcePath, additionalparams);
-
         }
     }
 }

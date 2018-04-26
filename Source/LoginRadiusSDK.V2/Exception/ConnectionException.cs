@@ -8,11 +8,6 @@ namespace LoginRadiusSDK.V2.Exception
     public class ConnectionException : LoginRadiusException
     {
         /// <summary>
-        /// Gets the response payload for non-200 response
-        /// </summary>
-        public string Response { get; private set; }
-
-        /// <summary>
         /// Gets the <see cref="System.Net.WebExceptionStatus"/> returned from a failed HTTP request.
         /// </summary>
         public WebExceptionStatus WebExceptionStatus { get; private set; }

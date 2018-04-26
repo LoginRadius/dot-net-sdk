@@ -9,7 +9,7 @@ namespace LoginRadiusSDK.V2.Exception
     public class LoginRadiusException : System.Exception
     {
         /// <summary>
-        /// 
+        /// Gets the response payload for non-200 response
         /// </summary>
         public string Response { get; set; }
 
@@ -31,10 +31,7 @@ namespace LoginRadiusSDK.V2.Exception
         /// <summary>
         /// 
         /// </summary>
-        public LoginRadiusException()
-            : base()
-        {
-        }
+        public LoginRadiusException(){}
 
         /// <summary>
         /// 

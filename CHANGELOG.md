@@ -1,5 +1,14 @@
 > **LoginRadius .NET SDK Change Log** provides information regarding what has changed, more specifically what changes, improvements and bug fix has been made to the SDK. For more details please refer to the [LoginRadius API Documention](https://docs.loginradius.com/api/v2/sdk-libraries/aspnet)
 
+### Version 5.0.3
+Release on **April 26, 2018**
+
+##### Enhancements
+
+  - Server validation error model add to the "RestException"
+  - **username** param add to GetForgotPasswordToken
+  - dependency update 
+
 ### Version 5.0.2
 Release on **Jan 22, 2018**
 

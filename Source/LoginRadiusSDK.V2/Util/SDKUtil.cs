@@ -192,93 +192,6 @@ namespace LoginRadiusSDK.V2.Util
         }
 
         /// <summary>
-        /// Escapes invalid XML characters using &amp; escapes
-        /// </summary>
-        /// <param name="textContent">Text content to escape</param>
-        /// <returns>Escaped XML string</returns>
-        public static string EscapeInvalidXmlCharsRegex(string textContent)
-        {
-            string response = null;
-            if (!string.IsNullOrEmpty(textContent))
-            {
-                response = Regex.Replace(
-                    Regex.Replace(
-                        Regex.Replace(
-                            Regex.Replace(
-                                Regex.Replace(textContent, "&(?!(amp;|lt;|gt;|quot;|apos;))", "&amp;"),
-                                "<", "&lt;"),
-                            ">", "&gt;"),
-                        "\"", "&quot;"),
-                    "'", "&apos;");
-            }
-            return response;
-        }
-
-        /// <summary>
-        /// Escapes invalid XML characters using &amp; escapes
-        /// </summary>
-        /// <param name="intContent">Integer content to escape</param>
-        /// <returns>Escaped XML string</returns>
-        public static string EscapeInvalidXmlCharsRegex(int? intContent)
-        {
-            string response = null;
-            if (intContent != null)
-            {
-                string textContent = intContent.ToString();
-                response = EscapeInvalidXmlCharsRegex(textContent);
-            }
-            return response;
-        }
-
-        /// <summary>
-        /// Escapes invalid XML characters using &amp; escapes
-        /// </summary>
-        /// <param name="boolContent">Boolean content to escape</param>
-        /// <returns>Escaped XML string</returns>
-        public static string EscapeInvalidXmlCharsRegex(bool? boolContent)
-        {
-            string response = null;
-            if (boolContent != null)
-            {
-                string textContent = boolContent.ToString();
-                response = EscapeInvalidXmlCharsRegex(textContent);
-            }
-            return response;
-        }
-
-        /// <summary>
-        /// Escapes invalid XML characters using &amp; escapes
-        /// </summary>
-        /// <param name="floatContent">Float content to escape</param>
-        /// <returns>Escaped XML string</returns>
-        public static string EscapeInvalidXmlCharsRegex(float? floatContent)
-        {
-            string response = null;
-            if (floatContent != null)
-            {
-                string textContent = floatContent.ToString();
-                response = EscapeInvalidXmlCharsRegex(textContent);
-            }
-            return response;
-        }
-
-        /// <summary>
-        /// Escapes invalid XML characters using &amp; escapes
-        /// </summary>
-        /// <param name="doubleContent">Double content to escape</param>
-        /// <returns>Escaped XML string</returns>
-        public static string EscapeInvalidXmlCharsRegex(double? doubleContent)
-        {
-            string response = null;
-            if (doubleContent != null)
-            {
-                string textContent = doubleContent.ToString();
-                response = EscapeInvalidXmlCharsRegex(textContent);
-            }
-            return response;
-        }
-
-        /// <summary>
         /// Gets the version number of the parent assembly for the specified object type.
         /// </summary>
         /// <param name="type">The object type to use in determining which assembly version should be returned.</param>
@@ -287,8 +200,9 @@ namespace LoginRadiusSDK.V2.Util
         {
             #if !NETSTANDARD1_3
             return type.Assembly.GetName().Version.ToString(3);
-            #endif
+            #else
             return null;
+            #endif
         }
 
         /// <summary>
@@ -307,7 +221,7 @@ namespace LoginRadiusSDK.V2.Util
         /// <returns>A string containing the highest installed version of the .NET framework found on the system.</returns>
         private static Version GetHighestInstalledNetVersion()
         {
-            #if NetFramework
+#if NetFramework
             Version highestNetVersion = null;
             try
             {
@@ -359,7 +273,7 @@ namespace LoginRadiusSDK.V2.Util
             {
                 // ignored
             }
-            #endif
+#endif
 
             return null;
         }

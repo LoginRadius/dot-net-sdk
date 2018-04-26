@@ -346,7 +346,7 @@ namespace LoginRadiusSDK.V2.Http
                 string message;
                 // For connection timeout errors, include the connection timeout value that was used.
 #if NetFramework
-                            message = $"{ex.Message} (HTTP request timeout was set to {httpRequest.Timeout}ms)";
+                message = $"{ex.Message} (HTTP request timeout was set to {httpRequest.Timeout}ms)";
 #else
                 message = ex.Message;
 #endif

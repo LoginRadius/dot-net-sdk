@@ -10,6 +10,11 @@ namespace LoginRadiusSDK.V2.Api
     {
         private readonly LoginRadiusResoucePath _resoucePath = new LoginRadiusResoucePath("{0}/role");
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uId"></param>
+        /// <returns></returns>
         public ApiResponse<LoginRadiusUserRoles> GetAccountRole(string uId)
         {
             Validate(new [] {uId});
@@ -17,8 +22,13 @@ namespace LoginRadiusSDK.V2.Api
             return ConfigureAndExecute<LoginRadiusUserRoles>(RequestType.Identity, HttpMethod.Get, resourcePath);
         }
 
-        public ApiResponse<LoginRadiusAccountRolesUpsert> RolesAssignToUser(string uId,
-            LoginRadiusAccountRolesUpsert accountRoles)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uId"></param>
+        /// <param name="accountRoles"></param>
+        /// <returns></returns>
+        public ApiResponse<LoginRadiusAccountRolesUpsert> RolesAssignToUser(string uId, LoginRadiusAccountRolesUpsert accountRoles)
         {
             Validate(new List<object> { uId, accountRoles});
             var resourcePath = SDKUtil.FormatURIPath(_resoucePath, new object[] {uId});
@@ -26,6 +36,12 @@ namespace LoginRadiusSDK.V2.Api
                 resourcePath, accountRoles.ConvertToJson());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uId"></param>
+        /// <param name="accountRoles"></param>
+        /// <returns></returns>
         public ApiResponse<LoginRadiusDeleteResponse> UnAssignRolesToUser(string uId,
             LoginRadiusAccountRolesUpsert accountRoles)
         {
@@ -34,7 +50,13 @@ namespace LoginRadiusSDK.V2.Api
             return ConfigureAndExecute<LoginRadiusDeleteResponse>(RequestType.Identity, HttpMethod.Delete, resourcePath,
                 accountRoles.ConvertToJson());
         }
-
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="roleContext"></param>
+        /// <returns></returns>
         public ApiResponse<RoleContextData> UpsertContext(string uid, AccountRoleContextModel roleContext)
         {
             Validate(new [] {uid});
@@ -43,7 +65,11 @@ namespace LoginRadiusSDK.V2.Api
                 roleContext.ConvertToJson());
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <returns></returns>
         public ApiResponse<RoleContextData> GetContextwithRolesAndPermissions(string uid)
         {
             Validate(new [] {uid});
@@ -51,7 +77,13 @@ namespace LoginRadiusSDK.V2.Api
             return ConfigureAndExecute<RoleContextData>(RequestType.Identity, HttpMethod.Get, resourcePath);
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="rolecontextname"></param>
+        /// <param name="roles"></param>
+        /// <returns></returns>
         public ApiResponse<LoginRadiusDeleteResponse> DeleteRolefromContext(string uid, string rolecontextname,
             LoginRadiusAccountRolesUpsert roles)
         {
@@ -62,7 +94,13 @@ namespace LoginRadiusSDK.V2.Api
                 roles.ConvertToJson());
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="rolecontextname"></param>
+        /// <param name="additionalRolePermissions"></param>
+        /// <returns></returns>
         public ApiResponse<LoginRadiusDeleteResponse> DeleteAdditionalPermissionfromContext(string uid,
             string rolecontextname, AdditionalRolePermissions additionalRolePermissions)
         {
@@ -74,6 +112,13 @@ namespace LoginRadiusSDK.V2.Api
                 additionalRolePermissions.ConvertToJson());
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="rolecontextname"></param>
+        /// <returns></returns>
         public ApiResponse<LoginRadiusDeleteResponse> DeleteContex( string uid,  string rolecontextname)
         {
             Validate(new [] { uid, rolecontextname });

@@ -42,33 +42,39 @@ namespace LoginRadiusSDK.V2.Util
         public void AddRange<T>(ICollection<T> target, IEnumerable<T> source)
         {
             if (target == null)
-                throw new ArgumentNullException("target");
+                throw new ArgumentNullException(nameof(target));
             if (source == null)
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException(nameof(source));
             foreach (var element in source)
                 target.Add(element);
         }
 
         public void AddOptionalParamsRange(LoginRadiusApiOptionalParams source)
         {
-            if (!string.IsNullOrWhiteSpace(source.SmsTemplate)) Add("SmsTemplate", source.SmsTemplate);
-            if (!string.IsNullOrWhiteSpace(source.DeleteUrl)) Add("DeleteUrl", source.DeleteUrl);
-            if (!string.IsNullOrWhiteSpace(source.EmailTemplate)) Add("EmailTemplate", source.EmailTemplate);
-            if (!string.IsNullOrWhiteSpace(source.LoginUrl)) Add("LoginUrl", source.LoginUrl);
-            if (!string.IsNullOrWhiteSpace(source.SmsTemplate2Fa)) Add("LoginUrl", source.SmsTemplate2Fa);
-            if (!string.IsNullOrWhiteSpace(source.VerificationUrl)) Add("VerificationUrl", source.VerificationUrl);
+            if (!string.IsNullOrWhiteSpace(source.SmsTemplate)) Add(nameof(source.SmsTemplate), source.SmsTemplate);
+            if (!string.IsNullOrWhiteSpace(source.DeleteUrl)) Add(nameof(source.DeleteUrl), source.DeleteUrl);
+            if (!string.IsNullOrWhiteSpace(source.EmailTemplate)) Add(nameof(source.EmailTemplate), source.EmailTemplate);
+            if (!string.IsNullOrWhiteSpace(source.LoginUrl)) Add(nameof(source.LoginUrl), source.LoginUrl);
+            if (!string.IsNullOrWhiteSpace(source.SmsTemplate2Fa)) Add(nameof(source.SmsTemplate2Fa), source.SmsTemplate2Fa);
+            if (!string.IsNullOrWhiteSpace(source.VerificationUrl)) Add(nameof(source.VerificationUrl), source.VerificationUrl);
         }
 
         public void AddOptionalParamsRange(TwoFactorAuthModel source)
         {
             if (!string.IsNullOrWhiteSpace(source.GoogleAuthenticatorCode))
-                Add("GoogleAuthenticatorCode", source.GoogleAuthenticatorCode);
-            if (!string.IsNullOrWhiteSpace(source.Otp)) Add("Otp", source.Otp);
+                Add(nameof(source.GoogleAuthenticatorCode), source.GoogleAuthenticatorCode);
+
+            if (!string.IsNullOrWhiteSpace(source.Otp)) Add(nameof(source.Otp), source.Otp);
         }
 
         public void AddOptionalParamsRange(TwoFactorPhoneAuthModel source)
         {
-            if (!string.IsNullOrWhiteSpace(source.PhoneNo2Fa)) Add("PhoneNo2Fa", source.PhoneNo2Fa);
+            if (!string.IsNullOrWhiteSpace(source.PhoneNo2Fa)) Add(nameof(source.PhoneNo2Fa), source.PhoneNo2Fa);
+        }
+
+        public void TryAdd(string key, string value)
+        {
+            if (!string.IsNullOrWhiteSpace(key)) Add(key, value);
         }
     }
 

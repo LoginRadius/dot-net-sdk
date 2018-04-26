@@ -113,5 +113,7 @@ namespace LoginRadiusSDK.V2.Models.UserProfile
         public string PhoneId { get; set; }
         public Dictionary<string, string> SecurityQuestionAnswer { get; set; }
         public bool IsTwoFactorAuthenticationEnabled { get; set; }
+        public string ExternalUserLoginId { get; set; }
+        public bool? AcceptPrivacyPolicy { get; set; }
     }
 }

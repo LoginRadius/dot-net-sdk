@@ -11,7 +11,7 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <PackageId>LoginRadiusSDK.NET</PackageId>
     <RootNamespace>LoginRadiusSDK.V2</RootNamespace>
-    <Title>LoginRadius - User Registration V2 SDK</Title>
+    <Title>LoginRadius .Net V2 SDK</Title>
     <Description>Portable class library for the LoginRadius V2 APIs to work with LoginRadius APIs and Services. The LoginRadius REST API uses HTTP verbs and a RESTful endpoint structure. Request and response payloads are formatted as JSON.</Description>
     <Summary>Portable class library for the LoginRadius V2 APIs to work with LoginRadius APIs and Services.</Summary>
     <PackageCopyright>Copyright © LoginRadius Inc. 2018</PackageCopyright>
@@ -25,9 +25,9 @@
     <RepositoryType>Github</RepositoryType>
     <Company>LoginRadius Inc.</Company>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>5.0.2</Version>
-    <AssemblyVersion>5.0.2.0</AssemblyVersion>
-    <FileVersion>5.0.2.0</FileVersion>
+    <Version>5.0.3</Version>
+    <AssemblyVersion>5.0.3.0</AssemblyVersion>
+    <FileVersion>5.0.3.0</FileVersion>
     <RepositoryUrl>https://github.com/LoginRadius/dot-net-sdk</RepositoryUrl>
   </PropertyGroup>
 
@@ -43,7 +43,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
   
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">

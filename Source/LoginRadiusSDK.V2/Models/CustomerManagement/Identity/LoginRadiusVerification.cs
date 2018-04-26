@@ -1,4 +1,4 @@
-﻿namespace LoginRadiusSDK.V2.Models.CustomerManagement.Identity
+﻿namespace LoginRadiusSDK.V2.Models.Identity
 {
     public class LoginRadiusVerification
     {

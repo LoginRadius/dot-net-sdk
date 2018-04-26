@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using LoginRadiusSDK.V2.Entity;
 using LoginRadiusSDK.V2.Models;
+using LoginRadiusSDK.V2.Models.Identity;
 using LoginRadiusSDK.V2.Models.UserProfile;
 using LoginRadiusSDK.V2.Util;
 using static LoginRadiusSDK.V2.Util.LoginRadiusArgumentValidator;
-using LoginRadiusSDK.V2.Models.CustomerManagement.Identity;
 
 namespace LoginRadiusSDK.V2.Api.AdvancedSocial
 {
@@ -59,16 +59,6 @@ namespace LoginRadiusSDK.V2.Api.AdvancedSocial
             return ConfigureAndExecute<LoginRadiusStatusStats>(RequestType.AdvancedSocial, HttpMethod.Get,
                 "status/trackable", additionalQueryParams);
         }
-
-        //public ApiResponse<TrackableStatusPostResponse> GetUpdateTrackableStatus(string accessToken,
-        //    TrackableStatusUpdateModel trackableStatusUpdate)
-        //{
-        //    Validate(new [] {accessToken, trackableStatusUpdate});
-        //    var additionalQueryParams = new QueryParameters {["access_token"] = accessToken};
-        //    //.AddRange(additionalQueryParams, trackableStatusUpdate.ConvertToJson());
-        //    return ConfigureAndExecute<TrackableStatusPostResponse>(RequestType.AdvancedSocial, HttpMethod.Post,
-        //        "status/trackable", additionalQueryParams, trackableStatusUpdate.ConvertToJson());
-        //}
 
         public ApiResponse<TrackableStatusPostResponse> PostUpdateTrackableStatus(string accessToken,
             TrackableStatusUpdateModel trackableStatusUpdate)

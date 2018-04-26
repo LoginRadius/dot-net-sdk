@@ -42,17 +42,16 @@ namespace LoginRadiusSDK.V2.Api
         /// 
         /// </summary>
         /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <param name="optionalParams"></param>
+        /// <param name="password">Password of the user [REQUIRED]</param>
+        /// <param name="optionalParams">Gets or sets API optional parameters, <see cref="LoginRadiusApiOptionalParams"/></param>
         /// <returns></returns>
         public ApiResponse<LoginResponse> LoginByUserName(string username, string password,
             LoginRadiusApiOptionalParams optionalParams)
         {
             Validate(new[] { username, password });
-            var additionalQueryParams = new QueryParameters { { "username", username }, { "password", password } };
+            var additionalQueryParams = new QueryParameters { { nameof(username), username }, { nameof(password), password } };
             additionalQueryParams.AddOptionalParamsRange(optionalParams);
-            return ConfigureAndExecute<LoginResponse>(RequestType.Authentication, HttpMethod.Get,
-                _resoucePath.ToString(),
+            return ConfigureAndExecute<LoginResponse>(RequestType.Authentication, HttpMethod.Get, _resoucePath.ToString(),
                 additionalQueryParams);
         }
 
@@ -207,13 +206,10 @@ namespace LoginRadiusSDK.V2.Api
             Validate(new[] { email, clientguid });
             var additionalparams = new QueryParameters { ["email"] = email, ["clientguid"] = clientguid };
 
-            if (!string.IsNullOrEmpty(autologinemailtemplate))
-                additionalparams.Add("autologinemailtemplate", autologinemailtemplate);
+            additionalparams.TryAdd(nameof(autologinemailtemplate), autologinemailtemplate);
+            additionalparams.TryAdd(nameof(welcomeemailtemplate), welcomeemailtemplate);
 
-            if (!string.IsNullOrEmpty(welcomeemailtemplate))
-                additionalparams.Add("welcomeemailtemplate", welcomeemailtemplate);
-            return ConfigureAndExecute
-                <LoginRadiusPostResponse>(RequestType.Authentication, HttpMethod.Get, "login/autologin",
+            return ConfigureAndExecute <LoginRadiusPostResponse>(RequestType.Authentication, HttpMethod.Get, "login/autologin",
                     additionalparams);
         }
 

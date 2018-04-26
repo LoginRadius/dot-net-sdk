@@ -7,7 +7,6 @@ using System.IO;
 using Microsoft.Extensions.Configuration;
 #endif
 
-
 namespace LoginRadiusSDK.V2
 {
 #if NetFramework

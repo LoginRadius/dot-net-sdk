@@ -1,8 +1,8 @@
-﻿namespace LoginRadiusSDK.V2.Models.Social.Password
+﻿namespace LoginRadiusSDK.V2.Models.Identity
 {
-    public class LoginRadiusPassword
+    public class ForgotPasswordToken
     {
         public string ForgotToken { get; set; }
-        public string IdentityProviders { get; set; }
+        public string[] IdentityProviders { get; set; }
     }
 }

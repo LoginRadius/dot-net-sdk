@@ -16,23 +16,15 @@ namespace LoginRadiusSDK.V2.Util
         {
             foreach (var arg in (IEnumerable) argument)
             {
-                if (arg is string)
+                if (arg is string argStr)
                 {
-                    if (string.IsNullOrEmpty(arg as string))
+                    if (string.IsNullOrEmpty(argStr))
                     {
                         throw new ArgumentNullException("Value(s) cannot be null or empty.");
                     }
                 }
-                else if (arg is int)
+                else if (arg is IList list)
                 {
-                    if (argument == null)
-                    {
-                        throw new ArgumentNullException("Value(s) cannot be null.");
-                    }
-                }
-                else if (arg is IList)
-                {
-                    var list = arg as IList;
                     if (list.Count <= 0)
                     {
                         throw new ArgumentNullException("List cannot be empty.");

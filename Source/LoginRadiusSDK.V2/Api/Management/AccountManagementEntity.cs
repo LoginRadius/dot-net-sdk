@@ -2,18 +2,22 @@
 using LoginRadiusSDK.V2.Entity;
 using LoginRadiusSDK.V2.Models;
 using LoginRadiusSDK.V2.Models.CustomerAuthentication.Account;
+using LoginRadiusSDK.V2.Models.Identity;
 using LoginRadiusSDK.V2.Models.Object;
 using LoginRadiusSDK.V2.Models.UserProfile;
 using LoginRadiusSDK.V2.Util;
 using static LoginRadiusSDK.V2.Util.LoginRadiusArgumentValidator;
-using LoginRadiusSDK.V2.Models.CustomerManagement.Identity;
-using LoginRadiusSDK.V2.Models.Social.Password;
 using LoginRadiusSDK.V2.Models.Password;
 
 namespace LoginRadiusSDK.V2.Api
 {
     public class AccountManagementEntity : LoginRadiusResource
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userIdentity"></param>
+        /// <returns></returns>
         public ApiResponse<LoginRadiusUserIdentity> CreateAccount(UserIdentityCreateModel userIdentity)
         {
             Validate(new List<object> { userIdentity.Email, userIdentity.Password });
@@ -21,30 +25,50 @@ namespace LoginRadiusSDK.V2.Api
                 userIdentity.ConvertToJson());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public ApiResponse<LoginRadiusUserIdentity> GetAccountProfileByEmail(string email)
         {
             Validate(new [] { email });
-            var additionalQueryParams = new QueryParameters { { "email", email } };
+            var additionalQueryParams = new QueryParameters { { nameof(email), email } };
             return ConfigureAndExecute<LoginRadiusUserIdentity>(RequestType.Identity, HttpMethod.Get, null,
                 additionalQueryParams);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
         public ApiResponse<LoginRadiusUserIdentity> GetAccountProfileByUserName(string userName)
         {
             Validate(new [] { userName });
-            var additionalQueryParams = new QueryParameters { { "username", userName } };
+            var additionalQueryParams = new QueryParameters { { nameof(userName), userName } };
             return ConfigureAndExecute<LoginRadiusUserIdentity>(RequestType.Identity, HttpMethod.Get, null,
                 additionalQueryParams);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <returns></returns>
         public ApiResponse<LoginRadiusUserIdentity> GetAccountProfileByPhone(string phone)
         {
             Validate(new [] { phone });
-            var additionalQueryParams = new QueryParameters { { "phone", phone } };
+            var additionalQueryParams = new QueryParameters { { nameof(phone), phone } };
             return ConfigureAndExecute<LoginRadiusUserIdentity>(RequestType.Identity, HttpMethod.Get, null,
                 additionalQueryParams);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uId"></param>
+        /// <returns></returns>
         public ApiResponse<LoginRadiusUserIdentity> GetAccountProfileByUid(string uId)
         {
             Validate(new [] { uId });
@@ -53,6 +77,12 @@ namespace LoginRadiusSDK.V2.Api
             return ConfigureAndExecute<LoginRadiusUserIdentity>(RequestType.Identity, HttpMethod.Get, resourcePath);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uId"></param>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public ApiResponse<LoginRadiusUserIdentity> UpdateAccount(string uId, LoginRadiusAccountUpdateModel user)
         {
             Validate(new [] { uId });
@@ -62,6 +92,11 @@ namespace LoginRadiusSDK.V2.Api
                 user.ConvertToJson());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uId"></param>
+        /// <returns></returns>
         public ApiResponse<LoginRadiusDeleteResponse> DeleteAccount(string uId)
         {
             Validate(new [] { uId });
@@ -71,16 +106,27 @@ namespace LoginRadiusSDK.V2.Api
                 "");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uId"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public ApiResponse<HashPassword> SetAccountPassword(string uId, string password)
         {
             Validate(new [] { uId, password });
             var pattern = new LoginRadiusResoucePath("{0}/password").ToString();
             var resourcePath = SDKUtil.FormatURIPath(pattern, new object[] { uId });
-            var passwordbody = new BodyParameters { ["password"] = password };
+            var passwordbody = new BodyParameters { [nameof(password)] = password };
             return ConfigureAndExecute<HashPassword>(RequestType.Identity, HttpMethod.Put, resourcePath,
                 passwordbody.ConvertToJson());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uId"></param>
+        /// <returns></returns>
         public ApiResponse<HashPassword> GetAccountPassword(string uId)
         {
             Validate(new [] { uId });
@@ -89,49 +135,81 @@ namespace LoginRadiusSDK.V2.Api
             return ConfigureAndExecute<HashPassword>(RequestType.Identity, HttpMethod.Get, resourcePath, "");
         }
 
-        public ApiResponse<UpdatePhoneResponse> PhoneNumberUpdate(string accessToken, ResetPasswordbyOtpModel model , string smsTemplate = "")
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="accessToken"></param>
+        /// <param name="model"></param>
+        /// <param name="smsTemplate"></param>
+        /// <returns></returns>
+        public ApiResponse<UpdatePhoneResponse> PhoneNumberUpdate(string accessToken, ResetPasswordbyOtpModel model, 
+            string smsTemplate = "")
         {
-            Validate(new [] { accessToken });
-            var additionalparms = new QueryParameters {{"smsTemplate", smsTemplate}, {"access_token", accessToken}};
+            Validate(new[] { accessToken });
+            var additionalparms = new QueryParameters { { nameof(smsTemplate), smsTemplate }, { "access_token", accessToken } };
             return ConfigureAndExecute<UpdatePhoneResponse>(RequestType.Authentication, HttpMethod.Put, "phone", additionalparms, model.ConvertToJson());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uId"></param>
+        /// <param name="phone"></param>
+        /// <returns></returns>
         public ApiResponse<LoginRadiusUserIdentity> ChangeAccountPhone(string uId, string phone)
         {
             Validate(new [] { uId });
             var pattern = new LoginRadiusResoucePath("{0}/PhoneId").ToString();
             var resourcePath = SDKUtil.FormatURIPath(pattern, new object[] { uId });
-            var payload = new BodyParameters { ["phone"] = phone };
+            var payload = new BodyParameters { [nameof(phone)] = phone };
             return ConfigureAndExecute<LoginRadiusUserIdentity>(RequestType.Identity, HttpMethod.Put, resourcePath,
                 payload.ConvertToJson());
         }
 
-
-        public ApiResponse<LoginRadiusPassword> GetForgotPasswordToken(string email)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public ApiResponse<ForgotPasswordToken> GetForgotPasswordToken(string email = "", string username = "")
         {
-            Validate(new [] { email });
-            var payload = new BodyParameters { ["email"] = email };
-            return ConfigureAndExecute<LoginRadiusPassword>(RequestType.Identity, HttpMethod.Post, "forgot/token",
+            var payload = new BodyParameters { [nameof(email)] = email, [nameof(username)] = username };
+            return ConfigureAndExecute<ForgotPasswordToken>(RequestType.Identity, HttpMethod.Post, "forgot/token",
                 payload.ConvertToJson());
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public ApiResponse<LoginRadiusVerification> EmailVerificationToken(string email)
         {
             Validate(new [] { email });
-            var payload = new BodyParameters { ["email"] = email };
+            var payload = new BodyParameters { [nameof(email)] = email };
             return ConfigureAndExecute<LoginRadiusVerification>(RequestType.Identity, HttpMethod.Post, "verify/token",
                 payload.ConvertToJson());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <returns></returns>
         public ApiResponse<AccessTokenResponse> AccessTokenBasedUID(string uid)
         {
             Validate(new [] { uid });
-            var additionalQueryParams = new QueryParameters { { "uid", uid } };
+            var additionalQueryParams = new QueryParameters { { nameof(uid), uid } };
             return ConfigureAndExecute<AccessTokenResponse>(RequestType.Identity, HttpMethod.Get, "access_token",
                 additionalQueryParams);
         }
-
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="accessToken"></param>
+        /// <returns></returns>
         public ApiResponse<AccessTokenResponse> Token_Validity(string accessToken)
         {
             Validate(new [] { accessToken });
@@ -140,6 +218,11 @@ namespace LoginRadiusSDK.V2.Api
                 "access_token/validate", additionalQueryParams);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="accessToken"></param>
+        /// <returns></returns>
         public ApiResponse<LoginRadiusPostResponse> Token_Invalidate(string accessToken)
         {
             Validate(new [] { accessToken });
@@ -148,15 +231,25 @@ namespace LoginRadiusSDK.V2.Api
                 "access_token/invalidate", additionalQueryParams);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <returns></returns>
         public ApiResponse<AccessTokenResponse> User_impersonation(string uid)
         {
             Validate(new [] { uid });
-            var additionalQueryParams = new QueryParameters { { "uid", uid } };
+            var additionalQueryParams = new QueryParameters { { nameof(uid), uid } };
             return ConfigureAndExecute<AccessTokenResponse>(RequestType.Identity, HttpMethod.Get, "access_token",
                 additionalQueryParams);
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public ApiResponse<LoginRadiusUserIdentity> PhoneUpdateSecurityQuestion(string uid,
               SecurityQuestion obj)
         {
@@ -180,16 +273,21 @@ namespace LoginRadiusSDK.V2.Api
             var resourcePath = SDKUtil.FormatURIPath(pattern, new object[] { uid });
             var additionalparams = new QueryParameters();
             if (!string.IsNullOrEmpty(optionalParams.VerificationUrl))
-                additionalparams.Add("verificationUrl", optionalParams.VerificationUrl);
+                additionalparams.Add(nameof(optionalParams.VerificationUrl), optionalParams.VerificationUrl);
             if (!string.IsNullOrEmpty(optionalParams.EmailTemplate))
-                additionalparams.Add("EmailTemplate", optionalParams.EmailTemplate);
+                additionalparams.Add(nameof(optionalParams.EmailTemplate), optionalParams.EmailTemplate);
             return ConfigureAndExecute<LoginRadiusPostResponse>(RequestType.Identity, HttpMethod.Put, resourcePath, additionalparams);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="timeDifference"></param>
+        /// <returns></returns>
         public ApiResponse<SottResponseData> GetSott(int timeDifference = 10)
         {
             Validate(new [] { timeDifference });
-            var additionalQueryParams = new QueryParameters { { "timedifference", timeDifference.ToString() } };
+            var additionalQueryParams = new QueryParameters { { nameof(timeDifference), timeDifference.ToString() } };
             return ConfigureAndExecute<SottResponseData>(RequestType.Identity, HttpMethod.Get, "sott", additionalQueryParams);
         }
 
@@ -201,7 +299,7 @@ namespace LoginRadiusSDK.V2.Api
         public ApiResponse<AccountIdentities> GetAccountIdentitiesByEmail(string email)
         {
             Validate(new[] { email });
-            var additionalQueryParams = new QueryParameters { { "email", email } };
+            var additionalQueryParams = new QueryParameters { { nameof(email), email } };
             return ConfigureAndExecute<AccountIdentities>(RequestType.Identity, HttpMethod.Get, "identities", additionalQueryParams);
         }
 
@@ -217,7 +315,7 @@ namespace LoginRadiusSDK.V2.Api
             var pattern = new LoginRadiusResoucePath("{0}/invalidatephone").ToString();
             var resourcePath = SDKUtil.FormatURIPath(pattern, new object[] { uid });
             var additionalparams = new QueryParameters();
-            if (!string.IsNullOrEmpty(optionalParams.EmailTemplate)) additionalparams.Add("SmsTemplate", optionalParams.EmailTemplate);
+            if (!string.IsNullOrEmpty(optionalParams.SmsTemplate)) additionalparams.Add(nameof(optionalParams.SmsTemplate), optionalParams.SmsTemplate);
             return ConfigureAndExecute<LoginRadiusPostResponse>(RequestType.Identity, HttpMethod.Put, resourcePath, additionalparams);
         }
     }
