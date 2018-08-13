@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading;
 using LoginRadiusSDK.V2.Exception;
 using LoginRadiusSDK.V2.Http;
@@ -7,6 +9,7 @@ using LoginRadiusSDK.V2.Models;
 using LoginRadiusSDK.V2.Util;
 using LoginRadiusSDK.V2.Util.Serialization;
 using Newtonsoft.Json;
+
 
 namespace LoginRadiusSDK.V2.Api
 {
@@ -23,22 +26,22 @@ namespace LoginRadiusSDK.V2.Api
             /// <summary>
             /// GET HTTP request. This is typically used in API operations to retrieve a static resource.
             /// </summary>
-            Get,
+            GET,
 
             /// <summary>
             /// POST HTTP request. This is typically used in API operations that require data in the request body to complete.
             /// </summary>
-            Post,
+            POST,
 
             /// <summary>
             /// PUT HTTP request. This is used in some API operations that update a given resource.
             /// </summary>
-            Put,
+            PUT,
 
             /// <summary>
             /// DELETE HTTP request. This is typcially used in API oeprations that delete a given resource.
             /// </summary>
-            Delete
+            DELETE
         }
 
         public enum RequestType
@@ -106,7 +109,21 @@ namespace LoginRadiusSDK.V2.Api
             /// <summary>
             /// 
             /// </summary>
-            Webhook
+            Webhook,
+            /// <summary>
+            /// 
+            /// </summary>
+            RegistrationData,
+            /// <summary>
+            /// 
+            /// </summary>
+            RegistrationDataAuth,
+             /// <summary>
+             /// 
+             /// </summary>
+            Configuration
+
+
         }
 
         /// <summary>
@@ -124,6 +141,9 @@ namespace LoginRadiusSDK.V2.Api
         /// </summary>
         private static QueryParameters _commHttpRequestParameter;
 
+
+        private static bool requestChannel = false;
+
         /// <summary>
         /// 
         /// </summary>
@@ -137,7 +157,8 @@ namespace LoginRadiusSDK.V2.Api
         protected LoginRadiusResource() : this(new CustomerRegistrationAuthentication
         {
             UserRegistrationKey = ConfigDictionary[BaseConstants.LoginRadiusApiKey],
-            UserRegistrationSecret = ConfigDictionary[BaseConstants.LoginRadiusApiSecret]
+            UserRegistrationSecret = ConfigDictionary[BaseConstants.LoginRadiusApiSecret],
+            UserRegistrationApiRequestSigning = ConfigDictionary[BaseConstants.ApiRequestSigning]
         })
         {
         }
@@ -148,7 +169,8 @@ namespace LoginRadiusSDK.V2.Api
             _commHttpRequestParameter = new QueryParameters
             {
                 {BaseConstants.LoginRadiusApiKey, Authentication.UserRegistrationKey},
-                {BaseConstants.LoginRadiusApiSecret, Authentication.UserRegistrationSecret}
+                {BaseConstants.LoginRadiusApiSecret, Authentication.UserRegistrationSecret},
+                {BaseConstants.ApiRequestSigning, Authentication.UserRegistrationApiRequestSigning}
             };
         }
 
@@ -175,6 +197,39 @@ namespace LoginRadiusSDK.V2.Api
             QueryParameters queryParameters, string payload = "")
         {
             return ConfigureAndExecute<object>(requestType, httpMethod, resource, queryParameters, payload);
+        }
+
+
+        static string CreateHash(string apiSecret, string endPoint, string httpMethod, string expiryTime, string payload = null)
+        {
+
+            var stringToHash = string.Empty;
+            string decodedUrl = null;
+            string encodedUrl = null;
+
+            #if NETSTANDARD1_3
+                decodedUrl = System.Net.WebUtility.UrlDecode(endPoint);
+                encodedUrl = System.Net.WebUtility.UrlEncode(decodedUrl).ToLower();
+            #else
+                decodedUrl = System.Web.HttpUtility.UrlDecode(endPoint);
+                encodedUrl = System.Web.HttpUtility.UrlEncode(decodedUrl).ToLower();
+            #endif
+
+
+            if (payload != null && payload!="") {
+                   stringToHash = expiryTime + ":" + encodedUrl + ":" + payload;
+            } else {
+                   stringToHash = expiryTime + ":" + encodedUrl;
+            }
+           
+
+            var hmacSha = new HMACSHA256(Encoding.UTF8.GetBytes(apiSecret));
+            hmacSha.Initialize();
+            byte[] hmac = hmacSha.ComputeHash(Encoding.UTF8.GetBytes(stringToHash));
+
+            var hash = Convert.ToBase64String(hmac);
+
+            return hash;
         }
 
         /// <summary>
@@ -228,6 +283,19 @@ namespace LoginRadiusSDK.V2.Api
                 // Create the URI where the HTTP request will be sent.
                 Uri uniformResourceIdentifier;
                 var endPoint = GetEndpoint(requestType, resource, out Dictionary<string, string> authHeaders, queryParameters);
+                if (_commHttpRequestParameter[BaseConstants.ApiRequestSigning] !=null && _commHttpRequestParameter[BaseConstants.ApiRequestSigning] == "true" && requestChannel)
+                {
+                    var time = DateTime.UtcNow.AddMinutes(15).ToString("yyyy-M-d h:m:s tt");
+                    var hash = CreateHash(_commHttpRequestParameter[BaseConstants.LoginRadiusApiSecret], endPoint, httpMethod.ToString(), time, payload);
+      
+                    if (headers == null)
+                    {
+                        headers = new Dictionary<string, string>();
+                    }
+
+                    headers.Add("digest", "SHA-256=" + hash);
+                    headers.Add("X-Request-Expires", time);
+                }
                 var baseUri = new Uri(endPoint);
                 if (resource != null)
                 {
@@ -323,14 +391,26 @@ namespace LoginRadiusSDK.V2.Api
                     {
                         ["secret"] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiSecret]
                     };
+
                     baseEndPoint = BaseConstants.RestApiEndpoint;
                     break;
                 case RequestType.AdvancedSocial:
-                    requestParameter = new QueryParameters
+                    if (_commHttpRequestParameter[BaseConstants.ApiRequestSigning] != null && _commHttpRequestParameter[BaseConstants.ApiRequestSigning] == "true")
                     {
-                        ["key"] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiKey],
-                        ["secret"] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiSecret]
-                    };
+                        requestChannel = true;
+                        requestParameter = new QueryParameters
+                        {
+                            ["key"] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiKey]
+                        };
+                    }
+                    else
+                    {
+                        requestParameter = new QueryParameters
+                        {
+                            ["key"] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiKey],
+                            ["secret"] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiSecret]
+                        };
+                    }
                     baseEndPoint = BaseConstants.RestApiEndpoint;
                     break;
                 case RequestType.AdvancedSharing:
@@ -343,19 +423,39 @@ namespace LoginRadiusSDK.V2.Api
                 case RequestType.Cloud:
                 case RequestType.Sso:
                     baseEndPoint = BaseConstants.RestApiEndpoint;
-                    requestParameter = new QueryParameters
+                    if (_commHttpRequestParameter[BaseConstants.ApiRequestSigning] != null && _commHttpRequestParameter[BaseConstants.ApiRequestSigning] == "true")
                     {
-                        ["key"] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiKey],
-                        ["secret"] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiSecret]
-                    };
+                        requestChannel = true;
+                        requestParameter = new QueryParameters
+                        {
+                            ["key"] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiKey]
+                        };
+                    }
+                    else
+                    {
+                        requestParameter = new QueryParameters
+                        {
+                            ["key"] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiKey],
+                            ["secret"] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiSecret]
+                        };
+                    }
                     break;
                 case RequestType.Identity:
                     baseEndPoint = BaseConstants.RestIdentityApiEndpoint;
-                    requestParameter = new QueryParameters { ["apiKey"] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiKey] };
-                    authHeaders = new Dictionary<string, string>
+                    
+                    if (_commHttpRequestParameter[BaseConstants.ApiRequestSigning] != null && _commHttpRequestParameter[BaseConstants.ApiRequestSigning] == "true")
                     {
-                        [BaseConstants.AuthorizationHeader] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiSecret]
-                    };
+                        requestChannel = true;
+                        requestParameter = new QueryParameters { ["apiKey"] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiKey] };
+                    }
+                    else
+                    {
+                        requestParameter = new QueryParameters { ["apiKey"] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiKey] };
+                        authHeaders = new Dictionary<string, string>
+                        {
+                            [BaseConstants.AuthorizationHeader] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiSecret]
+                        };
+                    }
                     break;
                 case RequestType.Role:
                     baseEndPoint = BaseConstants.RestRoleApiEndpoint;
@@ -367,11 +467,22 @@ namespace LoginRadiusSDK.V2.Api
                     break;
                 case RequestType.RestHook:
                     baseEndPoint = BaseConstants.RestHookApiEndpoint;
-                    requestParameter = new QueryParameters
+                    if (_commHttpRequestParameter[BaseConstants.ApiRequestSigning] != null && _commHttpRequestParameter[BaseConstants.ApiRequestSigning] == "true")
                     {
-                        ["api_key"] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiKey],
-                        ["api_secret"] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiSecret]
-                    };
+                        requestChannel = true;
+                        requestParameter = new QueryParameters
+                        {
+                            ["api_key"] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiKey]
+                        };
+                    }
+                    else
+                    {
+                        requestParameter = new QueryParameters
+                        {
+                            ["api_key"] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiKey],
+                            ["api_secret"] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiSecret]
+                        };
+                    }
                     break;
 
                 case RequestType.ServerInfo:
@@ -383,10 +494,56 @@ namespace LoginRadiusSDK.V2.Api
                     break;
                 case RequestType.Webhook:
                     baseEndPoint = BaseConstants.WebhokApiEndpoint;
+                    if (_commHttpRequestParameter[BaseConstants.ApiRequestSigning] != null && _commHttpRequestParameter[BaseConstants.ApiRequestSigning] == "true")
+                    {
+                        requestChannel = true;
+                        requestParameter = new QueryParameters
+                        {
+                            ["apikey"] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiKey]
+                        };
+                    }
+                    else
+                    {
+                        requestParameter = new QueryParameters
+                        {
+                            ["apikey"] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiKey],
+                            ["apisecret"] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiSecret]
+                        };
+                    }
+                    break;
+
+               case RequestType.RegistrationData:
+                    baseEndPoint = BaseConstants.RegistrationDataApiEndpoint;
+                    if (_commHttpRequestParameter[BaseConstants.ApiRequestSigning] != null && _commHttpRequestParameter[BaseConstants.ApiRequestSigning] == "true")
+                    {
+                        requestChannel = true;
+                        requestParameter = new QueryParameters
+                        {
+                            ["apikey"] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiKey]
+                        };
+                    }else
+                    {
+                        requestParameter = new QueryParameters
+                        {
+                            ["apikey"] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiKey],
+                            ["apisecret"] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiSecret]
+                        };
+                    }
+                    break;
+
+                case RequestType.RegistrationDataAuth:
+                    baseEndPoint = BaseConstants.RegistrationDataAuthApiEndpoint;
                     requestParameter = new QueryParameters
                     {
-                        ["apikey"] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiKey],
-                        ["apisecret"] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiSecret]
+                        ["apikey"] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiKey]
+                    };
+                    break;
+
+                case RequestType.Configuration:
+                    baseEndPoint = BaseConstants.ConfigurationAuthApiEndpoint;
+                    requestParameter = new QueryParameters
+                    {
+                        ["apikey"] = _commHttpRequestParameter[BaseConstants.LoginRadiusApiKey]
                     };
                     break;
 

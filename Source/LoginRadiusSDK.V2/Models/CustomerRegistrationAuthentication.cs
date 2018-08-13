@@ -4,5 +4,6 @@
     {
         public string UserRegistrationKey { get; set; }
         public string UserRegistrationSecret { get; set; }
+        public string UserRegistrationApiRequestSigning { get; set; }
     }
 }

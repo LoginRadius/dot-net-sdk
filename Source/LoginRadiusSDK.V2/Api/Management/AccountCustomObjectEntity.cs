@@ -24,7 +24,7 @@ namespace LoginRadiusSDK.V2.Api
             Validate(new [] { uId, customObject });
             var resourcePath = SDKUtil.FormatURIPath(_resoucePath, new object[] { uId });
             var additionalParameter = new QueryParameters { ["objectname"] = objectname };
-            return ConfigureAndExecute<CustomObjectprop>(RequestType.Identity, HttpMethod.Post, resourcePath,
+            return ConfigureAndExecute<CustomObjectprop>(RequestType.Identity, HttpMethod.POST, resourcePath,
                 additionalParameter, customObject);
         }
 
@@ -52,7 +52,7 @@ namespace LoginRadiusSDK.V2.Api
                 additionalparams.Add("updateType", "PartialReplace");
             }
             var resourcePath = SDKUtil.FormatURIPath(pattern, new object[] { uId, objectRecordId });
-            return ConfigureAndExecute<CustomObjectprop>(RequestType.Identity, HttpMethod.Put, resourcePath, additionalparams,
+            return ConfigureAndExecute<CustomObjectprop>(RequestType.Identity, HttpMethod.PUT, resourcePath, additionalparams,
                 customObject);
         }
 
@@ -67,7 +67,7 @@ namespace LoginRadiusSDK.V2.Api
             Validate(new [] { uId });
             var resourcePath = SDKUtil.FormatURIPath(_resoucePath, new object[] { uId });
             var addtionalparameter = new QueryParameters { ["objectname"] = objectname };
-            return ConfigureAndExecute<CustomObjectResponse>(RequestType.Identity, HttpMethod.Get, resourcePath,
+            return ConfigureAndExecute<CustomObjectResponse>(RequestType.Identity, HttpMethod.GET, resourcePath,
                 addtionalparameter);
         }
 
@@ -92,7 +92,7 @@ namespace LoginRadiusSDK.V2.Api
             var pattern = _resoucePath.ChildObject("{1}").ObjectName;
             var resourcePath = SDKUtil.FormatURIPath(pattern, new object[] { uId, objectRecordId });
             var additionalparams = new QueryParameters { ["objectname"] = objectname };
-            return ConfigureAndExecute<LoginRadiusDeleteResponse>(RequestType.Identity, HttpMethod.Delete,
+            return ConfigureAndExecute<LoginRadiusDeleteResponse>(RequestType.Identity, HttpMethod.DELETE,
                 resourcePath, additionalparams);
         }
 
@@ -112,7 +112,7 @@ namespace LoginRadiusSDK.V2.Api
                 ["access_token"] = access_token,
                 ["objectname"] = objectname
             };
-            return ConfigureAndExecute<CustomObjectprop>(RequestType.Authentication, HttpMethod.Get,
+            return ConfigureAndExecute<CustomObjectprop>(RequestType.Authentication, HttpMethod.GET,
                 resourcePath, additionalparams);
         }
     }

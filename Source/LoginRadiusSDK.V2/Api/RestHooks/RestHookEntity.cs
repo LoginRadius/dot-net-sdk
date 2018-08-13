@@ -6,24 +6,24 @@ namespace LoginRadiusSDK.V2.Api
     {
         public ApiResponse<LoginRadiusPostResponse> TestRestHook()
         {
-            return ConfigureAndExecute<LoginRadiusPostResponse>(RequestType.RestHook, HttpMethod.Get, "test");
+            return ConfigureAndExecute<LoginRadiusPostResponse>(RequestType.RestHook, HttpMethod.GET, "test");
         }
         public ApiResponse<LoginRadiusRestHookUserProfile> GetRestHookFieldList()
         {
-            return ConfigureAndExecute<LoginRadiusRestHookUserProfile>(RequestType.RestHook, HttpMethod.Get, "fields");
+            return ConfigureAndExecute<LoginRadiusRestHookUserProfile>(RequestType.RestHook, HttpMethod.GET, "fields");
         }
         public ApiResponse<RestHookSubscribeModel> GetRestHookSubscribedUrl()
         {
-            return ConfigureAndExecute<RestHookSubscribeModel>(RequestType.RestHook, HttpMethod.Get, "subscription");
+            return ConfigureAndExecute<RestHookSubscribeModel>(RequestType.RestHook, HttpMethod.GET, "subscription");
         }
         public ApiResponse<LoginRadiusPostResponse> PostSubscribeRestHook(RestHookSubscribeModel restHookSubscribeModel)
         {
-            return ConfigureAndExecute<LoginRadiusPostResponse>(RequestType.RestHook, HttpMethod.Post,
+            return ConfigureAndExecute<LoginRadiusPostResponse>(RequestType.RestHook, HttpMethod.POST,
                 "subscribe", restHookSubscribeModel.ConvertToJson());
         }
         public ApiResponse<LoginRadiusPostResponse> PostUnsubscribeRestHook(RestHookUnsubscribeModel restHookUnsubscribeModel)
         {
-            return ConfigureAndExecute<LoginRadiusPostResponse>(RequestType.RestHook, HttpMethod.Post,
+            return ConfigureAndExecute<LoginRadiusPostResponse>(RequestType.RestHook, HttpMethod.POST,
                 "subscribe", restHookUnsubscribeModel.ConvertToJson());
         }
     }

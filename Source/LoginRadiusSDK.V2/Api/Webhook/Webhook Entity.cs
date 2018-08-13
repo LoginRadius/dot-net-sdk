@@ -8,25 +8,25 @@ namespace LoginRadiusSDK.V2.Api.Webhook
     {
         public ApiResponse<LoginRadiusWebhookTestResponse> WebhookTest()
         {
-            return ConfigureAndExecute<LoginRadiusWebhookTestResponse>(RequestType.Webhook, HttpMethod.Get, "/test");
+            return ConfigureAndExecute<LoginRadiusWebhookTestResponse>(RequestType.Webhook, HttpMethod.GET, "/test");
         }
 
         public ApiResponse<LoginRadiusWebhookSubscribe> WebHookSubscribeAPI(webhookPost webhookPost)
         {
-            return ConfigureAndExecute<LoginRadiusWebhookSubscribe>(RequestType.Webhook, HttpMethod.Post, string.Empty,
+            return ConfigureAndExecute<LoginRadiusWebhookSubscribe>(RequestType.Webhook, HttpMethod.POST, string.Empty,
                 webhookPost.ConvertToJson());
         }
 
         public ApiResponse<LoginRadiusWebhookUnSubscribe> WebHookUnsubscribe(webhookPost webhookPost)
         {
-            return ConfigureAndExecute<LoginRadiusWebhookUnSubscribe>(RequestType.Webhook, HttpMethod.Delete, string.Empty,
+            return ConfigureAndExecute<LoginRadiusWebhookUnSubscribe>(RequestType.Webhook, HttpMethod.DELETE, string.Empty,
                 webhookPost.ConvertToJson());
         }
 
         public ApiResponse<LoginRadiouswebhookEvent> WebhookSubscribedURLs(string Event)
         {
             var additionalparams = new QueryParameters { ["event"] = Event };
-            return ConfigureAndExecute<LoginRadiouswebhookEvent>(RequestType.Webhook, HttpMethod.Get, null, additionalparams);
+            return ConfigureAndExecute<LoginRadiouswebhookEvent>(RequestType.Webhook, HttpMethod.GET, null, additionalparams);
         }
     }
 }

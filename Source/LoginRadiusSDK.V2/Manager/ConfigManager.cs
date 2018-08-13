@@ -152,6 +152,11 @@ namespace LoginRadiusSDK.V2
                 : LoginRadiusSdkGlobalConfig.AppName;
             _configValues.Add(BaseConstants.LoginRadiusAppName, valStr);
 
+            valStr = string.IsNullOrWhiteSpace(LoginRadiusSdkGlobalConfig.ApiRequestSigning)
+               ? _sdkConfigHandler.Setting(BaseConstants.ApiRequestSigning)
+               : LoginRadiusSdkGlobalConfig.ApiRequestSigning;
+            _configValues.Add(BaseConstants.ApiRequestSigning, valStr);
+
             return _configValues;
         }
     }

@@ -20,9 +20,9 @@ namespace LoginRadiusSDK.V2.Api
         public ApiResponse<AccessTokenResponse> TokenValidity(string access_token)
         {
             LoginRadiusArgumentValidator.Validate(new[] { access_token });
-            var additionalQueryParams = new QueryParameters { { nameof(access_token), access_token } };
-            return ConfigureAndExecute<AccessTokenResponse>(RequestType.Authentication, HttpMethod.Get,
-                "access_token/Validate", additionalQueryParams);
+            var additionalHeaders = new Dictionary<string, string>() { [BaseConstants.AccessTokenAuthorizationHeader] = BaseConstants.AccessTokenBearerHeader + access_token };
+            return ConfigureAndExecute<AccessTokenResponse>(RequestType.Authentication, HttpMethod.GET,
+                "access_token/Validate", null,null, additionalHeaders);
         }
 
 
@@ -34,9 +34,9 @@ namespace LoginRadiusSDK.V2.Api
         public ApiResponse<LoginRadiusPostResponse> InvalidateAccessToken(string access_token)
         {
             LoginRadiusArgumentValidator.Validate(new[] { access_token });
-            var additionalQueryParams = new QueryParameters { { nameof(access_token), access_token } };
-            return ConfigureAndExecute<LoginRadiusPostResponse>(RequestType.Authentication, HttpMethod.Get,
-                "access_token/InValidate", additionalQueryParams);
+            var additionalHeaders = new Dictionary<string, string>() { [BaseConstants.AccessTokenAuthorizationHeader] = BaseConstants.AccessTokenBearerHeader + access_token };
+            return ConfigureAndExecute<LoginRadiusPostResponse>(RequestType.Authentication, HttpMethod.GET,
+                "access_token/InValidate", null,null, additionalHeaders);
         }
 
 
@@ -50,9 +50,9 @@ namespace LoginRadiusSDK.V2.Api
             string access_token)
         {
             LoginRadiusArgumentValidator.Validate(new[] { model.otpauthenticator, model.googleauthenticator });
-            var additionalQueryParams = new QueryParameters { { nameof(access_token), access_token } };
-            return ConfigureAndExecute<LoginRadiusDeleteResponse>(RequestType.Authentication, HttpMethod.Delete,
-                "account/2FA/authenticator", additionalQueryParams, model.ConvertToJson());
+            var additionalHeaders = new Dictionary<string, string>() { [BaseConstants.AccessTokenAuthorizationHeader] = BaseConstants.AccessTokenBearerHeader + access_token };
+            return ConfigureAndExecute<LoginRadiusDeleteResponse>(RequestType.Authentication, HttpMethod.DELETE,
+                "account/2FA/authenticator", null, model.ConvertToJson(), additionalHeaders);
         }
 
 
@@ -65,7 +65,7 @@ namespace LoginRadiusSDK.V2.Api
         {
             LoginRadiusArgumentValidator.Validate(new[] { id_token });
             var additionalQueryParams = new QueryParameters { { nameof(id_token), id_token } };
-            return ConfigureAndExecute<Auth>(RequestType.AdvancedSocial, HttpMethod.Get, "access_token/googlejwt",
+            return ConfigureAndExecute<Auth>(RequestType.AdvancedSocial, HttpMethod.GET, "access_token/googlejwt",
                 additionalQueryParams);
         }
 
@@ -82,9 +82,9 @@ namespace LoginRadiusSDK.V2.Api
             LoginRadiusArgumentValidator.Validate(new[] { otpauthenticator, googleauthenticator });
             var pattern = new LoginRadiusResoucePath("{0}{1}").ToString();
             var resourcePath = SDKUtil.FormatURIPath(pattern, new object[] { otpauthenticator, googleauthenticator });
-            var additionalQueryParams = new QueryParameters { { nameof(access_token), access_token } };
-            return ConfigureAndExecute<LoginRadiusDeleteResponse>(RequestType.Authentication, HttpMethod.Delete,
-                "account/2FA/authenticator", additionalQueryParams, resourcePath);
+            var additionalHeaders = new Dictionary<string, string>() { [BaseConstants.AccessTokenAuthorizationHeader] = BaseConstants.AccessTokenBearerHeader + access_token };
+            return ConfigureAndExecute<LoginRadiusDeleteResponse>(RequestType.Authentication, HttpMethod.DELETE,
+                "account/2FA/authenticator", null, resourcePath, additionalHeaders);
         }
 
 
@@ -99,7 +99,7 @@ namespace LoginRadiusSDK.V2.Api
         {
             LoginRadiusArgumentValidator.Validate(new List<object> { model.googleauthenticator, model.otpauthenticator, uid });
             var additionalQueryParams = new QueryParameters { [nameof(uid)] = uid };
-            return ConfigureAndExecute<LoginRadiusDeleteResponse>(RequestType.Identity, HttpMethod.Delete,
+            return ConfigureAndExecute<LoginRadiusDeleteResponse>(RequestType.Identity, HttpMethod.DELETE,
                 "2FA/authenticator", additionalQueryParams, model.ConvertToJson());
         }
 
@@ -118,7 +118,7 @@ namespace LoginRadiusSDK.V2.Api
                 [nameof(secondfactorauthenticationtoken)] = secondfactorauthenticationtoken,
                 [nameof(smstemplate2fa)] = smstemplate2fa
             };
-            return ConfigureAndExecute<PhoneUpsertResponse>(RequestType.Authentication, HttpMethod.Get,
+            return ConfigureAndExecute<PhoneUpsertResponse>(RequestType.Authentication, HttpMethod.GET,
                 "login/2FA/resend", additionalQueryParams);
         }
 
@@ -131,9 +131,10 @@ namespace LoginRadiusSDK.V2.Api
         public ApiResponse<SecondFactorAuthenticationSettings> TwoFactorAuthenticationbyToken(string access_token, string smsTemplate2FA)
         {
             LoginRadiusArgumentValidator.Validate(new[] { access_token });
-            var additionalQueryParams = new QueryParameters { [nameof(access_token)] = access_token };
+            var additionalQueryParams = new QueryParameters();
             additionalQueryParams.TryAdd(nameof(smsTemplate2FA), smsTemplate2FA);
-            return ConfigureAndExecute<SecondFactorAuthenticationSettings>(RequestType.Authentication, HttpMethod.Get, "/account/2fa", additionalQueryParams);
+            var additionalHeaders = new Dictionary<string, string>() { [BaseConstants.AccessTokenAuthorizationHeader] = BaseConstants.AccessTokenBearerHeader + access_token };
+            return ConfigureAndExecute<SecondFactorAuthenticationSettings>(RequestType.Authentication, HttpMethod.GET, "/account/2fa", additionalQueryParams,null, additionalHeaders);
         }
     }
 }

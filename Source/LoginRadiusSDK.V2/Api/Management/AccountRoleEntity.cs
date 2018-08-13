@@ -19,7 +19,7 @@ namespace LoginRadiusSDK.V2.Api
         {
             Validate(new [] {uId});
             var resourcePath = SDKUtil.FormatURIPath(_resoucePath, new object[] {uId});
-            return ConfigureAndExecute<LoginRadiusUserRoles>(RequestType.Identity, HttpMethod.Get, resourcePath);
+            return ConfigureAndExecute<LoginRadiusUserRoles>(RequestType.Identity, HttpMethod.GET, resourcePath);
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace LoginRadiusSDK.V2.Api
         {
             Validate(new List<object> { uId, accountRoles});
             var resourcePath = SDKUtil.FormatURIPath(_resoucePath, new object[] {uId});
-            return ConfigureAndExecute<LoginRadiusAccountRolesUpsert>(RequestType.Identity, HttpMethod.Put,
+            return ConfigureAndExecute<LoginRadiusAccountRolesUpsert>(RequestType.Identity, HttpMethod.PUT,
                 resourcePath, accountRoles.ConvertToJson());
         }
 
@@ -47,7 +47,7 @@ namespace LoginRadiusSDK.V2.Api
         {
             Validate(new List<object> { uId, accountRoles});
             var resourcePath = SDKUtil.FormatURIPath(_resoucePath, new object[] {uId});
-            return ConfigureAndExecute<LoginRadiusDeleteResponse>(RequestType.Identity, HttpMethod.Delete, resourcePath,
+            return ConfigureAndExecute<LoginRadiusDeleteResponse>(RequestType.Identity, HttpMethod.DELETE, resourcePath,
                 accountRoles.ConvertToJson());
         }
         
@@ -61,7 +61,7 @@ namespace LoginRadiusSDK.V2.Api
         {
             Validate(new [] {uid});
             var resourcePath = SDKUtil.FormatURIPath(new LoginRadiusResoucePath("{0}/rolecontext"), new object[] {uid});
-            return ConfigureAndExecute<RoleContextData>(RequestType.Identity, HttpMethod.Put, resourcePath,
+            return ConfigureAndExecute<RoleContextData>(RequestType.Identity, HttpMethod.PUT, resourcePath,
                 roleContext.ConvertToJson());
         }
 
@@ -74,7 +74,7 @@ namespace LoginRadiusSDK.V2.Api
         {
             Validate(new [] {uid});
             var resourcePath = SDKUtil.FormatURIPath(new LoginRadiusResoucePath("{0}/rolecontext"), new object[] {uid});
-            return ConfigureAndExecute<RoleContextData>(RequestType.Identity, HttpMethod.Get, resourcePath);
+            return ConfigureAndExecute<RoleContextData>(RequestType.Identity, HttpMethod.GET, resourcePath);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace LoginRadiusSDK.V2.Api
             Validate(new [] {uid, rolecontextname});
             var resourcePath = SDKUtil.FormatURIPath(new LoginRadiusResoucePath("{0}/rolecontext/{1}/role"),
                 new object[] {uid, rolecontextname});
-            return ConfigureAndExecute<LoginRadiusDeleteResponse>(RequestType.Identity, HttpMethod.Delete, resourcePath,
+            return ConfigureAndExecute<LoginRadiusDeleteResponse>(RequestType.Identity, HttpMethod.DELETE, resourcePath,
                 roles.ConvertToJson());
         }
 
@@ -108,7 +108,7 @@ namespace LoginRadiusSDK.V2.Api
             var resourcePath =
                 SDKUtil.FormatURIPath(new LoginRadiusResoucePath("{0}/rolecontext/{1}/additionalpermission"),
                     new object[] {uid, rolecontextname});
-            return ConfigureAndExecute<LoginRadiusDeleteResponse>(RequestType.Identity, HttpMethod.Delete, resourcePath,
+            return ConfigureAndExecute<LoginRadiusDeleteResponse>(RequestType.Identity, HttpMethod.DELETE, resourcePath,
                 additionalRolePermissions.ConvertToJson());
         }
 
@@ -125,7 +125,7 @@ namespace LoginRadiusSDK.V2.Api
             var resourcePath =
                SDKUtil.FormatURIPath(new LoginRadiusResoucePath("{0}/rolecontext/{1}"),
                    new object[] { uid, rolecontextname });
-            return ConfigureAndExecute<LoginRadiusDeleteResponse>(RequestType.Identity, HttpMethod.Delete, resourcePath );
+            return ConfigureAndExecute<LoginRadiusDeleteResponse>(RequestType.Identity, HttpMethod.DELETE, resourcePath );
         }
     }
 }

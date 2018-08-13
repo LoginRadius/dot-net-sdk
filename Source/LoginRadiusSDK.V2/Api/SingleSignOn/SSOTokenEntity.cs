@@ -14,14 +14,14 @@ namespace LoginRadiusSDK.V2.Api
         {
             Validate(new [] { accessToken });
             var additionalQueryParams = new QueryParameters {["access_token"] = accessToken };   
-            return ConfigureAndExecute<LoginRadiusAccessToken>(RequestType.Sso, HttpMethod.Get, _resoucePath.ToString(),
+            return ConfigureAndExecute<LoginRadiusAccessToken>(RequestType.Sso, HttpMethod.GET, _resoucePath.ToString(),
                 additionalQueryParams);
         }
         public ApiResponse<LoginRadiusPostResponse> TokenInvalidate(string accessToken)
         {
             Validate(new [] { accessToken });
             var additionalQueryParams = new QueryParameters {["access_token"] = accessToken };
-            return ConfigureAndExecute<LoginRadiusPostResponse>(RequestType.Sso, HttpMethod.Get, _resoucePath.ToString(),
+            return ConfigureAndExecute<LoginRadiusPostResponse>(RequestType.Sso, HttpMethod.GET, _resoucePath.ToString(),
                 additionalQueryParams);
         }
     }

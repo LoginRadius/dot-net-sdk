@@ -1,5 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 using LoginRadiusSDK.V2.Api;
+
 
 namespace LoginRadiusSDK.V2.Net45.Sample.Controllers
 {
@@ -18,6 +20,7 @@ namespace LoginRadiusSDK.V2.Net45.Sample.Controllers
             // In order to set Request Retries uncomment below line. 
             //LoginRadiusSdkGlobalConfig.RequestRetries = 3;
             var sott = new AccountManagementEntity().GetSott(30);
+
             ViewBag.Sott = sott.RestException == null ? sott.Response.Sott : null;
             return View();
         }
@@ -29,10 +32,11 @@ namespace LoginRadiusSDK.V2.Net45.Sample.Controllers
             {
                 Session[AccessTokenKey] = token;
             }
-
+           
             var api = new AccountEntity();
             var apiResponse = api.GetProfile(token);
             return Json(apiResponse);
         }
     }
+
 }

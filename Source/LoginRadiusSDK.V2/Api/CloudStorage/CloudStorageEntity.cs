@@ -46,7 +46,7 @@ namespace LoginRadiusSDK.V2.Api
             {
                 postRequest.Add("Limit", limit);
             }
-            return ConfigureAndExecute<LoginRadiusIdentityUserList>(RequestType.Cloud, HttpMethod.Post,
+            return ConfigureAndExecute<LoginRadiusIdentityUserList>(RequestType.Cloud, HttpMethod.POST,
                 "identity",
                 postRequest.ConvertToJson());
         }
@@ -73,7 +73,7 @@ namespace LoginRadiusSDK.V2.Api
                 {"firstDatapoint", firstDatapoint},
                 {"statsType", statsType}
             };
-            return ConfigureAndExecute<LoginRadiusQueryDataModel>(RequestType.Cloud, HttpMethod.Post,
+            return ConfigureAndExecute<LoginRadiusQueryDataModel>(RequestType.Cloud, HttpMethod.POST,
                 "insights", additionalQueryParams,
                 postRequest.ConvertToJson());
         }

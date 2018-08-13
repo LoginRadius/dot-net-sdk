@@ -26,12 +26,29 @@ a:hover {
   clear: both;
 }
 .lr-raas-button {
-  display: inline-block;
-
-  border-radius: 5px;
-
-  -webkit-transition: all 200ms ease-in-out;
-          transition: all 200ms ease-in-out;
+    display: inline-block;
+    background: #f4821f;
+    border: #f4821f 1px solid;
+    color: #fff;
+    font-weight: bold;
+    color: #fff;
+    padding: 4px 15px;
+    border-radius: 6px;
+    -webkit-transition: all 200ms ease-in-out;
+    transition: all 200ms ease-in-out;
+}
+a.lr-raas-button-x {
+    margin: 3px;
+    display: inline-block;
+    background: #2299dd;
+    border: #2299dd 1px solid;
+    color: #fff;
+    font-weight: bold;
+    color: #fff;
+    padding: 4px 15px;
+    border-radius: 6px;
+    -webkit-transition: all 200ms ease-in-out;
+    transition: all 200ms ease-in-out;
 }
 .lr-raas-button:hover {
   text-decoration: none;
@@ -256,4 +273,75 @@ a:hover {
 }
 #sociallogin-container {
   padding: 30px;
+}
+
+
+.pop_up {
+    background: rgba(0,0,0,.4);
+    cursor: pointer;
+    display: none;
+    height: 100%;
+    position: fixed;
+    text-align: center;
+    top: 0;
+    width: 100%;
+    z-index: 10000;
+}
+
+    .pop_up .helper {
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+    }
+
+    .pop_up > div {
+        background-color: #fff;
+        box-shadow: 10px 10px 60px #555;
+        display: inline-block;
+        height: auto;
+        max-width: 727px;
+        min-height: 600px;
+        vertical-align: middle;
+        width: 100%;
+        position: relative;
+        border-radius: 3px;
+        overflow: hidden;
+    }
+
+    .pop_up .pop_body {
+        float: left;
+    }
+
+.popup_close_button {
+    font-size: 30px;
+    line-height: 50px;
+    width: 20px;
+    text-align: center;
+    float: right;
+    position: relative;
+    top: 18px;
+}
+
+/ Popup box BEGIN /
+
+body.fixed {
+    overflow: hidden;
+}
+
+.pop_header {
+    padding: 0 20px;
+    border-radius: 3px 3px 0 0;
+}
+
+    .pop_header h3 {
+        font-size: 18px;
+        font-weight: normal;
+    }
+
+.pop_up > div > .pop_body {
+    text-align: left;
+}
+
+.pop_body .lr-ls-page {
+    margin-top: 0;
 }

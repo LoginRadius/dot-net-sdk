@@ -80,20 +80,20 @@
   transition: all 200ms ease-in-out;
   box-shadow: inset -5px 0 7px -2px rgba(0, 0, 0, 0.1);
 }
-.lr-sl-shaded-brick-frame .lr-sl-shaded-brick-button .lr-sl-icon:before {
-  content: "";
-  display: inline-block;
-  vertical-align: middle;
-  width: 32px;
-  height: 32px;
-  background-image: url("../images/icon-sprite-32.png");
-  /*Image fallback for ie8*/
-  background-image: linear-gradient(transparent, transparent), url("../images/icon-sprite.svg");
-  /*SVG for scalability. Good for high resolution screens/retina*/
-  background-size: 100% 3600%;
-  background-position: 0 0;
-  margin-top: 4px;
-}
+    .lr-sl-shaded-brick-frame .lr-sl-shaded-brick-button .lr-sl-icon:before {
+        content: "";
+        display: inline-block;
+        vertical-align: middle;
+        width: 32px;
+        height: 32px;
+        background-image: url("../images/icon-sprite-32.png");
+        /*Image fallback for ie8*/
+        background-image: linear-gradient(transparent, transparent), url('../images/icon-sprite.svg');
+        /*SVG for scalability. Good for high resolution screens/retina*/
+        background-size: 100% 3600%;
+        background-position: 0 0;
+        margin-top: 4px;
+    }
 .lr-sl-shaded-brick-frame .lr-sl-shaded-brick-button .lr-sl-icon-amazon:before {
   background-position: 0 0%;
   /*========================================================*/
@@ -493,3 +493,12 @@
 .lr-sl-shaded-brick-frame .lr-sl-shaded-brick-button.lr-flat-mailru {
   background-color: #1897e6;
 }
+.lr-linked, .lr-unlinked {
+    width: 100%;
+    margin-bottom: 20px;
+    text-align: left;
+}
+    .lr-linked a, .lr-unlinked a {
+        width: 100%;
+        color: #fff;
+    }

@@ -34,4 +34,9 @@ namespace LoginRadiusSDK.V2.Models
         /// </summary>
         public List<ValidationErrors> Errors { get; set; }
     }
+
+    public class ApiExceptionResponse<T> : ApiExceptionResponse
+    {
+        public T Data { get; set; }
+    }
 }

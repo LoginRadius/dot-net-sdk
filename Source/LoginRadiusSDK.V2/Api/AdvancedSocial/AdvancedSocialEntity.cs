@@ -16,7 +16,7 @@ namespace LoginRadiusSDK.V2.Api.AdvancedSocial
             Validate(new [] {facebookToken});
             var additionalQueryParams = new QueryParameters {["fb_access_token"] = facebookToken};
             return ConfigureAndExecute<LoginRadiusAccessToken>(RequestType.AdvancedSocial,
-                HttpMethod.Get, "access_token/facebook", additionalQueryParams);
+                HttpMethod.GET, "access_token/facebook", additionalQueryParams);
         }
 
         public ApiResponse<LoginRadiusAccessToken> GetTwitterAccessToken(string twitterToken, string twitterTokenSecret)
@@ -25,14 +25,14 @@ namespace LoginRadiusSDK.V2.Api.AdvancedSocial
             var additionalQueryParams =
                 new QueryParameters {["tw_access_token"] = twitterToken, ["tw_token_secret"] = twitterTokenSecret};
             return ConfigureAndExecute<LoginRadiusAccessToken>(RequestType.AdvancedSocial,
-                HttpMethod.Get, "access_token/twitter", additionalQueryParams);
+                HttpMethod.GET, "access_token/twitter", additionalQueryParams);
         }
 
         public ApiResponse<LoginRadiusSocialUserProfile> GetRefreshUserProfile(string accessToken)
         {
             Validate(new [] {accessToken});
             var additionalQueryParams = new QueryParameters {["access_token"] = accessToken};
-            return ConfigureAndExecute<LoginRadiusSocialUserProfile>(RequestType.AdvancedSocial, HttpMethod.Get,
+            return ConfigureAndExecute<LoginRadiusSocialUserProfile>(RequestType.AdvancedSocial, HttpMethod.GET,
                 "userprofile/refresh", additionalQueryParams);
         }
 
@@ -40,7 +40,7 @@ namespace LoginRadiusSDK.V2.Api.AdvancedSocial
         {
             Validate(new [] {accessToken});
             var additionalQueryParams = new QueryParameters {["access_token"] = accessToken};
-            return ConfigureAndExecute<AccessTokenResponse>(RequestType.AdvancedSocial, HttpMethod.Get,
+            return ConfigureAndExecute<AccessTokenResponse>(RequestType.AdvancedSocial, HttpMethod.GET,
                 "access_token/refresh", additionalQueryParams);
         }
 
@@ -48,7 +48,7 @@ namespace LoginRadiusSDK.V2.Api.AdvancedSocial
         {
             Validate(new [] {uri});
             var additionalQueryParams = new QueryParameters {["url"] = uri};
-            return ConfigureAndExecute<ShortUrlResponse>(RequestType.AdvancedSharing, HttpMethod.Get, null,
+            return ConfigureAndExecute<ShortUrlResponse>(RequestType.AdvancedSharing, HttpMethod.GET, null,
                 additionalQueryParams);
         }
 
@@ -56,7 +56,7 @@ namespace LoginRadiusSDK.V2.Api.AdvancedSocial
         {
             Validate(new [] {postId});
             var additionalQueryParams = new QueryParameters {["postid"] = postId};
-            return ConfigureAndExecute<LoginRadiusStatusStats>(RequestType.AdvancedSocial, HttpMethod.Get,
+            return ConfigureAndExecute<LoginRadiusStatusStats>(RequestType.AdvancedSocial, HttpMethod.GET,
                 "status/trackable", additionalQueryParams);
         }
 
@@ -65,7 +65,7 @@ namespace LoginRadiusSDK.V2.Api.AdvancedSocial
         {
             Validate(new List<object> {accessToken, trackableStatusUpdate});
             var additionalQueryParams = new QueryParameters {["access_token"] = accessToken};
-            return ConfigureAndExecute<TrackableStatusPostResponse>(RequestType.AdvancedSocial, HttpMethod.Post,
+            return ConfigureAndExecute<TrackableStatusPostResponse>(RequestType.AdvancedSocial, HttpMethod.POST,
                 "status/trackable", additionalQueryParams, trackableStatusUpdate.ConvertToJson());
         }
     }

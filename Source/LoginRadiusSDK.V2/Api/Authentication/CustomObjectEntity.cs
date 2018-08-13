@@ -10,15 +10,15 @@ namespace LoginRadiusSDK.V2.Api
     public class CustomObjectEntity : LoginRadiusResource
     {
         private readonly LoginRadiusResoucePath _resoucePath = new LoginRadiusResoucePath("CustomObject");
-
+       
         public ApiResponse<CustomObjectprop> CreateCustomObjectbyToken(string accessToken, string objectName, string customObject)
         {
             Validate(new [] { objectName, accessToken });
             var additionalQueryParams =
-                new QueryParameters { ["access_token"] = accessToken, ["objectName"] = objectName };
-            return ConfigureAndExecute<CustomObjectprop>(RequestType.Authentication, HttpMethod.Post,
-                _resoucePath.ToString(),
-                additionalQueryParams, customObject);
+                new QueryParameters { ["objectName"] = objectName };
+            var additionalHeaders = new Dictionary<string, string>() { [BaseConstants.AccessTokenAuthorizationHeader] = BaseConstants.AccessTokenBearerHeader + accessToken };
+            return ConfigureAndExecute<CustomObjectprop>(RequestType.Authentication, HttpMethod.POST,
+                _resoucePath.ToString(),additionalQueryParams, customObject, additionalHeaders);
         }
 
         public ApiResponse<CustomObjectprop> UpdateCustomObjectbyAccessToken(string accessToken, string objectRecordId, string objectName,
@@ -26,7 +26,8 @@ namespace LoginRadiusSDK.V2.Api
         {
             Validate(new [] { objectName, accessToken });
             var additionalQueryParams =
-                new QueryParameters { ["access_token"] = accessToken, ["objectName"] = objectName };
+                new QueryParameters { ["objectName"] = objectName };
+            var additionalHeaders = new Dictionary<string, string>() { [BaseConstants.AccessTokenAuthorizationHeader] = BaseConstants.AccessTokenBearerHeader + accessToken };
             if (fullReplace.HasValue && fullReplace.Value)
             {
                 additionalQueryParams.Add("updateType", "Replace");
@@ -37,8 +38,8 @@ namespace LoginRadiusSDK.V2.Api
             }
             var resourcePath = SDKUtil.FormatURIPath(_resoucePath.ChildObject("{0}").ToString(),
                 new object[] { objectRecordId });
-            return ConfigureAndExecute<CustomObjectprop>(RequestType.Authentication, HttpMethod.Put, resourcePath,
-                additionalQueryParams, customObject);
+            return ConfigureAndExecute<CustomObjectprop>(RequestType.Authentication, HttpMethod.PUT, resourcePath,
+                additionalQueryParams, customObject, additionalHeaders);
         }
 
         public ApiResponse<LoginRadiusCountResponse<List<CustomObjectprop>>> GetByAccessToken(string accessToken,
@@ -46,10 +47,11 @@ namespace LoginRadiusSDK.V2.Api
         {
             Validate(new [] { objectName, accessToken });
             var additionalQueryParams =
-                new QueryParameters { ["access_token"] = accessToken, ["objectName"] = objectName };
+                new QueryParameters { ["objectName"] = objectName };
+            var additionalHeaders = new Dictionary<string, string>() { [BaseConstants.AccessTokenAuthorizationHeader] = BaseConstants.AccessTokenBearerHeader + accessToken };
             return ConfigureAndExecute<LoginRadiusCountResponse<List<CustomObjectprop>>>(RequestType.Authentication,
-                HttpMethod.Get, _resoucePath.ToString(),
-                additionalQueryParams);
+                HttpMethod.GET, _resoucePath.ToString(),
+                additionalQueryParams,null, additionalHeaders);
         }
 
         public ApiResponse<CustomObjectprop> GetByRecordId(string accessToken, string objectRecordId,
@@ -57,11 +59,12 @@ namespace LoginRadiusSDK.V2.Api
         {
             Validate(new [] { objectName, accessToken });
             var additionalQueryParams =
-                new QueryParameters { ["access_token"] = accessToken, ["objectName"] = objectName };
+                new QueryParameters {  ["objectName"] = objectName };
+            var additionalHeaders = new Dictionary<string, string>() { [BaseConstants.AccessTokenAuthorizationHeader] = BaseConstants.AccessTokenBearerHeader + accessToken };
             var resourcePath = SDKUtil.FormatURIPath(_resoucePath.ChildObject("{0}").ToString(),
                 new object[] { objectRecordId });
-            return ConfigureAndExecute<CustomObjectprop>(RequestType.Authentication, HttpMethod.Get, resourcePath,
-                additionalQueryParams);
+            return ConfigureAndExecute<CustomObjectprop>(RequestType.Authentication, HttpMethod.GET, resourcePath,
+                additionalQueryParams,null,additionalHeaders);
         }
 
         public ApiResponse<LoginRadiusDeleteResponse> CustomObjectDeletebyRecordIdAndToken(string accessToken, string objectRecordId,
@@ -69,12 +72,13 @@ namespace LoginRadiusSDK.V2.Api
         {
             Validate(new [] { objectName, accessToken });
             var additionalQueryParams =
-                new QueryParameters { ["access_token"] = accessToken, ["objectName"] = objectName };
+                new QueryParameters { ["objectName"] = objectName };
+            var additionalHeaders = new Dictionary<string, string>() { [BaseConstants.AccessTokenAuthorizationHeader] = BaseConstants.AccessTokenBearerHeader + accessToken };
             var resourcePath = SDKUtil.FormatURIPath(_resoucePath.ChildObject("{0}").ToString(),
                 new object[] { objectRecordId });
-            return ConfigureAndExecute<LoginRadiusDeleteResponse>(RequestType.Authentication, HttpMethod.Delete,
+            return ConfigureAndExecute<LoginRadiusDeleteResponse>(RequestType.Authentication, HttpMethod.DELETE,
                 resourcePath,
-                additionalQueryParams);
+                additionalQueryParams,null,additionalHeaders);
         }
 
         public ApiResponse<CustomObjectprop> CustomObjectbyObjectRecordIdandUID(string uid, string objectrecordid, string objectname)
@@ -87,7 +91,7 @@ namespace LoginRadiusSDK.V2.Api
             //{uid}/customobject/{objectrecordid}
             var resourcePath = SDKUtil.FormatURIPath(("{0}/customobject/{1}"),
                new object[] { uid, objectrecordid });
-            return ConfigureAndExecute<CustomObjectprop>(RequestType.Identity, HttpMethod.Get,
+            return ConfigureAndExecute<CustomObjectprop>(RequestType.Identity, HttpMethod.GET,
                 resourcePath, additionalQueryParams);
 
         }

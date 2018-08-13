@@ -959,3 +959,11 @@ Ovrelay
 td.profileValue {
     word-break: break-all;
 }
+
+.lrLogin {
+    padding-bottom: 20px;
+}
+
+.lrLogin .lrLogin {
+        padding-bottom: 0;
+}

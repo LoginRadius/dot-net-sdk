@@ -30,7 +30,7 @@ namespace LoginRadiusSDK.V2.Api.Social
                 ["access_token"] = accessToken,
                 ["nextcursor"] = nextCursor.ToString()
             };
-            return ConfigureAndExecute<ListLoginRadiusAlbum>(RequestType.Social, HttpMethod.Get, "album",
+            return ConfigureAndExecute<ListLoginRadiusAlbum>(RequestType.Social, HttpMethod.GET, "album",
                 additionalQueryParams);
         }
 
@@ -38,7 +38,7 @@ namespace LoginRadiusSDK.V2.Api.Social
         {
             Validate(new [] {accessToken});
             var additionalQueryParams = new QueryParameters {["access_token"] = accessToken};
-            return ConfigureAndExecute<List<LoginRadiusAudio>>(RequestType.Social, HttpMethod.Get, "audio",
+            return ConfigureAndExecute<List<LoginRadiusAudio>>(RequestType.Social, HttpMethod.GET, "audio",
                 additionalQueryParams);
         }
 
@@ -46,7 +46,7 @@ namespace LoginRadiusSDK.V2.Api.Social
         {
             Validate(new [] {accessToken});
             var additionalQueryParams = new QueryParameters {["access_token"] = accessToken};
-            return ConfigureAndExecute<List<LoginRadiusCheckIn>>(RequestType.Social, HttpMethod.Get, "checkin",
+            return ConfigureAndExecute<List<LoginRadiusCheckIn>>(RequestType.Social, HttpMethod.GET, "checkin",
                 additionalQueryParams);
         }
 
@@ -54,7 +54,7 @@ namespace LoginRadiusSDK.V2.Api.Social
         {
             Validate(new [] {accessToken});
             var additionalQueryParams = new QueryParameters {["access_token"] = accessToken};
-            return ConfigureAndExecute<List<LoginRadiusCompany>>(RequestType.Social, HttpMethod.Get, "company",
+            return ConfigureAndExecute<List<LoginRadiusCompany>>(RequestType.Social, HttpMethod.GET, "company",
                 additionalQueryParams);
         }
 
@@ -66,7 +66,7 @@ namespace LoginRadiusSDK.V2.Api.Social
                 ["access_token"] = accessToken,
                 ["nextcursor"] = nextCursor.ToString()
             };
-            return ConfigureAndExecute<LoginRadiusContact>(RequestType.Social, HttpMethod.Get, "contact",
+            return ConfigureAndExecute<LoginRadiusContact>(RequestType.Social, HttpMethod.GET, "contact",
                 additionalQueryParams);
         }
 
@@ -78,7 +78,7 @@ namespace LoginRadiusSDK.V2.Api.Social
                 ["access_token"] = accessToken,
                 ["nextcursor"] = nextCursor.ToString()
             };
-            return ConfigureAndExecute<ListLoginRadiusEvent>(RequestType.Social, HttpMethod.Get, "event",
+            return ConfigureAndExecute<ListLoginRadiusEvent>(RequestType.Social, HttpMethod.GET, "event",
                 additionalQueryParams);
         }
 
@@ -86,7 +86,7 @@ namespace LoginRadiusSDK.V2.Api.Social
         {
             Validate(new [] {accessToken});
             var additionalQueryParams = new QueryParameters {["access_token"] = accessToken};
-            return ConfigureAndExecute<List<LoginRadiusFollowing>>(RequestType.Social, HttpMethod.Get, "following",
+            return ConfigureAndExecute<List<LoginRadiusFollowing>>(RequestType.Social, HttpMethod.GET, "following",
                 additionalQueryParams);
         }
 
@@ -99,7 +99,7 @@ namespace LoginRadiusSDK.V2.Api.Social
                 ["nextcursor"] = nextCursor.ToString()
             };
 
-            return ConfigureAndExecute<ListLoginRadiusGroup>(RequestType.Social, HttpMethod.Get, "group",
+            return ConfigureAndExecute<ListLoginRadiusGroup>(RequestType.Social, HttpMethod.GET, "group",
                 additionalQueryParams);
         }
 
@@ -112,7 +112,7 @@ namespace LoginRadiusSDK.V2.Api.Social
                 ["nextcursor"] = nextCursor.ToString()
             };
 
-            return ConfigureAndExecute<ListLoginRadiusLike>(RequestType.Social, HttpMethod.Get, "like",
+            return ConfigureAndExecute<ListLoginRadiusLike>(RequestType.Social, HttpMethod.GET, "like",
                 additionalQueryParams);
         }
 
@@ -120,7 +120,7 @@ namespace LoginRadiusSDK.V2.Api.Social
         {
             Validate(new [] {accessToken});
             var additionalQueryParams = new QueryParameters {["access_token"] = accessToken};
-            return ConfigureAndExecute<List<LoginRadiusMention>>(RequestType.Social, HttpMethod.Get, "mention",
+            return ConfigureAndExecute<List<LoginRadiusMention>>(RequestType.Social, HttpMethod.GET, "mention",
                 additionalQueryParams);
         }
 
@@ -135,7 +135,7 @@ namespace LoginRadiusSDK.V2.Api.Social
                 ["subject"] = subject,
                 ["message"] = message
             };
-            return ConfigureAndExecute<LoginRadiusPostResponse>(RequestType.Social, HttpMethod.Post,
+            return ConfigureAndExecute<LoginRadiusPostResponse>(RequestType.Social, HttpMethod.POST,
                 "message", additionalQueryParams );
         }
 
@@ -150,7 +150,7 @@ namespace LoginRadiusSDK.V2.Api.Social
                 ["subject"] = subject,
                 ["message"] = message
             };
-            return ConfigureAndExecute<LoginRadiusPostResponse>(RequestType.Social, HttpMethod.Get,
+            return ConfigureAndExecute<LoginRadiusPostResponse>(RequestType.Social, HttpMethod.GET,
                "message/js", additionalQueryParams   );
 
         }
@@ -158,7 +158,7 @@ namespace LoginRadiusSDK.V2.Api.Social
         {
             Validate(new [] {accessToken, pageName});
             var additionalQueryParams = new QueryParameters {["access_token"] = accessToken, ["pageName"] = pageName};
-            return ConfigureAndExecute<LoginRadiusPage>(RequestType.Social, HttpMethod.Get, "page",
+            return ConfigureAndExecute<LoginRadiusPage>(RequestType.Social, HttpMethod.GET, "page",
                 additionalQueryParams);
         }
 
@@ -166,7 +166,7 @@ namespace LoginRadiusSDK.V2.Api.Social
         {
             Validate(new [] {accessToken, albumId});
             var additionalQueryParams = new QueryParameters {["access_token"] = accessToken, ["albumId"] = albumId};
-            return ConfigureAndExecute<List<LoginRadiusPhoto>>(RequestType.Social, HttpMethod.Get, "photo",
+            return ConfigureAndExecute<List<LoginRadiusPhoto>>(RequestType.Social, HttpMethod.GET, "photo",
                 additionalQueryParams);
         }
 
@@ -174,7 +174,7 @@ namespace LoginRadiusSDK.V2.Api.Social
         {
             Validate(new [] {accessToken});
             var additionalQueryParams = new QueryParameters {["access_token"] = accessToken};
-            return ConfigureAndExecute<List<LoginRadiusStatus>>(RequestType.Social, HttpMethod.Get, "status",
+            return ConfigureAndExecute<List<LoginRadiusStatus>>(RequestType.Social, HttpMethod.GET, "status",
                 additionalQueryParams);
         }
 
@@ -191,7 +191,7 @@ namespace LoginRadiusSDK.V2.Api.Social
                 ["Caption"] = model.Caption,
                 ["Description"] = model.Description
             };
-            return ConfigureAndExecute<LoginRadiusPostResponse>(RequestType.Social, HttpMethod.Post,
+            return ConfigureAndExecute<LoginRadiusPostResponse>(RequestType.Social, HttpMethod.POST,
                 "status", additionalQueryParams);
         }
 
@@ -210,7 +210,7 @@ namespace LoginRadiusSDK.V2.Api.Social
                 ["Caption"] = model.Caption,
                 ["Description"] = model.Description
             };
-            return ConfigureAndExecute<List<LoginRadiusCurrentStatus>>(RequestType.Social, HttpMethod.Get,
+            return ConfigureAndExecute<List<LoginRadiusCurrentStatus>>(RequestType.Social, HttpMethod.GET,
                 "status", additionalQueryParams);
         }
 
@@ -222,7 +222,7 @@ namespace LoginRadiusSDK.V2.Api.Social
             {
                 ["access_token"] = accessToken
             };
-            return ConfigureAndExecute<List<LoginRadiusStatus>>(RequestType.Social, HttpMethod.Get,
+            return ConfigureAndExecute<List<LoginRadiusStatus>>(RequestType.Social, HttpMethod.GET,
                 "status", additionalQueryParams);
         }
 
@@ -230,7 +230,7 @@ namespace LoginRadiusSDK.V2.Api.Social
         {
             Validate(new [] {accessToken});
             var additionalQueryParams = new QueryParameters {["access_token"] = accessToken};
-            return ConfigureAndExecute<LoginRadiusSocialUserProfile>(RequestType.Social, HttpMethod.Get,
+            return ConfigureAndExecute<LoginRadiusSocialUserProfile>(RequestType.Social, HttpMethod.GET,
                 "userprofile", additionalQueryParams);
         }
 
@@ -238,7 +238,7 @@ namespace LoginRadiusSDK.V2.Api.Social
         {
             Validate(new [] {accessToken});
             var additionalQueryParams = new QueryParameters {["access_token"] = accessToken};
-            return ConfigureAndExecute<List<Models.Video.Data>>(RequestType.Social, HttpMethod.Get, "video",
+            return ConfigureAndExecute<List<Models.Video.Data>>(RequestType.Social, HttpMethod.GET, "video",
                 additionalQueryParams);
         }
 
@@ -246,7 +246,7 @@ namespace LoginRadiusSDK.V2.Api.Social
         {
             Validate(new [] {token});
             var additionalQueryParams = new QueryParameters {["token"] = token};
-            return ConfigureAndExecute<LoginRadiusAccessToken>(RequestType.AccessToken, HttpMethod.Get, "access_token",
+            return ConfigureAndExecute<LoginRadiusAccessToken>(RequestType.AccessToken, HttpMethod.GET, "access_token",
                 additionalQueryParams);
         }
     }

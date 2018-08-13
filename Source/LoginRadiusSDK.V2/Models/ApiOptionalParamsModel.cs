@@ -49,5 +49,12 @@ namespace LoginRadiusSDK.V2.Models
         /// Default settings are automatically used by API i.e. empty string.
         /// </summary>
         public string ResetPasswordUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets Google Recaptcha Response property for LoginRadius API call.
+        /// Default settings are automatically used by API i.e. empty string.
+        /// </summary>
+        public string G_Recaptcha_Response { get; set; }
+
     }
 }

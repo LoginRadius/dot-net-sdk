@@ -12,14 +12,14 @@ namespace LoginRadiusSDK.V2.Api
 
         public ApiResponse<LoginRadiusRolesResponse> GetRoles()
         {
-            return ConfigureAndExecute<LoginRadiusRolesResponse>(RequestType.Role, HttpMethod.Get,
+            return ConfigureAndExecute<LoginRadiusRolesResponse>(RequestType.Role, HttpMethod.GET,
                 _resoucePath.ToString());
         }
 
         public ApiResponse<LoginRadiusRolesResponse> CreateRoles(LoginRadiusRolesCreate accoutRolesCreate)
         {
             Validate(new [] {accoutRolesCreate});
-            return ConfigureAndExecute<LoginRadiusRolesResponse>(RequestType.Role, HttpMethod.Post,
+            return ConfigureAndExecute<LoginRadiusRolesResponse>(RequestType.Role, HttpMethod.POST,
                 _resoucePath.ToString(),
                 accoutRolesCreate.ConvertToJson());
         }
@@ -29,7 +29,7 @@ namespace LoginRadiusSDK.V2.Api
             Validate(new [] {roleName});
             var pattern = _resoucePath.ChildObject("{0}");
             var resourcePath = SDKUtil.FormatURIPath(pattern, new object[] {roleName});
-            return ConfigureAndExecute<LoginRadiusDeleteResponse>(RequestType.Role, HttpMethod.Delete, resourcePath);
+            return ConfigureAndExecute<LoginRadiusDeleteResponse>(RequestType.Role, HttpMethod.DELETE, resourcePath);
         }
 
         public ApiResponse<LoginRadiusRoles> AddRolePermissions(string roleName, LoginRadiusDeleteRolePermissions permissions)
@@ -37,7 +37,7 @@ namespace LoginRadiusSDK.V2.Api
             Validate(new [] {roleName});
             var pattern = _resoucePath.ChildObject("{0}/permission");
             var resourcePath = SDKUtil.FormatURIPath(pattern, new object[] {roleName});
-            return ConfigureAndExecute<LoginRadiusRoles>(RequestType.Role, HttpMethod.Put, resourcePath,
+            return ConfigureAndExecute<LoginRadiusRoles>(RequestType.Role, HttpMethod.PUT, resourcePath,
                 permissions.ConvertToJson());
         }
 
@@ -47,7 +47,7 @@ namespace LoginRadiusSDK.V2.Api
             Validate(new [] {roleName});
             var pattern = _resoucePath.ChildObject("{0}/permission");
             var resourcePath = SDKUtil.FormatURIPath(pattern, new object[] {roleName});
-            return ConfigureAndExecute<LoginRadiusRoles>(RequestType.Role, HttpMethod.Delete, resourcePath,
+            return ConfigureAndExecute<LoginRadiusRoles>(RequestType.Role, HttpMethod.DELETE, resourcePath,
                 permissions.ConvertToJson());
         }
     }

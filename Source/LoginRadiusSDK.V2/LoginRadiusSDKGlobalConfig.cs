@@ -24,6 +24,7 @@ namespace LoginRadiusSDK.V2
         }
 
         public static string ApiSecret { get; set; }
+        public static string ApiRequestSigning { get; set; }
 
         private static string _appName;
 

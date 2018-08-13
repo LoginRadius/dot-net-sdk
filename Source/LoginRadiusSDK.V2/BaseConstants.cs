@@ -53,6 +53,21 @@ namespace LoginRadiusSDK.V2
         public const string SottAuthorizationHeader = "X-LoginRadius-Sott";
 
         /// <summary>
+        /// Configuration LoginRadius API AccessToken Header Key
+        /// </summary>
+        public const string AccessTokenAuthorizationHeader = "Authorization";
+
+        /// <summary>
+        /// Configuration LoginRadius API AccessToken Header Bearer Key
+        /// </summary>
+        public const string AccessTokenBearerHeader = "Bearer ";
+
+        /// <summary>
+        /// Configuration LoginRadius ApiRequestSigning Key
+        /// </summary>
+        public const string ApiRequestSigning = "ApiRequestSigning";
+
+        /// <summary>
         /// Configuration Section Identifier 
         /// </summary>
         public const string ConfigSection = "loginradius";
@@ -77,7 +92,8 @@ namespace LoginRadiusSDK.V2
         /// </summary>
         public const string SdkName = "LoginRadius-NET-SDK";
 
-        private const string BaseRestApiEndpoint = "http://api.loginradius.com/";
+        private const string BaseRestApiEndpoint = "https://api.loginradius.com/";
+        private const string BaseConfigApiEndpoint = "https://config.lrcontent.com/";
         public const string RestAuthApiEndpoint = BaseRestApiEndpoint + "identity/v2/auth/";
         public const string RestIdentityApiEndpoint = BaseRestApiEndpoint + "identity/v2/manage/account/";
         public const string RestRoleApiEndpoint = BaseRestApiEndpoint + "identity/v2/manage/";
@@ -86,5 +102,8 @@ namespace LoginRadiusSDK.V2
         public const string RestShareApiEndpoint = BaseRestApiEndpoint + "sharing/v1/shorturl/";
         public const string ServerinfoApiEndpoint = BaseRestApiEndpoint + "identity/v2/serverinfo";
         public const string WebhokApiEndpoint = BaseRestApiEndpoint + "api/v2/webhook";
+        public const string RegistrationDataApiEndpoint = BaseRestApiEndpoint + "identity/v2/manage/registrationdata";
+        public const string RegistrationDataAuthApiEndpoint = BaseRestApiEndpoint + "identity/v2/auth/registrationdata";
+        public const string ConfigurationAuthApiEndpoint = BaseConfigApiEndpoint + "ciam/appinfo";
     }
 }

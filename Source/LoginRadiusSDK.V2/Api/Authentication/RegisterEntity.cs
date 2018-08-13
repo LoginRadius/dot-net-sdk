@@ -26,7 +26,7 @@ namespace LoginRadiusSDK.V2.Api
             else 
             {
                 var timediffrence = new QueryParameters { ["timedifference"] = sottAuth.TimeDifference };
-                var sottresponse = ConfigureAndExecute<SottDetails>(RequestType.ServerInfo, HttpMethod.Get, null, timediffrence);
+                var sottresponse = ConfigureAndExecute<SottDetails>(RequestType.ServerInfo, HttpMethod.GET, null, timediffrence);
 
                 if (sottresponse.Response != null && sottresponse.Response.Sott != null)
                 {
@@ -37,7 +37,7 @@ namespace LoginRadiusSDK.V2.Api
                 additionalHeaders[BaseConstants.SottAuthorizationHeader] = GetSott(sottAuth);
             }
             
-            return ConfigureAndExecute<LoginRadiusPostResponse>(RequestType.Authentication, HttpMethod.Post,
+            return ConfigureAndExecute<LoginRadiusPostResponse>(RequestType.Authentication, HttpMethod.POST,
                 _resoucePath.ToString(), additionalQueryParams, socialUserProfile.ConvertToJson(), additionalHeaders);
         }
 
@@ -49,7 +49,7 @@ namespace LoginRadiusSDK.V2.Api
                 additionalQueryParams.Add("verificationUrl", verificationUrl);
             if (!string.IsNullOrWhiteSpace(emailTemplate)) additionalQueryParams.Add("emailTemplate", emailTemplate);
             var bodyParams = new BodyParameters {["Email"] = email};
-            return ConfigureAndExecute<LoginRadiusPostResponse>(RequestType.Authentication, HttpMethod.Put,
+            return ConfigureAndExecute<LoginRadiusPostResponse>(RequestType.Authentication, HttpMethod.PUT,
                 _resoucePath.ToString(),
                 additionalQueryParams, bodyParams.ConvertToJson());
         }
@@ -57,7 +57,7 @@ namespace LoginRadiusSDK.V2.Api
         public ApiResponse<LoginResponse> RegistrationWithRecaptcha(string apikey, LoginRadiusAccountUpdateModel model)
         {
             Validate(new [] {apikey});
-            return ConfigureAndExecute<LoginResponse>(RequestType.Authentication, HttpMethod.Post, "register/captcha",
+            return ConfigureAndExecute<LoginResponse>(RequestType.Authentication, HttpMethod.POST, "register/captcha",
                 model.ConvertToJson());
         }
     }

@@ -57,6 +57,7 @@ namespace LoginRadiusSDK.V2.Util
             if (!string.IsNullOrWhiteSpace(source.LoginUrl)) Add(nameof(source.LoginUrl), source.LoginUrl);
             if (!string.IsNullOrWhiteSpace(source.SmsTemplate2Fa)) Add(nameof(source.SmsTemplate2Fa), source.SmsTemplate2Fa);
             if (!string.IsNullOrWhiteSpace(source.VerificationUrl)) Add(nameof(source.VerificationUrl), source.VerificationUrl);
+            if (!string.IsNullOrWhiteSpace(source.G_Recaptcha_Response)) Add(nameof(source.G_Recaptcha_Response), source.G_Recaptcha_Response);
         }
 
         public void AddOptionalParamsRange(TwoFactorAuthModel source)

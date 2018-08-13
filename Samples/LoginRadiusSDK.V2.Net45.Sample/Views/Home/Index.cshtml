@@ -6,17 +6,19 @@
                     <h1 class="logo">
                         <a href="/">LoginRadius</a>
                     </h1>
-                    <div class="site-description">Customer Registration HTML5 Demo</div>
+                    <div class="site-description">Customer Registration ASP.Net Demo</div>
                 </div>
             </div>
             <!-- Fragment Caching -->
             <div class="secondary-menu">
                 <ul id="menu-top-menu" class="menu">
-                    <li id="loginaction">
-                        <a class="lr-raas-button lr-raas-theme-login">Login</a>&nbsp;/&nbsp;
-                        <a class="lr-raas-button lr-raas-theme-register">Register</a>
+                    <li id="loginaction"><a class="lr-raas-button lr-raas-theme-login trigger_popup">Click to Login</a>
+                    <li id="logoutaction" style="display: none;">
+                        <a class="lr-raas-button-x lr-raas-theme-changePassword" onclick="changePassword();">Change Password</a>
+                        <a class="lr-raas-button-x lr-raas-theme-accountLinking" onclick="accountLinking();">Account Linking</a>
+                        <a class="lr-raas-button-x lr-raas-theme-addEmail" onclick="addEmail();">Add Email</a>
+                        <a class="lr-raas-button-x lr-raas-theme-logout" onclick="lrLogout();">Logout</a>
                     </li>
-                    <li id="logoutaction" style="display: none;"><a class="lr-raas-button lr-raas-theme-logout">Logout</a></li>
                 </ul>
             </div>
         </div>
@@ -65,6 +67,46 @@
         <h2>My Profile</h2>
         <div style="text-align: left;margin-top:20px;">
             <div id="profiledata"></div>
+        </div>
+    </div>
+    <div id="changepassowrd" class="lr-frame lr-input-style" style="display: none;">
+        <h2>Change Password</h2>
+        <div style="text-align: center;margin-top:20px;">
+            <div id="changepassword-container" style="text-align: center;"></div>
+        </div>
+    </div>
+    <div id="accountlinking" class="lr-frame lr-input-style" style="display: none;">
+        <h2>Account Linking</h2>
+        <div style="text-align: center;margin-top:20px;">
+            <div id="interfacecontainerdiv_link" style="margin-left: 350px; margin-right: 350px; margin-bottom: 20px" class="interfacecontainerdiv_link"></div>
+            <script type="text/html" id="loginradiuscustom_tmpl_link">
+                <# if(isLinked) { #>
+                    <div class="lr-linked">
+                        <a class="lr-sl-shaded-brick-button lr-flat-<#=Name.toLowerCase()#>" href="javascript:void(0)" onclick='return  <#=ObjectName#>.util.unLinkAccount(\"<#= Name.toLowerCase() #>\",\"<#= providerId #>\")' title="<#=Name#>" alt="Connected">
+                            <span class="lr-sl-icon lr-sl-icon-<#=Name.toLowerCase()#>"></span></span>
+                            <#=Name#> is connected | Unlink <#=Name#>
+                        </a>
+
+                    </div>
+                    <# } else {#>
+                        <div class="lr-unlinked">
+
+                            <a class="lr-sl-shaded-brick-button lr-flat-<#=Name.toLowerCase()#>" href="javascript:void(0)" onclick="return  <#=ObjectName#>.util.openWindow('<#= Endpoint #>');" title="<#=Name#>">
+                                <span class="lr-sl-icon lr-sl-icon-<#=Name.toLowerCase()#>"></span></span>
+                                Link With <#=Name#>
+
+                            </a>
+
+                        </div>
+                        <# } #>
+            </script>
+        </div>
+    </div>
+
+    <div id="addemail" class="lr-frame lr-input-style" style="display: none;">
+        <h2>Add Email</h2>
+        <div style="text-align: center;margin-top:20px;">
+            <div id="addemail-container" style="text-align: center;"></div>
         </div>
     </div>
 </div>
