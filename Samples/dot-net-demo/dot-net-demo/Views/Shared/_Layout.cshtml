@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+@RenderBody()
+<script type="text/javascript">
+        $(document).ready(function () {
+            m_options = {
+                loginUrl: "@Url.Action("LRLogin", "Home")",
+                mfaLoginUrl: "@Url.Action("LRMfaLogin", "Home")",
+                mfaAuthUrl: "@Url.Action("LRMfaAuth", "Home")",
+                pwlessLoginUrl: "@Url.Action("LRPwlessLogin", "Home")",
+                pwlessAuthUrl: "@Url.Action("LRPwlessAuth", "Home")",
+                registerUrl: "@Url.Action("LRRegister", "Home")",
+                verifyEmailUrl: "@Url.Action("LRVerifyEmail", "Home")",
+                forgotPasswordUrl: "@Url.Action("LRForgotPassword", "Home")",
+                resetPasswordEmailUrl: "@Url.Action("LRResetPasswordEmail", "Home")",
+                changePasswordUrl: "@Url.Action("LRChangePassword", "Home")",
+                setPasswordUrl: "@Url.Action("LRSetPassword", "Home")",
+                updateUrl: "@Url.Action("LRUpdate", "Home")",
+                createCustomObjectUrl: "@Url.Action("LRCreateCustomObject", "Home")",
+                updateCustomObjectUrl: "@Url.Action("LRUpdateCustomObject", "Home")",
+                deleteCustomObjectUrl: "@Url.Action("LRDeleteCustomObject", "Home")",
+                getCustomObjectUrl: "@Url.Action("LRGetCustomObject", "Home")",
+                mfaResetGoogleUrl: "@Url.Action("LRMfaResetGoogle", "Home")",
+                mfaValidateUrl: "@Url.Action("LRMfaValidate", "Home")",
+                mfaEnableGoogleUrl: "@Url.Action("LRMfaEnableGoogle", "Home")",
+                getRolesUrl: "@Url.Action("LRGetRoles", "Home")",
+                getRoleUrl: "@Url.Action("LRGetRole", "Home")",
+                createRoleUrl: "@Url.Action("LRCreateRole", "Home")",
+                deleteRoleUrl: "@Url.Action("LRDeleteRole", "Home")",
+                assignRoleUrl: "@Url.Action("LRAssignRole", "Home")",
+                getProfileUrl: "@Url.Action("LRGetProfile", "Home")"
+            };
+            if (typeof verificationFunc == "function") verificationFunc();
+            if (typeof profileUpdate == "function") profileUpdate();
+            if (typeof roleUpdate == "function") roleUpdate();
+        });
+</script>
+</html>

@@ -115,5 +115,7 @@ namespace LoginRadiusSDK.V2.Models.UserProfile
         public bool IsTwoFactorAuthenticationEnabled { get; set; }
         public string ExternalUserLoginId { get; set; }
         public bool? AcceptPrivacyPolicy { get; set; }
+        public bool EmailVerified { get; set; }
+        public bool PhoneIdVerified { get; set; }
     }
 }

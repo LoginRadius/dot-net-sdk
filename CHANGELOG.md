@@ -1,5 +1,19 @@
 > **LoginRadius .NET SDK Change Log** provides information regarding what has changed, more specifically what changes, improvements and bug fix has been made to the SDK. For more details please refer to the [LoginRadius API Documention](https://docs.loginradius.com/api/v2/sdk-libraries/aspnet)
 
+### Version 5.2.0
+Release on **January 15, 2019**
+
+> **Note: The version contains several breaking changes.**
+
+##### Enhancements
+
+  - SDK has been re-structured to match the structure of the LoginRadius API Docs
+  - Several method names have had their spelling errors fixed
+  - Demo for the SDK has been updated and is properly functional
+  - Update Account in the Account APIs have been updated to include ExternalIds
+  - A variable named domainName is now defined in the configurations that allow the user to define a custom API domain
+  - The Multifactor re-authentication APIs are now included within the SDK
+
 ### Version 5.1.0
 Release on **August 13, 2018**
 
@@ -11,29 +25,29 @@ Release on **August 13, 2018**
   - Added option to Prevent Sending Email Verification.
   - API Route Changes for better naming.
   - Enforce Recaptcha for Auth APIs.
-  - Added OTP Lockout feature.
+  - Added Otp Lockout feature.
   - Updating Demos with LoginSurface for login/Registration.
   - Added new multiple APIs for better user experience.
-  - Added API to Remove Phone ID by access token.
+  - Added api to Remove Phone ID by access token.
   - Added auth api to verify email and reset password by OTP.
-  - Added API Account Identities by Email.
-  - Added API to get sott from server.
-  - Added API to add, get, delete and update registration data.
-  - Validate secret code API is added.
-  - Added auth APIs to login by email, username and phone using POST method.
-  - Added auth APIs to Reset password by security answer and username/email/phone.
-  - Get Configurations API is added.
-  - One touch Login APIs by email and OTP are added.
-  - One touch OTP Verification API is also added.
-  - Smart Login by Email/Username/Ping and verify token APIs are added.
-  - Passwordless login by email,username and verification APIs are added.
-  - Added APIs for phone login using OTP and to send OTP.
-  - Added APIs to update MFA settings and MFA Authentication by Access token and to verify MFA by backup code.
-  - APIs to validate MFA by Google authentication code, OTP, Backup code and password are added.
+  - Added api Account Identities by Email.
+  - Added api to get sott from server.
+  - Added api to add, get, delete and update registration data.
+  - Validate secret code api is added.
+  - Added auth apis to login by email, username and phone using POST method.
+  - Added auth apis to Reset password by security answer and username/email/phone.
+  - Get Configurations api is added.
+  - One touch Login apis by email and OTP are added.
+  - One touch OTP Verification api is also added.
+  - Smart Login by Email/Username/Ping and verify token apis are added.
+  - Passwordless login by email,username and verification apis are added.
+  - Added apis for phone login using OTP and to send OTP.
+  - Added apis to update MFA settings and MFA Authentication by Access token and to verify MFA by backup code.
+  - Apis to validate MFA by Google authentication code, OTP, Backup code and password are added.
 
 ##### Bug Fixes
 
-  - Changed HTTP method name in UPPER CASE.
+  - Fixed http method naming convention issue.
   - Fixed serialization related issue in datetime parsing from .net to javascript.
   
   

@@ -83,6 +83,11 @@ namespace LoginRadiusSDK.V2
         public const string ContentTypeHeaderJson = "application/json";
 
         /// <summary>
+        /// Application - Json Content Type
+        /// </summary>
+        public const string DomainName = "domainName";
+
+        /// <summary>
         /// The version of this SDK.
         /// </summary>
         public static string SdkVersion => SDKUtil.GetAssemblyVersionForType(typeof(BaseConstants));
@@ -94,16 +99,16 @@ namespace LoginRadiusSDK.V2
 
         private const string BaseRestApiEndpoint = "https://api.loginradius.com/";
         private const string BaseConfigApiEndpoint = "https://config.lrcontent.com/";
-        public const string RestAuthApiEndpoint = BaseRestApiEndpoint + "identity/v2/auth/";
-        public const string RestIdentityApiEndpoint = BaseRestApiEndpoint + "identity/v2/manage/account/";
-        public const string RestRoleApiEndpoint = BaseRestApiEndpoint + "identity/v2/manage/";
-        public const string RestApiEndpoint = BaseRestApiEndpoint + "api/v2/";
-        public const string RestHookApiEndpoint = BaseRestApiEndpoint + "api/v2/resthook/";
-        public const string RestShareApiEndpoint = BaseRestApiEndpoint + "sharing/v1/shorturl/";
-        public const string ServerinfoApiEndpoint = BaseRestApiEndpoint + "identity/v2/serverinfo";
-        public const string WebhokApiEndpoint = BaseRestApiEndpoint + "api/v2/webhook";
-        public const string RegistrationDataApiEndpoint = BaseRestApiEndpoint + "identity/v2/manage/registrationdata";
-        public const string RegistrationDataAuthApiEndpoint = BaseRestApiEndpoint + "identity/v2/auth/registrationdata";
+        public const string RestAuthApiEndpoint = "identity/v2/auth/";
+        public const string RestIdentityApiEndpoint = "identity/v2/manage/account/";
+        public const string RestRoleApiEndpoint = "identity/v2/manage/";
+        public const string RestApiEndpoint = "api/v2/";
+        public const string RestHookApiEndpoint = "api/v2/resthook/";
+        public const string RestShareApiEndpoint = "sharing/v1/shorturl/";
+        public const string ServerinfoApiEndpoint = "identity/v2/serverinfo";
+        public const string WebhookApiEndpoint = "api/v2/webhook";
+        public const string RegistrationDataApiEndpoint = "identity/v2/manage/registrationdata";
+        public const string RegistrationDataAuthApiEndpoint = "identity/v2/auth/registrationdata";
         public const string ConfigurationAuthApiEndpoint = BaseConfigApiEndpoint + "ciam/appinfo";
     }
 }

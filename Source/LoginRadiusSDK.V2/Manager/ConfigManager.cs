@@ -112,7 +112,7 @@ namespace LoginRadiusSDK.V2
             return DefaultConfig.ContainsKey(configKey) ? DefaultConfig[configKey] : null;
         }
 
-        internal static Dictionary<string, string> GetConfiguration()
+        internal Dictionary<string, string> GetConfiguration()
         {
             _configValues = new Dictionary<string, string>();
 
@@ -156,6 +156,11 @@ namespace LoginRadiusSDK.V2
                ? _sdkConfigHandler.Setting(BaseConstants.ApiRequestSigning)
                : LoginRadiusSdkGlobalConfig.ApiRequestSigning;
             _configValues.Add(BaseConstants.ApiRequestSigning, valStr);
+
+            valStr = string.IsNullOrWhiteSpace(LoginRadiusSdkGlobalConfig.DomainName)
+               ? _sdkConfigHandler.Setting(BaseConstants.DomainName)
+               : LoginRadiusSdkGlobalConfig.DomainName;
+            _configValues.Add(BaseConstants.DomainName, valStr);
 
             return _configValues;
         }

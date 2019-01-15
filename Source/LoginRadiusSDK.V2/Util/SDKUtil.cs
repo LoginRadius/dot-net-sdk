@@ -43,7 +43,7 @@ namespace LoginRadiusSDK.V2.Util
         /// <param name="pattern"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public static string FormatURIPath(LoginRadiusResoucePath pattern, object[] parameters)
+        public static string FormatURIPath(LoginRadiusResourcePath pattern, object[] parameters)
         {
             return FormatURIPath(pattern.ToString(), parameters);
         }

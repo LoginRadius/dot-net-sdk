@@ -1,0 +1,28 @@
+﻿
+<head>
+    <title>SDK Demo Verification Page</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="../css/style.css" rel="stylesheet" />
+    <script src="../js/jquery-3.3.1.min.js"></script>
+</head>
+
+<body>
+    <div class="section-menu">
+        <div class="menu-header">
+            <a asp-area="" asp-controller="Home" asp-action="Index"><img src="../images/lr-logo.png" /></a>
+            <span style="display:block;margin-left:120px">SDK Web Demo</span>
+            <div class="button-group">
+                <a asp-area="" asp-controller="Home" asp-action="Index">Minimal</a>
+                <a asp-area="" asp-controller="Home" asp-action="LoginScreen">Login Screen</a>
+            </div>
+        </div>
+    </div>
+    <div class="section-main">
+        <h3>Email Verification</h3>
+        <div class="container">
+            <span id="minimal-verification-message"></span>
+        </div>
+    </div>
+    <script src="../js/emailVerification.js"></script>
+</body>

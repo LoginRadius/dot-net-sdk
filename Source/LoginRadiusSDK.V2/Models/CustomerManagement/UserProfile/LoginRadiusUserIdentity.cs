@@ -31,7 +31,7 @@ namespace LoginRadiusSDK.V2.Models.UserProfile
         public List<LoginRadiusEmail> UnverifiedEmail { get; set; }
         public object IsSecurePassword { get; set; }
         public PrivacyPolicy PrivacyPolicy { get; set; }
-        public object ExternalIds { get; set; }
+        public List<LoginRadiusExternalIds> ExternalIds { get; set; }
         public string ID { get; set; }
         public string Provider { get; set; }
         public string Prefix { get; set; }

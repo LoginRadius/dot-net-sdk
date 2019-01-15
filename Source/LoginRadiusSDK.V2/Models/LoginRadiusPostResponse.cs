@@ -17,5 +17,8 @@ namespace LoginRadiusSDK.V2.Models
     {
         public string Email { get; set; }
         public LoginRadiusUserIdentity Profile { get; set; }
+        public string access_token { get; set; }
+        public string refresh_token { get; set; }
+        public string expires_in { get; set; }
     }
 }

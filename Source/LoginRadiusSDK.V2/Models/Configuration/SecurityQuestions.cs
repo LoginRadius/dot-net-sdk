@@ -4,8 +4,14 @@ using System.Text;
 
 namespace LoginRadiusSDK.V2.Models.Configuration
 {
-   public class SecurityQuestions
+    public class SecurityQuestions
     {
-        public List<object> Questions { get; set; }
+        public List<SecurityQuestionGet> Questions { get; set; }
+    }
+
+    public class SecurityQuestionGet
+    {
+        public string QuestionID { get; set; }
+        public string Question { get; set; }
     }
 }

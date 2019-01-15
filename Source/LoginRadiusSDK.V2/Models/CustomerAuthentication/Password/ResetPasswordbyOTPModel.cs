@@ -2,7 +2,7 @@
 
 namespace LoginRadiusSDK.V2.Models.Password
 {
-    public class ResetPasswordbyOtpModel : LoginRadiusSerializableObject
+    public class ResetPasswordByOtpModel : LoginRadiusSerializableObject
     {
         public string Otp { get; set; }
         public string Password { get; set; }

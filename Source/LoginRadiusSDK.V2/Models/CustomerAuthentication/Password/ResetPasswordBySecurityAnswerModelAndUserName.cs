@@ -8,8 +8,8 @@ namespace LoginRadiusSDK.V2.Models.CustomerAuthentication.Password
    public class ResetPasswordBySecurityAnswerModelAndUserName : LoginRadiusSerializableObject
     {
         public Dictionary<string, string> SecurityAnswer { get; set; }
-        public string username { get; set; }
-        public string password { get; set; }
-        public string resetpasswordemailtemplate { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string ResetPasswordEmailTemplate { get; set; }
     }
 }

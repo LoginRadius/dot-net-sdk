@@ -1,0 +1,12 @@
+var commonOptions = {};
+commonOptions.apiKey = "";
+commonOptions.appName = "";
+commonOptions.hashTemplate = true;
+commonOptions.sott = "";
+commonOptions.formValidationMessage = true;
+var path = window.location.href;
+commonOptions.verificationUrl = path.slice(0, path.lastIndexOf('/')).concat("/EmailVerification");
+commonOptions.resetPasswordUrl = path.slice(0, path.lastIndexOf("/")).concat("/ResetPassword");
+commonOptions.emailVerify = path.slice(0, path.lastIndexOf('/')).concat("/Home/EmailVerification");
+commonOptions.resetPassword = path.slice(0, path.lastIndexOf("/")).concat("/Home/ResetPassword");
+var LRObject = new LoginRadiusV2(commonOptions);

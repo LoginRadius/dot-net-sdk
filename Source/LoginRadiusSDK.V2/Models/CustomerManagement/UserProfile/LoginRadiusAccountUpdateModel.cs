@@ -91,6 +91,7 @@ namespace LoginRadiusSDK.V2.Models.UserProfile
         public LoginRadiusSuggestion Suggestions { get; set; }
         public List<LoginRadiusBadge> Badges { get; set; }
         public List<LoginRadiusMemberUrlResource> MemberUrlResources { get; set; }
+        public List<LoginRadiusExternalIds> ExternalIds { get; set; }
         public int ?TotalPrivateRepository { get; set; }
         public string Currency { get; set; }
         public string StarredUrl { get; set; }

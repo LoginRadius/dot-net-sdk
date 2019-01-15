@@ -1,8 +1,8 @@
 ﻿using System;
+using LoginRadiusSDK.V2.Api;
 #if NetFramework
 using System.Web; 
 #endif
-using LoginRadiusSDK.V2.Api.Social;
 
 namespace LoginRadiusSDK.V2.Entity
 {
@@ -11,7 +11,7 @@ namespace LoginRadiusSDK.V2.Entity
     /// </summary>
     public class LoginRadiusAccessToken
     {
-        private readonly SocialEntity _socialEntity = new SocialEntity();
+        private readonly SocialApi _socialEntity = new SocialApi();
 
         public LoginRadiusAccessToken()
         {

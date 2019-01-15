@@ -38,5 +38,18 @@ namespace LoginRadiusSDK.V2
             }
             set { _appName = value; }
         }
+
+        private static string _domainName;
+
+        public static string DomainName
+        {
+            get
+            {
+                return string.IsNullOrWhiteSpace(_domainName) && LoginRadiusResource.ConfigDictionary != null
+                    ? LoginRadiusResource.ConfigDictionary[BaseConstants.DomainName]
+                    : _domainName;
+            }
+            set { _domainName = value; }
+        }
     }
 }
