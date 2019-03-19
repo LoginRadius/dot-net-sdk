@@ -136,6 +136,7 @@ namespace LoginRadiusSDK.V2.Http
             }
             newHttpRequest.UserAgent = httpRequest.UserAgent;
             newHttpRequest.ClientCertificates = httpRequest.ClientCertificates;
+            newHttpRequest.AutomaticDecompression = DecompressionMethods.GZip;
 #endif
             newHttpRequest = CopyHttpWebRequestHeaders(httpRequest, newHttpRequest);
             return newHttpRequest;

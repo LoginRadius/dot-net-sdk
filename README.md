@@ -22,4 +22,4 @@ Please visit [here](http://www.loginradius.com/) for more information.
 
 ## Getting Started
 
-* Everything you need begin using this SDK: [LoginRadius Developer documentation](https://docs.loginradius.com/api/v2/sdk-libraries/aspnet)
+* Everything you need begin using this SDK: [LoginRadius Developer documentation](https://www.loginradius.com/docs/api/v2/deployment/sdk-libraries/asp-net-library)
