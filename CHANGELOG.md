@@ -4,7 +4,7 @@
 Release on **March 19, 2019**
 
 ##### Enhancements
-  -Added gzip Accept-Encoding HTTPS header in requests sent to an LoginRadius server
+  -- Added gzip Accept-Encoding HTTPS header in requests sent to LoginRadius server
 
 ### Version 5.2.0
 Release on **January 15, 2019**
