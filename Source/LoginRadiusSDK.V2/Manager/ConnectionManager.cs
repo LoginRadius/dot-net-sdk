@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -34,7 +35,7 @@ namespace LoginRadiusSDK.V2
         /// <param name="headers"></param>
         /// <param name="authHeaders"></param>
         /// <returns></returns>
-        public HttpWebRequest GetConnection(Dictionary<string, string> config, string url, Dictionary<string, string> headers = null,
+        public HttpWebRequest GetConnection(ConcurrentDictionary<string, string> config, string url, Dictionary<string, string> headers = null,
             Dictionary<string, string> authHeaders = null)
         {
             HttpWebRequest httpRequest;

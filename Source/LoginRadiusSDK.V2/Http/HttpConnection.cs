@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -90,7 +91,7 @@ namespace LoginRadiusSDK.V2.Http
     /// </summary>
     internal class HttpConnection
     {
-        private readonly Dictionary<string, string> _config;
+        private readonly ConcurrentDictionary<string, string> _config;
 
         /// <summary>
         /// Gets the HTTP request details.
@@ -106,7 +107,7 @@ namespace LoginRadiusSDK.V2.Http
         /// Initializes a new instance of <seealso cref="HttpConnection"/> using the given _config.
         /// </summary>
         /// <param name="config">The _config to use when making HTTP requests.</param>
-        public HttpConnection(Dictionary<string, string> config)
+        public HttpConnection(ConcurrentDictionary<string, string> config)
         {
             _config = config;
             RequestDetails = new RequestDetails();
@@ -120,7 +121,7 @@ namespace LoginRadiusSDK.V2.Http
         /// <param name="config"></param>
         /// <param name="url"></param>
         /// <returns>HttpWebRequest</returns>
-        private HttpWebRequest CopyRequest(HttpWebRequest httpRequest, Dictionary<string, string> config, string url)
+        private HttpWebRequest CopyRequest(HttpWebRequest httpRequest, ConcurrentDictionary<string, string> config, string url)
         {
             ConnectionManager connMngr = ConnectionManager.Instance;
 
@@ -128,6 +129,7 @@ namespace LoginRadiusSDK.V2.Http
             newHttpRequest.Method = httpRequest.Method;
             newHttpRequest.Accept = httpRequest.Accept;
             newHttpRequest.ContentType = httpRequest.ContentType;
+
 
 #if !NETSTANDARD1_3
             if (httpRequest.ContentLength > 0)

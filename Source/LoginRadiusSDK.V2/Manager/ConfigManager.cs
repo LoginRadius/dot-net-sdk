@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 #if NetFramework
 using System.Configuration;
@@ -14,7 +15,7 @@ namespace LoginRadiusSDK.V2
         /// <summary>
         /// The configValue is readonly as it should not be changed outside constructor (but the content can)
         /// </summary>
-        private static Dictionary<string, string> _configValues;
+        private static ConcurrentDictionary<string, string> _configValues;
 
         private static SDKConfigHandler _sdkConfigHandler = new SDKConfigHandler();
 
@@ -112,55 +113,55 @@ namespace LoginRadiusSDK.V2
             return DefaultConfig.ContainsKey(configKey) ? DefaultConfig[configKey] : null;
         }
 
-        internal Dictionary<string, string> GetConfiguration()
+        internal ConcurrentDictionary<string, string> GetConfiguration()
         {
-            _configValues = new Dictionary<string, string>();
+            _configValues = new ConcurrentDictionary<string, string>();
 
             var valStr = string.IsNullOrWhiteSpace(LoginRadiusSdkGlobalConfig.ApiKey)
                 ? _sdkConfigHandler.Setting(BaseConstants.LoginRadiusApiKey)
                 : LoginRadiusSdkGlobalConfig.ApiKey;
-            _configValues.Add(BaseConstants.LoginRadiusApiKey, valStr);
+            _configValues.TryAdd(BaseConstants.LoginRadiusApiKey, valStr);
 
             valStr = string.IsNullOrWhiteSpace(LoginRadiusSdkGlobalConfig.ApiSecret)
                 ? _sdkConfigHandler.Setting(BaseConstants.LoginRadiusApiSecret)
                 : LoginRadiusSdkGlobalConfig.ApiSecret;
-            _configValues.Add(BaseConstants.LoginRadiusApiSecret, valStr);
+            _configValues.TryAdd(BaseConstants.LoginRadiusApiSecret, valStr);
 
             valStr = string.IsNullOrWhiteSpace(LoginRadiusSdkGlobalConfig.ProxyAddress)
                 ? _sdkConfigHandler.Setting(BaseConstants.HttpProxyAddressConfig)
                 : LoginRadiusSdkGlobalConfig.ProxyAddress;
-            _configValues.Add(BaseConstants.HttpProxyAddressConfig, valStr);
+            _configValues.TryAdd(BaseConstants.HttpProxyAddressConfig, valStr);
 
 
             valStr = string.IsNullOrWhiteSpace(LoginRadiusSdkGlobalConfig.ProxyCredentials)
                 ? _sdkConfigHandler.Setting(BaseConstants.HttpProxyCredentialConfig)
                 : LoginRadiusSdkGlobalConfig.ProxyCredentials;
-            _configValues.Add(BaseConstants.HttpProxyCredentialConfig, valStr);
+            _configValues.TryAdd(BaseConstants.HttpProxyCredentialConfig, valStr);
 
             valStr = LoginRadiusSdkGlobalConfig.ConnectionTimeout <= 0
                 ? _sdkConfigHandler.Setting(BaseConstants.HttpConnectionTimeoutConfig)
                 : LoginRadiusSdkGlobalConfig.ConnectionTimeout.ToString();
-            _configValues.Add(BaseConstants.HttpConnectionTimeoutConfig, valStr);
+            _configValues.TryAdd(BaseConstants.HttpConnectionTimeoutConfig, valStr);
 
             valStr = LoginRadiusSdkGlobalConfig.RequestRetries <= 0
                 ? _sdkConfigHandler.Setting(BaseConstants.HttpConnectionRetryConfig)
                 : LoginRadiusSdkGlobalConfig.RequestRetries.ToString();
-            _configValues.Add(BaseConstants.HttpConnectionRetryConfig, valStr);
+            _configValues.TryAdd(BaseConstants.HttpConnectionRetryConfig, valStr);
 
             valStr = string.IsNullOrWhiteSpace(LoginRadiusSdkGlobalConfig.AppName)
                 ? _sdkConfigHandler.Setting(BaseConstants.LoginRadiusAppName)
                 : LoginRadiusSdkGlobalConfig.AppName;
-            _configValues.Add(BaseConstants.LoginRadiusAppName, valStr);
+            _configValues.TryAdd(BaseConstants.LoginRadiusAppName, valStr);
 
             valStr = string.IsNullOrWhiteSpace(LoginRadiusSdkGlobalConfig.ApiRequestSigning)
                ? _sdkConfigHandler.Setting(BaseConstants.ApiRequestSigning)
                : LoginRadiusSdkGlobalConfig.ApiRequestSigning;
-            _configValues.Add(BaseConstants.ApiRequestSigning, valStr);
+            _configValues.TryAdd(BaseConstants.ApiRequestSigning, valStr);
 
             valStr = string.IsNullOrWhiteSpace(LoginRadiusSdkGlobalConfig.DomainName)
                ? _sdkConfigHandler.Setting(BaseConstants.DomainName)
                : LoginRadiusSdkGlobalConfig.DomainName;
-            _configValues.Add(BaseConstants.DomainName, valStr);
+            _configValues.TryAdd(BaseConstants.DomainName, valStr);
 
             return _configValues;
         }

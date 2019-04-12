@@ -25,9 +25,9 @@
     <RepositoryType>Github</RepositoryType>
     <Company>LoginRadius Inc.</Company>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>5.2.1</Version>
-    <AssemblyVersion>5.2.1</AssemblyVersion>
-    <FileVersion>5.2.1</FileVersion>
+    <Version>5.2.2</Version>
+    <AssemblyVersion>5.2.2</AssemblyVersion>
+    <FileVersion>5.2.2</FileVersion>
     <RepositoryUrl>https://github.com/LoginRadius/dot-net-sdk</RepositoryUrl>
   </PropertyGroup>
 

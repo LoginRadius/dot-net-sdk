@@ -16,8 +16,7 @@ namespace dot_net_demo.Controllers
     {
         LoginRadiusApiOptionalParams _apiOptionalParams = new LoginRadiusApiOptionalParams();
 
-         
-
+ 
 
         public IActionResult Index()
         {

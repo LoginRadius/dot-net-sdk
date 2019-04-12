@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
@@ -138,7 +139,7 @@ namespace LoginRadiusSDK.V2.Api
 
         private static bool _requestChannel;
 
-        internal static Dictionary<string, string> ConfigDictionary;
+        internal static ConcurrentDictionary<string, string> ConfigDictionary;
 
         /// <summary>
         /// Static constructor initializing any static properties.
@@ -279,8 +280,7 @@ namespace LoginRadiusSDK.V2.Api
                     uniformResourceIdentifier = baseUri;
                 }
 
-                // Create the HttpRequest object that will be used to send the HTTP request.
-                ConfigDictionary = ConfigManager.Instance.GetConfiguration();
+                
                 var connMngr = ConnectionManager.Instance;
                 var httpRequest = connMngr.GetConnection(ConfigDictionary, uniformResourceIdentifier.ToString(), headers, authHeaders);
                 httpRequest.Method = httpMethod.ToString();
