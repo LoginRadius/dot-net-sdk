@@ -4,7 +4,7 @@
 Release on **April 12, 2019**
 
 ##### Bug Fixes
-  - Fixed Dictionary concurency error in ConfigManager.
+  - Fixed Dictionary concurrency error in ConfigManager.
 
 ### Version 5.2.1
 Release on **March 19, 2019**
