@@ -225,9 +225,9 @@ $("#btn-user-getcustomobj").click(function () {
             '<tr>').appendTo("#table-customobj > tbody:last-child");
 
         for (let i = 0; i < ret.data.length; i++) {
-            $("<tr><td>" + ret.data[i].id + "</td></tr>").appendTo("#table-customobj > tbody:last-child");
+            $("<tr><td>" + ret.data[i].Id + "</td></tr>").appendTo("#table-customobj > tbody:last-child");
             $("<td>", {
-                text: JSON.stringify(ret.data[i].customObject)
+                text: JSON.stringify(ret.data[i].CustomObject)
             }).appendTo("#table-customobj > tbody:last-child > tr:last-child");
         }
     });
@@ -277,7 +277,12 @@ $( "#btn-user-createrole" ).click(function() {
     });
 });
 
-$( "#btn-user-deleterole" ).click(function() {
+$("#btn-user-deleterole").click(function () {
+    if ($("#user-roles-deleterole").val() === "") {
+        $("#user-deleterole-message").text("Please input a valid Role.");
+        $("#user-deleterole-message").attr("class", "error-message");
+        return;
+    }
     $.ajax({
         method: "DELETE",
         url: m_options.deleteRoleUrl + "?role=" + $("#user-roles-deleterole").val(),
@@ -334,17 +339,20 @@ let profileUpdate = function() {
         }
     }).done(function (ret) {
         console.log(ret);
-        if (ret.fullName === null) {
+        if (ret.FullName === null) {
             $("#profile-name").html("");
         } else {
-            $("#profile-name").html("<b>" + ret.fullName + "</b>");
+            $("#profile-name").html("<b>" + ret.FullName + "</b>");
         }
-        $("#profile-provider").text("Provider: " + ret.provider);
-        $("#profile-email").text(ret.email[0].value);
-        $("#profile-lastlogin").text("Last Login Date: " + ret.lastLoginDate);
-        $("#user-updateaccount-firstname").val(ret.firstName);
-        $("#user-updateaccount-lastname").val(ret.lastName);
-        $("#user-updateaccount-about").val(ret.about);
+        if (ret.ImageUrl != null && ret.ImageUrl != undefined && ret.ImageUrl != "") {
+            $("#profile-image").attr('src', ret.ImageUrl)
+        }
+        $("#profile-provider").text("Provider: " + ret.Provider);
+        $("#profile-email").text(ret.Email[0].Value);
+        $("#profile-lastlogin").text("Last Login Date: " + ret.LastLoginDate);
+        $("#user-updateaccount-firstname").val(ret.FirstName);
+        $("#user-updateaccount-lastname").val(ret.LastName);
+        $("#user-updateaccount-about").val(ret.About);
     });
 }
 
@@ -361,7 +369,7 @@ let roleUpdate = function() {
         for (let i = 0; i < ret.data.length; i++) {
             $("<tr></tr>").appendTo("#table-allroles > tbody:last-child");
             $("<td>", {
-                text: ret.data[i].name
+                text: ret.data[i].Name
             }).appendTo('#table-allroles > tbody:last-child > tr:last-child');
         }
     });
@@ -376,11 +384,11 @@ let roleUpdate = function() {
         }
     }).done(function(ret) {
         $('#table-userroles tr:not(:first)').remove();
-        if (ret && ret.roles) {
-            for (let i = 0; i < ret.roles.length; i++) {
+        if (ret && ret.Roles) {
+            for (let i = 0; i < ret.Roles.length; i++) {
                 $("<tr></tr>").appendTo("#table-userroles > tbody:last-child");
                 $("<td>", {
-                    text: ret.roles[i]
+                    text: ret.Roles[i]
                 }).appendTo('#table-userroles > tbody:last-child > tr:last-child');
             }
         }

@@ -1,5 +1,5 @@
-using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 #if NetFramework
 using System.Configuration;
 #endif
@@ -29,14 +29,14 @@ namespace LoginRadiusSDK.V2
             // Default connection timeout in milliseconds
             DefaultConfig = new Dictionary<string, string>
             {
-                [BaseConstants.HttpConnectionTimeoutConfig] = "30000",
-                [BaseConstants.HttpConnectionRetryConfig] = "3"
+                [LRConfigConstants.HttpConnectionTimeoutConfig] = "30000",
+                [LRConfigConstants.HttpConnectionRetryConfig] = "3"
             };
 
             try
             {
 #if NetFramework
-                _sdkConfigHandler = ConfigurationManager.GetSection(BaseConstants.ConfigSection) as SDKConfigHandler ?? new SDKConfigHandler();
+                _sdkConfigHandler = ConfigurationManager.GetSection(LRConfigConstants.ConfigSection) as SDKConfigHandler ?? new SDKConfigHandler();
 #else
                 _sdkConfigHandler.GetSection();
 #endif
@@ -118,50 +118,55 @@ namespace LoginRadiusSDK.V2
             _configValues = new ConcurrentDictionary<string, string>();
 
             var valStr = string.IsNullOrWhiteSpace(LoginRadiusSdkGlobalConfig.ApiKey)
-                ? _sdkConfigHandler.Setting(BaseConstants.LoginRadiusApiKey)
+                ? _sdkConfigHandler.Setting(LRConfigConstants.LoginRadiusApiKey)
                 : LoginRadiusSdkGlobalConfig.ApiKey;
-            _configValues.TryAdd(BaseConstants.LoginRadiusApiKey, valStr);
+            _configValues.TryAdd(LRConfigConstants.LoginRadiusApiKey, valStr);
 
             valStr = string.IsNullOrWhiteSpace(LoginRadiusSdkGlobalConfig.ApiSecret)
-                ? _sdkConfigHandler.Setting(BaseConstants.LoginRadiusApiSecret)
+                ? _sdkConfigHandler.Setting(LRConfigConstants.LoginRadiusApiSecret)
                 : LoginRadiusSdkGlobalConfig.ApiSecret;
-            _configValues.TryAdd(BaseConstants.LoginRadiusApiSecret, valStr);
+            _configValues.TryAdd(LRConfigConstants.LoginRadiusApiSecret, valStr);
 
             valStr = string.IsNullOrWhiteSpace(LoginRadiusSdkGlobalConfig.ProxyAddress)
-                ? _sdkConfigHandler.Setting(BaseConstants.HttpProxyAddressConfig)
+                ? _sdkConfigHandler.Setting(LRConfigConstants.HttpProxyAddressConfig)
                 : LoginRadiusSdkGlobalConfig.ProxyAddress;
-            _configValues.TryAdd(BaseConstants.HttpProxyAddressConfig, valStr);
+            _configValues.TryAdd(LRConfigConstants.HttpProxyAddressConfig, valStr);
 
 
             valStr = string.IsNullOrWhiteSpace(LoginRadiusSdkGlobalConfig.ProxyCredentials)
-                ? _sdkConfigHandler.Setting(BaseConstants.HttpProxyCredentialConfig)
+                ? _sdkConfigHandler.Setting(LRConfigConstants.HttpProxyCredentialConfig)
                 : LoginRadiusSdkGlobalConfig.ProxyCredentials;
-            _configValues.TryAdd(BaseConstants.HttpProxyCredentialConfig, valStr);
+            _configValues.TryAdd(LRConfigConstants.HttpProxyCredentialConfig, valStr);
 
             valStr = LoginRadiusSdkGlobalConfig.ConnectionTimeout <= 0
-                ? _sdkConfigHandler.Setting(BaseConstants.HttpConnectionTimeoutConfig)
+                ? _sdkConfigHandler.Setting(LRConfigConstants.HttpConnectionTimeoutConfig)
                 : LoginRadiusSdkGlobalConfig.ConnectionTimeout.ToString();
-            _configValues.TryAdd(BaseConstants.HttpConnectionTimeoutConfig, valStr);
+            _configValues.TryAdd(LRConfigConstants.HttpConnectionTimeoutConfig, valStr);
 
             valStr = LoginRadiusSdkGlobalConfig.RequestRetries <= 0
-                ? _sdkConfigHandler.Setting(BaseConstants.HttpConnectionRetryConfig)
+                ? _sdkConfigHandler.Setting(LRConfigConstants.HttpConnectionRetryConfig)
                 : LoginRadiusSdkGlobalConfig.RequestRetries.ToString();
-            _configValues.TryAdd(BaseConstants.HttpConnectionRetryConfig, valStr);
+            _configValues.TryAdd(LRConfigConstants.HttpConnectionRetryConfig, valStr);
 
             valStr = string.IsNullOrWhiteSpace(LoginRadiusSdkGlobalConfig.AppName)
-                ? _sdkConfigHandler.Setting(BaseConstants.LoginRadiusAppName)
+                ? _sdkConfigHandler.Setting(LRConfigConstants.LoginRadiusAppName)
                 : LoginRadiusSdkGlobalConfig.AppName;
-            _configValues.TryAdd(BaseConstants.LoginRadiusAppName, valStr);
+            _configValues.TryAdd(LRConfigConstants.LoginRadiusAppName, valStr);
 
             valStr = string.IsNullOrWhiteSpace(LoginRadiusSdkGlobalConfig.ApiRequestSigning)
-               ? _sdkConfigHandler.Setting(BaseConstants.ApiRequestSigning)
+               ? _sdkConfigHandler.Setting(LRConfigConstants.ApiRequestSigning)
                : LoginRadiusSdkGlobalConfig.ApiRequestSigning;
-            _configValues.TryAdd(BaseConstants.ApiRequestSigning, valStr);
+            _configValues.TryAdd(LRConfigConstants.ApiRequestSigning, valStr);
 
             valStr = string.IsNullOrWhiteSpace(LoginRadiusSdkGlobalConfig.DomainName)
-               ? _sdkConfigHandler.Setting(BaseConstants.DomainName)
-               : LoginRadiusSdkGlobalConfig.DomainName;
-            _configValues.TryAdd(BaseConstants.DomainName, valStr);
+               ? _sdkConfigHandler.Setting(LRConfigConstants.DomainName)
+               :LoginRadiusSdkGlobalConfig.DomainName;
+            _configValues.TryAdd(LRConfigConstants.DomainName, valStr);
+
+            valStr = string.IsNullOrWhiteSpace(LoginRadiusSdkGlobalConfig.ApiRegion)
+               ? _sdkConfigHandler.Setting(LRConfigConstants.ApiRegion)
+               : LoginRadiusSdkGlobalConfig.ApiRegion;
+            _configValues.TryAdd(LRConfigConstants.ApiRegion, valStr);
 
             return _configValues;
         }

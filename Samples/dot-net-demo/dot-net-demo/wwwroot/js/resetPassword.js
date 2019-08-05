@@ -1,6 +1,6 @@
 const url = location.href;
 const params = url.split("?")[1];
-const serverUrl = "http://localhost:4000";
+const serverUrl = "http://localhost:65151";
 let paramsObj = {};
 
 $("#btn-minimal-resetpassword").click(function () {
@@ -24,9 +24,9 @@ $("#btn-minimal-resetpassword").click(function () {
       method: "PUT",
       data: JSON.stringify(data),
       url: m_options.resetPasswordEmailUrl,
-      contentType: "application/json",
+      contentType: "application/json; charset=utf-8",
       error: function(xhr) {
-          $("#minimal-resetpassword-message").text(xhr.responseJSON.Description);
+          $("#minimal-resetpassword-message").text(xhr.responseJSON.value.description);
           $("#minimal-resetpassword-message").attr("class", "error-message");
       }
   }).done(function () {

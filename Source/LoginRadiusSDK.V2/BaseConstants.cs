@@ -7,41 +7,7 @@ namespace LoginRadiusSDK.V2
     /// </summary>
     public static class BaseConstants
     {
-        /// <summary>
-        /// Configuration key for HTTP Proxy Address
-        /// </summary>
-        public const string HttpProxyAddressConfig = "proxyAddress";
-
-        /// <summary>
-        /// Configuration key for HTTP Proxy Credential
-        /// </summary>
-        public const string HttpProxyCredentialConfig = "proxyCredentials";
-
-        /// <summary>
-        /// Configuration key for HTTP Connection Timeout
-        /// </summary>
-        public const string HttpConnectionTimeoutConfig = "connectionTimeout";
-
-        /// <summary>
-        /// Configuration key for HTTP Connection Retry
-        /// </summary>
-        public const string HttpConnectionRetryConfig = "requestRetries";
-
-        /// <summary>
-        /// Configuration LoginRadius API Key
-        /// </summary>
-        public const string LoginRadiusApiKey = "apiKey";
-
-        /// <summary>
-        /// Configuration LoginRadius APP Name
-        /// </summary>
-        public const string LoginRadiusAppName = "appName";
-
-        /// <summary>
-        /// Configuration LoginRadius API Secret
-        /// </summary>
-        public const string LoginRadiusApiSecret = "apiSecret";
-
+        
         /// <summary>
         /// Configuration LoginRadius API Secret Header Key
         /// </summary>
@@ -62,16 +28,7 @@ namespace LoginRadiusSDK.V2
         /// </summary>
         public const string AccessTokenBearerHeader = "Bearer ";
 
-        /// <summary>
-        /// Configuration LoginRadius ApiRequestSigning Key
-        /// </summary>
-        public const string ApiRequestSigning = "ApiRequestSigning";
-
-        /// <summary>
-        /// Configuration Section Identifier 
-        /// </summary>
-        public const string ConfigSection = "loginradius";
-
+       
         /// <summary>
         /// Content Type HTTP Header
         /// </summary>
@@ -82,10 +39,11 @@ namespace LoginRadiusSDK.V2
         /// </summary>
         public const string ContentTypeHeaderJson = "application/json";
 
+
         /// <summary>
-        /// Application - Json Content Type
+        /// Parameter validation
         /// </summary>
-        public const string DomainName = "domainName";
+        public const string ValidationMessage = "The Method Parameter is not Formated or Null";
 
         /// <summary>
         /// The version of this SDK.
@@ -97,18 +55,8 @@ namespace LoginRadiusSDK.V2
         /// </summary>
         public const string SdkName = "LoginRadius-NET-SDK";
 
-        private const string BaseRestApiEndpoint = "https://api.loginradius.com/";
-        private const string BaseConfigApiEndpoint = "https://config.lrcontent.com/";
-        public const string RestAuthApiEndpoint = "identity/v2/auth/";
-        public const string RestIdentityApiEndpoint = "identity/v2/manage/account/";
-        public const string RestRoleApiEndpoint = "identity/v2/manage/";
-        public const string RestApiEndpoint = "api/v2/";
-        public const string RestHookApiEndpoint = "api/v2/resthook/";
-        public const string RestShareApiEndpoint = "sharing/v1/shorturl/";
-        public const string ServerinfoApiEndpoint = "identity/v2/serverinfo";
-        public const string WebhookApiEndpoint = "api/v2/webhook";
-        public const string RegistrationDataApiEndpoint = "identity/v2/manage/registrationdata";
-        public const string RegistrationDataAuthApiEndpoint = "identity/v2/auth/registrationdata";
-        public const string ConfigurationAuthApiEndpoint = BaseConfigApiEndpoint + "ciam/appinfo";
+        public const string BaseRestApiEndpoint = "https://api.loginradius.com/";
+        public const string BaseConfigApiEndpoint = "https://config.lrcontent.com/";
+
     }
 }

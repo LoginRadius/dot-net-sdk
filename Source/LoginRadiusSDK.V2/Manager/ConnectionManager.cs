@@ -1,6 +1,6 @@
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Linq;
 using System.Net;
 #if !NET_40
@@ -49,11 +49,9 @@ namespace LoginRadiusSDK.V2
             }
 
             // Set connection timeout
-            int connectionTimeout;
-            if (!config.ContainsKey(BaseConstants.HttpConnectionTimeoutConfig) ||
-                !int.TryParse(config[BaseConstants.HttpConnectionTimeoutConfig], out connectionTimeout))
+            if (!config.ContainsKey(LRConfigConstants.HttpConnectionTimeoutConfig) || !int.TryParse(config[LRConfigConstants.HttpConnectionTimeoutConfig], out int connectionTimeout))
             {
-                int.TryParse(ConfigManager.GetDefault(BaseConstants.HttpConnectionTimeoutConfig),
+                int.TryParse(ConfigManager.GetDefault(LRConfigConstants.HttpConnectionTimeoutConfig),
                     out connectionTimeout);
             }
 
@@ -62,14 +60,14 @@ namespace LoginRadiusSDK.V2
 
             // Set request proxy for tunnelling http requests via a proxy server
             Uri proxyUri;
-            if (config.ContainsKey(BaseConstants.HttpProxyAddressConfig) &&
-                !string.IsNullOrWhiteSpace(config[BaseConstants.HttpProxyAddressConfig]) &&
-                Uri.TryCreate(config[BaseConstants.HttpProxyAddressConfig], UriKind.Absolute, out proxyUri))
+            if (config.ContainsKey(LRConfigConstants.HttpProxyAddressConfig) &&
+                !string.IsNullOrWhiteSpace(config[LRConfigConstants.HttpProxyAddressConfig]) &&
+                Uri.TryCreate(config[LRConfigConstants.HttpProxyAddressConfig], UriKind.Absolute, out proxyUri))
             {
-                WebProxy requestProxy = new WebProxy {Address = new Uri(config[BaseConstants.HttpProxyAddressConfig])};
-                if (config.ContainsKey(BaseConstants.HttpProxyCredentialConfig))
+                WebProxy requestProxy = new WebProxy {Address = new Uri(config[LRConfigConstants.HttpProxyAddressConfig])};
+                if (config.ContainsKey(LRConfigConstants.HttpProxyCredentialConfig) && !string.IsNullOrWhiteSpace(config[LRConfigConstants.HttpProxyCredentialConfig]))
                 {
-                    string proxyCredentials = config[BaseConstants.HttpProxyCredentialConfig];
+                    string proxyCredentials = config[LRConfigConstants.HttpProxyCredentialConfig];
                     string[] proxyDetails = proxyCredentials.Split(':');
                     if (proxyDetails.Length == 2)
                     {

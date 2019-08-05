@@ -31,7 +31,7 @@ let verificationFunc = function () {
                 }
             }).done(function (ret) {
                 localStorage.setItem("LRTokenKey", ret.access_token);
-                localStorage.setItem("lr-user-uid", ret.profile.uid);
+                localStorage.setItem("lr-user-uid", ret.Profile.Uid);
                 window.location.replace("/Home/Profile");
             });
         } else {

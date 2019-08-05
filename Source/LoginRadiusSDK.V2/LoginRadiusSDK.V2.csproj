@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>netstandard1.3;netstandard2.0;net45;net40</TargetFrameworks>
@@ -25,9 +25,9 @@
     <RepositoryType>Github</RepositoryType>
     <Company>LoginRadius Inc.</Company>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>5.2.2</Version>
-    <AssemblyVersion>5.2.2</AssemblyVersion>
-    <FileVersion>5.2.2</FileVersion>
+    <Version>10.0.0-beta</Version>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
+    <FileVersion>10.0.0.0</FileVersion>
     <RepositoryUrl>https://github.com/LoginRadius/dot-net-sdk</RepositoryUrl>
   </PropertyGroup>
 
@@ -49,7 +49,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
   
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">

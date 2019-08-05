@@ -52,7 +52,7 @@ $("#btn-minimal-login").click(function () {
         }
     }).done(function(ret) {
         localStorage.setItem("LRTokenKey", ret.access_token);
-        localStorage.setItem("lr-user-uid", ret.profile.uid);
+        localStorage.setItem("lr-user-uid", ret.Profile.Uid);
         window.location.replace("Home/Profile");
     });
 });
@@ -83,19 +83,19 @@ $("#btn-minimal-mfalogin-next").click(function () {
     }).done(function (ret) {
         console.log(ret);
         $("#minimal-mfalogin-message").text("");
-        if (ret.secondFactorAuthentication && ret.secondFactorAuthentication.secondFactorAuthenticationToken) {
-            if (ret.secondFactorAuthentication.isGoogleAuthenticatorVerified === false) {
-                $("#minimal-mfalogin-qrcode").append('<img src="' + ret.secondFactorAuthentication.qrCode + '">');
+        if (ret.SecondFactorAuthentication) {
+            if (ret.SecondFactorAuthentication.IsGoogleAuthenticatorVerified === false) {
+                $("#minimal-mfalogin-qrcode").append('<img src="' + ret.SecondFactorAuthentication.QRCode + '">');
             }
             $("#minimal-mfalogin-next")
                 .html('<table><tbody><tr>' +
                     '<td>Google Authenticator Code: </td><td><input type="text" id="minimal-mfalogin-googlecode"></td>' +
                     '</tr></tbody></table>' + 
                     '<button id="btn-minimal-mfalogin-login">Login</button>');
-            multiFactorAuthToken = ret.secondFactorAuthentication.secondFactorAuthenticationToken;
+            multiFactorAuthToken = ret.SecondFactorAuthentication.SecondFactorAuthenticationToken;
         } else {
             localStorage.setItem("LRTokenKey", ret.access_token);
-            localStorage.setItem("lr-user-uid", ret.profile.uid);
+            localStorage.setItem("lr-user-uid", ret.Profile.Uid);
             window.location.replace("Home/Profile");
         }
     });
@@ -118,7 +118,7 @@ $("#minimal-mfalogin-next").on('click', "#btn-minimal-mfalogin-login", function(
     }).done(function (ret) {
         console.log(ret);
         localStorage.setItem("LRTokenKey", ret.access_token);
-        localStorage.setItem("lr-user-uid", ret.profile.uid);
+        localStorage.setItem("lr-user-uid", ret.Profile.Uid);
         window.location.replace("Home/Profile");
     });
 });

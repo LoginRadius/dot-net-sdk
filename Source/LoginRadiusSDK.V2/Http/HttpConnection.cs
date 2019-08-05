@@ -1,6 +1,4 @@
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Net;
 using LoginRadiusSDK.V2.Exception;
@@ -127,9 +125,8 @@ namespace LoginRadiusSDK.V2.Http
 
             HttpWebRequest newHttpRequest = connMngr.GetConnection(config, url);
             newHttpRequest.Method = httpRequest.Method;
-            newHttpRequest.Accept = httpRequest.Accept;
+            newHttpRequest.Accept = httpRequest.Accept;  
             newHttpRequest.ContentType = httpRequest.ContentType;
-
 
 #if !NETSTANDARD1_3
             if (httpRequest.ContentLength > 0)
@@ -188,9 +185,8 @@ namespace LoginRadiusSDK.V2.Http
         /// <returns>A string containing the response from the remote host.</returns>
         public string Execute(string payLoad, HttpWebRequest httpRequest, int contentLength)
         {
-            int retriesInt;
-            int retriesConfigured = _config.ContainsKey(BaseConstants.HttpConnectionRetryConfig) 
-                && int.TryParse(_config[BaseConstants.HttpConnectionRetryConfig], out retriesInt) 
+            int retriesConfigured = _config.ContainsKey(LRConfigConstants.HttpConnectionRetryConfig)
+                && int.TryParse(_config[LRConfigConstants.HttpConnectionRetryConfig], out int retriesInt)
                 ? retriesInt
                 : 0;
             int retries = 0;

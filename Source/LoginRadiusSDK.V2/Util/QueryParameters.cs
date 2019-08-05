@@ -3,7 +3,6 @@ using System.Collections.Generic;
 #if !NETSTANDARD1_3
 using System.Web;
 #endif
-using LoginRadiusSDK.V2.Models;
 using LoginRadiusSDK.V2.Util.Serialization;
 
 namespace LoginRadiusSDK.V2.Util
@@ -49,29 +48,8 @@ namespace LoginRadiusSDK.V2.Util
                 target.Add(element);
         }
 
-        public void AddOptionalParamsRange(LoginRadiusApiOptionalParams source)
-        {
-            if (!string.IsNullOrWhiteSpace(source.SmsTemplate)) Add(nameof(source.SmsTemplate), source.SmsTemplate);
-            if (!string.IsNullOrWhiteSpace(source.DeleteUrl)) Add(nameof(source.DeleteUrl), source.DeleteUrl);
-            if (!string.IsNullOrWhiteSpace(source.EmailTemplate)) Add(nameof(source.EmailTemplate), source.EmailTemplate);
-            if (!string.IsNullOrWhiteSpace(source.LoginUrl)) Add(nameof(source.LoginUrl), source.LoginUrl);
-            if (!string.IsNullOrWhiteSpace(source.SmsTemplate2Fa)) Add(nameof(source.SmsTemplate2Fa), source.SmsTemplate2Fa);
-            if (!string.IsNullOrWhiteSpace(source.VerificationUrl)) Add(nameof(source.VerificationUrl), source.VerificationUrl);
-            if (!string.IsNullOrWhiteSpace(source.G_Recaptcha_Response)) Add(nameof(source.G_Recaptcha_Response), source.G_Recaptcha_Response);
-        }
+        
 
-        public void AddOptionalParamsRange(TwoFactorAuthModel source)
-        {
-            if (!string.IsNullOrWhiteSpace(source.GoogleAuthenticatorCode))
-                Add(nameof(source.GoogleAuthenticatorCode), source.GoogleAuthenticatorCode);
-
-            if (!string.IsNullOrWhiteSpace(source.Otp)) Add(nameof(source.Otp), source.Otp);
-        }
-
-        public void AddOptionalParamsRange(TwoFactorPhoneAuthModel source)
-        {
-            if (!string.IsNullOrWhiteSpace(source.PhoneNo2Fa)) Add(nameof(source.PhoneNo2Fa), source.PhoneNo2Fa);
-        }
 
         public void TryAdd(string key, string value)
         {
@@ -79,7 +57,7 @@ namespace LoginRadiusSDK.V2.Util
         }
     }
 
-    public class BodyParameters : Dictionary<string, string>
+    public class BodyParameters : Dictionary<string, object>
     {
         /// <summary>
         /// Converts this object to a JSON string.

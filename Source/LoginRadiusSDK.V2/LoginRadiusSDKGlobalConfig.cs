@@ -1,4 +1,4 @@
-﻿using LoginRadiusSDK.V2.Api;
+﻿using LoginRadiusSDK.V2.Common;
 
 namespace LoginRadiusSDK.V2
 {
@@ -8,6 +8,7 @@ namespace LoginRadiusSDK.V2
         public static string ProxyCredentials { get; set; }
         public static int ConnectionTimeout { get; set; }
         public static int RequestRetries { get; set; }
+        public static string ApiRegion { get; set; }
 
         private static string _apiKey;
 
@@ -17,7 +18,7 @@ namespace LoginRadiusSDK.V2
             {
 
                 return string.IsNullOrWhiteSpace(_apiKey) && LoginRadiusResource.ConfigDictionary != null
-                    ? LoginRadiusResource.ConfigDictionary[BaseConstants.LoginRadiusApiKey]
+                    ? LoginRadiusResource.ConfigDictionary[LRConfigConstants.LoginRadiusApiKey]
                     : _apiKey;
             }
             set { _apiKey = value; }
@@ -33,7 +34,7 @@ namespace LoginRadiusSDK.V2
             get
             {
                 return string.IsNullOrWhiteSpace(_appName) && LoginRadiusResource.ConfigDictionary != null
-                    ? LoginRadiusResource.ConfigDictionary[BaseConstants.LoginRadiusAppName]
+                    ? LoginRadiusResource.ConfigDictionary[LRConfigConstants.LoginRadiusAppName]
                     : _appName;
             }
             set { _appName = value; }
@@ -46,7 +47,7 @@ namespace LoginRadiusSDK.V2
             get
             {
                 return string.IsNullOrWhiteSpace(_domainName) && LoginRadiusResource.ConfigDictionary != null
-                    ? LoginRadiusResource.ConfigDictionary[BaseConstants.DomainName]
+                    ? LoginRadiusResource.ConfigDictionary[LRConfigConstants.DomainName]
                     : _domainName;
             }
             set { _domainName = value; }

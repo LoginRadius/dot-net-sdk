@@ -1,10 +1,10 @@
-﻿using LoginRadiusSDK.V2.Models;
+﻿using LoginRadiusSDK.V2.Common;
 using LoginRadiusSDK.V2.Util.Serialization;
 
 namespace LoginRadiusSDK.V2.Exception
 {
     /// <summary>
-    /// The LoginRadiusException class is used to handle exception while loginradius api is executing.
+    /// The LoginRadiusException class is used to handle exception while loginRadius API is executing.
     /// </summary>
     public class LoginRadiusException : System.Exception
     {
@@ -29,12 +29,12 @@ namespace LoginRadiusSDK.V2.Exception
         }
 
         /// <summary>
-        /// 
+        /// LoginRadiusException
         /// </summary>
         public LoginRadiusException(){}
 
         /// <summary>
-        /// 
+        /// LoginRadiusException
         /// </summary>
         /// <param name="message"></param>
         public LoginRadiusException(string message)
@@ -43,7 +43,7 @@ namespace LoginRadiusSDK.V2.Exception
         }
 
         /// <summary>
-        /// 
+        /// LoginRadiusException
         /// </summary>
         /// <param name="message"></param>
         /// <param name="innerException"></param>
@@ -69,7 +69,7 @@ namespace LoginRadiusSDK.V2.Exception
         }
 
         /// <summary>
-        /// 
+        /// LoginRadiusException
         /// </summary>
         /// <param name="message"></param>
         /// <param name="innerException"></param>

@@ -66,7 +66,7 @@ namespace LoginRadiusSDK.V2
         public void GetSection()
         {
             _loginRadiusSettings = new Dictionary<string, string>();
-            Configuration.GetSection(BaseConstants.ConfigSection).Bind(_loginRadiusSettings);
+            Configuration.GetSection(LRConfigConstants.ConfigSection).Bind(_loginRadiusSettings);
         }
 
         public string Setting(string name)

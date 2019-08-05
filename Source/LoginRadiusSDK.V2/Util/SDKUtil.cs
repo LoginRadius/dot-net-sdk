@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Text;
-using System.Text.RegularExpressions;
 #if !NETSTANDARD1_3
 using System.Web;
 #endif
-using LoginRadiusSDK.V2.Entity;
+
 using LoginRadiusSDK.V2.Exception;
 using Microsoft.Win32;
 
@@ -43,10 +42,7 @@ namespace LoginRadiusSDK.V2.Util
         /// <param name="pattern"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public static string FormatURIPath(LoginRadiusResourcePath pattern, object[] parameters)
-        {
-            return FormatURIPath(pattern.ToString(), parameters);
-        }
+        
 
         /// <summary>
         /// Formats the URI path for REST calls. Replaces any occurrences of the form

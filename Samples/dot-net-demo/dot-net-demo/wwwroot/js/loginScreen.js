@@ -4,7 +4,7 @@ LRObject.util.ready(function() {
 
 let options = {
     redirecturl: {
-        afterlogin: "http://localhost:57476/Home/Profile",
-        afterreset: "http://localhost:57476/"
+        afterlogin: window.location.origin + "/Home/Profile",
+        afterreset: window.location.origin + "/"
   }
 }
