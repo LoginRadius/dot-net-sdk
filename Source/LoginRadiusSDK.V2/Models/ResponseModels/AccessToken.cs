@@ -34,6 +34,18 @@ namespace LoginRadiusSDK.V2.Models.ResponseModels
 		[JsonProperty(PropertyName = "refresh_token")]
         public  Guid? Refresh_Token {get;set;}
 
+		/// <summary>
+		///	session token expiry time
+		/// </summary>
+		[JsonProperty(PropertyName = "session_expires_in")]
+        public  DateTime? Session_expires_in {get;set;}
+
+		/// <summary>
+		///	session token of user
+		/// </summary>
+		[JsonProperty(PropertyName = "session_token")]
+        public  Guid? Session_token {get;set;}
+
     }
 	
 	/// <summary>

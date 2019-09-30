@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 
 namespace LoginRadiusSDK.V2.Common
@@ -36,10 +35,8 @@ namespace LoginRadiusSDK.V2.Common
         /// Represents errors that occurred during the server validation of request payload. 
         /// </summary>
         public List<ValidationErrors> Errors { get; set; }
+        public object Data { get; set; }
+        
     }
 
-    public class ApiExceptionResponse<T> : ApiExceptionResponse
-    {
-        public T Data { get; set; }
-    }
 }

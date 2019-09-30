@@ -25,7 +25,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <param name="userProfileUpdateModel">Model Class containing Definition of payload for User Profile update API</param>
         /// <param name="emailTemplate">Email template name</param>
         /// <param name="fields">The fields parameter filters the API response so that the response only includes a specific set of fields</param>
-        /// <param name="nullSupport">>Boolean, pass true if you wish to update any user profile field with a NULL value, You can get the details <a href='/api/v2/user-registration/advanced-api-usage#nullsupport0'>Here</a></param>
+        /// <param name="nullSupport">>Boolean, pass true if you wish to update any user profile field with a NULL value, You can get the details <a href='https://www.loginradius.com/docs/api/v2/customer-identity-api/advanced-api-usage#nullsupport0'>Here</a></param>
         /// <param name="smsTemplate">SMS Template name</param>
         /// <param name="verificationUrl">Email verification url</param>
         /// <returns>Response containing Definition of Complete Validation and UserProfile data</returns>
@@ -1157,60 +1157,6 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             if (!string.IsNullOrWhiteSpace(options))
             {
                queryParameters.Add("options", options);
-            }
-            if (!string.IsNullOrWhiteSpace(verificationUrl))
-            {
-               queryParameters.Add("verificationUrl", verificationUrl);
-            }
-            if (!string.IsNullOrWhiteSpace(welcomeEmailTemplate))
-            {
-               queryParameters.Add("welcomeEmailTemplate", welcomeEmailTemplate);
-            }
-
-            var resourcePath = "identity/v2/auth/register";
-            
-            return ConfigureAndExecute<UserProfilePostResponse<AccessToken<Identity>>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(authUserRegistrationModel));
-        }
-        /// <summary>
-        /// This API registers the new users into your Cloud Storage and triggers the phone verification process.
-        /// </summary>
-        /// <param name="authUserRegistrationModel">Model Class containing Definition of payload for Auth User Registration API</param>
-        /// <param name="sott">LoginRadius Secured One Time Token</param>
-        /// <param name="fields">The fields parameter filters the API response so that the response only includes a specific set of fields</param>
-        /// <param name="options">PreventVerificationEmail (Specifying this value prevents the verification email from being sent. Only applicable if you have the optional email verification flow)</param>
-        /// <param name="smsTemplate">SMS Template name</param>
-        /// <param name="verificationUrl">Email verification url</param>
-        /// <param name="welcomeEmailTemplate">Name of the welcome email template</param>
-        /// <returns>Response containing Definition of Complete Validation, UserProfile data and Access Token</returns>
-        /// 17.1.2
-
-        public ApiResponse<UserProfilePostResponse<AccessToken<Identity>>> UserRegistrationByPhone(AuthUserRegistrationModel authUserRegistrationModel, string sott,
-        string fields = "", string options = "", string smsTemplate = null, string verificationUrl = null, string welcomeEmailTemplate = null)
-        {
-            if (authUserRegistrationModel == null)
-            {
-               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(authUserRegistrationModel));
-            }
-            if (string.IsNullOrWhiteSpace(sott))
-            {
-               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(sott));
-            }
-            var queryParameters = new QueryParameters
-            {
-                { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] },
-                { "sott", sott }
-            };
-            if (!string.IsNullOrWhiteSpace(fields))
-            {
-               queryParameters.Add("fields", fields);
-            }
-            if (!string.IsNullOrWhiteSpace(options))
-            {
-               queryParameters.Add("options", options);
-            }
-            if (!string.IsNullOrWhiteSpace(smsTemplate))
-            {
-               queryParameters.Add("smsTemplate", smsTemplate);
             }
             if (!string.IsNullOrWhiteSpace(verificationUrl))
             {

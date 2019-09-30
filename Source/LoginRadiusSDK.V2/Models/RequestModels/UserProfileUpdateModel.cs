@@ -137,6 +137,12 @@ namespace LoginRadiusSDK.V2.Models.RequestModels
         public  List<Email> Email {get;set;}
 
 		/// <summary>
+		///	Array of Objects,string represents SourceId,Source
+		/// </summary>
+		[JsonProperty(PropertyName = "ExternalIds")]
+        public  List<ExternalIds> ExternalIds {get;set;}
+
+		/// <summary>
 		///	External User Login Id
 		/// </summary>
 		[JsonProperty(PropertyName = "ExternalUserLoginId")]
@@ -185,7 +191,7 @@ namespace LoginRadiusSDK.V2.Models.RequestModels
         public  string FullName {get;set;}
 
 		/// <summary>
-		///	
+		///	Array of Objects,string represents Id,Name,Category,CreatedDate
 		/// </summary>
 		[JsonProperty(PropertyName = "Games")]
         public  List<Games> Games {get;set;}
@@ -293,12 +299,6 @@ namespace LoginRadiusSDK.V2.Models.RequestModels
         public  List<JobBookmarks> JobBookmarks {get;set;}
 
 		/// <summary>
-		///	Object, string represents KloutId and double represents Score
-		/// </summary>
-		[JsonProperty(PropertyName = "KloutScore")]
-        public  KloutProfile KloutScore {get;set;}
-
-		/// <summary>
 		///	language known by user's
 		/// </summary>
 		[JsonProperty(PropertyName = "Languages")]
@@ -399,6 +399,12 @@ namespace LoginRadiusSDK.V2.Models.RequestModels
 		/// </summary>
 		[JsonProperty(PropertyName = "PhoneNumbers")]
         public  List<Phone> PhoneNumbers {get;set;}
+
+		/// <summary>
+		///	PIN Info
+		/// </summary>
+		[JsonProperty(PropertyName = "PINInfo")]
+        public  PINModel PINInfo {get;set;}
 
 		/// <summary>
 		///	Array of Objects,strings Name and boolean IsPrimary

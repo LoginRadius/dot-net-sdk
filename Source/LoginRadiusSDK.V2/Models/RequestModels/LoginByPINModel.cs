@@ -11,21 +11,15 @@ namespace LoginRadiusSDK.V2.Models.RequestModels
 {
 
     /// <summary>
-    ///	Model Class containing Definition for KloutProfile Property
+    ///	Model Class containing Definition of payload for LoginByPin API
     /// </summary>
-    public class KloutProfile
+    public class LoginByPINModel
     {
 		/// <summary>
-		///	Id of klout
+		///	PIN of user
 		/// </summary>
-		[JsonProperty(PropertyName = "KloutId")]
-        public  string KloutId {get;set;}
-
-		/// <summary>
-		///	Object, string represents KloutId and double represents Score
-		/// </summary>
-		[JsonProperty(PropertyName = "Score")]
-        public  double? Score {get;set;}
+		[JsonProperty(PropertyName = "PIN")]
+        public  string PIN {get;set;}
 
     }
 }

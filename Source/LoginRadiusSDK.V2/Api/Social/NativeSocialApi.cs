@@ -15,7 +15,7 @@ namespace LoginRadiusSDK.V2.Api.Social
     public class NativeSocialApi : LoginRadiusResource
     {
         /// <summary>
-        /// The API is used to get LoginRadius access token by sending Facebook’s access token. It will be valid for the specific duration of time specified in the response.
+        /// The API is used to get LoginRadius access token by sending Facebook's access token. It will be valid for the specific duration of time specified in the response.
         /// </summary>
         /// <param name="fbAccessToken">Facebook Access Token</param>
         /// <returns>Response containing Definition of Complete Token data</returns>
@@ -38,7 +38,7 @@ namespace LoginRadiusSDK.V2.Api.Social
             return ConfigureAndExecute<AccessToken>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
-        /// The API is used to get LoginRadius access token by sending Twitter’s access token. It will be valid for the specific duration of time specified in the response.
+        /// The API is used to get LoginRadius access token by sending Twitter's access token. It will be valid for the specific duration of time specified in the response.
         /// </summary>
         /// <param name="twAccessToken">Twitter Access Token</param>
         /// <param name="twTokenSecret">Twitter Token Secret</param>
@@ -67,7 +67,7 @@ namespace LoginRadiusSDK.V2.Api.Social
             return ConfigureAndExecute<AccessToken>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
-        /// The API is used to get LoginRadius access token by sending Google’s access token. It will be valid for the specific duration of time specified in the response.
+        /// The API is used to get LoginRadius access token by sending Google's access token. It will be valid for the specific duration of time specified in the response.
         /// </summary>
         /// <param name="googleAccessToken">Google Access Token</param>
         /// <param name="clientId">Google Client ID</param>
@@ -124,7 +124,7 @@ namespace LoginRadiusSDK.V2.Api.Social
             return ConfigureAndExecute<AccessToken>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
-        /// The API is used to get LoginRadius access token by sending Linkedin’s access token. It will be valid for the specific duration of time specified in the response.
+        /// The API is used to get LoginRadius access token by sending Linkedin's access token. It will be valid for the specific duration of time specified in the response.
         /// </summary>
         /// <param name="lnAccessToken">Linkedin Access Token</param>
         /// <returns>Response containing Definition of Complete Token data</returns>
@@ -147,7 +147,7 @@ namespace LoginRadiusSDK.V2.Api.Social
             return ConfigureAndExecute<AccessToken>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
-        /// The API is used to get LoginRadius access token by sending Foursquare’s access token. It will be valid for the specific duration of time specified in the response.
+        /// The API is used to get LoginRadius access token by sending Foursquare's access token. It will be valid for the specific duration of time specified in the response.
         /// </summary>
         /// <param name="fsAccessToken">Foursquare Access Token</param>
         /// <returns>Response containing Definition of Complete Token data</returns>
@@ -170,7 +170,7 @@ namespace LoginRadiusSDK.V2.Api.Social
             return ConfigureAndExecute<AccessToken>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
-        /// The API is used to get LoginRadius access token by sending Vkontakte’s access token. It will be valid for the specific duration of time specified in the response.
+        /// The API is used to get LoginRadius access token by sending Vkontakte's access token. It will be valid for the specific duration of time specified in the response.
         /// </summary>
         /// <param name="vkAccessToken">Vkontakte Access Token</param>
         /// <returns>Response containing Definition of Complete Token data</returns>
@@ -193,7 +193,7 @@ namespace LoginRadiusSDK.V2.Api.Social
             return ConfigureAndExecute<AccessToken>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
-        /// The API is used to get LoginRadius access token by sending Google’s AuthCode. It will be valid for the specific duration of time specified in the response.
+        /// The API is used to get LoginRadius access token by sending Google's AuthCode. It will be valid for the specific duration of time specified in the response.
         /// </summary>
         /// <param name="googleAuthcode">Google AuthCode</param>
         /// <returns>Response containing Definition of Complete Token data</returns>

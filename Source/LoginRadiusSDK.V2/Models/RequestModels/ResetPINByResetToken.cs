@@ -6,26 +6,26 @@
 //-----------------------------------------------------------------------
 
 using Newtonsoft.Json;
-namespace LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects
+namespace LoginRadiusSDK.V2.Models.RequestModels
 
 {
 
     /// <summary>
-    ///	Response containing Definition of Delete Request
+    ///	Model Class containing Definition of payload for Reset Pin By Reset Token API
     /// </summary>
-    public class DeleteResponse
+    public class ResetPINByResetToken
     {
 		/// <summary>
-		///	boolean type value, default is true
+		///	PIN of user
 		/// </summary>
-		[JsonProperty(PropertyName = "IsDeleted")]
-        public  bool IsDeleted {get;set;}
+		[JsonProperty(PropertyName = "PIN")]
+        public  string PIN {get;set;}
 
 		/// <summary>
-		///	Number of Records Deleted
+		///	reset token received in the email
 		/// </summary>
-		[JsonProperty(PropertyName = "RecordsDeleted")]
-        public  int? RecordsDeleted {get;set;}
+		[JsonProperty(PropertyName = "ResetToken")]
+        public  string ResetToken {get;set;}
 
     }
 }

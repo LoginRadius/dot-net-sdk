@@ -18,12 +18,12 @@ namespace LoginRadiusSDK.V2.Api.Account
     public class AccountApi : LoginRadiusResource
     {
         /// <summary>
-        /// This API is used to update the information of existing accounts in your Cloud Storage. See our Advanced API Usage section <a href='/api/v2/user-registration/advanced-api-usage'>Here</a> for more capabilities.
+        /// This API is used to update the information of existing accounts in your Cloud Storage. See our Advanced API Usage section <a href='https://www.loginradius.com/docs/api/v2/customer-identity-api/advanced-api-usage'>Here</a> for more capabilities.
         /// </summary>
         /// <param name="accountUserProfileUpdateModel">Model Class containing Definition of payload for Account Update API</param>
         /// <param name="uid">UID, the unified identifier for each user account</param>
         /// <param name="fields">The fields parameter filters the API response so that the response only includes a specific set of fields</param>
-        /// <param name="nullSupport">Boolean, pass true if you wish to update any user profile field with a NULL value, You can get the details <a href='https://www.loginradius.com/docs/api/v2/customer-identity-api/advanced-api-usage/'>Here</a></param>
+        /// <param name="nullSupport">Boolean, pass true if you wish to update any user profile field with a NULL value, You can get the details <a href='https://www.loginradius.com/docs/api/v2/customer-identity-api/advanced-api-usage#nullsupport0'>Here</a></param>
         /// <returns>Response containing Definition for Complete profile data</returns>
         /// 18.15
 
@@ -224,7 +224,7 @@ namespace LoginRadiusSDK.V2.Api.Account
             return ConfigureAndExecute<Identity>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
-        /// This API is used to update the information of existing accounts in your Cloud Storage. See our Advanced API Usage section <a href='/api/v2/customer-identity-api/advanced-api-usage/'>Here</a> for more capabilities.
+        /// This API is used to update the information of existing accounts in your Cloud Storage. See our Advanced API Usage section <a href='https://www.loginradius.com/docs/api/v2/customer-identity-api/advanced-api-usage/'>Here</a> for more capabilities.
         /// </summary>
         /// <param name="accountUserProfileUpdateModel">Model Class containing Definition of payload for Account Update API</param>
         /// <param name="uid">UID, the unified identifier for each user account</param>
@@ -420,7 +420,7 @@ namespace LoginRadiusSDK.V2.Api.Account
         /// 18.22
 
         public ApiResponse<ForgotPasswordResponse> GetForgotPasswordToken(string email, string emailTemplate = null,
-        string resetPasswordUrl = null, bool sendEmail = false)
+        string resetPasswordUrl = null, bool? sendEmail = null)
         {
             if (string.IsNullOrWhiteSpace(email))
             {
@@ -682,6 +682,59 @@ namespace LoginRadiusSDK.V2.Api.Account
             var resourcePath = "identity/v2/manage/account/identities";
             
             return ConfigureAndExecute<ListReturn<Identity>>(HttpMethod.GET, resourcePath, queryParameters, null);
+        }
+        /// <summary>
+        /// This API is used to delete all user profiles associated with an Email.
+        /// </summary>
+        /// <param name="email">Email of the user</param>
+        /// <returns>Response containing Definition of Delete Request</returns>
+        /// 18.36
+
+        public ApiResponse<DeleteResponse> AccountDeleteByEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(email));
+            }
+            var queryParameters = new QueryParameters
+            {
+                { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] },
+                { "apiSecret", ConfigDictionary[LRConfigConstants.LoginRadiusApiSecret] },
+                { "email", email }
+            };
+
+            var resourcePath = "identity/v2/manage/account";
+            
+            return ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, null);
+        }
+        /// <summary>
+        /// This API is used to update a user's Uid. It will update all profiles, custom objects and consent management logs associated with the Uid.
+        /// </summary>
+        /// <param name="updateUidModel">Payload containing Update UID</param>
+        /// <param name="uid">UID, the unified identifier for each user account</param>
+        /// <returns>Response containing Definition of Complete Validation data</returns>
+        /// 18.41
+
+        public ApiResponse<PostResponse> AccountUpdateUid(UpdateUidModel updateUidModel, string uid)
+        {
+            if (updateUidModel == null)
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(updateUidModel));
+            }
+            if (string.IsNullOrWhiteSpace(uid))
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(uid));
+            }
+            var queryParameters = new QueryParameters
+            {
+                { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] },
+                { "apiSecret", ConfigDictionary[LRConfigConstants.LoginRadiusApiSecret] },
+                { "uid", uid }
+            };
+
+            var resourcePath = "identity/v2/manage/account/uid";
+            
+            return ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(updateUidModel));
         }
     }
 }

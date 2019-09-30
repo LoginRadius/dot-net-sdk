@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using LoginRadiusSDK.V2.Models.ResponseModels.UserProfile.Objects;
+using LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects;
 namespace LoginRadiusSDK.V2.Models.ResponseModels.UserProfile
 
 {
@@ -18,6 +19,12 @@ namespace LoginRadiusSDK.V2.Models.ResponseModels.UserProfile
     /// </summary>
     public class UserProfile:SocialUserProfile
     {
+		/// <summary>
+		///	Response containing consent profile
+		/// </summary>
+		[JsonProperty(PropertyName = "ConsentProfile")]
+        public  ConsentProfile ConsentProfile {get;set;}
+
 		/// <summary>
 		///	Custom fields as user set on LoginRadius Admin Console.
 		/// </summary>
@@ -139,10 +146,22 @@ namespace LoginRadiusSDK.V2.Models.ResponseModels.UserProfile
         public  bool? PhoneIdVerified {get;set;}
 
 		/// <summary>
+		///	PIN of user
+		/// </summary>
+		[JsonProperty(PropertyName = "PIN")]
+        public  PINInformation PIN {get;set;}
+
+		/// <summary>
 		///	Object type by default false, string represents Version, AcceptSource and datetime represents AcceptDateTime
 		/// </summary>
 		[JsonProperty(PropertyName = "PrivacyPolicy")]
         public  AcceptedPrivacyPolicy PrivacyPolicy {get;set;}
+
+		/// <summary>
+		///	User Registartion Data
+		/// </summary>
+		[JsonProperty(PropertyName = "RegistrationData")]
+        public  RegistrationData RegistrationData {get;set;}
 
 		/// <summary>
 		///	Provider with which user registered
@@ -155,6 +174,12 @@ namespace LoginRadiusSDK.V2.Models.ResponseModels.UserProfile
 		/// </summary>
 		[JsonProperty(PropertyName = "RegistrationSource")]
         public  string RegistrationSource {get;set;}
+
+		/// <summary>
+		///	
+		/// </summary>
+		[JsonProperty(PropertyName = "Roles")]
+        public  List<string> Roles {get;set;}
 
 		/// <summary>
 		///	UID, the unified identifier for each user account

@@ -6,26 +6,26 @@
 //-----------------------------------------------------------------------
 
 using Newtonsoft.Json;
-namespace LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects
+namespace LoginRadiusSDK.V2.Models.ResponseModels.UserProfile.Objects
 
 {
 
     /// <summary>
-    ///	Response containing Definition of Delete Request
+    ///	Response Model Class containing Definition of Registration Data
     /// </summary>
-    public class DeleteResponse
+    public class DataValue
     {
 		/// <summary>
-		///	boolean type value, default is true
+		///	Registration Data Source
 		/// </summary>
-		[JsonProperty(PropertyName = "IsDeleted")]
-        public  bool IsDeleted {get;set;}
+		[JsonProperty(PropertyName = "DataSource")]
+        public  string DataSource {get;set;}
 
 		/// <summary>
-		///	Number of Records Deleted
+		///	Value of the dropdown member
 		/// </summary>
-		[JsonProperty(PropertyName = "RecordsDeleted")]
-        public  int? RecordsDeleted {get;set;}
+		[JsonProperty(PropertyName = "Value")]
+        public  RegistrationDataValueObject Value {get;set;}
 
     }
 }

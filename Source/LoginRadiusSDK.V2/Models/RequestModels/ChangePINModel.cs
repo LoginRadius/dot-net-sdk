@@ -6,26 +6,26 @@
 //-----------------------------------------------------------------------
 
 using Newtonsoft.Json;
-namespace LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects
+namespace LoginRadiusSDK.V2.Models.RequestModels
 
 {
 
     /// <summary>
-    ///	Response containing Definition of Delete Request
+    ///	Model Class containing Definition for change PIN Property
     /// </summary>
-    public class DeleteResponse
+    public class ChangePINModel
     {
 		/// <summary>
-		///	boolean type value, default is true
+		///	New PIN of user
 		/// </summary>
-		[JsonProperty(PropertyName = "IsDeleted")]
-        public  bool IsDeleted {get;set;}
+		[JsonProperty(PropertyName = "NewPIN")]
+        public  string NewPIN {get;set;}
 
 		/// <summary>
-		///	Number of Records Deleted
+		///	Old PIN of user
 		/// </summary>
-		[JsonProperty(PropertyName = "RecordsDeleted")]
-        public  int? RecordsDeleted {get;set;}
+		[JsonProperty(PropertyName = "OldPIN")]
+        public  string OldPIN {get;set;}
 
     }
 }

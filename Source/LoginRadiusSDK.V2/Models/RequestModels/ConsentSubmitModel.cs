@@ -5,27 +5,28 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System.Collections.Generic;
 using Newtonsoft.Json;
-namespace LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects
+namespace LoginRadiusSDK.V2.Models.RequestModels
 
 {
 
     /// <summary>
-    ///	Response containing Definition of Delete Request
+    ///	Model class containing list of multiple consent
     /// </summary>
-    public class DeleteResponse
+    public class ConsentSubmitModel
     {
 		/// <summary>
-		///	boolean type value, default is true
+		///	Data
 		/// </summary>
-		[JsonProperty(PropertyName = "IsDeleted")]
-        public  bool IsDeleted {get;set;}
+		[JsonProperty(PropertyName = "Data")]
+        public  List<ConsentDataModel> Data {get;set;}
 
 		/// <summary>
-		///	Number of Records Deleted
+		///	The event associated with the consent form
 		/// </summary>
-		[JsonProperty(PropertyName = "RecordsDeleted")]
-        public  int? RecordsDeleted {get;set;}
+		[JsonProperty(PropertyName = "Events")]
+        public  List<ConsentEventModel> Events {get;set;}
 
     }
 }

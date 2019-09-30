@@ -41,7 +41,7 @@ namespace LoginRadiusSDK.V2
             HttpWebRequest httpRequest;
             try
             {
-                httpRequest = (HttpWebRequest) WebRequest.Create(url);
+                httpRequest = (HttpWebRequest)WebRequest.Create(url);
             }
             catch (UriFormatException)
             {
@@ -72,8 +72,11 @@ namespace LoginRadiusSDK.V2
                     if (proxyDetails.Length == 2)
                     {
                         requestProxy.Credentials = new NetworkCredential(proxyDetails[0], proxyDetails[1]);
-                    }
+                    }else{
+            requestProxy.Credentials = new NetworkCredential(proxyDetails[0],"");
+           
                 }
+            }
                 httpRequest.Proxy = requestProxy;
             }
 #endif

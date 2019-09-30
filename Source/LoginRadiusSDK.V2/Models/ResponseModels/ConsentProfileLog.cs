@@ -6,26 +6,27 @@
 //-----------------------------------------------------------------------
 
 using Newtonsoft.Json;
-namespace LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects
+using LoginRadiusSDK.V2.Models.Enums;
+namespace LoginRadiusSDK.V2.Models.ResponseModels
 
 {
 
     /// <summary>
-    ///	Response containing Definition of Delete Request
+    ///	Response containing consent profile logs
     /// </summary>
-    public class DeleteResponse
+    public class ConsentProfileLog
     {
 		/// <summary>
-		///	boolean type value, default is true
+		///	Consent ID
 		/// </summary>
-		[JsonProperty(PropertyName = "IsDeleted")]
-        public  bool IsDeleted {get;set;}
+		[JsonProperty(PropertyName = "ConsentId")]
+        public  string ConsentId {get;set;}
 
 		/// <summary>
-		///	Number of Records Deleted
+		///	ConsentProfileActions
 		/// </summary>
-		[JsonProperty(PropertyName = "RecordsDeleted")]
-        public  int? RecordsDeleted {get;set;}
+		[JsonProperty(PropertyName = "Event")]
+        public  ConsentProfileActions Event {get;set;}
 
     }
 }

@@ -156,7 +156,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <summary>
         /// This API is used to consume the verification code sent to verify a user's phone number. Use this call for front-end purposes in cases where the user is already logged in by passing the user's access token.
         /// </summary>
-        /// <param name="accessToken">Access_Token</param>
+        /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
         /// <param name="otp">The Verification Code</param>
         /// <param name="smsTemplate">SMS Template name</param>
         /// <returns>Response containing Definition of Complete Validation data</returns>
@@ -175,6 +175,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             }
             var queryParameters = new QueryParameters
             {
+                { "access_token", accessToken },
                 { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] },
                 { "otp", otp }
             };
@@ -183,14 +184,9 @@ namespace LoginRadiusSDK.V2.Api.Authentication
                queryParameters.Add("smsTemplate", smsTemplate);
             }
 
-            var bodyParameters = new BodyParameters
-            {
-                { "access_token", accessToken }
-            };
-
             var resourcePath = "identity/v2/auth/phone/otp";
             
-            return ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API is used to resend a verification OTP to verify a user's Phone Number. The user will receive a verification code that they will need to input
@@ -246,6 +242,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             }
             var queryParameters = new QueryParameters
             {
+                { "access_token", accessToken },
                 { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] }
             };
             if (!string.IsNullOrWhiteSpace(smsTemplate))
@@ -255,7 +252,6 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var bodyParameters = new BodyParameters
             {
-                { "access_token", accessToken },
                 { "phone", phone }
             };
 
@@ -305,7 +301,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <summary>
         /// This API is used to check the Phone Number exists or not on your site.
         /// </summary>
-        /// <param name="phone">LoginRadius API Key</param>
+        /// <param name="phone">The Registered Phone Number</param>
         /// <returns>Response containing Definition Complete ExistResponse data</returns>
         /// 11.6
 
@@ -347,6 +343,60 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             var resourcePath = "identity/v2/auth/phone";
             
             return ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, null);
+        }
+        /// <summary>
+        /// This API registers the new users into your Cloud Storage and triggers the phone verification process.
+        /// </summary>
+        /// <param name="authUserRegistrationModel">Model Class containing Definition of payload for Auth User Registration API</param>
+        /// <param name="sott">LoginRadius Secured One Time Token</param>
+        /// <param name="fields">The fields parameter filters the API response so that the response only includes a specific set of fields</param>
+        /// <param name="options">PreventVerificationEmail (Specifying this value prevents the verification email from being sent. Only applicable if you have the optional email verification flow)</param>
+        /// <param name="smsTemplate">SMS Template name</param>
+        /// <param name="verificationUrl">Email verification url</param>
+        /// <param name="welcomeEmailTemplate">Name of the welcome email template</param>
+        /// <returns>Response containing Definition of Complete Validation, UserProfile data and Access Token</returns>
+        /// 17.1.2
+
+        public ApiResponse<UserProfilePostResponse<AccessToken<Identity>>> UserRegistrationByPhone(AuthUserRegistrationModel authUserRegistrationModel, string sott,
+        string fields = "", string options = "", string smsTemplate = null, string verificationUrl = null, string welcomeEmailTemplate = null)
+        {
+            if (authUserRegistrationModel == null)
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(authUserRegistrationModel));
+            }
+            if (string.IsNullOrWhiteSpace(sott))
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(sott));
+            }
+            var queryParameters = new QueryParameters
+            {
+                { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] },
+                { "sott", sott }
+            };
+            if (!string.IsNullOrWhiteSpace(fields))
+            {
+               queryParameters.Add("fields", fields);
+            }
+            if (!string.IsNullOrWhiteSpace(options))
+            {
+               queryParameters.Add("options", options);
+            }
+            if (!string.IsNullOrWhiteSpace(smsTemplate))
+            {
+               queryParameters.Add("smsTemplate", smsTemplate);
+            }
+            if (!string.IsNullOrWhiteSpace(verificationUrl))
+            {
+               queryParameters.Add("verificationUrl", verificationUrl);
+            }
+            if (!string.IsNullOrWhiteSpace(welcomeEmailTemplate))
+            {
+               queryParameters.Add("welcomeEmailTemplate", welcomeEmailTemplate);
+            }
+
+            var resourcePath = "identity/v2/auth/register";
+            
+            return ConfigureAndExecute<UserProfilePostResponse<AccessToken<Identity>>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(authUserRegistrationModel));
         }
     }
 }

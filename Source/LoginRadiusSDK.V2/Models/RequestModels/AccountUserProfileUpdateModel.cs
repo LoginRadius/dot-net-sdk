@@ -5,7 +5,6 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System.Collections.Generic;
 using Newtonsoft.Json;
 namespace LoginRadiusSDK.V2.Models.RequestModels
 
@@ -27,12 +26,6 @@ namespace LoginRadiusSDK.V2.Models.RequestModels
 		/// </summary>
 		[JsonProperty(PropertyName = "EmailVerified")]
         public  bool? EmailVerified {get;set;}
-
-		/// <summary>
-		///	Array of Objects,string represents SourceId,Source
-		/// </summary>
-		[JsonProperty(PropertyName = "ExternalIds")]
-        public  List<ExternalIds> ExternalIds {get;set;}
 
 		/// <summary>
 		///	boolean type value, default is true

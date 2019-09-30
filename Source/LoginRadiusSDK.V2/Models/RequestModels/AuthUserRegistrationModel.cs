@@ -95,6 +95,12 @@ namespace LoginRadiusSDK.V2.Models.RequestModels
         public  string Company {get;set;}
 
 		/// <summary>
+		///	List of Consents
+		/// </summary>
+		[JsonProperty(PropertyName = "Consents")]
+        public  ConsentSubmitModel Consents {get;set;}
+
+		/// <summary>
 		///	Country of the user
 		/// </summary>
 		[JsonProperty(PropertyName = "Country")]
@@ -305,12 +311,6 @@ namespace LoginRadiusSDK.V2.Models.RequestModels
         public  List<JobBookmarks> JobBookmarks {get;set;}
 
 		/// <summary>
-		///	Object, string represents KloutId and double represents Score
-		/// </summary>
-		[JsonProperty(PropertyName = "KloutScore")]
-        public  KloutProfile KloutScore {get;set;}
-
-		/// <summary>
 		///	language known by user's
 		/// </summary>
 		[JsonProperty(PropertyName = "Languages")]
@@ -405,6 +405,12 @@ namespace LoginRadiusSDK.V2.Models.RequestModels
 		/// </summary>
 		[JsonProperty(PropertyName = "PhoneNumbers")]
         public  List<Phone> PhoneNumbers {get;set;}
+
+		/// <summary>
+		///	PIN Info
+		/// </summary>
+		[JsonProperty(PropertyName = "PINInfo")]
+        public  PINModel PINInfo {get;set;}
 
 		/// <summary>
 		///	Array of Objects,strings Name and boolean IsPrimary
