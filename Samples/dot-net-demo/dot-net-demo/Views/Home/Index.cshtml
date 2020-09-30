@@ -20,7 +20,7 @@
             <span style="display:block;margin-left:120px">SDK Web Demo</span>
             <div class="button-group">
                 <a asp-area="" asp-controller="Home" asp-action="Index">Minimal</a>
-                <a asp-area="" asp-controller="Home" asp-action="LoginScreen">Login Screen</a>
+                @*<a asp-area="" asp-controller="Home" asp-action="LoginScreen">Login Screen</a>*@
             </div>
         </div>
         <div class="vertical-menu">
@@ -42,23 +42,23 @@
                 <br />
                 <span id="minimal-login-message"></span>
                 <br />
-                <table>
+                @*<table>
                     <tr><th colspan="2">MFA Login</th></tr>
                     <tr><td>Email Address: </td><td><input name="email" type='text' id='minimal-mfalogin-email' /></td></tr>
                     <tr><td>Password: </td><td><input name="password" type='password' id='minimal-mfalogin-password' /></td></tr>
-                </table>
-                <div id="minimal-mfalogin-qrcode"></div>
+                </table>*@
+                @*<div id="minimal-mfalogin-qrcode"></div>
                 <div id="minimal-mfalogin-next">
                     <button id="btn-minimal-mfalogin-next">Next</button><br />
                 </div>
                 <span id="minimal-mfalogin-message"></span>
-                <br />
-                <table>
+                <br />*@
+                @*<table>
                     <tr><th colspan="2">Passwordless Login</th></tr>
                     <tr><td>Email Address: </td><td><input name="email" type='text' id='minimal-pwless-email' /></td></tr>
                 </table>
-                <button id="btn-minimal-pwless">Email me a link to sign in</button>
-                <br />
+                <button id="btn-minimal-pwless">Email me a link to sign in</button>*@
+                @*<br />
                 <span id="minimal-pwless-message"></span>
                 <br />
                 <b>Social Login</b>
@@ -66,7 +66,7 @@
                 <div id="interfacecontainerdiv" class="interfacecontainerdiv"></div>
                 <div id="sociallogin-container"></div>
                 <div id="sociallogin"></div>
-                <span id="social-login-message"></span>
+                <span id="social-login-message"></span>*@
             </div>
         </div>
         <div class="right-elem signup-elem">
