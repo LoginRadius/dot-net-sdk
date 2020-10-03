@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using dot_net_demo.Models;
 
@@ -11,14 +9,11 @@ using LoginRadiusSDK.V2.Models.RequestModels;
 
 using LoginRadiusSDK.V2.Common;
 using LoginRadiusSDK.V2.Api.Account;
-using RestSharp;
-using RestSharp.Authenticators;
 
 namespace dot_net_demo.Controllers
 {
     public class HomeController : Controller
     {
-        private string BreachVeriable = "breachdetecteddate";
         public IActionResult Index()
         {
             return View();
@@ -58,66 +53,6 @@ namespace dot_net_demo.Controllers
             if (apiresponse.RestException != null)
             {
                 return StatusCode(400, Json(apiresponse.RestException));
-            }
-            else
-            {
-                var passwordChangedAfterBreach = false;
-                if (apiresponse.Response != null && apiresponse.Response.Profile != null &&
-                    apiresponse.Response.Profile.CustomFields != null
-                    && apiresponse.Response.Profile.CustomFields.ContainsKey(BreachVeriable)
-                    && !string.IsNullOrEmpty(apiresponse.Response.Profile.CustomFields[BreachVeriable])
-                    && apiresponse.Response.Profile.LastPasswordChangeDate.HasValue)
-                {
-                    var breachdetecteddateString = apiresponse.Response.Profile.CustomFields[BreachVeriable];
-
-                    DateTime.TryParse(breachdetecteddateString, out DateTime breachDate);
-
-                    if (apiresponse.Response.Profile.LastPasswordChangeDate > breachDate)
-                    {
-                        passwordChangedAfterBreach = true;
-                    }
-                }
-
-                if (!passwordChangedAfterBreach)
-                {
-                    try
-                    {
-                        var payload = new { email = log.Email== "lruser123@mail7.io"?"test@gmail.com":log.Email };
-                        var _request = new RestRequest(Method.POST);
-                        _request.AddHeader("Accept", "*/*");
-                        _request.AddHeader("Content-Type", "application/json");
-                        _request.AddJsonBody(payload);
-                        _request.JsonSerializer = new RestSharp.Serialization.Json.JsonSerializer();
-                        var RestClient = new RestClient("https://openfaas-dev.div4.dev/function/jarvis-dark-web");
-                        RestClient.Authenticator = new HttpBasicAuthenticator("admin", "Yel9HPJAVZFT");
-                        var resp = RestClient.Execute(_request);
-
-                        if (resp.StatusCode == HttpStatusCode.OK && !string.IsNullOrWhiteSpace(resp.Content))
-                        {
-                            var updatemodel = new UserProfileUpdateModel { CustomFields = new Dictionary<string, string>() };
-                            updatemodel.CustomFields.Add(BreachVeriable, DateTime.UtcNow.ToString());
-                            var setCheckBreach = new AuthenticationApi().
-                                UpdateProfileByAccessToken(apiresponse.Response.Access_Token.ToString(), updatemodel);
-
-                            var currentDomain = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}";
-                            var forgotPass = new AuthenticationApi().ForgotPassword(log.Email, currentDomain + "/Home/ResetPassword", "");
-
-                            return StatusCode(400, Json(
-                                new ApiExceptionResponse
-                                {
-                                    ErrorCode = 2000,
-                                    Description = "We have found your email id in data breaches happened on some external sites. We have sent an email to reset your password.",
-                                    Message = "We have found your email id in data breaches happened on some external sites. We have sent an email to reset your password.",
-
-                                }));
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-
-                    }
-                }
-
             }
             return Json(apiresponse.Response);
         }
@@ -170,7 +105,7 @@ namespace dot_net_demo.Controllers
             {
                 TimeDifference = "50"
             };
-            var apiresponse = new AuthenticationApi().UserRegistrationByEmail(identityCreateModel, _sott.GetSott(sott), null,null, verificationUrl: verificationUrl);
+            var apiresponse = new AuthenticationApi().UserRegistrationByEmail(identityCreateModel, _sott.GetSott(sott), null,null, verificationUrl,null);
             
             if (apiresponse.RestException != null)
             {
