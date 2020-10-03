@@ -105,7 +105,7 @@ namespace dot_net_demo.Controllers
             {
                 TimeDifference = "50"
             };
-            var apiresponse = new AuthenticationApi().UserRegistrationByEmail(identityCreateModel, _sott.GetSott(sott), null,null, verificationUrl,null);
+            var apiresponse = new AuthenticationApi().UserRegistrationByEmail(identityCreateModel, _sott.GetSott(sott),  verificationUrl:verificationUrl);
             
             if (apiresponse.RestException != null)
             {
