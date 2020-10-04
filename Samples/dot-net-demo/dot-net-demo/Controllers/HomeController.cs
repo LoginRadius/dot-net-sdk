@@ -116,7 +116,7 @@ namespace dot_net_demo.Controllers
 
         public IActionResult LRVerifyEmail([FromQuery(Name = "verification_token")] String verificationToken)
         {
-            var apiresponse = new AuthenticationApi().VerifyEmail(verificationToken, "google.ca", "");
+            var apiresponse = new AuthenticationApi().VerifyEmail(verificationToken,url: "google.ca");
 
             if (apiresponse.RestException != null)
             {
