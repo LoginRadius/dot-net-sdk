@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard1.3;netstandard2.0;net45;net40</TargetFrameworks>
-    
     <Authors>LoginRadius Inc.</Authors>
     <RequireLicenseAcceptance>false</RequireLicenseAcceptance>
     <Language>en-US</Language>
@@ -45,12 +44,6 @@
     <IncludeSymbols>true</IncludeSymbols>
     <DefineConstants>RELEASE</DefineConstants>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Api\AdvancedSocial\**" />
-    <EmbeddedResource Remove="Api\AdvancedSocial\**" />
-    <None Remove="Api\AdvancedSocial\**" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
