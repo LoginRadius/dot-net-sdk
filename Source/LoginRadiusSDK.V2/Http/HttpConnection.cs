@@ -225,10 +225,10 @@ namespace LoginRadiusSDK.V2.Http
                                 if (!string.IsNullOrEmpty(payLoad))
                                 {
                                     Stream stream = null;
-#if NetFramework
-                                    stream = httpRequest.GetRequestStream();
-#else
+#if NETSTANDARD1_3
                                     stream = httpRequest.GetRequestStreamAsync().Result;
+#else
+                                    stream = httpRequest.GetRequestStream();
 #endif
                                     using (StreamWriter writerStream = new StreamWriter(stream))
                                     {
@@ -242,7 +242,7 @@ namespace LoginRadiusSDK.V2.Http
                                 break;
                         }
                         WebResponse webResponse = null;
-#if !NetFramework
+#if NETSTANDARD1_3
                         webResponse = httpRequest.GetResponseAsync().Result;
 #else
                         webResponse = httpRequest.GetResponse();
