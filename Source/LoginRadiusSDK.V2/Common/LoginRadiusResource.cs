@@ -43,7 +43,6 @@ namespace LoginRadiusSDK.V2.Common
             DELETE
         }
 
-      
 
         /// <summary>
         /// Gets the last request sent by the SDK in the current thread.
@@ -55,7 +54,6 @@ namespace LoginRadiusSDK.V2.Common
         /// </summary>
         public static ThreadLocal<ResponseDetails> LastResponseDetails { get; private set; }
 
-       
 
         internal static ConcurrentDictionary<string, string> ConfigDictionary;
 
@@ -72,12 +70,11 @@ namespace LoginRadiusSDK.V2.Common
         /// <summary>
         /// Configures and executes REST call: Supports JSON
         /// </summary>
-        /// <param name="requestType"></param>
         /// <param name="httpMethod">HttpMethod type</param>
         /// <param name="resource">URI path of the resource</param>
         /// <param name="payload">JSON request payload</param>
         /// <param name="queryParameters"></param>
-        /// <returns>Response object or null otherwise for void API calls</returns>    
+        /// <returns>Response object or null otherwise for void API calls</returns>
         public static object ConfigureAndExecute(HttpMethod httpMethod, string resource,
             QueryParameters queryParameters, string payload = "")
         {
@@ -122,7 +119,6 @@ namespace LoginRadiusSDK.V2.Common
         /// 
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="requestType"></param>
         /// <param name="httpMethod"></param>
         /// <param name="resource"></param>
         /// <returns></returns>
@@ -135,7 +131,6 @@ namespace LoginRadiusSDK.V2.Common
         /// 
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="requestType"></param>
         /// <param name="httpMethod"></param>
         /// <param name="resource"></param>
         /// <param name="payload"></param>
@@ -149,7 +144,6 @@ namespace LoginRadiusSDK.V2.Common
         /// Configures and executes REST call: Supports JSON
         /// </summary>
         /// <typeparam name="T">Generic Type parameter for response object</typeparam>
-        /// <param name="requestType"></param>
         /// <param name="httpMethod">HttpMethod type</param>
         /// <param name="resource">URI path of the resource</param>
         /// <param name="payload">JSON request payload</param>
@@ -227,7 +221,6 @@ namespace LoginRadiusSDK.V2.Common
                 {
                     return (ApiResponse<T>)Convert.ChangeType(response, typeof(T));
                 }
-                
 
                 return new ApiResponse<T> { Response = JsonFormatter.ConvertFromJson<T>(response) };
             }
@@ -263,7 +256,6 @@ namespace LoginRadiusSDK.V2.Common
 
         private static string GetEndpoint(string apiPath, out Dictionary<string, string> authHeaders, QueryParameters additionalParameters = null)
         {
-           
             string baseEndPoint;
             authHeaders = null;
             if (ConfigDictionary.ContainsKey(LRConfigConstants.ApiRegion) && !string.IsNullOrWhiteSpace(ConfigDictionary[LRConfigConstants.ApiRegion])) {

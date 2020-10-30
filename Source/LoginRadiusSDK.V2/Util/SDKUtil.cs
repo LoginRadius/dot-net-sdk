@@ -37,20 +37,13 @@ namespace LoginRadiusSDK.V2.Util
         }
 
         /// <summary>
-        /// Overload to above method to support LoginRadius path object class.
-        /// </summary>
-        /// <param name="pattern"></param>
-        /// <param name="parameters"></param>
-        /// <returns></returns>
-        
-
-        /// <summary>
         /// Formats the URI path for REST calls. Replaces any occurrences of the form
         /// {name} in pattern with the corresponding value of key name in the passed
         /// Dictionary
         /// </summary>
         /// <param name="pattern">URI pattern with named place holders</param>
         /// <param name="pathParameters">Dictionary</param>
+        /// <remarks>Overload to above method to support LoginRadius path object class.</remarks>
         /// <returns>Processed URI path</returns>
         public static string FormatURIPath(string pattern, Dictionary<string, string> pathParameters)
         {

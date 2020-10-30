@@ -20,7 +20,7 @@ namespace LoginRadiusSDK.V2.Api.Account
         /// <summary>
         /// This API is used to update the information of existing accounts in your Cloud Storage. See our Advanced API Usage section <a href='https://www.loginradius.com/docs/api/v2/customer-identity-api/advanced-api-usage'>Here</a> for more capabilities.
         /// </summary>
-        /// <param name="accountUserProfileUpdateModel">Model Class containing Definition of payload for Account Update API</param>
+        /// <param name="payload">Model Class containing Definition of payload for Account Update API</param>
         /// <param name="uid">UID, the unified identifier for each user account</param>
         /// <param name="fields">The fields parameter filters the API response so that the response only includes a specific set of fields</param>
         /// <param name="nullSupport">Boolean, pass true if you wish to update any user profile field with a NULL value, You can get the details <a href='https://www.loginradius.com/docs/api/v2/customer-identity-api/advanced-api-usage#nullsupport0'>Here</a></param>
@@ -81,7 +81,7 @@ namespace LoginRadiusSDK.V2.Api.Account
             return ConfigureAndExecute<PrivacyPolicyHistoryResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
-        /// This API is used to create an account in Cloud Storage. This API bypass the normal email verification process and manually creates the user. <br><br>In order to use this API, you need to format a JSON request body with all of the mandatory fields
+        /// This API is used to create an account in Cloud Storage. This API bypass the normal email verification process and manually creates the user. <br/><br/>In order to use this API, you need to format a JSON request body with all of the mandatory fields
         /// </summary>
         /// <param name="accountCreateModel">Model Class containing Definition of payload for Account Create API</param>
         /// <param name="fields">The fields parameter filters the API response so that the response only includes a specific set of fields</param>

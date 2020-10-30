@@ -22,7 +22,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// This API is used to update the user's profile by passing the access_token.
         /// </summary>
         /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
-        /// <param name="userProfileUpdateModel">Model Class containing Definition of payload for User Profile update API</param>
+        /// <param name="payload">Model Class containing Definition of payload for User Profile update API</param>
         /// <param name="emailTemplate">Email template name</param>
         /// <param name="fields">The fields parameter filters the API response so that the response only includes a specific set of fields</param>
         /// <param name="nullSupport">>Boolean, pass true if you wish to update any user profile field with a NULL value, You can get the details <a href='https://www.loginradius.com/docs/api/v2/customer-identity-api/advanced-api-usage#nullsupport0'>Here</a></param>

@@ -122,7 +122,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// This API is used to check if consent is submitted for a particular event or not.
         /// </summary>
         /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
-        /// <param name="@event">Allowed events: Login, Register, UpdateProfile, ResetPassword, ChangePassword, emailVerification, AddEmail, RemoveEmail, BlockAccount, DeleteAccount, SetUsername, AssignRoles, UnassignRoles, SetPassword, LinkAccount, UnlinkAccount, UpdatePhoneId, VerifyPhoneNumber, CreateCustomObject, UpdateCustomobject, DeleteCustomObject</param>
+        /// <param name="event">Allowed events: Login, Register, UpdateProfile, ResetPassword, ChangePassword, emailVerification, AddEmail, RemoveEmail, BlockAccount, DeleteAccount, SetUsername, AssignRoles, UnassignRoles, SetPassword, LinkAccount, UnlinkAccount, UpdatePhoneId, VerifyPhoneNumber, CreateCustomObject, UpdateCustomobject, DeleteCustomObject</param>
         /// <param name="isCustom">true/false</param>
         /// <returns>Response containing consent profile</returns>
         /// 43.4
