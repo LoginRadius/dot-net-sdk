@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using LoginRadiusSDK.V2.Exception;
 using LoginRadiusSDK.V2.Http;
 using LoginRadiusSDK.V2.Util;
@@ -119,33 +120,6 @@ namespace LoginRadiusSDK.V2.Common
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="requestType"></param>
-        /// <param name="httpMethod"></param>
-        /// <param name="resource"></param>
-        /// <returns></returns>
-        protected static ApiResponse<T> ConfigureAndExecute<T>(HttpMethod httpMethod, string resource)
-        {
-            return ConfigureAndExecute<T>(httpMethod, resource, null, null);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="requestType"></param>
-        /// <param name="httpMethod"></param>
-        /// <param name="resource"></param>
-        /// <param name="payload"></param>
-        /// <returns></returns>
-        protected static ApiResponse<T> ConfigureAndExecute<T>(HttpMethod httpMethod,string resource,string payload)
-        {
-            return ConfigureAndExecute<T>(httpMethod, resource, null, payload);
-        }
-
-        /// <summary>
         /// Configures and executes REST call: Supports JSON
         /// </summary>
         /// <typeparam name="T">Generic Type parameter for response object</typeparam>
@@ -160,76 +134,89 @@ namespace LoginRadiusSDK.V2.Common
         protected static ApiResponse<T> ConfigureAndExecute<T>(HttpMethod httpMethod,string resource = "" ,
             QueryParameters queryParameters = null, string payload = "", Dictionary<string, string> headers = null)
         {
+            var request = ConfigureRequest(httpMethod, resource, queryParameters, payload, headers);
+            return ExecuteRequest<T>(request);
+        }
+
+        /// <summary>
+        /// Configures the REST call: Supports JSON
+        /// </summary>
+        /// <param name="httpMethod">HttpMethod type</param>
+        /// <param name="resource">URI path of the resource</param>
+        /// <param name="payload">JSON request payload</param>
+        /// <param name="queryParameters"></param>
+        /// <param name="headers"></param>
+        /// <returns>Response object or null otherwise for void API calls</returns>
+        /// <exception cref="HttpException">Thrown if there was an error sending the request.</exception>
+        protected static ApiRequest ConfigureRequest(HttpMethod httpMethod, string resource = "",
+            QueryParameters queryParameters = null, string payload = "", Dictionary<string, string> headers = null)
+        {
+            // Create the URI where the HTTP request will be sent.
+            Uri uniformResourceIdentifier;
+            var apiPath = resource;
+            var endPoint = GetEndpoint(apiPath, out Dictionary<string, string> authHeaders, queryParameters);
+            if (ConfigDictionary[LRConfigConstants.ApiRequestSigning] != null && ConfigDictionary[LRConfigConstants.ApiRequestSigning] == "true" && authHeaders.Count > 0)
+            {
+                var time = DateTime.UtcNow.AddMinutes(15).ToString("yyyy-M-d h:m:s tt");
+                var hash = CreateHash(ConfigDictionary[LRConfigConstants.LoginRadiusApiSecret], endPoint, httpMethod.ToString(), time, payload);
+                authHeaders.Remove("apiSecret");
+                if (headers == null)
+                {
+                    headers = new Dictionary<string, string>();
+                }
+
+                headers.Add("digest", "SHA-256=" + hash);
+                headers.Add("X-Request-Expires", time);
+            }
+            var baseUri = new Uri(endPoint);
+            if (apiPath != null)
+            {
+                var resourceUri = baseUri;
+                if (!Uri.TryCreate(resourceUri, apiPath, out uniformResourceIdentifier))
+                {
+                    throw new LoginRadiusException("Cannot create URL; baseURI=" + baseUri + ", resourcePath=" +
+                                                   apiPath);
+                }
+                uniformResourceIdentifier = resourceUri;
+            }
+            else
+            {
+                uniformResourceIdentifier = baseUri;
+            }
+
+            var request = new ApiRequest();
+
+            var connMngr = ConnectionManager.Instance;
+            request.HttpRequest = connMngr.GetConnection(ConfigDictionary, uniformResourceIdentifier.ToString(), headers, authHeaders);
+            request.HttpRequest.Method = httpMethod.ToString();
+
+            request.HttpRequest.ContentType = BaseConstants.ContentTypeHeaderJson;
+
+            // Execute call
+            request.HttpConnection = new HttpConnection(ConfigDictionary);
+
+            // Setup the last request & response details.
+            LastRequestDetails.Value = request.HttpConnection.RequestDetails;
+            LastResponseDetails.Value = request.HttpConnection.ResponseDetails;
+
+            request.Payload = payload ?? "";
+
+            return request;
+        }
+
+        /// <summary>
+        /// Executes REST call: Supports JSON
+        /// </summary>
+        /// <typeparam name="T">Generic Type parameter for response object</typeparam>
+        /// <param name="request">API request</param>
+        /// <returns>Response object or null otherwise for void API calls</returns>
+        /// <exception cref="HttpException">Thrown if there was an error sending the request.</exception>
+        protected static ApiResponse<T> ExecuteRequest<T>(ApiRequest request)
+        {
             try
             {
-                // Create the URI where the HTTP request will be sent.
-                Uri uniformResourceIdentifier;
-                var apiPath = resource;
-                var endPoint = GetEndpoint(apiPath,out Dictionary<string, string> authHeaders, queryParameters);
-                if (ConfigDictionary[LRConfigConstants.ApiRequestSigning] != null && ConfigDictionary[LRConfigConstants.ApiRequestSigning] == "true" && authHeaders.Count>0)
-                {
-                    var time = DateTime.UtcNow.AddMinutes(15).ToString("yyyy-M-d h:m:s tt");
-                    var hash = CreateHash(ConfigDictionary[LRConfigConstants.LoginRadiusApiSecret], endPoint, httpMethod.ToString(), time, payload);
-                    authHeaders.Remove("apiSecret");
-                    if (headers == null)
-                    {
-                        headers = new Dictionary<string, string>();
-                    }
-
-                    headers.Add("digest", "SHA-256=" + hash);
-                    headers.Add("X-Request-Expires", time);
-                }
-                var baseUri = new Uri(endPoint);
-                if (apiPath != null)
-                {
-                    var resourceUri = baseUri;
-                    if (!Uri.TryCreate(resourceUri, apiPath, out uniformResourceIdentifier))
-                    {
-                        throw new LoginRadiusException("Cannot create URL; baseURI=" + baseUri + ", resourcePath=" +
-                                                       apiPath);
-                    }
-                    uniformResourceIdentifier = resourceUri;
-                }
-                else
-                {
-                    uniformResourceIdentifier = baseUri;
-                }
-
-                var connMngr = ConnectionManager.Instance;
-                var httpRequest = connMngr.GetConnection(ConfigDictionary, uniformResourceIdentifier.ToString(), headers, authHeaders);
-                httpRequest.Method = httpMethod.ToString();
-
-                httpRequest.ContentType = BaseConstants.ContentTypeHeaderJson;
-
-                // Execute call
-                var connectionHttp = new HttpConnection(ConfigDictionary);
-
-                // Setup the last request & response details.
-                LastRequestDetails.Value = connectionHttp.RequestDetails;
-                LastResponseDetails.Value = connectionHttp.ResponseDetails;
-
-                payload = payload ?? "";
-
-                var response = connectionHttp.Execute(payload, httpRequest, payload.Length);
-                if (response.Contains("errorCode"))
-                {
-                    var exception = new ApiResponse<T>
-                    {
-                        RestException = JsonConvert.DeserializeObject<ApiExceptionResponse>(response)
-                    };
-                    return exception;
-                }
-                if (typeof(T).Name.Equals("Object"))
-                {
-                    return default(ApiResponse<T>);
-                }
-                if (typeof(T).Name.Equals("String"))
-                {
-                    return (ApiResponse<T>)Convert.ChangeType(response, typeof(T));
-                }
-                
-
-                return new ApiResponse<T> { Response = JsonFormatter.ConvertFromJson<T>(response) };
+                var response = request.HttpConnection.Execute(request);
+                return ValidateResponse<T>(response);
             }
             catch (ConnectionException ex)
             {
@@ -250,15 +237,83 @@ namespace LoginRadiusSDK.V2.Common
                     throw ex;
                 }
             }
-            catch (LoginRadiusException e)
+            catch (LoginRadiusException ex)
             {
                 // If get a LoginRadius, just rethrow to preserve the stack trace.
-                return new ApiResponse<T> { RestException = e.ErrorResponse };
+                return new ApiResponse<T> { RestException = ex.ErrorResponse };
             }
             catch (System.Exception ex)
             {
                 throw new LoginRadiusException(ex.Message, ex);
             }
+        }
+
+#if !NET_40
+        /// <summary>
+        /// Executes asynchronous REST call: Supports JSON
+        /// </summary>
+        /// <typeparam name="T">Generic Type parameter for response object</typeparam>
+        /// <param name="request">API request</param>
+        /// <returns>Response object or null otherwise for void API calls</returns>
+        /// <exception cref="HttpException">Thrown if there was an error sending the request.</exception>
+        protected static async Task<ApiResponse<T>> ExecuteRequestAsync<T>(ApiRequest request)
+        {
+            try
+            {
+                var response = await request.HttpConnection.ExecuteAsync(request).ConfigureAwait(false);
+                return ValidateResponse<T>(response);
+            }
+            catch (ConnectionException ex)
+            {
+                try
+                {
+                    if (ex.Response == string.Empty)
+                    {
+                        throw;
+                    }
+                    var exception = new ApiResponse<T>
+                    {
+                        RestException = JsonConvert.DeserializeObject<ApiExceptionResponse>(ex.Response)
+                    };
+                    return exception;
+                }
+                catch
+                {
+                    throw ex;
+                }
+            }
+            catch (LoginRadiusException ex)
+            {
+                // If get a LoginRadius, just rethrow to preserve the stack trace.
+                return new ApiResponse<T> { RestException = ex.ErrorResponse };
+            }
+            catch (System.Exception ex)
+            {
+                throw new LoginRadiusException(ex.Message, ex);
+            }
+        }
+#endif
+
+        private static ApiResponse<T> ValidateResponse<T>(string response)
+        {
+            if (response.Contains("errorCode"))
+            {
+                var exception = new ApiResponse<T>
+                {
+                    RestException = JsonConvert.DeserializeObject<ApiExceptionResponse>(response)
+                };
+                return exception;
+            }
+            if (typeof(T).Name.Equals("Object"))
+            {
+                return default(ApiResponse<T>);
+            }
+            if (typeof(T).Name.Equals("String"))
+            {
+                return (ApiResponse<T>)Convert.ChangeType(response, typeof(T));
+            }
+
+            return new ApiResponse<T> { Response = JsonFormatter.ConvertFromJson<T>(response) };
         }
 
         private static string GetEndpoint(string apiPath, out Dictionary<string, string> authHeaders, QueryParameters additionalParameters = null)

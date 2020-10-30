@@ -1,6 +1,8 @@
 using System.Collections.Concurrent;
 using System.IO;
 using System.Net;
+using System.Threading.Tasks;
+using LoginRadiusSDK.V2.Common;
 using LoginRadiusSDK.V2.Exception;
 
 namespace LoginRadiusSDK.V2.Http
@@ -179,11 +181,8 @@ namespace LoginRadiusSDK.V2.Http
         /// <summary>
         /// Executing API calls
         /// </summary>
-        /// <param name="payLoad"></param>
-        /// <param name="httpRequest"></param>
-        /// <param name="contentLength"></param>
         /// <returns>A string containing the response from the remote host.</returns>
-        public string Execute(string payLoad, HttpWebRequest httpRequest, int contentLength)
+        public string Execute(ApiRequest request)
         {
             int retriesConfigured = _config.ContainsKey(LRConfigConstants.HttpConnectionRetryConfig)
                 && int.TryParse(_config[LRConfigConstants.HttpConnectionRetryConfig], out int retriesInt)
@@ -191,19 +190,23 @@ namespace LoginRadiusSDK.V2.Http
                 : 0;
             int retries = 0;
 
+            var httpRequest = request.HttpRequest;
+
             // Reset the request & response details
             RequestDetails.Reset();
             ResponseDetails.Reset();
 
             // Store the request details
 
-            RequestDetails.Body = payLoad;
+            RequestDetails.Body =request.Payload;
             RequestDetails.Headers = httpRequest.Headers;
             RequestDetails.Url = httpRequest.RequestUri.AbsoluteUri;
             RequestDetails.Method = httpRequest.Method;
 
+            var contentLength = request.Payload.Length;
+
 #if !NETSTANDARD1_3
-            if (contentLength == 0) httpRequest.ContentLength = contentLength;
+            if (contentLength == 0) request.HttpRequest.ContentLength = contentLength;
 #endif
 
             try
@@ -222,7 +225,7 @@ namespace LoginRadiusSDK.V2.Http
                             case "POST":
                             case "PUT":
                             case "DELETE":
-                                if (!string.IsNullOrEmpty(payLoad))
+                                if (!string.IsNullOrEmpty(request.Payload))
                                 {
                                     Stream stream = null;
 #if NETSTANDARD1_3
@@ -230,9 +233,10 @@ namespace LoginRadiusSDK.V2.Http
 #else
                                     stream = httpRequest.GetRequestStream();
 #endif
+
                                     using (StreamWriter writerStream = new StreamWriter(stream))
                                     {
-                                        writerStream.Write(payLoad);
+                                        writerStream.Write(request.Payload);
                                         writerStream.Flush();
 #if NetFramework
                                         writerStream.Close();
@@ -241,6 +245,7 @@ namespace LoginRadiusSDK.V2.Http
                                 }
                                 break;
                         }
+
                         WebResponse webResponse = null;
 #if NETSTANDARD1_3
                         webResponse = httpRequest.GetResponseAsync().Result;
@@ -280,7 +285,7 @@ namespace LoginRadiusSDK.V2.Http
                         }
                     }
 #endif
-                    } while (retries++ < retriesConfigured);
+                } while (retries++ < retriesConfigured);
             }
             catch (LoginRadiusException)
             {
@@ -301,6 +306,125 @@ namespace LoginRadiusSDK.V2.Http
             throw new LoginRadiusException("Retried " + retriesConfigured +
                                            " times.... Exception in LoginRadius.HttpConnection.Execute().");
         }
+
+#if !NET_40
+        /// <summary>
+        /// Executing asynchronous API calls
+        /// </summary>
+        /// <returns>A string containing the response from the remote host.</returns>
+        public async Task<string> ExecuteAsync(ApiRequest request)
+        {
+            int retriesConfigured = _config.ContainsKey(LRConfigConstants.HttpConnectionRetryConfig)
+                && int.TryParse(_config[LRConfigConstants.HttpConnectionRetryConfig], out int retriesInt)
+                ? retriesInt
+                : 0;
+            int retries = 0;
+
+            var httpRequest = request.HttpRequest;
+
+            // Reset the request & response details
+            RequestDetails.Reset();
+            ResponseDetails.Reset();
+
+            // Store the request details
+
+            RequestDetails.Body = request.Payload;
+            RequestDetails.Headers = httpRequest.Headers;
+            RequestDetails.Url = httpRequest.RequestUri.AbsoluteUri;
+            RequestDetails.Method = httpRequest.Method;
+
+            var contentLength = request.Payload.Length;
+
+#if !NETSTANDARD1_3
+            if (contentLength == 0) request.HttpRequest.ContentLength = contentLength;
+#endif
+
+            try
+            {
+                do
+                {
+                    if (retries > 0)
+                    {
+                        httpRequest = CopyRequest(httpRequest, _config, httpRequest.RequestUri.ToString());
+                        RequestDetails.RetryAttempts++;
+                    }
+                    try
+                    {
+                        switch (httpRequest.Method.ToUpper())
+                        {
+                            case "POST":
+                            case "PUT":
+                            case "DELETE":
+                                if (!string.IsNullOrEmpty(request.Payload))
+                                {
+                                    Stream stream = await httpRequest.GetRequestStreamAsync().ConfigureAwait(false);
+                                    using (StreamWriter writerStream = new StreamWriter(stream))
+                                    {
+                                        writerStream.Write(request.Payload);
+                                        writerStream.Flush();
+#if NetFramework
+                                        writerStream.Close();
+#endif
+                                    }
+                                }
+                                break;
+                        }
+
+                        using (WebResponse responseWeb = await httpRequest.GetResponseAsync())
+                        {
+                            // Store the response information
+                            ResponseDetails.Headers = responseWeb.Headers;
+                            if (responseWeb is HttpWebResponse httpWebResponse)
+                            {
+                                ResponseDetails.StatusCode = httpWebResponse.StatusCode;
+                            }
+
+                            using (StreamReader readerStream = new StreamReader(responseWeb.GetResponseStream()))
+                            {
+                                ResponseDetails.Body = readerStream.ReadToEnd().Trim();
+                                return ResponseDetails.Body;
+                            }
+                        }
+                    }
+                    catch (WebException ex)
+                    {
+                        CatchException(ex, httpRequest);
+                    }
+#if NETSTANDARD
+                    catch (System.Exception ex)
+                    {
+                        if (ex.InnerException is WebException webException)
+                        {
+                            CatchException(webException, httpRequest);
+                        }
+                        else
+                        {
+                            throw new LoginRadiusException(ex.Message, ex, null);
+                        }
+                    }
+#endif
+                } while (retries++ < retriesConfigured);
+            }
+            catch (LoginRadiusException)
+            {
+                // Rethrow any LoginRadiusExceptions since they already contain the
+                // details of the exception.
+
+                throw;
+            }
+            catch (System.Exception ex)
+            {
+                // Repackage any other exceptions to give a bit more context to
+                // the caller.
+                throw new LoginRadiusException("Exception in LoginRadius.HttpConnection.Execute(): " + ex.Message, ex);
+            }
+
+            // If we've gotten this far, it means all attempts at sending the
+            // request resulted in a failed attempt.
+            throw new LoginRadiusException("Retried " + retriesConfigured +
+                                           " times.... Exception in LoginRadius.HttpConnection.Execute().");
+        }
+#endif
 
         private void CatchException(WebException ex, HttpWebRequest httpRequest)
         {
