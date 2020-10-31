@@ -207,7 +207,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
                 { "access_token", accessToken },
                 { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] }
             };
-            if (preventRefresh != false)
+            if (preventRefresh)
             {
                queryParameters.Add("preventRefresh", preventRefresh.ToString());
             }
