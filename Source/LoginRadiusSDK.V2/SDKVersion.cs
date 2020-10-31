@@ -3,7 +3,7 @@ namespace LoginRadiusSDK.V2
     /// <summary>
     /// Class for inspecting the ID and version of this SDK.
     /// </summary>
-    public class SDKVersion
+    public static class SDKVersion
     {
         /// <summary>
         /// SDK ID used in User-Agent HTTP header

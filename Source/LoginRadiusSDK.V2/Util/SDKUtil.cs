@@ -14,7 +14,7 @@ namespace LoginRadiusSDK.V2.Util
     /// <summary>
     /// Helper methods for this SDK.
     /// </summary>
-    internal class SDKUtil
+    internal static class SDKUtil
     {
         /// <summary>
         /// Formats the URI path for REST calls.

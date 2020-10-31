@@ -6,7 +6,7 @@ namespace LoginRadiusSDK.V2.Util
     /// <summary>
     /// Class that validates arguments.
     /// </summary>
-    public class LoginRadiusArgumentValidator
+    public static class LoginRadiusArgumentValidator
     {
         /// <summary>
         /// Helper method for validating an argument that will be used by API in any requests.
