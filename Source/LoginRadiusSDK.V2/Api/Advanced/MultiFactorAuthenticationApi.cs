@@ -12,6 +12,7 @@ using LoginRadiusSDK.V2.Models.ResponseModels;
 using LoginRadiusSDK.V2.Models.ResponseModels.UserProfile;
 using LoginRadiusSDK.V2.Models.RequestModels;
 using LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects;
+using System.Threading.Tasks;
 
 namespace LoginRadiusSDK.V2.Api.Advanced
 {
@@ -25,7 +26,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition of Complete Multi-Factor Authentication Settings data</returns>
         /// 5.7
 
-        public ApiResponse<MultiFactorAuthenticationSettingsResponse> MFAConfigureByAccessToken(string accessToken, string smsTemplate2FA = null)
+        public async Task<ApiResponse<MultiFactorAuthenticationSettingsResponse>> MFAConfigureByAccessToken(string accessToken, string smsTemplate2FA = null)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -43,7 +44,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/account/2fa";
             
-            return ConfigureAndExecute<MultiFactorAuthenticationSettingsResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<MultiFactorAuthenticationSettingsResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API is used to trigger the Multi-factor authentication settings after login for secure actions
@@ -54,7 +55,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition for Complete profile data</returns>
         /// 5.9
 
-        public ApiResponse<Identity> MFAUpdateSetting(string accessToken, MultiFactorAuthModelWithLockout multiFactorAuthModelWithLockout,
+        public async Task<ApiResponse<Identity>> MFAUpdateSetting(string accessToken, MultiFactorAuthModelWithLockout multiFactorAuthModelWithLockout,
         string fields = "")
         {
             if (string.IsNullOrWhiteSpace(accessToken))
@@ -77,7 +78,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/account/2fa/verification/otp";
             
-            return ConfigureAndExecute<Identity>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(multiFactorAuthModelWithLockout));
+            return await ConfigureAndExecute<Identity>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(multiFactorAuthModelWithLockout));
         }
         /// <summary>
         /// This API is used to Enable Multi-factor authentication by access token on user login
@@ -89,7 +90,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition for Complete profile data</returns>
         /// 5.10
 
-        public ApiResponse<Identity> MFAUpdateByAccessToken(string accessToken, MultiFactorAuthModelByGoogleAuthenticatorCode multiFactorAuthModelByGoogleAuthenticatorCode,
+        public async Task<ApiResponse<Identity>> MFAUpdateByAccessToken(string accessToken, MultiFactorAuthModelByGoogleAuthenticatorCode multiFactorAuthModelByGoogleAuthenticatorCode,
         string fields = "", string smsTemplate = null)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
@@ -116,7 +117,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/account/2fa/verification/googleauthenticatorcode";
             
-            return ConfigureAndExecute<Identity>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(multiFactorAuthModelByGoogleAuthenticatorCode));
+            return await ConfigureAndExecute<Identity>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(multiFactorAuthModelByGoogleAuthenticatorCode));
         }
         /// <summary>
         /// This API is used to update the Multi-factor authentication phone number by sending the verification OTP to the provided phone number
@@ -127,7 +128,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition for Complete SMS data</returns>
         /// 5.11
 
-        public ApiResponse<SMSResponseData> MFAUpdatePhoneNumberByToken(string accessToken, string phoneNo2FA,
+        public async Task<ApiResponse<SMSResponseData>> MFAUpdatePhoneNumberByToken(string accessToken, string phoneNo2FA,
         string smsTemplate2FA = null)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
@@ -155,7 +156,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/account/2fa";
             
-            return ConfigureAndExecute<SMSResponseData>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<SMSResponseData>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
         /// This API Resets the Google Authenticator configurations on a given account via the access_token
@@ -165,7 +166,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition of Delete Request</returns>
         /// 5.12.1
 
-        public ApiResponse<DeleteResponse> MFAResetGoogleAuthByToken(string accessToken, bool googleAuthenticator)
+        public async Task<ApiResponse<DeleteResponse>> MFAResetGoogleAuthByToken(string accessToken, bool googleAuthenticator)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -184,7 +185,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/account/2fa/authenticator";
             
-            return ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
         /// This API resets the SMS Authenticator configurations on a given account via the access_token.
@@ -194,7 +195,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition of Delete Request</returns>
         /// 5.12.2
 
-        public ApiResponse<DeleteResponse> MFAResetSMSAuthByToken(string accessToken, bool otpAuthenticator)
+        public async Task<ApiResponse<DeleteResponse>> MFAResetSMSAuthByToken(string accessToken, bool otpAuthenticator)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -213,7 +214,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/account/2fa/authenticator";
             
-            return ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
         /// This API is used to get a set of backup codes via access_token to allow the user login on a site that has Multi-factor Authentication enabled in the event that the user does not have a secondary factor available. We generate 10 codes, each code can only be consumed once. If any user attempts to go over the number of invalid login attempts configured in the Dashboard then the account gets blocked automatically
@@ -222,7 +223,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition of Complete Backup Code data</returns>
         /// 5.13
 
-        public ApiResponse<BackupCodeResponse> MFABackupCodeByAccessToken(string accessToken)
+        public async Task<ApiResponse<BackupCodeResponse>> MFABackupCodeByAccessToken(string accessToken)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -236,7 +237,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/account/2fa/backupcode";
             
-            return ConfigureAndExecute<BackupCodeResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<BackupCodeResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// API is used to reset the backup codes on a given account via the access_token. This API call will generate 10 new codes, each code can only be consumed once
@@ -245,7 +246,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition of Complete Backup Code data</returns>
         /// 5.14
 
-        public ApiResponse<BackupCodeResponse> MFAResetBackupCodeByAccessToken(string accessToken)
+        public async Task<ApiResponse<BackupCodeResponse>> MFAResetBackupCodeByAccessToken(string accessToken)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -259,7 +260,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/account/2fa/backupcode/reset";
             
-            return ConfigureAndExecute<BackupCodeResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<BackupCodeResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API can be used to login by emailid on a Multi-factor authentication enabled LoginRadius site.
@@ -275,7 +276,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Complete user UserProfile data</returns>
         /// 9.8.1
 
-        public ApiResponse<MultiFactorAuthenticationResponse<Identity>> MFALoginByEmail(string email, string password,
+        public async Task<ApiResponse<MultiFactorAuthenticationResponse<Identity>>> MFALoginByEmail(string email, string password,
         string emailTemplate = null, string fields = "", string loginUrl = null, string smsTemplate = null, string smsTemplate2FA = null,
         string verificationUrl = null)
         {
@@ -324,7 +325,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/login/2fa";
             
-            return ConfigureAndExecute<MultiFactorAuthenticationResponse<Identity>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<MultiFactorAuthenticationResponse<Identity>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
         /// This API can be used to login by username on a Multi-factor authentication enabled LoginRadius site.
@@ -340,7 +341,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Complete user UserProfile data</returns>
         /// 9.8.2
 
-        public ApiResponse<MultiFactorAuthenticationResponse<Identity>> MFALoginByUserName(string password, string username,
+        public async Task<ApiResponse<MultiFactorAuthenticationResponse<Identity>>> MFALoginByUserName(string password, string username,
         string emailTemplate = null, string fields = "", string loginUrl = null, string smsTemplate = null, string smsTemplate2FA = null,
         string verificationUrl = null)
         {
@@ -389,7 +390,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/login/2fa";
             
-            return ConfigureAndExecute<MultiFactorAuthenticationResponse<Identity>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<MultiFactorAuthenticationResponse<Identity>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
         /// This API can be used to login by Phone on a Multi-factor authentication enabled LoginRadius site.
@@ -405,7 +406,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Complete user UserProfile data</returns>
         /// 9.8.3
 
-        public ApiResponse<MultiFactorAuthenticationResponse<Identity>> MFALoginByPhone(string password, string phone,
+        public async Task<ApiResponse<MultiFactorAuthenticationResponse<Identity>>> MFALoginByPhone(string password, string phone,
         string emailTemplate = null, string fields = "", string loginUrl = null, string smsTemplate = null, string smsTemplate2FA = null,
         string verificationUrl = null)
         {
@@ -454,7 +455,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/login/2fa";
             
-            return ConfigureAndExecute<MultiFactorAuthenticationResponse<Identity>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<MultiFactorAuthenticationResponse<Identity>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
         /// This API is used to login via Multi-factor authentication by passing the One Time Password received via SMS
@@ -466,7 +467,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Complete user UserProfile data</returns>
         /// 9.12
 
-        public ApiResponse<AccessToken<Identity>> MFAValidateOTPByPhone(MultiFactorAuthModelWithLockout multiFactorAuthModelWithLockout, string secondFactorAuthenticationToken,
+        public async Task<ApiResponse<AccessToken<Identity>>> MFAValidateOTPByPhone(MultiFactorAuthModelWithLockout multiFactorAuthModelWithLockout, string secondFactorAuthenticationToken,
         string fields = "", string smsTemplate2FA = null)
         {
             if (multiFactorAuthModelWithLockout == null)
@@ -493,7 +494,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/login/2fa/verification/otp";
             
-            return ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(multiFactorAuthModelWithLockout));
+            return await ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(multiFactorAuthModelWithLockout));
         }
         /// <summary>
         /// This API is used to login via Multi-factor-authentication by passing the google authenticator code.
@@ -505,7 +506,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Complete user UserProfile data</returns>
         /// 9.13
 
-        public ApiResponse<AccessToken<Identity>> MFAValidateGoogleAuthCode(string googleAuthenticatorCode, string secondFactorAuthenticationToken,
+        public async Task<ApiResponse<AccessToken<Identity>>> MFAValidateGoogleAuthCode(string googleAuthenticatorCode, string secondFactorAuthenticationToken,
         string fields = "", string smsTemplate2FA = null)
         {
             if (string.IsNullOrWhiteSpace(googleAuthenticatorCode))
@@ -537,7 +538,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/login/2fa/verification/googleauthenticatorcode";
             
-            return ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
         /// This API is used to validate the backup code provided by the user and if valid, we return an access_token allowing the user to login incases where Multi-factor authentication (MFA) is enabled and the secondary factor is unavailable. When a user initially downloads the Backup codes, We generate 10 codes, each code can only be consumed once. if any user attempts to go over the number of invalid login attempts configured in the Dashboard then the account gets blocked automatically
@@ -548,7 +549,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Complete user UserProfile data</returns>
         /// 9.14
 
-        public ApiResponse<AccessToken<Identity>> MFAValidateBackupCode(MultiFactorAuthModelByBackupCode multiFactorAuthModelByBackupCode, string secondFactorAuthenticationToken,
+        public async Task<ApiResponse<AccessToken<Identity>>> MFAValidateBackupCode(MultiFactorAuthModelByBackupCode multiFactorAuthModelByBackupCode, string secondFactorAuthenticationToken,
         string fields = "")
         {
             if (multiFactorAuthModelByBackupCode == null)
@@ -571,7 +572,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/login/2fa/verification/backupcode";
             
-            return ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(multiFactorAuthModelByBackupCode));
+            return await ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(multiFactorAuthModelByBackupCode));
         }
         /// <summary>
         /// This API is used to update (if configured) the phone number used for Multi-factor authentication by sending the verification OTP to the provided phone number
@@ -582,7 +583,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition for Complete SMS data</returns>
         /// 9.16
 
-        public ApiResponse<SMSResponseData> MFAUpdatePhoneNumber(string phoneNo2FA, string secondFactorAuthenticationToken,
+        public async Task<ApiResponse<SMSResponseData>> MFAUpdatePhoneNumber(string phoneNo2FA, string secondFactorAuthenticationToken,
         string smsTemplate2FA = null)
         {
             if (string.IsNullOrWhiteSpace(phoneNo2FA))
@@ -610,7 +611,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/login/2fa";
             
-            return ConfigureAndExecute<SMSResponseData>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<SMSResponseData>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
         /// This API is used to resending the verification OTP to the provided phone number
@@ -620,7 +621,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition for Complete SMS data</returns>
         /// 9.17
 
-        public ApiResponse<SMSResponseData> MFAResendOTP(string secondFactorAuthenticationToken, string smsTemplate2FA = null)
+        public async Task<ApiResponse<SMSResponseData>> MFAResendOTP(string secondFactorAuthenticationToken, string smsTemplate2FA = null)
         {
             if (string.IsNullOrWhiteSpace(secondFactorAuthenticationToken))
             {
@@ -638,7 +639,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/login/2fa/resend";
             
-            return ConfigureAndExecute<SMSResponseData>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<SMSResponseData>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API resets the SMS Authenticator configurations on a given account via the UID.
@@ -648,7 +649,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition of Delete Request</returns>
         /// 18.21.1
 
-        public ApiResponse<DeleteResponse> MFAResetSMSAuthenticatorByUid(bool otpAuthenticator, string uid)
+        public async Task<ApiResponse<DeleteResponse>> MFAResetSMSAuthenticatorByUid(bool otpAuthenticator, string uid)
         {
             if (string.IsNullOrWhiteSpace(uid))
             {
@@ -668,7 +669,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/manage/account/2fa/authenticator";
             
-            return ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
         /// This API resets the Google Authenticator configurations on a given account via the UID.
@@ -678,7 +679,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition of Delete Request</returns>
         /// 18.21.2
 
-        public ApiResponse<DeleteResponse> MFAResetGoogleAuthenticatorByUid(bool googleAuthenticator, string uid)
+        public async Task<ApiResponse<DeleteResponse>> MFAResetGoogleAuthenticatorByUid(bool googleAuthenticator, string uid)
         {
             if (string.IsNullOrWhiteSpace(uid))
             {
@@ -698,7 +699,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/manage/account/2fa/authenticator";
             
-            return ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
         /// This API is used to reset the backup codes on a given account via the UID. This API call will generate 10 new codes, each code can only be consumed once.
@@ -707,7 +708,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition of Complete Backup Code data</returns>
         /// 18.25
 
-        public ApiResponse<BackupCodeResponse> MFABackupCodeByUid(string uid)
+        public async Task<ApiResponse<BackupCodeResponse>> MFABackupCodeByUid(string uid)
         {
             if (string.IsNullOrWhiteSpace(uid))
             {
@@ -722,7 +723,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/manage/account/2fa/backupcode";
             
-            return ConfigureAndExecute<BackupCodeResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<BackupCodeResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API is used to reset the backup codes on a given account via the UID. This API call will generate 10 new codes, each code can only be consumed once.
@@ -731,7 +732,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition of Complete Backup Code data</returns>
         /// 18.26
 
-        public ApiResponse<BackupCodeResponse> MFAResetBackupCodeByUid(string uid)
+        public async Task<ApiResponse<BackupCodeResponse>> MFAResetBackupCodeByUid(string uid)
         {
             if (string.IsNullOrWhiteSpace(uid))
             {
@@ -746,7 +747,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/manage/account/2fa/backupcode/reset";
             
-            return ConfigureAndExecute<BackupCodeResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<BackupCodeResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
     }
 }

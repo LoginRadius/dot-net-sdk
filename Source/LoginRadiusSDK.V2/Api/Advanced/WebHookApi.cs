@@ -10,6 +10,7 @@ using LoginRadiusSDK.V2.Common;
 using LoginRadiusSDK.V2.Util;
 using LoginRadiusSDK.V2.Models.ResponseModels;
 using LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects;
+using System.Threading.Tasks;
 
 namespace LoginRadiusSDK.V2.Api.Advanced
 {
@@ -22,7 +23,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response Containing List of Webhhook Data</returns>
         /// 40.1
 
-        public ApiResponse<ListData<LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects.WebHookSubscribeModel>> GetWebHookSubscribedURLs(string @event)
+        public async Task<ApiResponse<ListData<LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects.WebHookSubscribeModel>>> GetWebHookSubscribedURLs(string @event)
         {
             if (string.IsNullOrWhiteSpace(@event))
             {
@@ -37,7 +38,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "api/v2/webhook";
             
-            return ConfigureAndExecute<ListData<LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects.WebHookSubscribeModel>>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<ListData<LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects.WebHookSubscribeModel>>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// API can be used to configure a WebHook on your LoginRadius site. Webhooks also work on subscribe and notification model, subscribe your hook and get a notification. Equivalent to RESThook but these provide security on basis of signature and RESThook work on unique URL. Following are the events that are allowed by LoginRadius to trigger a WebHook service call.
@@ -46,7 +47,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 40.2
 
-        public ApiResponse<PostResponse> WebHookSubscribe(LoginRadiusSDK.V2.Models.RequestModels.WebHookSubscribeModel webHookSubscribeModel)
+        public async Task<ApiResponse<PostResponse>> WebHookSubscribe(LoginRadiusSDK.V2.Models.RequestModels.WebHookSubscribeModel webHookSubscribeModel)
         {
             if (webHookSubscribeModel == null)
             {
@@ -60,7 +61,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "api/v2/webhook";
             
-            return ConfigureAndExecute<PostResponse>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(webHookSubscribeModel));
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(webHookSubscribeModel));
         }
         /// <summary>
         /// API can be used to test a subscribed WebHook.
@@ -68,7 +69,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 40.3
 
-        public ApiResponse<EntityPermissionAcknowledgement> WebhookTest()
+        public async Task<ApiResponse<EntityPermissionAcknowledgement>> WebhookTest()
         {
             var queryParameters = new QueryParameters
             {
@@ -78,7 +79,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "api/v2/webhook/test";
             
-            return ConfigureAndExecute<EntityPermissionAcknowledgement>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<EntityPermissionAcknowledgement>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// API can be used to unsubscribe a WebHook configured on your LoginRadius site.
@@ -87,7 +88,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition of Delete Request</returns>
         /// 40.4
 
-        public ApiResponse<DeleteResponse> WebHookUnsubscribe(LoginRadiusSDK.V2.Models.RequestModels.WebHookSubscribeModel webHookSubscribeModel)
+        public async Task<ApiResponse<DeleteResponse>> WebHookUnsubscribe(LoginRadiusSDK.V2.Models.RequestModels.WebHookSubscribeModel webHookSubscribeModel)
         {
             if (webHookSubscribeModel == null)
             {
@@ -101,7 +102,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "api/v2/webhook";
             
-            return ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, ConvertToJson(webHookSubscribeModel));
+            return await ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, ConvertToJson(webHookSubscribeModel));
         }
     }
 }

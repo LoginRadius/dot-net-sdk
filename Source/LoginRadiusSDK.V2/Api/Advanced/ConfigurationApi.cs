@@ -8,6 +8,7 @@
 using LoginRadiusSDK.V2.Common;
 using LoginRadiusSDK.V2.Util;
 using LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects;
+using System.Threading.Tasks;
 
 namespace LoginRadiusSDK.V2.Api.Advanced
 {
@@ -18,14 +19,17 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// </summary>
         /// <returns>Response containing LoginRadius App configurations which are set in the LoginRadius Dashboard for a particular LoginRadius site/environment</returns>
         /// 100
-        public ApiResponse<ConfigResponseModel> GetConfigurations()
+        public async Task<ApiResponse<ConfigResponseModel>> GetConfigurations()
         {
             var queryParameters = new QueryParameters
             {
                 { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] }
             };
             var resourcePath = "ciam/appinfo";
-            return ConfigureAndExecute<ConfigResponseModel>(HttpMethod.GET, resourcePath, queryParameters, null);
+
+            return await ConfigureAndExecute<ConfigResponseModel>(HttpMethod.GET, resourcePath, queryParameters, null);
+
+
         }
 
         /// <summary>
@@ -35,7 +39,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition of Complete service info data</returns>
         /// 3.1
 
-        public ApiResponse<ServiceInfoModel> GetServerInfo(int? timeDifference = null)
+        public async Task<ApiResponse<ServiceInfoModel>> GetServerInfo(int? timeDifference = null)
         {
             var queryParameters = new QueryParameters
             {
@@ -48,7 +52,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/serverinfo";
             
-            return ConfigureAndExecute<ServiceInfoModel>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<ServiceInfoModel>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
     }
 }

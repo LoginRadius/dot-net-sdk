@@ -11,6 +11,7 @@ using LoginRadiusSDK.V2.Util;
 using LoginRadiusSDK.V2.Models.ResponseModels;
 using LoginRadiusSDK.V2.Models.ResponseModels.UserProfile;
 using LoginRadiusSDK.V2.Models.RequestModels;
+using System.Threading.Tasks;
 
 namespace LoginRadiusSDK.V2.Api.Authentication
 {
@@ -40,7 +41,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing User Profile Data and access token</returns>
         /// 9.2.4
 
-        public ApiResponse<AccessToken<Identity>> RBALoginByEmail(EmailAuthenticationModel emailAuthenticationModel, string emailTemplate = null,
+        public async Task<ApiResponse<AccessToken<Identity>>> RBALoginByEmail(EmailAuthenticationModel emailAuthenticationModel, string emailTemplate = null,
         string fields = "", string loginUrl = null, bool? passwordDelegation = null, string passwordDelegationApp = null, string rbaBrowserEmailTemplate = null,
         string rbaBrowserSmsTemplate = null, string rbaCityEmailTemplate = null, string rbaCitySmsTemplate = null, string rbaCountryEmailTemplate = null,
         string rbaCountrySmsTemplate = null, string rbaIpEmailTemplate = null, string rbaIpSmsTemplate = null, string rbaOneclickEmailTemplate = null,
@@ -125,7 +126,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/login";
             
-            return ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(emailAuthenticationModel));
+            return await ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(emailAuthenticationModel));
         }
         /// <summary>
         /// This API retrieves a copy of the user data based on the Username
@@ -151,7 +152,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing User Profile Data and access token</returns>
         /// 9.2.5
 
-        public ApiResponse<AccessToken<Identity>> RBALoginByUserName(UserNameAuthenticationModel userNameAuthenticationModel, string emailTemplate = null,
+        public async Task<ApiResponse<AccessToken<Identity>>> RBALoginByUserName(UserNameAuthenticationModel userNameAuthenticationModel, string emailTemplate = null,
         string fields = "", string loginUrl = null, bool? passwordDelegation = null, string passwordDelegationApp = null, string rbaBrowserEmailTemplate = null,
         string rbaBrowserSmsTemplate = null, string rbaCityEmailTemplate = null, string rbaCitySmsTemplate = null, string rbaCountryEmailTemplate = null,
         string rbaCountrySmsTemplate = null, string rbaIpEmailTemplate = null, string rbaIpSmsTemplate = null, string rbaOneclickEmailTemplate = null,
@@ -236,7 +237,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/login";
             
-            return ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(userNameAuthenticationModel));
+            return await ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(userNameAuthenticationModel));
         }
         /// <summary>
         /// This API retrieves a copy of the user data based on the Phone
@@ -262,7 +263,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing User Profile Data and access token</returns>
         /// 9.2.6
 
-        public ApiResponse<AccessToken<Identity>> RBALoginByPhone(PhoneAuthenticationModel phoneAuthenticationModel, string emailTemplate = null,
+        public async Task<ApiResponse<AccessToken<Identity>>> RBALoginByPhone(PhoneAuthenticationModel phoneAuthenticationModel, string emailTemplate = null,
         string fields = "", string loginUrl = null, bool? passwordDelegation = null, string passwordDelegationApp = null, string rbaBrowserEmailTemplate = null,
         string rbaBrowserSmsTemplate = null, string rbaCityEmailTemplate = null, string rbaCitySmsTemplate = null, string rbaCountryEmailTemplate = null,
         string rbaCountrySmsTemplate = null, string rbaIpEmailTemplate = null, string rbaIpSmsTemplate = null, string rbaOneclickEmailTemplate = null,
@@ -347,7 +348,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/login";
             
-            return ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(phoneAuthenticationModel));
+            return await ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(phoneAuthenticationModel));
         }
     }
 }

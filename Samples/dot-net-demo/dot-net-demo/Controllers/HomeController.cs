@@ -42,13 +42,14 @@ namespace dot_net_demo.Controllers
         [HttpPost]
         public IActionResult LRLogin([FromBody] EmailLoginModel emailLoginModel)
         {
+
             string fields = null;
             EmailAuthenticationModel log = new EmailAuthenticationModel
             {
                 Email = emailLoginModel.Email,
                 Password = emailLoginModel.Password
             };
-            var apiresponse = new AuthenticationApi().LoginByEmail(log, fields);
+            var apiresponse = new AuthenticationApi().LoginByEmail(log, fields).Result;
 
             if (apiresponse.RestException != null)
             {
@@ -59,7 +60,8 @@ namespace dot_net_demo.Controllers
 
         public IActionResult LRMfaLogin([FromBody] EmailLoginModel emailLoginModel)
         {
-            var apiresponse = new MultiFactorAuthenticationApi().MFALoginByEmail(emailLoginModel.Email, emailLoginModel.Password);
+            var apiresponse = new MultiFactorAuthenticationApi().MFALoginByEmail(emailLoginModel.Email, emailLoginModel.Password).Result;
+
             if (apiresponse.RestException != null)
             {
                 return StatusCode(400, Json(apiresponse.RestException));
@@ -69,7 +71,7 @@ namespace dot_net_demo.Controllers
 
         public IActionResult LRMfaAuth([FromBody] GoogleAuthenticatorModel googleAuth, [FromQuery(Name = "multi_factor_auth_token")] String secondFactorAuthToken)
         {
-            var apiresponse = new MultiFactorAuthenticationApi().MFAValidateGoogleAuthCode(googleAuth.googleauthenticatorcode, secondFactorAuthToken);
+            var apiresponse = new MultiFactorAuthenticationApi().MFAValidateGoogleAuthCode(googleAuth.googleauthenticatorcode, secondFactorAuthToken).Result;
             if (apiresponse.RestException != null)
             {
                 return StatusCode(400, Json(apiresponse.RestException));
@@ -79,7 +81,8 @@ namespace dot_net_demo.Controllers
 
         public IActionResult LRPwlessLogin([FromQuery(Name = "email")] String email, [FromQuery(Name = "verification_url")] String verificationUrl)
         {
-            var apiresponse = new PasswordLessLoginApi().PasswordlessLoginByEmail(email, "", verificationUrl);
+            var apiresponse = new PasswordLessLoginApi().PasswordlessLoginByEmail(email, "", verificationUrl).Result;
+
             if (apiresponse.RestException != null)
             {
                 return StatusCode(400, Json(apiresponse.RestException));
@@ -89,7 +92,7 @@ namespace dot_net_demo.Controllers
 
         public IActionResult LRPwlessAuth([FromQuery(Name = "verification_token")] String verificationToken)
         {
-            var apiresponse = new PasswordLessLoginApi().PasswordlessLoginVerification(verificationToken);
+            var apiresponse = new PasswordLessLoginApi().PasswordlessLoginVerification(verificationToken).Result;
 
             if (apiresponse.RestException != null)
             {
@@ -105,8 +108,8 @@ namespace dot_net_demo.Controllers
             {
                 TimeDifference = "50"
             };
-            var apiresponse = new AuthenticationApi().UserRegistrationByEmail(identityCreateModel, _sott.GetSott(sott), null,null, verificationUrl,null);
-            
+            var apiresponse = new AuthenticationApi().UserRegistrationByEmail(identityCreateModel, _sott.GetSott(sott), null,null, verificationUrl,null).Result;
+
             if (apiresponse.RestException != null)
             {
                 return StatusCode(400, Json(apiresponse.RestException));
@@ -116,7 +119,7 @@ namespace dot_net_demo.Controllers
 
         public IActionResult LRVerifyEmail([FromQuery(Name = "verification_token")] String verificationToken)
         {
-            var apiresponse = new AuthenticationApi().VerifyEmail(verificationToken, "google.ca", "");
+            var apiresponse = new AuthenticationApi().VerifyEmail(verificationToken, "google.ca", "").Result;
 
             if (apiresponse.RestException != null)
             {
@@ -127,8 +130,8 @@ namespace dot_net_demo.Controllers
 
         public IActionResult LRForgotPassword([FromBody] ForgotPasswordModel forgotPassModel, [FromQuery(Name = "reset_password_url")] String resetPasswordUrl)
         {
-            var apiresponse = new AuthenticationApi().ForgotPassword(forgotPassModel.Email, resetPasswordUrl, "");
-
+            var apiresponse = new AuthenticationApi().ForgotPassword(forgotPassModel.Email, resetPasswordUrl, "").Result;
+            
             if (apiresponse.RestException != null)
             {
                 return StatusCode(400, Json(apiresponse.RestException));
@@ -143,7 +146,7 @@ namespace dot_net_demo.Controllers
                 Password = resetPasswordModel.password,
                 ResetToken = resetPasswordModel.resettoken
             };
-            var apiresponse = new AuthenticationApi().ResetPasswordByResetToken(reset);
+            var apiresponse = new AuthenticationApi().ResetPasswordByResetToken(reset).Result;
 
             if (apiresponse.RestException != null)
             {
@@ -154,7 +157,7 @@ namespace dot_net_demo.Controllers
 
         public IActionResult LRChangePassword([FromBody] ChangePasswordModel changePasswordModel, [FromQuery(Name = "auth")] String accessToken)
         {
-            var apiresponse = new AuthenticationApi().ChangePassword(accessToken, changePasswordModel.newPassword, changePasswordModel.oldPassword);
+            var apiresponse = new AuthenticationApi().ChangePassword(accessToken, changePasswordModel.newPassword, changePasswordModel.oldPassword).Result;
 
             if (apiresponse.RestException != null)
             {
@@ -165,8 +168,9 @@ namespace dot_net_demo.Controllers
 
         public IActionResult LRSetPassword([FromBody] SetPasswordModel setPasswordModel, [FromQuery(Name = "uid")] String uid)
         {
-            var apiresponse = new AccountApi().SetAccountPasswordByUid(setPasswordModel.Password, uid);
-                if (apiresponse.RestException != null)
+            var apiresponse = new AccountApi().SetAccountPasswordByUid(setPasswordModel.Password, uid).Result;
+
+            if (apiresponse.RestException != null)
                 {
                    return StatusCode(400, Json(apiresponse.RestException));
                 }
@@ -175,7 +179,7 @@ namespace dot_net_demo.Controllers
 
         public IActionResult LRUpdate([FromBody] AccountUserProfileUpdateModel updateModel, [FromQuery(Name = "uid")] String uid)
         {
-            var apiresponse = new AccountApi().UpdateAccountByUid(updateModel, uid);
+            var apiresponse = new AccountApi().UpdateAccountByUid(updateModel, uid).Result;
             if (apiresponse.RestException != null)
             {
                 return StatusCode(400, Json(apiresponse.RestException));
@@ -185,7 +189,8 @@ namespace dot_net_demo.Controllers
 
         public IActionResult LRCreateCustomObject([FromBody] dynamic customObject, [FromQuery(Name = "auth")] String accessToken, [FromQuery(Name = "object_name")] String objectName)
         {
-            var apiresponse = new CustomObjectApi().CreateCustomObjectByToken(accessToken, objectName, customObject);
+            var apiresponse = new CustomObjectApi().CreateCustomObjectByToken(accessToken, objectName, customObject).Result;
+
             if (apiresponse.RestException != null)
             {
                 return StatusCode(400, Json(apiresponse.RestException));
@@ -195,8 +200,8 @@ namespace dot_net_demo.Controllers
 
         public IActionResult LRUpdateCustomObject([FromBody] dynamic customObject, [FromQuery(Name = "auth")] String accessToken, [FromQuery(Name = "object_name")] String objectName, [FromQuery(Name = "object_id")] String objectId)
         {
-           
-            var apiresponse = new CustomObjectApi().UpdateCustomObjectByToken(accessToken, objectName, objectId, customObject);
+
+            var apiresponse = new CustomObjectApi().UpdateCustomObjectByToken(accessToken, objectName, objectId, customObject).Result;
 
             if (apiresponse.RestException != null)
             {
@@ -207,8 +212,8 @@ namespace dot_net_demo.Controllers
 
         public IActionResult LRDeleteCustomObject([FromQuery(Name = "auth")] String accessToken, [FromQuery(Name = "object_name")] String objectName, [FromQuery(Name = "object_id")] String objectId)
         {
-            var apiresponse = new CustomObjectApi().DeleteCustomObjectByToken(accessToken, objectName, objectId);
-            
+            var apiresponse = new CustomObjectApi().DeleteCustomObjectByToken(accessToken, objectName, objectId).Result;
+
             if (apiresponse.RestException != null)
             {
                 return StatusCode(400, Json(apiresponse.RestException));
@@ -218,7 +223,8 @@ namespace dot_net_demo.Controllers
 
         public IActionResult LRGetCustomObject([FromQuery(Name = "auth")] String accessToken, [FromQuery(Name = "object_name")] String objectName)
         {
-            var apiresponse = new CustomObjectApi().GetCustomObjectByToken(accessToken, objectName);
+            var apiresponse = new CustomObjectApi().GetCustomObjectByToken(accessToken, objectName).Result;
+
             if (apiresponse.RestException != null)
             {
                 return StatusCode(400, Json(apiresponse.RestException));
@@ -228,7 +234,8 @@ namespace dot_net_demo.Controllers
 
         public IActionResult LRMfaResetGoogle([FromQuery(Name = "auth")] String accessToken)
         {
-            var apiresponse = new MultiFactorAuthenticationApi().MFAResetGoogleAuthByToken(accessToken, true);
+            var apiresponse = new MultiFactorAuthenticationApi().MFAResetGoogleAuthByToken(accessToken, true).Result;
+
             if (apiresponse.RestException != null)
             {
                 return StatusCode(400, Json(apiresponse.RestException));
@@ -238,7 +245,8 @@ namespace dot_net_demo.Controllers
 
         public IActionResult LRMfaValidate([FromQuery(Name = "auth")] String accessToken)
         {
-            var apiresponse = new MultiFactorAuthenticationApi().MFAConfigureByAccessToken(accessToken);
+            var apiresponse = new MultiFactorAuthenticationApi().MFAConfigureByAccessToken(accessToken).Result;
+
             if (apiresponse.RestException != null)
             {
                 return StatusCode(400, Json(apiresponse.RestException));
@@ -248,7 +256,8 @@ namespace dot_net_demo.Controllers
 
         public IActionResult LRMfaEnableGoogle([FromBody] GoogleAuthenticatorModel googleAuthenticatorCode, [FromQuery(Name = "auth")] String accessToken)
         {
-            var apiresponse = new MultiFactorAuthenticationApi().MFAValidateGoogleAuthCode(accessToken, googleAuthenticatorCode.googleauthenticatorcode);
+            var apiresponse = new MultiFactorAuthenticationApi().MFAValidateGoogleAuthCode(accessToken, googleAuthenticatorCode.googleauthenticatorcode).Result;
+
             if (apiresponse.RestException != null)
             {
                 return StatusCode(400, Json(apiresponse.RestException));
@@ -258,7 +267,7 @@ namespace dot_net_demo.Controllers
 
         public IActionResult LRGetRoles()
         {
-            var apiresponse = new RoleApi().GetRolesList();
+            var apiresponse = new RoleApi().GetRolesList().Result;
             if (apiresponse.RestException != null)
             {
                 return StatusCode(400, Json(apiresponse.RestException));
@@ -268,7 +277,7 @@ namespace dot_net_demo.Controllers
 
         public IActionResult LRGetRole([FromQuery(Name = "uid")] String uid)
         {
-            var apiresponse = new RoleApi().GetRolesByUid(uid);
+            var apiresponse = new RoleApi().GetRolesByUid(uid).Result;
             if (apiresponse.RestException != null)
             {
                 return StatusCode(400, Json(apiresponse.RestException));
@@ -278,7 +287,7 @@ namespace dot_net_demo.Controllers
 
         public IActionResult LRCreateRole([FromBody] RolesModel rolePermissions)
         {
-            var apiresponse = new RoleApi().CreateRoles(rolePermissions);
+            var apiresponse = new RoleApi().CreateRoles(rolePermissions).Result;
 
             if (apiresponse.RestException != null)
             {
@@ -289,7 +298,7 @@ namespace dot_net_demo.Controllers
 
         public IActionResult LRDeleteRole([FromQuery(Name = "role")] String roleName)
         {
-            var apiresponse = new RoleApi().DeleteRole(roleName);
+            var apiresponse = new RoleApi().DeleteRole(roleName).Result;
             if (apiresponse.RestException != null)
             {
                 return StatusCode(400, Json(apiresponse.RestException));
@@ -299,7 +308,7 @@ namespace dot_net_demo.Controllers
 
         public IActionResult LRAssignRole([FromQuery(Name = "uid")] String uid, [FromBody] AccountRolesModel roles)
         {
-            var apiresponse = new RoleApi().AssignRolesByUid(roles, uid);
+            var apiresponse = new RoleApi().AssignRolesByUid(roles, uid).Result;
             if (apiresponse.RestException != null)
             {
                 return StatusCode(400, Json(apiresponse.RestException));
@@ -309,7 +318,7 @@ namespace dot_net_demo.Controllers
 
         public IActionResult LRGetProfile([FromQuery(Name = "auth")] String accessToken)
         {
-            var apiresponse = new AuthenticationApi().GetProfileByAccessToken(accessToken);
+            var apiresponse = new AuthenticationApi().GetProfileByAccessToken(accessToken).Result;
             if (apiresponse.RestException != null)
             {
                 return StatusCode(400, Json(apiresponse.RestException));

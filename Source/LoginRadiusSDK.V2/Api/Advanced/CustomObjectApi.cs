@@ -11,10 +11,11 @@ using LoginRadiusSDK.V2.Util;
 using LoginRadiusSDK.V2.Models.ResponseModels;
 using LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects;
 using LoginRadiusSDK.V2.Models.Enums;
+using System.Threading.Tasks;
 
 namespace LoginRadiusSDK.V2.Api.Advanced
 {
-    public class CustomObjectApi : LoginRadiusResource
+   public class CustomObjectApi : LoginRadiusResource
     {
         /// <summary>
         /// This API is used to write information in JSON format to the custom object for the specified account.
@@ -25,7 +26,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition for Complete user custom object data</returns>
         /// 6.1
 
-        public ApiResponse<UserCustomObjectData> CreateCustomObjectByToken(string accessToken, string objectName,
+        public async Task<ApiResponse<UserCustomObjectData>> CreateCustomObjectByToken(string accessToken, string objectName,
         object payload)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
@@ -49,7 +50,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/customobject";
             
-            return ConfigureAndExecute<UserCustomObjectData>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(payload));
+            return await ConfigureAndExecute<UserCustomObjectData>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(payload));
         }
         /// <summary>
         /// This API is used to update the specified custom object data of the specified account. If the value of updatetype is 'replace' then it will fully replace custom object with the new custom object and if the value of updatetype is 'partialreplace' then it will perform an upsert type operation
@@ -62,7 +63,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition for Complete user custom object data</returns>
         /// 6.2
 
-        public ApiResponse<UserCustomObjectData> UpdateCustomObjectByToken(string accessToken, string objectName,
+        public async Task<ApiResponse<UserCustomObjectData>> UpdateCustomObjectByToken(string accessToken, string objectName,
         string objectRecordId, object payload, CustomObjectUpdateOperationType? updateType = null)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
@@ -94,7 +95,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = $"identity/v2/auth/customobject/{objectRecordId}";
             
-            return ConfigureAndExecute<UserCustomObjectData>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(payload));
+            return await ConfigureAndExecute<UserCustomObjectData>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(payload));
         }
         /// <summary>
         /// This API is used to retrieve the specified Custom Object data for the specified account.
@@ -104,7 +105,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Complete user CustomObject data</returns>
         /// 6.3
 
-        public ApiResponse<ListData<UserCustomObjectData>> GetCustomObjectByToken(string accessToken, string objectName)
+        public async Task<ApiResponse<ListData<UserCustomObjectData>>> GetCustomObjectByToken(string accessToken, string objectName)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -123,7 +124,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/customobject";
             
-            return ConfigureAndExecute<ListData<UserCustomObjectData>>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<ListData<UserCustomObjectData>>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API is used to retrieve the Custom Object data for the specified account.
@@ -134,7 +135,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition for Complete user custom object data</returns>
         /// 6.4
 
-        public ApiResponse<UserCustomObjectData> GetCustomObjectByRecordIDAndToken(string accessToken, string objectName,
+        public async Task<ApiResponse<UserCustomObjectData>> GetCustomObjectByRecordIDAndToken(string accessToken, string objectName,
         string objectRecordId)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
@@ -158,7 +159,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = $"identity/v2/auth/customobject/{objectRecordId}";
             
-            return ConfigureAndExecute<UserCustomObjectData>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<UserCustomObjectData>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API is used to remove the specified Custom Object data using ObjectRecordId of a specified account.
@@ -169,7 +170,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition of Delete Request</returns>
         /// 6.5
 
-        public ApiResponse<DeleteResponse> DeleteCustomObjectByToken(string accessToken, string objectName,
+        public async Task<ApiResponse<DeleteResponse>> DeleteCustomObjectByToken(string accessToken, string objectName,
         string objectRecordId)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
@@ -193,7 +194,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = $"identity/v2/auth/customobject/{objectRecordId}";
             
-            return ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API is used to write information in JSON format to the custom object for the specified account.
@@ -204,7 +205,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition for Complete user custom object data</returns>
         /// 19.1
 
-        public ApiResponse<UserCustomObjectData> CreateCustomObjectByUid(string objectName, object payload,
+        public async Task<ApiResponse<UserCustomObjectData>> CreateCustomObjectByUid(string objectName, object payload,
         string uid)
         {
             if (string.IsNullOrWhiteSpace(objectName))
@@ -228,7 +229,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = $"identity/v2/manage/account/{uid}/customobject";
             
-            return ConfigureAndExecute<UserCustomObjectData>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(payload));
+            return await ConfigureAndExecute<UserCustomObjectData>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(payload));
         }
         /// <summary>
         /// This API is used to update the specified custom object data of a specified account. If the value of updatetype is 'replace' then it will fully replace custom object with new custom object and if the value of updatetype is partialreplace then it will perform an upsert type operation.
@@ -241,7 +242,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition for Complete user custom object data</returns>
         /// 19.2
 
-        public ApiResponse<UserCustomObjectData> UpdateCustomObjectByUid(string objectName, string objectRecordId,
+        public async Task<ApiResponse<UserCustomObjectData>> UpdateCustomObjectByUid(string objectName, string objectRecordId,
         object payload, string uid, CustomObjectUpdateOperationType? updateType = null)
         {
             if (string.IsNullOrWhiteSpace(objectName))
@@ -273,7 +274,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = $"identity/v2/manage/account/{uid}/customobject/{objectRecordId}";
             
-            return ConfigureAndExecute<UserCustomObjectData>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(payload));
+            return await ConfigureAndExecute<UserCustomObjectData>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(payload));
         }
         /// <summary>
         /// This API is used to retrieve all the custom objects by UID from cloud storage.
@@ -283,7 +284,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Complete user CustomObject data</returns>
         /// 19.3
 
-        public ApiResponse<ListData<UserCustomObjectData>> GetCustomObjectByUid(string objectName, string uid)
+        public async Task<ApiResponse<ListData<UserCustomObjectData>>> GetCustomObjectByUid(string objectName, string uid)
         {
             if (string.IsNullOrWhiteSpace(objectName))
             {
@@ -302,7 +303,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = $"identity/v2/manage/account/{uid}/customobject";
             
-            return ConfigureAndExecute<ListData<UserCustomObjectData>>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<ListData<UserCustomObjectData>>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API is used to retrieve the Custom Object data for the specified account.
@@ -313,7 +314,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition for Complete user custom object data</returns>
         /// 19.4
 
-        public ApiResponse<UserCustomObjectData> GetCustomObjectByRecordID(string objectName, string objectRecordId,
+        public async Task<ApiResponse<UserCustomObjectData>> GetCustomObjectByRecordID(string objectName, string objectRecordId,
         string uid)
         {
             if (string.IsNullOrWhiteSpace(objectName))
@@ -337,7 +338,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = $"identity/v2/manage/account/{uid}/customobject/{objectRecordId}";
             
-            return ConfigureAndExecute<UserCustomObjectData>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<UserCustomObjectData>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API is used to remove the specified Custom Object data using ObjectRecordId of specified account.
@@ -348,7 +349,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition of Delete Request</returns>
         /// 19.5
 
-        public ApiResponse<DeleteResponse> DeleteCustomObjectByRecordID(string objectName, string objectRecordId,
+        public async Task<ApiResponse<DeleteResponse>> DeleteCustomObjectByRecordID(string objectName, string objectRecordId,
         string uid)
         {
             if (string.IsNullOrWhiteSpace(objectName))
@@ -372,7 +373,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = $"identity/v2/manage/account/{uid}/customobject/{objectRecordId}";
             
-            return ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, null);
         }
     }
 }

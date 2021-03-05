@@ -1,6 +1,7 @@
 using System.Collections.Concurrent;
 using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 using LoginRadiusSDK.V2.Exception;
 
 namespace LoginRadiusSDK.V2.Http
@@ -183,7 +184,7 @@ namespace LoginRadiusSDK.V2.Http
         /// <param name="httpRequest"></param>
         /// <param name="contentLength"></param>
         /// <returns>A string containing the response from the remote host.</returns>
-        public string Execute(string payLoad, HttpWebRequest httpRequest, int contentLength)
+        public async Task<string> Execute(string payLoad, HttpWebRequest httpRequest, int contentLength)
         {
             int retriesConfigured = _config.ContainsKey(LRConfigConstants.HttpConnectionRetryConfig)
                 && int.TryParse(_config[LRConfigConstants.HttpConnectionRetryConfig], out int retriesInt)
@@ -228,7 +229,7 @@ namespace LoginRadiusSDK.V2.Http
 #if NetFramework
                                     stream = httpRequest.GetRequestStream();
 #else
-                                    stream = httpRequest.GetRequestStreamAsync().Result;
+                                    stream = await httpRequest.GetRequestStreamAsync();
 #endif
                                     using (StreamWriter writerStream = new StreamWriter(stream))
                                     {
@@ -243,7 +244,7 @@ namespace LoginRadiusSDK.V2.Http
                         }
                         WebResponse webResponse = null;
 #if !NetFramework
-                        webResponse = httpRequest.GetResponseAsync().Result;
+                        webResponse = await httpRequest.GetResponseAsync();
 #else
                         webResponse = httpRequest.GetResponse();
 #endif
@@ -258,7 +259,11 @@ namespace LoginRadiusSDK.V2.Http
 
                             using (StreamReader readerStream = new StreamReader(responseWeb.GetResponseStream()))
                             {
+#if NET40
                                 ResponseDetails.Body = readerStream.ReadToEnd().Trim();
+#else
+                                ResponseDetails.Body = await readerStream.ReadToEndAsync();
+#endif
                                 return ResponseDetails.Body;
                             }
                         }
@@ -368,4 +373,5 @@ namespace LoginRadiusSDK.V2.Http
             throw rethrowEx;
         }
     }
+
 }

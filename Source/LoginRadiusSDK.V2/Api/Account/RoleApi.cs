@@ -12,6 +12,7 @@ using LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects;
 using LoginRadiusSDK.V2.Models.RequestModels;
 using LoginRadiusSDK.V2.Models.ResponseModels;
 using LoginRadiusSDK.V2.Models.ResponseModels.UserProfile.Objects;
+using System.Threading.Tasks;
 
 namespace LoginRadiusSDK.V2.Api.Account
 {
@@ -24,7 +25,7 @@ namespace LoginRadiusSDK.V2.Api.Account
         /// <returns>Response containing Definition of Complete Roles data</returns>
         /// 18.6
 
-        public ApiResponse<LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects.AccountRolesModel> GetRolesByUid(string uid)
+        public async Task<ApiResponse<LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects.AccountRolesModel>> GetRolesByUid(string uid)
         {
             if (string.IsNullOrWhiteSpace(uid))
             {
@@ -38,7 +39,7 @@ namespace LoginRadiusSDK.V2.Api.Account
 
             var resourcePath = $"identity/v2/manage/account/{uid}/role";
             
-            return ConfigureAndExecute<LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects.AccountRolesModel>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects.AccountRolesModel>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API is used to assign your desired roles to a given user.
@@ -48,7 +49,7 @@ namespace LoginRadiusSDK.V2.Api.Account
         /// <returns>Response containing Definition of Complete Roles data</returns>
         /// 18.7
 
-        public ApiResponse<LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects.AccountRolesModel> AssignRolesByUid(LoginRadiusSDK.V2.Models.RequestModels.AccountRolesModel accountRolesModel, string uid)
+        public async Task<ApiResponse<LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects.AccountRolesModel>> AssignRolesByUid(LoginRadiusSDK.V2.Models.RequestModels.AccountRolesModel accountRolesModel, string uid)
         {
             if (accountRolesModel == null)
             {
@@ -66,7 +67,7 @@ namespace LoginRadiusSDK.V2.Api.Account
 
             var resourcePath = $"identity/v2/manage/account/{uid}/role";
             
-            return ConfigureAndExecute<LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects.AccountRolesModel>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(accountRolesModel));
+            return await ConfigureAndExecute<LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects.AccountRolesModel>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(accountRolesModel));
         }
         /// <summary>
         /// This API is used to unassign roles from a user.
@@ -76,7 +77,7 @@ namespace LoginRadiusSDK.V2.Api.Account
         /// <returns>Response containing Definition of Delete Request</returns>
         /// 18.8
 
-        public ApiResponse<DeleteResponse> UnassignRolesByUid(LoginRadiusSDK.V2.Models.RequestModels.AccountRolesModel accountRolesModel, string uid)
+        public async Task<ApiResponse<DeleteResponse>> UnassignRolesByUid(LoginRadiusSDK.V2.Models.RequestModels.AccountRolesModel accountRolesModel, string uid)
         {
             if (accountRolesModel == null)
             {
@@ -94,7 +95,7 @@ namespace LoginRadiusSDK.V2.Api.Account
 
             var resourcePath = $"identity/v2/manage/account/{uid}/role";
             
-            return ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, ConvertToJson(accountRolesModel));
+            return await ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, ConvertToJson(accountRolesModel));
         }
         /// <summary>
         /// This API Gets the contexts that have been configured and the associated roles and permissions.
@@ -103,7 +104,7 @@ namespace LoginRadiusSDK.V2.Api.Account
         /// <returns>Complete user RoleContext data</returns>
         /// 18.9
 
-        public ApiResponse<ListReturn<RoleContext>> GetRoleContextByUid(string uid)
+        public async Task<ApiResponse<ListReturn<RoleContext>>> GetRoleContextByUid(string uid)
         {
             if (string.IsNullOrWhiteSpace(uid))
             {
@@ -117,7 +118,7 @@ namespace LoginRadiusSDK.V2.Api.Account
 
             var resourcePath = $"identity/v2/manage/account/{uid}/rolecontext";
             
-            return ConfigureAndExecute<ListReturn<RoleContext>>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<ListReturn<RoleContext>>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// The API is used to retrieve role context by the context name.
@@ -126,7 +127,7 @@ namespace LoginRadiusSDK.V2.Api.Account
         /// <returns>Complete user RoleContext data</returns>
         /// 18.10
 
-        public ApiResponse<ListReturn<RoleContextResponseModel>> GetRoleContextByContextName(string contextName)
+        public async Task<ApiResponse<ListReturn<RoleContextResponseModel>>> GetRoleContextByContextName(string contextName)
         {
             if (string.IsNullOrWhiteSpace(contextName))
             {
@@ -140,7 +141,7 @@ namespace LoginRadiusSDK.V2.Api.Account
 
             var resourcePath = $"identity/v2/manage/account/rolecontext/{contextName}";
             
-            return ConfigureAndExecute<ListReturn<RoleContextResponseModel>>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<ListReturn<RoleContextResponseModel>>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API creates a Context with a set of Roles
@@ -150,7 +151,7 @@ namespace LoginRadiusSDK.V2.Api.Account
         /// <returns>Complete user RoleContext data</returns>
         /// 18.11
 
-        public ApiResponse<ListReturn<RoleContext>> UpdateRoleContextByUid(AccountRoleContextModel accountRoleContextModel, string uid)
+        public async Task<ApiResponse<ListReturn<RoleContext>>> UpdateRoleContextByUid(AccountRoleContextModel accountRoleContextModel, string uid)
         {
             if (accountRoleContextModel == null)
             {
@@ -168,7 +169,7 @@ namespace LoginRadiusSDK.V2.Api.Account
 
             var resourcePath = $"identity/v2/manage/account/{uid}/rolecontext";
             
-            return ConfigureAndExecute<ListReturn<RoleContext>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(accountRoleContextModel));
+            return await ConfigureAndExecute<ListReturn<RoleContext>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(accountRoleContextModel));
         }
         /// <summary>
         /// This API Deletes the specified Role Context
@@ -178,7 +179,7 @@ namespace LoginRadiusSDK.V2.Api.Account
         /// <returns>Response containing Definition of Delete Request</returns>
         /// 18.12
 
-        public ApiResponse<DeleteResponse> DeleteRoleContextByUid(string contextName, string uid)
+        public async Task<ApiResponse<DeleteResponse>> DeleteRoleContextByUid(string contextName, string uid)
         {
             if (string.IsNullOrWhiteSpace(contextName))
             {
@@ -196,7 +197,7 @@ namespace LoginRadiusSDK.V2.Api.Account
 
             var resourcePath = $"identity/v2/manage/account/{uid}/rolecontext/{contextName}";
             
-            return ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API Deletes the specified Role from a Context.
@@ -207,7 +208,7 @@ namespace LoginRadiusSDK.V2.Api.Account
         /// <returns>Response containing Definition of Delete Request</returns>
         /// 18.13
 
-        public ApiResponse<DeleteResponse> DeleteRolesFromRoleContextByUid(string contextName, RoleContextRemoveRoleModel roleContextRemoveRoleModel,
+        public async Task<ApiResponse<DeleteResponse>> DeleteRolesFromRoleContextByUid(string contextName, RoleContextRemoveRoleModel roleContextRemoveRoleModel,
         string uid)
         {
             if (string.IsNullOrWhiteSpace(contextName))
@@ -230,7 +231,7 @@ namespace LoginRadiusSDK.V2.Api.Account
 
             var resourcePath = $"identity/v2/manage/account/{uid}/rolecontext/{contextName}/role";
             
-            return ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, ConvertToJson(roleContextRemoveRoleModel));
+            return await ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, ConvertToJson(roleContextRemoveRoleModel));
         }
         /// <summary>
         /// This API Deletes Additional Permissions from Context.
@@ -241,7 +242,7 @@ namespace LoginRadiusSDK.V2.Api.Account
         /// <returns>Response containing Definition of Delete Request</returns>
         /// 18.14
 
-        public ApiResponse<DeleteResponse> DeleteAdditionalPermissionFromRoleContextByUid(string contextName, RoleContextAdditionalPermissionRemoveRoleModel roleContextAdditionalPermissionRemoveRoleModel,
+        public async Task<ApiResponse<DeleteResponse>> DeleteAdditionalPermissionFromRoleContextByUid(string contextName, RoleContextAdditionalPermissionRemoveRoleModel roleContextAdditionalPermissionRemoveRoleModel,
         string uid)
         {
             if (string.IsNullOrWhiteSpace(contextName))
@@ -264,7 +265,7 @@ namespace LoginRadiusSDK.V2.Api.Account
 
             var resourcePath = $"identity/v2/manage/account/{uid}/rolecontext/{contextName}/additionalpermission";
             
-            return ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, ConvertToJson(roleContextAdditionalPermissionRemoveRoleModel));
+            return await ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, ConvertToJson(roleContextAdditionalPermissionRemoveRoleModel));
         }
         /// <summary>
         /// This API retrieves the complete list of created roles with permissions of your app.
@@ -272,7 +273,7 @@ namespace LoginRadiusSDK.V2.Api.Account
         /// <returns>Complete user Roles List data</returns>
         /// 41.1
 
-        public ApiResponse<ListData<LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects.RoleModel>> GetRolesList()
+        public async Task<ApiResponse<ListData<LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects.RoleModel>>> GetRolesList()
         {
             var queryParameters = new QueryParameters
             {
@@ -282,7 +283,7 @@ namespace LoginRadiusSDK.V2.Api.Account
 
             var resourcePath = "identity/v2/manage/role";
             
-            return ConfigureAndExecute<ListData<LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects.RoleModel>>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<ListData<LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects.RoleModel>>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API creates a role with permissions.
@@ -291,7 +292,7 @@ namespace LoginRadiusSDK.V2.Api.Account
         /// <returns>Complete user Roles data</returns>
         /// 41.2
 
-        public ApiResponse<ListData<LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects.RoleModel>> CreateRoles(RolesModel rolesModel)
+        public async Task<ApiResponse<ListData<LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects.RoleModel>>> CreateRoles(RolesModel rolesModel)
         {
             if (rolesModel == null)
             {
@@ -305,7 +306,7 @@ namespace LoginRadiusSDK.V2.Api.Account
 
             var resourcePath = "identity/v2/manage/role";
             
-            return ConfigureAndExecute<ListData<LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects.RoleModel>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(rolesModel));
+            return await ConfigureAndExecute<ListData<LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects.RoleModel>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(rolesModel));
         }
         /// <summary>
         /// This API is used to delete the role.
@@ -314,7 +315,7 @@ namespace LoginRadiusSDK.V2.Api.Account
         /// <returns>Response containing Definition of Delete Request</returns>
         /// 41.3
 
-        public ApiResponse<DeleteResponse> DeleteRole(string role)
+        public async Task<ApiResponse<DeleteResponse>> DeleteRole(string role)
         {
             if (string.IsNullOrWhiteSpace(role))
             {
@@ -328,7 +329,7 @@ namespace LoginRadiusSDK.V2.Api.Account
 
             var resourcePath = $"identity/v2/manage/role/{role}";
             
-            return ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API is used to add permissions to a given role.
@@ -338,7 +339,7 @@ namespace LoginRadiusSDK.V2.Api.Account
         /// <returns>Response containing Definition of Complete role data</returns>
         /// 41.4
 
-        public ApiResponse<LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects.RoleModel> AddRolePermissions(PermissionsModel permissionsModel, string role)
+        public async Task<ApiResponse<LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects.RoleModel>> AddRolePermissions(PermissionsModel permissionsModel, string role)
         {
             if (permissionsModel == null)
             {
@@ -356,7 +357,7 @@ namespace LoginRadiusSDK.V2.Api.Account
 
             var resourcePath = $"identity/v2/manage/role/{role}/permission";
             
-            return ConfigureAndExecute<LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects.RoleModel>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(permissionsModel));
+            return await ConfigureAndExecute<LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects.RoleModel>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(permissionsModel));
         }
         /// <summary>
         /// API is used to remove permissions from a role.
@@ -366,7 +367,7 @@ namespace LoginRadiusSDK.V2.Api.Account
         /// <returns>Response containing Definition of Complete role data</returns>
         /// 41.5
 
-        public ApiResponse<LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects.RoleModel> RemoveRolePermissions(PermissionsModel permissionsModel, string role)
+        public async Task<ApiResponse<LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects.RoleModel>> RemoveRolePermissions(PermissionsModel permissionsModel, string role)
         {
             if (permissionsModel == null)
             {
@@ -384,7 +385,7 @@ namespace LoginRadiusSDK.V2.Api.Account
 
             var resourcePath = $"identity/v2/manage/role/{role}/permission";
             
-            return ConfigureAndExecute<LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects.RoleModel>(HttpMethod.DELETE, resourcePath, queryParameters, ConvertToJson(permissionsModel));
+            return await ConfigureAndExecute<LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects.RoleModel>(HttpMethod.DELETE, resourcePath, queryParameters, ConvertToJson(permissionsModel));
         }
     }
 }

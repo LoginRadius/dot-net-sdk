@@ -11,6 +11,7 @@ using LoginRadiusSDK.V2.Common;
 using LoginRadiusSDK.V2.Util;
 using LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects;
 using LoginRadiusSDK.V2.Models.RequestModels;
+using System.Threading.Tasks;
 
 namespace LoginRadiusSDK.V2.Api.Advanced
 {
@@ -26,7 +27,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Complete user Registration data</returns>
         /// 7.1
 
-        public ApiResponse<List<RegistrationDataField>> AuthGetRegistrationData(string type, int? limit = null,
+        public async Task<ApiResponse<List<RegistrationDataField>>> AuthGetRegistrationData(string type, int? limit = null,
         string parentId = null, int? skip = null)
         {
             if (string.IsNullOrWhiteSpace(type))
@@ -52,7 +53,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = $"identity/v2/auth/registrationdata/{type}";
             
-            return ConfigureAndExecute<List<RegistrationDataField>>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<List<RegistrationDataField>>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API allows you to validate code for a particular dropdown member.
@@ -62,7 +63,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 7.2
 
-        public ApiResponse<PostValidationResponse> ValidateRegistrationDataCode(string code, string recordId)
+        public async Task<ApiResponse<PostValidationResponse>> ValidateRegistrationDataCode(string code, string recordId)
         {
             if (string.IsNullOrWhiteSpace(code))
             {
@@ -85,7 +86,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/registrationdata/validatecode";
             
-            return ConfigureAndExecute<PostValidationResponse>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<PostValidationResponse>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
         /// This API is used to retrieve dropdown data.
@@ -97,7 +98,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Complete user Registration data Fields</returns>
         /// 16.1
 
-        public ApiResponse<List<RegistrationDataField>> GetRegistrationData(string type, int? limit = null,
+        public async Task<ApiResponse<List<RegistrationDataField>>> GetRegistrationData(string type, int? limit = null,
         string parentId = null, int? skip = null)
         {
             if (string.IsNullOrWhiteSpace(type))
@@ -124,7 +125,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = $"identity/v2/manage/registrationdata/{type}";
             
-            return ConfigureAndExecute<List<RegistrationDataField>>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<List<RegistrationDataField>>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API allows you to fill data into a dropdown list which you have created for user Registeration. For more details on how to use this API please see our Custom Registration Data Overview
@@ -133,7 +134,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 16.2
 
-        public ApiResponse<PostResponse> AddRegistrationData(RegistrationDataCreateModelList registrationDataCreateModelList)
+        public async Task<ApiResponse<PostResponse>> AddRegistrationData(RegistrationDataCreateModelList registrationDataCreateModelList)
         {
             if (registrationDataCreateModelList == null)
             {
@@ -147,7 +148,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/manage/registrationdata";
             
-            return ConfigureAndExecute<PostResponse>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(registrationDataCreateModelList));
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(registrationDataCreateModelList));
         }
         /// <summary>
         /// This API allows you to update a dropdown item
@@ -157,7 +158,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Complete user Registration data Field</returns>
         /// 16.3
 
-        public ApiResponse<UserProfilePostResponse<RegistrationDataField>> UpdateRegistrationData(RegistrationDataUpdateModel registrationDataUpdateModel, string recordId)
+        public async Task<ApiResponse<UserProfilePostResponse<RegistrationDataField>>> UpdateRegistrationData(RegistrationDataUpdateModel registrationDataUpdateModel, string recordId)
         {
             if (registrationDataUpdateModel == null)
             {
@@ -175,7 +176,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = $"identity/v2/manage/registrationdata/{recordId}";
             
-            return ConfigureAndExecute<UserProfilePostResponse<RegistrationDataField>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(registrationDataUpdateModel));
+            return await ConfigureAndExecute<UserProfilePostResponse<RegistrationDataField>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(registrationDataUpdateModel));
         }
         /// <summary>
         /// This API allows you to delete an item from a dropdown list.
@@ -184,7 +185,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition of Delete Request</returns>
         /// 16.4
 
-        public ApiResponse<DeleteResponse> DeleteRegistrationData(string recordId)
+        public async Task<ApiResponse<DeleteResponse>> DeleteRegistrationData(string recordId)
         {
             if (string.IsNullOrWhiteSpace(recordId))
             {
@@ -198,7 +199,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = $"identity/v2/manage/registrationdata/{recordId}";
             
-            return ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API allows you to delete all records contained in a datasource.
@@ -207,7 +208,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition of Delete Request</returns>
         /// 16.5
 
-        public ApiResponse<DeleteResponse> DeleteAllRecordsByDataSource(string type)
+        public async Task<ApiResponse<DeleteResponse>> DeleteAllRecordsByDataSource(string type)
         {
             if (string.IsNullOrWhiteSpace(type))
             {
@@ -221,7 +222,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = $"identity/v2/manage/registrationdata/type/{type}";
             
-            return ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, null);
         }
     }
 }

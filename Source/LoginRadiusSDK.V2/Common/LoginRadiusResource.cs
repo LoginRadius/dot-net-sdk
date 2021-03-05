@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using LoginRadiusSDK.V2.Exception;
 using LoginRadiusSDK.V2.Http;
 using LoginRadiusSDK.V2.Util;
@@ -78,10 +79,10 @@ namespace LoginRadiusSDK.V2.Common
         /// <param name="payload">JSON request payload</param>
         /// <param name="queryParameters"></param>
         /// <returns>Response object or null otherwise for void API calls</returns>    
-        public static object ConfigureAndExecute(HttpMethod httpMethod, string resource,
+        public async Task<object> ConfigureAndExecute(HttpMethod httpMethod, string resource,
             QueryParameters queryParameters, string payload = "")
         {
-            return ConfigureAndExecute<object>(httpMethod, resource, queryParameters, payload);
+            return await ConfigureAndExecute<object>(httpMethod, resource, queryParameters, payload);
         }
 
         static string CreateHash(string apiSecret, string endPoint, string httpMethod, string expiryTime,
@@ -126,9 +127,9 @@ namespace LoginRadiusSDK.V2.Common
         /// <param name="httpMethod"></param>
         /// <param name="resource"></param>
         /// <returns></returns>
-        protected static ApiResponse<T> ConfigureAndExecute<T>(HttpMethod httpMethod, string resource)
+        protected async Task<ApiResponse<T>> ConfigureAndExecute<T>(HttpMethod httpMethod, string resource)
         {
-            return ConfigureAndExecute<T>(httpMethod, resource, null, null);
+            return await ConfigureAndExecute<T>(httpMethod, resource, null, null);
         }
 
         /// <summary>
@@ -140,9 +141,9 @@ namespace LoginRadiusSDK.V2.Common
         /// <param name="resource"></param>
         /// <param name="payload"></param>
         /// <returns></returns>
-        protected static ApiResponse<T> ConfigureAndExecute<T>(HttpMethod httpMethod,string resource,string payload)
+        protected async Task<ApiResponse<T>> ConfigureAndExecute<T>(HttpMethod httpMethod,string resource,string payload)
         {
-            return ConfigureAndExecute<T>(httpMethod, resource, null, payload);
+            return await ConfigureAndExecute<T>(httpMethod, resource, null, payload);
         }
 
         /// <summary>
@@ -157,7 +158,7 @@ namespace LoginRadiusSDK.V2.Common
         /// <param name="headers"></param>
         /// <returns>Response object or null otherwise for void API calls</returns>
         /// <exception cref="HttpException">Thrown if there was an error sending the request.</exception>
-        protected static ApiResponse<T> ConfigureAndExecute<T>(HttpMethod httpMethod,string resource = "" ,
+        protected async Task<ApiResponse<T>> ConfigureAndExecute<T>(HttpMethod httpMethod,string resource = "" ,
             QueryParameters queryParameters = null, string payload = "", Dictionary<string, string> headers = null)
         {
             try
@@ -210,7 +211,7 @@ namespace LoginRadiusSDK.V2.Common
 
                 payload = payload ?? "";
 
-                var response = connectionHttp.Execute(payload, httpRequest, payload.Length);
+                var response = await connectionHttp.Execute(payload, httpRequest, payload.Length);
                 if (response.Contains("errorCode"))
                 {
                     var exception = new ApiResponse<T>
@@ -227,7 +228,6 @@ namespace LoginRadiusSDK.V2.Common
                 {
                     return (ApiResponse<T>)Convert.ChangeType(response, typeof(T));
                 }
-                
 
                 return new ApiResponse<T> { Response = JsonFormatter.ConvertFromJson<T>(response) };
             }

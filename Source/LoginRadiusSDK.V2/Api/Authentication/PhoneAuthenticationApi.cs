@@ -12,6 +12,7 @@ using LoginRadiusSDK.V2.Models.ResponseModels;
 using LoginRadiusSDK.V2.Models.ResponseModels.UserProfile;
 using LoginRadiusSDK.V2.Models.RequestModels;
 using LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects;
+using System.Threading.Tasks;
 
 namespace LoginRadiusSDK.V2.Api.Authentication
 {
@@ -27,7 +28,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing User Profile Data and access token</returns>
         /// 9.2.3
 
-        public ApiResponse<AccessToken<Identity>> LoginByPhone(PhoneAuthenticationModel phoneAuthenticationModel, string fields = "",
+        public async Task<ApiResponse<AccessToken<Identity>>> LoginByPhone(PhoneAuthenticationModel phoneAuthenticationModel, string fields = "",
         string loginUrl = null, string smsTemplate = null)
         {
             if (phoneAuthenticationModel == null)
@@ -53,7 +54,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/login";
             
-            return ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(phoneAuthenticationModel));
+            return await ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(phoneAuthenticationModel));
         }
         /// <summary>
         /// This API is used to send the OTP to reset the account password.
@@ -63,7 +64,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response Containing Validation Data and SMS Data</returns>
         /// 10.4
 
-        public ApiResponse<UserProfilePostResponse<SMSResponseData>> ForgotPasswordByPhoneOTP(string phone, string smsTemplate = null)
+        public async Task<ApiResponse<UserProfilePostResponse<SMSResponseData>>> ForgotPasswordByPhoneOTP(string phone, string smsTemplate = null)
         {
             if (string.IsNullOrWhiteSpace(phone))
             {
@@ -85,7 +86,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/password/otp";
             
-            return ConfigureAndExecute<UserProfilePostResponse<SMSResponseData>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<UserProfilePostResponse<SMSResponseData>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
         /// This API is used to reset the password
@@ -94,7 +95,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 10.5
 
-        public ApiResponse<PostResponse> ResetPasswordByPhoneOTP(ResetPasswordByOTPModel resetPasswordByOTPModel)
+        public async Task<ApiResponse<PostResponse>> ResetPasswordByPhoneOTP(ResetPasswordByOTPModel resetPasswordByOTPModel)
         {
             if (resetPasswordByOTPModel == null)
             {
@@ -107,7 +108,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/password/otp";
             
-            return ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(resetPasswordByOTPModel));
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(resetPasswordByOTPModel));
         }
         /// <summary>
         /// This API is used to validate the verification code sent to verify a user's phone number
@@ -119,7 +120,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing User Profile Data and access token</returns>
         /// 11.1.1
 
-        public ApiResponse<AccessToken<Identity>> PhoneVerificationByOTP(string otp, string phone,
+        public async Task<ApiResponse<AccessToken<Identity>>> PhoneVerificationByOTP(string otp, string phone,
         string fields = "", string smsTemplate = null)
         {
             if (string.IsNullOrWhiteSpace(otp))
@@ -151,7 +152,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/phone/otp";
             
-            return ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
         /// This API is used to consume the verification code sent to verify a user's phone number. Use this call for front-end purposes in cases where the user is already logged in by passing the user's access token.
@@ -162,7 +163,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 11.1.2
 
-        public ApiResponse<PostResponse> PhoneVerificationOTPByAccessToken(string accessToken, string otp,
+        public async Task<ApiResponse<PostResponse>> PhoneVerificationOTPByAccessToken(string accessToken, string otp,
         string smsTemplate = null)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
@@ -186,7 +187,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/phone/otp";
             
-            return ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API is used to resend a verification OTP to verify a user's Phone Number. The user will receive a verification code that they will need to input
@@ -196,7 +197,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response Containing Validation Data and SMS Data</returns>
         /// 11.2.1
 
-        public ApiResponse<UserProfilePostResponse<SMSResponseData>> PhoneResendVerificationOTP(string phone, string smsTemplate = null)
+        public async Task<ApiResponse<UserProfilePostResponse<SMSResponseData>>> PhoneResendVerificationOTP(string phone, string smsTemplate = null)
         {
             if (string.IsNullOrWhiteSpace(phone))
             {
@@ -218,7 +219,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/phone/otp";
             
-            return ConfigureAndExecute<UserProfilePostResponse<SMSResponseData>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<UserProfilePostResponse<SMSResponseData>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
         /// This API is used to resend a verification OTP to verify a user's Phone Number in cases in which an active token already exists
@@ -229,7 +230,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response Containing Validation Data and SMS Data</returns>
         /// 11.2.2
 
-        public ApiResponse<UserProfilePostResponse<SMSResponseData>> PhoneResendVerificationOTPByToken(string accessToken, string phone,
+        public async Task<ApiResponse<UserProfilePostResponse<SMSResponseData>>> PhoneResendVerificationOTPByToken(string accessToken, string phone,
         string smsTemplate = null)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
@@ -257,7 +258,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/phone/otp";
             
-            return ConfigureAndExecute<UserProfilePostResponse<SMSResponseData>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<UserProfilePostResponse<SMSResponseData>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
         /// This API is used to update the login Phone Number of users
@@ -268,7 +269,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response Containing Validation Data and SMS Data</returns>
         /// 11.5
 
-        public ApiResponse<UserProfilePostResponse<SMSResponseData>> UpdatePhoneNumber(string accessToken, string phone,
+        public async Task<ApiResponse<UserProfilePostResponse<SMSResponseData>>> UpdatePhoneNumber(string accessToken, string phone,
         string smsTemplate = null)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
@@ -296,7 +297,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/phone";
             
-            return ConfigureAndExecute<UserProfilePostResponse<SMSResponseData>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<UserProfilePostResponse<SMSResponseData>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
         /// This API is used to check the Phone Number exists or not on your site.
@@ -305,7 +306,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition Complete ExistResponse data</returns>
         /// 11.6
 
-        public ApiResponse<ExistResponse> CheckPhoneNumberAvailability(string phone)
+        public async Task<ApiResponse<ExistResponse>> CheckPhoneNumberAvailability(string phone)
         {
             if (string.IsNullOrWhiteSpace(phone))
             {
@@ -319,7 +320,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/phone";
             
-            return ConfigureAndExecute<ExistResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<ExistResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API is used to delete the Phone ID on a user's account via the access_token
@@ -328,7 +329,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Delete Request</returns>
         /// 11.7
 
-        public ApiResponse<DeleteResponse> RemovePhoneIDByAccessToken(string accessToken)
+        public async Task<ApiResponse<DeleteResponse>> RemovePhoneIDByAccessToken(string accessToken)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -342,7 +343,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/phone";
             
-            return ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API registers the new users into your Cloud Storage and triggers the phone verification process.
@@ -357,7 +358,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation, UserProfile data and Access Token</returns>
         /// 17.1.2
 
-        public ApiResponse<UserProfilePostResponse<AccessToken<Identity>>> UserRegistrationByPhone(AuthUserRegistrationModel authUserRegistrationModel, string sott,
+        public async Task<ApiResponse<UserProfilePostResponse<AccessToken<Identity>>>> UserRegistrationByPhone(AuthUserRegistrationModel authUserRegistrationModel, string sott,
         string fields = "", string options = "", string smsTemplate = null, string verificationUrl = null, string welcomeEmailTemplate = null)
         {
             if (authUserRegistrationModel == null)
@@ -396,7 +397,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/register";
             
-            return ConfigureAndExecute<UserProfilePostResponse<AccessToken<Identity>>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(authUserRegistrationModel));
+            return await ConfigureAndExecute<UserProfilePostResponse<AccessToken<Identity>>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(authUserRegistrationModel));
         }
     }
 }

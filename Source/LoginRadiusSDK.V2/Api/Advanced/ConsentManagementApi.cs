@@ -11,6 +11,7 @@ using LoginRadiusSDK.V2.Util;
 using LoginRadiusSDK.V2.Models.ResponseModels;
 using LoginRadiusSDK.V2.Models.ResponseModels.UserProfile;
 using LoginRadiusSDK.V2.Models.RequestModels;
+using System.Threading.Tasks;
 
 namespace LoginRadiusSDK.V2.Api.Advanced
 {
@@ -23,7 +24,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing consent logs</returns>
         /// 18.37
 
-        public ApiResponse<ConsentLogsResponseModel> GetConsentLogsByUid(string uid)
+        public async Task<ApiResponse<ConsentLogsResponseModel>> GetConsentLogsByUid(string uid)
         {
             if (string.IsNullOrWhiteSpace(uid))
             {
@@ -37,7 +38,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = $"identity/v2/manage/account/{uid}/consent/logs";
             
-            return ConfigureAndExecute<ConsentLogsResponseModel>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<ConsentLogsResponseModel>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API is to submit consent form using consent token.
@@ -47,7 +48,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing User Profile Data and access token</returns>
         /// 43.1
 
-        public ApiResponse<AccessToken<Identity>> SubmitConsentByConsentToken(string consentToken, ConsentSubmitModel consentSubmitModel)
+        public async Task<ApiResponse<AccessToken<Identity>>> SubmitConsentByConsentToken(string consentToken, ConsentSubmitModel consentSubmitModel)
         {
             if (string.IsNullOrWhiteSpace(consentToken))
             {
@@ -65,7 +66,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/consent";
             
-            return ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(consentSubmitModel));
+            return await ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(consentSubmitModel));
         }
         /// <summary>
         /// This API is used to fetch consent logs.
@@ -74,7 +75,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing consent logs</returns>
         /// 43.2
 
-        public ApiResponse<ConsentLogsResponseModel> GetConsentLogs(string accessToken)
+        public async Task<ApiResponse<ConsentLogsResponseModel>> GetConsentLogs(string accessToken)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -88,7 +89,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/consent/logs";
             
-            return ConfigureAndExecute<ConsentLogsResponseModel>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<ConsentLogsResponseModel>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// API to provide a way to end user to submit a consent form for particular event type.
@@ -98,7 +99,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition for Complete profile data</returns>
         /// 43.3
 
-        public ApiResponse<Identity> SubmitConsentByAccessToken(string accessToken, ConsentSubmitModel consentSubmitModel)
+        public async Task<ApiResponse<Identity>> SubmitConsentByAccessToken(string accessToken, ConsentSubmitModel consentSubmitModel)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -116,7 +117,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/consent/profile";
             
-            return ConfigureAndExecute<Identity>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(consentSubmitModel));
+            return await ConfigureAndExecute<Identity>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(consentSubmitModel));
         }
         /// <summary>
         /// This API is used to check if consent is submitted for a particular event or not.
@@ -127,7 +128,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing consent profile</returns>
         /// 43.4
 
-        public ApiResponse<ConsentProfileValidResponse> VerifyConsentByAccessToken(string accessToken, string @event,
+        public async Task<ApiResponse<ConsentProfileValidResponse>> VerifyConsentByAccessToken(string accessToken, string @event,
         bool? isCustom)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
@@ -148,7 +149,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/consent/verify";
             
-            return ConfigureAndExecute<ConsentProfileValidResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<ConsentProfileValidResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API is to update consents using access token.
@@ -158,7 +159,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing consent profile</returns>
         /// 43.5
 
-        public ApiResponse<ConsentProfile> UpdateConsentProfileByAccessToken(string accessToken, ConsentUpdateModel consentUpdateModel)
+        public async Task<ApiResponse<ConsentProfile>> UpdateConsentProfileByAccessToken(string accessToken, ConsentUpdateModel consentUpdateModel)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -176,7 +177,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/consent";
             
-            return ConfigureAndExecute<ConsentProfile>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(consentUpdateModel));
+            return await ConfigureAndExecute<ConsentProfile>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(consentUpdateModel));
         }
     }
 }

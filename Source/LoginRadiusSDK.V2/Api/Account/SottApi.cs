@@ -8,6 +8,7 @@
 using LoginRadiusSDK.V2.Common;
 using LoginRadiusSDK.V2.Util;
 using LoginRadiusSDK.V2.Models.ResponseModels;
+using System.Threading.Tasks;
 
 namespace LoginRadiusSDK.V2.Api.Account
 {
@@ -20,7 +21,7 @@ namespace LoginRadiusSDK.V2.Api.Account
         /// <returns>Sott data For Registration</returns>
         /// 18.28
 
-        public ApiResponse<SottResponseData> GenerateSott(int? timeDifference = null)
+        public async Task<ApiResponse<SottResponseData>> GenerateSott(int? timeDifference = null)
         {
             var queryParameters = new QueryParameters
             {
@@ -34,7 +35,7 @@ namespace LoginRadiusSDK.V2.Api.Account
 
             var resourcePath = "identity/v2/manage/account/sott";
             
-            return ConfigureAndExecute<SottResponseData>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<SottResponseData>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
     }
 }

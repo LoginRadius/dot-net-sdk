@@ -207,7 +207,7 @@ string fields = null; //Optional
 ; //Optional
 var smsTemplate = "smsTemplate"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
-var apiResponse = new AuthenticationApi().UpdateProfileByAccessToken(accessToken, userProfileUpdateModel, emailTemplate, fields, smsTemplate, verificationUrl);
+var apiResponse = new AuthenticationApi().UpdateProfileByAccessToken(accessToken, userProfileUpdateModel, emailTemplate, fields, smsTemplate, verificationUrl).Result;
 ```
 
 
@@ -222,7 +222,7 @@ var accessToken = "accessToken"; //Required
 UnlockProfileModel unlockProfileModel = new UnlockProfileModel{
 G_recaptcha_response ="<G-recaptcha-response>"
 }; //Required
-var apiResponse = new AuthenticationApi().UnlockAccountByToken(accessToken, unlockProfileModel);
+var apiResponse = new AuthenticationApi().UnlockAccountByToken(accessToken, unlockProfileModel).Result;
 ```
 
 
@@ -240,7 +240,7 @@ Otp ="<Otp>"
 string fields = null; //Optional
 var url = "url"; //Optional
 var welcomeEmailTemplate = "welcomeEmailTemplate"; //Optional
-var apiResponse = new AuthenticationApi().VerifyEmailByOTP(emailVerificationByOtpModel, fields, url, welcomeEmailTemplate);
+var apiResponse = new AuthenticationApi().VerifyEmailByOTP(emailVerificationByOtpModel, fields, url, welcomeEmailTemplate).Result;
 ```
 
 
@@ -258,7 +258,7 @@ SecurityAnswer = new Dictionary<String,String>{
 ["QuestionID"] = "Answer"
 }
 }; //Required
-var apiResponse = new AuthenticationApi().ResetPasswordBySecurityAnswerAndEmail(resetPasswordBySecurityAnswerAndEmailModel);
+var apiResponse = new AuthenticationApi().ResetPasswordBySecurityAnswerAndEmail(resetPasswordBySecurityAnswerAndEmailModel).Result;
 ```
 
 
@@ -276,7 +276,7 @@ SecurityAnswer = new Dictionary<String,String>{
 ["QuestionID"] = "Answer"
 }
 }; //Required
-var apiResponse = new AuthenticationApi().ResetPasswordBySecurityAnswerAndPhone(resetPasswordBySecurityAnswerAndPhoneModel);
+var apiResponse = new AuthenticationApi().ResetPasswordBySecurityAnswerAndPhone(resetPasswordBySecurityAnswerAndPhoneModel).Result;
 ```
 
 
@@ -294,7 +294,7 @@ SecurityAnswer = new Dictionary<String,String>{
 },
 UserName ="<UserName>"
 }; //Required
-var apiResponse = new AuthenticationApi().ResetPasswordBySecurityAnswerAndUserName(resetPasswordBySecurityAnswerAndUserNameModel);
+var apiResponse = new AuthenticationApi().ResetPasswordBySecurityAnswerAndUserName(resetPasswordBySecurityAnswerAndUserNameModel).Result;
 ```
 
 
@@ -309,7 +309,7 @@ ResetPasswordByResetTokenModel resetPasswordByResetTokenModel = new ResetPasswor
 Password ="<Password>",
 ResetToken ="<ResetToken>"
 }; //Required
-var apiResponse = new AuthenticationApi().ResetPasswordByResetToken(resetPasswordByResetTokenModel);
+var apiResponse = new AuthenticationApi().ResetPasswordByResetToken(resetPasswordByResetTokenModel).Result;
 ```
 
 
@@ -325,7 +325,7 @@ Email ="<Email>",
 Otp ="<Otp>",
 Password ="<Password>"
 }; //Required
-var apiResponse = new AuthenticationApi().ResetPasswordByEmailOTP(resetPasswordByEmailAndOtpModel);
+var apiResponse = new AuthenticationApi().ResetPasswordByEmailOTP(resetPasswordByEmailAndOtpModel).Result;
 ```
 
 
@@ -341,7 +341,7 @@ Otp ="<Otp>",
 Password ="<Password>",
 UserName ="<UserName>"
 }; //Required
-var apiResponse = new AuthenticationApi().ResetPasswordByOTPAndUserName(resetPasswordByUserNameModel);
+var apiResponse = new AuthenticationApi().ResetPasswordByOTPAndUserName(resetPasswordByUserNameModel).Result;
 ```
 
 
@@ -355,7 +355,7 @@ This API is used to change the accounts password based on the previous password 
 var accessToken = "accessToken"; //Required
 var newPassword = "newPassword"; //Required
 var oldPassword = "oldPassword"; //Required
-var apiResponse = new AuthenticationApi().ChangePassword(accessToken, newPassword, oldPassword);
+var apiResponse = new AuthenticationApi().ChangePassword(accessToken, newPassword, oldPassword).Result;
 ```
 
 
@@ -368,7 +368,7 @@ This API is used to link up a social provider account with the specified account
 
 var accessToken = "accessToken"; //Required
 var candidateToken = "candidateToken"; //Required
-var apiResponse = new AuthenticationApi().LinkSocialIdentities(accessToken, candidateToken);
+var apiResponse = new AuthenticationApi().LinkSocialIdentities(accessToken, candidateToken).Result;
 ```
 
 
@@ -381,7 +381,7 @@ This API is used to set or change UserName by access token. [More Info](https://
 
 var accessToken = "accessToken"; //Required
 var username = "username"; //Required
-var apiResponse = new AuthenticationApi().SetOrChangeUserName(accessToken, username);
+var apiResponse = new AuthenticationApi().SetOrChangeUserName(accessToken, username).Result;
 ```
 
 
@@ -395,7 +395,7 @@ This API resends the verification email to the user. [More Info](https://www.log
 var email = "email"; //Required
 var emailTemplate = "emailTemplate"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
-var apiResponse = new AuthenticationApi().AuthResendEmailVerification(email, emailTemplate, verificationUrl);
+var apiResponse = new AuthenticationApi().AuthResendEmailVerification(email, emailTemplate, verificationUrl).Result;
 ```
 
 
@@ -411,7 +411,7 @@ var email = "email"; //Required
 var type = "type"; //Required
 var emailTemplate = "emailTemplate"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
-var apiResponse = new AuthenticationApi().AddEmail(accessToken, email, type, emailTemplate, verificationUrl);
+var apiResponse = new AuthenticationApi().AddEmail(accessToken, email, type, emailTemplate, verificationUrl).Result;
 ```
 
 
@@ -430,7 +430,7 @@ var emailTemplate = "emailTemplate"; //Optional
 string fields = null; //Optional
 var loginUrl = "loginUrl"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
-var apiResponse = new AuthenticationApi().LoginByEmail(emailAuthenticationModel, emailTemplate, fields, loginUrl, verificationUrl);
+var apiResponse = new AuthenticationApi().LoginByEmail(emailAuthenticationModel, emailTemplate, fields, loginUrl, verificationUrl).Result;
 ```
 
 
@@ -449,7 +449,7 @@ var emailTemplate = "emailTemplate"; //Optional
 string fields = null; //Optional
 var loginUrl = "loginUrl"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
-var apiResponse = new AuthenticationApi().LoginByUserName(userNameAuthenticationModel, emailTemplate, fields, loginUrl, verificationUrl);
+var apiResponse = new AuthenticationApi().LoginByUserName(userNameAuthenticationModel, emailTemplate, fields, loginUrl, verificationUrl).Result;
 ```
 
 
@@ -463,7 +463,7 @@ This API is used to send the reset password url to a specified account. Note: If
 var email = "email"; //Required
 var resetPasswordUrl = "resetPasswordUrl"; //Required
 var emailTemplate = "emailTemplate"; //Optional
-var apiResponse = new AuthenticationApi().ForgotPassword(email, resetPasswordUrl, emailTemplate);
+var apiResponse = new AuthenticationApi().ForgotPassword(email, resetPasswordUrl, emailTemplate).Result;
 ```
 
 
@@ -490,7 +490,7 @@ string fields = null; //Optional
 var options = "options"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
 var welcomeEmailTemplate = "welcomeEmailTemplate"; //Optional
-var apiResponse = new AuthenticationApi().UserRegistrationByEmail(authUserRegistrationModel, sott, emailTemplate, fields, options, verificationUrl, welcomeEmailTemplate);
+var apiResponse = new AuthenticationApi().UserRegistrationByEmail(authUserRegistrationModel, sott, emailTemplate, fields, options, verificationUrl, welcomeEmailTemplate).Result;
 ```
 
 
@@ -518,7 +518,7 @@ var options = "options"; //Optional
 var smsTemplate = "smsTemplate"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
 var welcomeEmailTemplate = "welcomeEmailTemplate"; //Optional
-var apiResponse = new AuthenticationApi().UserRegistrationByCaptcha(authUserRegistrationModelWithCaptcha, emailTemplate, fields, options, smsTemplate, verificationUrl, welcomeEmailTemplate);
+var apiResponse = new AuthenticationApi().UserRegistrationByCaptcha(authUserRegistrationModelWithCaptcha, emailTemplate, fields, options, smsTemplate, verificationUrl, welcomeEmailTemplate).Result;
 ```
 
 
@@ -530,7 +530,7 @@ This API is used to retrieve the list of questions that are configured on the re
 ```
 
 var email = "email"; //Required
-var apiResponse = new AuthenticationApi().GetSecurityQuestionsByEmail(email);
+var apiResponse = new AuthenticationApi().GetSecurityQuestionsByEmail(email).Result;
 ```
 
 
@@ -542,7 +542,7 @@ This API is used to retrieve the list of questions that are configured on the re
 ```
 
 var userName = "userName"; //Required
-var apiResponse = new AuthenticationApi().GetSecurityQuestionsByUserName(userName);
+var apiResponse = new AuthenticationApi().GetSecurityQuestionsByUserName(userName).Result;
 ```
 
 
@@ -554,7 +554,7 @@ This API is used to retrieve the list of questions that are configured on the re
 ```
 
 var phone = "phone"; //Required
-var apiResponse = new AuthenticationApi().GetSecurityQuestionsByPhone(phone);
+var apiResponse = new AuthenticationApi().GetSecurityQuestionsByPhone(phone).Result;
 ```
 
 
@@ -566,7 +566,7 @@ This API is used to retrieve the list of questions that are configured on the re
 ```
 
 var accessToken = "accessToken"; //Required
-var apiResponse = new AuthenticationApi().GetSecurityQuestionsByAccessToken(accessToken);
+var apiResponse = new AuthenticationApi().GetSecurityQuestionsByAccessToken(accessToken).Result;
 ```
 
 
@@ -578,7 +578,7 @@ This api validates access token, if valid then returns a response with its expir
 ```
 
 var accessToken = "accessToken"; //Required
-var apiResponse = new AuthenticationApi().AuthValidateAccessToken(accessToken);
+var apiResponse = new AuthenticationApi().AuthValidateAccessToken(accessToken).Result;
 ```
 
 
@@ -591,7 +591,7 @@ This api call invalidates the active access token or expires an access token's v
 
 var accessToken = "accessToken"; //Required
 var preventRefresh = true; //Optional
-var apiResponse = new AuthenticationApi().AuthInValidateAccessToken(accessToken, preventRefresh);
+var apiResponse = new AuthenticationApi().AuthInValidateAccessToken(accessToken, preventRefresh).Result;
 ```
 
 
@@ -603,7 +603,7 @@ This api call provide the active access token Information [More Info](https://ww
 ```
 
 var accessToken = "accessToken"; //Required
-var apiResponse = new AuthenticationApi().GetAccessTokenInfo(accessToken);
+var apiResponse = new AuthenticationApi().GetAccessTokenInfo(accessToken).Result;
 ```
 
 
@@ -616,7 +616,7 @@ This API retrieves a copy of the user data based on the access_token. [More Info
 
 var accessToken = "accessToken"; //Required
 string fields = null; //Optional
-var apiResponse = new AuthenticationApi().GetProfileByAccessToken(accessToken, fields);
+var apiResponse = new AuthenticationApi().GetProfileByAccessToken(accessToken, fields).Result;
 ```
 
 
@@ -629,7 +629,7 @@ This API sends a welcome email [More Info](https://www.loginradius.com/docs/api/
 
 var accessToken = "accessToken"; //Required
 var welcomeEmailTemplate = "welcomeEmailTemplate"; //Optional
-var apiResponse = new AuthenticationApi().SendWelcomeEmail(accessToken, welcomeEmailTemplate);
+var apiResponse = new AuthenticationApi().SendWelcomeEmail(accessToken, welcomeEmailTemplate).Result;
 ```
 
 
@@ -641,7 +641,7 @@ This API is used to delete an account by passing it a delete token. [More Info](
 ```
 
 var deleteToken = "deleteToken"; //Required
-var apiResponse = new AuthenticationApi().DeleteAccountByDeleteToken(deleteToken);
+var apiResponse = new AuthenticationApi().DeleteAccountByDeleteToken(deleteToken).Result;
 ```
 
 
@@ -653,7 +653,7 @@ This API is used to check the email exists or not on your site. [More Info](http
 ```
 
 var email = "email"; //Required
-var apiResponse = new AuthenticationApi().CheckEmailAvailability(email);
+var apiResponse = new AuthenticationApi().CheckEmailAvailability(email).Result;
 ```
 
 
@@ -668,7 +668,7 @@ var verificationToken = "verificationToken"; //Required
 string fields = null; //Optional
 var url = "url"; //Optional
 var welcomeEmailTemplate = "welcomeEmailTemplate"; //Optional
-var apiResponse = new AuthenticationApi().VerifyEmail(verificationToken, fields, url, welcomeEmailTemplate);
+var apiResponse = new AuthenticationApi().VerifyEmail(verificationToken, fields, url, welcomeEmailTemplate).Result;
 ```
 
 
@@ -681,7 +681,7 @@ This API is called just after account linking API and it prevents the raas profi
 
 var accessToken = "accessToken"; //Required
 string fields = null; //Optional
-var apiResponse = new AuthenticationApi().GetSocialIdentity(accessToken, fields);
+var apiResponse = new AuthenticationApi().GetSocialIdentity(accessToken, fields).Result;
 ```
 
 
@@ -693,7 +693,7 @@ This API is used to check the UserName exists or not on your site. [More Info](h
 ```
 
 var username = "username"; //Required
-var apiResponse = new AuthenticationApi().CheckUserNameAvailability(username);
+var apiResponse = new AuthenticationApi().CheckUserNameAvailability(username).Result;
 ```
 
 
@@ -706,7 +706,7 @@ This API is used to update the privacy policy stored in the user's profile by pr
 
 var accessToken = "accessToken"; //Required
 string fields = null; //Optional
-var apiResponse = new AuthenticationApi().AcceptPrivacyPolicy(accessToken, fields);
+var apiResponse = new AuthenticationApi().AcceptPrivacyPolicy(accessToken, fields).Result;
 ```
 
 
@@ -718,7 +718,7 @@ This API will return all the accepted privacy policies for the user by providing
 ```
 
 var accessToken = "accessToken"; //Required
-var apiResponse = new AuthenticationApi().GetPrivacyPolicyHistoryByAccessToken(accessToken);
+var apiResponse = new AuthenticationApi().GetPrivacyPolicyHistoryByAccessToken(accessToken).Result;
 ```
 
 
@@ -732,7 +732,7 @@ This API will send a confirmation email for account deletion to the customer's e
 var accessToken = "accessToken"; //Required
 var deleteUrl = "deleteUrl"; //Optional
 var emailTemplate = "emailTemplate"; //Optional
-var apiResponse = new AuthenticationApi().DeleteAccountWithEmailConfirmation(accessToken, deleteUrl, emailTemplate);
+var apiResponse = new AuthenticationApi().DeleteAccountWithEmailConfirmation(accessToken, deleteUrl, emailTemplate).Result;
 ```
 
 
@@ -745,7 +745,7 @@ This API is used to remove additional emails from a user's account. [More Info](
 
 var accessToken = "accessToken"; //Required
 var email = "email"; //Required
-var apiResponse = new AuthenticationApi().RemoveEmail(accessToken, email);
+var apiResponse = new AuthenticationApi().RemoveEmail(accessToken, email).Result;
 ```
 
 
@@ -759,7 +759,7 @@ This API is used to unlink up a social provider account with the specified accou
 var accessToken = "accessToken"; //Required
 var provider = "provider"; //Required
 var providerId = "providerId"; //Required
-var apiResponse = new AuthenticationApi().UnlinkSocialIdentities(accessToken, provider, providerId);
+var apiResponse = new AuthenticationApi().UnlinkSocialIdentities(accessToken, provider, providerId).Result;
 ```
 
 
@@ -812,7 +812,7 @@ LastName ="<LastName>"
 var uid = "uid"; //Required
 string fields = null; //Optional
 ; //Optional
-var apiResponse = new AccountApi().UpdateAccountByUid(accountUserProfileUpdateModel, uid, fields);
+var apiResponse = new AccountApi().UpdateAccountByUid(accountUserProfileUpdateModel, uid, fields).Result;
 ```
 
 
@@ -826,7 +826,7 @@ This API is used to update the PhoneId by using the Uid's. Admin can update the 
 var phone = "phone"; //Required
 var uid = "uid"; //Required
 string fields = null; //Optional
-var apiResponse = new AccountApi().UpdatePhoneIDByUid(phone, uid, fields);
+var apiResponse = new AccountApi().UpdatePhoneIDByUid(phone, uid, fields).Result;
 ```
 
 
@@ -839,7 +839,7 @@ This API is used to set the password of an account in Cloud Storage. [More Info]
 
 var password = "password"; //Required
 var uid = "uid"; //Required
-var apiResponse = new AccountApi().SetAccountPasswordByUid(password, uid);
+var apiResponse = new AccountApi().SetAccountPasswordByUid(password, uid).Result;
 ```
 
 
@@ -853,7 +853,7 @@ This API is used to invalidate the Email Verification status on an account. [Mor
 var uid = "uid"; //Required
 var emailTemplate = "emailTemplate"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
-var apiResponse = new AccountApi().InvalidateAccountEmailVerification(uid, emailTemplate, verificationUrl);
+var apiResponse = new AccountApi().InvalidateAccountEmailVerification(uid, emailTemplate, verificationUrl).Result;
 ```
 
 
@@ -866,7 +866,7 @@ This API Allows you to reset the phone no verification of an end user’s accoun
 
 var uid = "uid"; //Required
 var smsTemplate = "smsTemplate"; //Optional
-var apiResponse = new AccountApi().ResetPhoneIDVerificationByUid(uid, smsTemplate);
+var apiResponse = new AccountApi().ResetPhoneIDVerificationByUid(uid, smsTemplate).Result;
 ```
 
 
@@ -886,7 +886,7 @@ Value ="<Value>"
 }; //Required
 var uid = "uid"; //Required
 string fields = null; //Optional
-var apiResponse = new AccountApi().UpsertEmail(upsertEmailModel, uid, fields);
+var apiResponse = new AccountApi().UpsertEmail(upsertEmailModel, uid, fields).Result;
 ```
 
 
@@ -901,7 +901,7 @@ UpdateUidModel updateUidModel = new UpdateUidModel{
 NewUid ="<NewUid>"
 }; //Required
 var uid = "uid"; //Required
-var apiResponse = new AccountApi().AccountUpdateUid(updateUidModel, uid);
+var apiResponse = new AccountApi().AccountUpdateUid(updateUidModel, uid).Result;
 ```
 
 
@@ -923,7 +923,7 @@ LastName ="<LastName>",
 Password ="<Password>"
 }; //Required
 string fields = null; //Optional
-var apiResponse = new AccountApi().CreateAccount(accountCreateModel, fields);
+var apiResponse = new AccountApi().CreateAccount(accountCreateModel, fields).Result;
 ```
 
 
@@ -938,7 +938,7 @@ var email = "email"; //Required
 var emailTemplate = "emailTemplate"; //Optional
 var resetPasswordUrl = "resetPasswordUrl"; //Optional
 var sendEmail = true; //Optional
-var apiResponse = new AccountApi().GetForgotPasswordToken(email, emailTemplate, resetPasswordUrl, sendEmail);
+var apiResponse = new AccountApi().GetForgotPasswordToken(email, emailTemplate, resetPasswordUrl, sendEmail).Result;
 ```
 
 
@@ -950,7 +950,7 @@ This API Returns an Email Verification token. [More Info](https://www.loginradiu
 ```
 
 var email = "email"; //Required
-var apiResponse = new AccountApi().GetEmailVerificationToken(email);
+var apiResponse = new AccountApi().GetEmailVerificationToken(email).Result;
 ```
 
 
@@ -962,7 +962,7 @@ This API is used to retrieve all of the accepted Policies by the user, associate
 ```
 
 var uid = "uid"; //Required
-var apiResponse = new AccountApi().GetPrivacyPolicyHistoryByUid(uid);
+var apiResponse = new AccountApi().GetPrivacyPolicyHistoryByUid(uid).Result;
 ```
 
 
@@ -975,7 +975,7 @@ This API is used to retrieve all of the profile data, associated with the specif
 
 var email = "email"; //Required
 string fields = null; //Optional
-var apiResponse = new AccountApi().GetAccountProfileByEmail(email, fields);
+var apiResponse = new AccountApi().GetAccountProfileByEmail(email, fields).Result;
 ```
 
 
@@ -988,7 +988,7 @@ This API is used to retrieve all of the profile data associated with the specifi
 
 var userName = "userName"; //Required
 string fields = null; //Optional
-var apiResponse = new AccountApi().GetAccountProfileByUserName(userName, fields);
+var apiResponse = new AccountApi().GetAccountProfileByUserName(userName, fields).Result;
 ```
 
 
@@ -1001,7 +1001,7 @@ This API is used to retrieve all of the profile data, associated with the accoun
 
 var phone = "phone"; //Required
 string fields = null; //Optional
-var apiResponse = new AccountApi().GetAccountProfileByPhone(phone, fields);
+var apiResponse = new AccountApi().GetAccountProfileByPhone(phone, fields).Result;
 ```
 
 
@@ -1014,7 +1014,7 @@ This API is used to retrieve all of the profile data, associated with the accoun
 
 var uid = "uid"; //Required
 string fields = null; //Optional
-var apiResponse = new AccountApi().GetAccountProfileByUid(uid, fields);
+var apiResponse = new AccountApi().GetAccountProfileByUid(uid, fields).Result;
 ```
 
 
@@ -1026,7 +1026,7 @@ This API use to retrive the hashed password of a specified account in Cloud Stor
 ```
 
 var uid = "uid"; //Required
-var apiResponse = new AccountApi().GetAccountPasswordHashByUid(uid);
+var apiResponse = new AccountApi().GetAccountPasswordHashByUid(uid).Result;
 ```
 
 
@@ -1038,7 +1038,7 @@ The API is used to get LoginRadius access token based on UID. [More Info](https:
 ```
 
 var uid = "uid"; //Required
-var apiResponse = new AccountApi().GetAccessTokenByUid(uid);
+var apiResponse = new AccountApi().GetAccessTokenByUid(uid).Result;
 ```
 
 
@@ -1050,7 +1050,7 @@ This API is used to refresh an access_token via it's associated refresh_token. [
 ```
 
 var refreshToken = "refreshToken"; //Required
-var apiResponse = new AccountApi().RefreshAccessTokenByRefreshToken(refreshToken);
+var apiResponse = new AccountApi().RefreshAccessTokenByRefreshToken(refreshToken).Result;
 ```
 
 
@@ -1062,7 +1062,7 @@ The Revoke Refresh Access Token API is used to revoke a refresh token or the Pro
 ```
 
 var refreshToken = "refreshToken"; //Required
-var apiResponse = new AccountApi().RevokeRefreshToken(refreshToken);
+var apiResponse = new AccountApi().RevokeRefreshToken(refreshToken).Result;
 ```
 
 
@@ -1075,7 +1075,7 @@ Note: This is intended for specific workflows where an email may be associated t
 
 var email = "email"; //Required
 string fields = null; //Optional
-var apiResponse = new AccountApi().GetAccountIdentitiesByEmail(email, fields);
+var apiResponse = new AccountApi().GetAccountIdentitiesByEmail(email, fields).Result;
 ```
 
 
@@ -1087,7 +1087,7 @@ This API deletes the Users account and allows them to re-register for a new acco
 ```
 
 var uid = "uid"; //Required
-var apiResponse = new AccountApi().DeleteAccountByUid(uid);
+var apiResponse = new AccountApi().DeleteAccountByUid(uid).Result;
 ```
 
 
@@ -1101,7 +1101,7 @@ Use this API to Remove emails from a user Account [More Info](https://www.loginr
 var email = "email"; //Required
 var uid = "uid"; //Required
 string fields = null; //Optional
-var apiResponse = new AccountApi().RemoveEmail(email, uid, fields);
+var apiResponse = new AccountApi().RemoveEmail(email, uid, fields).Result;
 ```
 
 
@@ -1113,7 +1113,7 @@ This API is used to delete all user profiles associated with an Email. [More Inf
 ```
 
 var email = "email"; //Required
-var apiResponse = new AccountApi().AccountDeleteByEmail(email);
+var apiResponse = new AccountApi().AccountDeleteByEmail(email).Result;
 ```
 
 
@@ -1174,7 +1174,7 @@ var accessToken = "accessToken"; //Required
 var message = "message"; //Required
 var subject = "subject"; //Required
 var to = "to"; //Required
-var apiResponse = new SocialApi().PostMessage(accessToken, message, subject, to);
+var apiResponse = new SocialApi().PostMessage(accessToken, message, subject, to).Result;
 ```
 
 
@@ -1193,7 +1193,7 @@ var status = "status"; //Required
 var title = "title"; //Required
 var url = "url"; //Required
 var shorturl = "shorturl"; //Optional
-var apiResponse = new SocialApi().StatusPosting(accessToken, caption, description, imageUrl, status, title, url, shorturl);
+var apiResponse = new SocialApi().StatusPosting(accessToken, caption, description, imageUrl, status, title, url, shorturl).Result;
 ```
 
 
@@ -1213,7 +1213,7 @@ Status ="<Status>",
 Title ="<Title>",
 Url ="<Url>"
 }; //Required
-var apiResponse = new SocialApi().TrackableStatusPosting(accessToken, statusModel);
+var apiResponse = new SocialApi().TrackableStatusPosting(accessToken, statusModel).Result;
 ```
 
 
@@ -1225,7 +1225,7 @@ This API Is used to translate the Request Token returned during authentication i
 ```
 
 var token = "token"; //Required
-var apiResponse = new SocialApi().ExchangeAccessToken(token);
+var apiResponse = new SocialApi().ExchangeAccessToken(token).Result;
 ```
 
 
@@ -1238,7 +1238,7 @@ The Refresh Access Token API is used to refresh the provider access token after 
 
 var accessToken = "accessToken"; //Required
 var expiresIn = 0; //Optional
-var apiResponse = new SocialApi().RefreshAccessToken(accessToken, expiresIn);
+var apiResponse = new SocialApi().RefreshAccessToken(accessToken, expiresIn).Result;
 ```
 
 
@@ -1250,7 +1250,7 @@ This API validates access token, if valid then returns a response with its expir
 ```
 
 var accessToken = "accessToken"; //Required
-var apiResponse = new SocialApi().ValidateAccessToken(accessToken);
+var apiResponse = new SocialApi().ValidateAccessToken(accessToken).Result;
 ```
 
 
@@ -1262,7 +1262,7 @@ This api invalidates the active access token or expires an access token validity
 ```
 
 var accessToken = "accessToken"; //Required
-var apiResponse = new SocialApi().InValidateAccessToken(accessToken);
+var apiResponse = new SocialApi().InValidateAccessToken(accessToken).Result;
 ```
 
 
@@ -1274,7 +1274,7 @@ This api is use to get all active session by Access Token. [More Info](https://w
 ```
 
 var token = "token"; //Required
-var apiResponse = new SocialApi().GetActiveSession(token);
+var apiResponse = new SocialApi().GetActiveSession(token).Result;
 ```
 
 
@@ -1286,7 +1286,7 @@ This api is used to get all active sessions by AccountID(UID). [More Info](https
 ```
 
 var accountId = "accountId"; //Required
-var apiResponse = new SocialApi().GetActiveSessionByAccountID(accountId);
+var apiResponse = new SocialApi().GetActiveSessionByAccountID(accountId).Result;
 ```
 
 
@@ -1298,7 +1298,7 @@ This api is used to get all active sessions by ProfileId. [More Info](https://ww
 ```
 
 var profileId = "profileId"; //Required
-var apiResponse = new SocialApi().GetActiveSessionByProfileID(profileId);
+var apiResponse = new SocialApi().GetActiveSessionByProfileID(profileId).Result;
 ```
 
 
@@ -1310,7 +1310,7 @@ var apiResponse = new SocialApi().GetActiveSessionByProfileID(profileId);
 ```
 
 var accessToken = "accessToken"; //Required
-var apiResponse = new SocialApi().GetAlbums(accessToken);
+var apiResponse = new SocialApi().GetAlbums(accessToken).Result;
 ```
 
 
@@ -1323,7 +1323,7 @@ var apiResponse = new SocialApi().GetAlbums(accessToken);
 
 var accessToken = "accessToken"; //Required
 var nextCursor = "nextCursor"; //Required
-var apiResponse = new SocialApi().GetAlbumsWithCursor(accessToken, nextCursor);
+var apiResponse = new SocialApi().GetAlbumsWithCursor(accessToken, nextCursor).Result;
 ```
 
 
@@ -1335,7 +1335,7 @@ The Audio API is used to get audio files data from the user's social account.<br
 ```
 
 var accessToken = "accessToken"; //Required
-var apiResponse = new SocialApi().GetAudios(accessToken);
+var apiResponse = new SocialApi().GetAudios(accessToken).Result;
 ```
 
 
@@ -1348,7 +1348,7 @@ The Audio API is used to get audio files data from the user's social account.<br
 
 var accessToken = "accessToken"; //Required
 var nextCursor = "nextCursor"; //Required
-var apiResponse = new SocialApi().GetAudiosWithCursor(accessToken, nextCursor);
+var apiResponse = new SocialApi().GetAudiosWithCursor(accessToken, nextCursor).Result;
 ```
 
 
@@ -1360,7 +1360,7 @@ The Check In API is used to get check Ins data from the user's social account.<b
 ```
 
 var accessToken = "accessToken"; //Required
-var apiResponse = new SocialApi().GetCheckIns(accessToken);
+var apiResponse = new SocialApi().GetCheckIns(accessToken).Result;
 ```
 
 
@@ -1373,7 +1373,7 @@ The Check In API is used to get check Ins data from the user's social account.<b
 
 var accessToken = "accessToken"; //Required
 var nextCursor = "nextCursor"; //Required
-var apiResponse = new SocialApi().GetCheckInsWithCursor(accessToken, nextCursor);
+var apiResponse = new SocialApi().GetCheckInsWithCursor(accessToken, nextCursor).Result;
 ```
 
 
@@ -1386,7 +1386,7 @@ The Contact API is used to get contacts/friends/connections data from the user's
 
 var accessToken = "accessToken"; //Required
 var nextCursor = "nextCursor"; //Optional
-var apiResponse = new SocialApi().GetContacts(accessToken, nextCursor);
+var apiResponse = new SocialApi().GetContacts(accessToken, nextCursor).Result;
 ```
 
 
@@ -1398,7 +1398,7 @@ The Event API is used to get the event data from the user's social account.<br><
 ```
 
 var accessToken = "accessToken"; //Required
-var apiResponse = new SocialApi().GetEvents(accessToken);
+var apiResponse = new SocialApi().GetEvents(accessToken).Result;
 ```
 
 
@@ -1411,7 +1411,7 @@ The Event API is used to get the event data from the user's social account.<br><
 
 var accessToken = "accessToken"; //Required
 var nextCursor = "nextCursor"; //Required
-var apiResponse = new SocialApi().GetEventsWithCursor(accessToken, nextCursor);
+var apiResponse = new SocialApi().GetEventsWithCursor(accessToken, nextCursor).Result;
 ```
 
 
@@ -1423,7 +1423,7 @@ Get the following user list from the user's social account.<br><br><b>Supported 
 ```
 
 var accessToken = "accessToken"; //Required
-var apiResponse = new SocialApi().GetFollowings(accessToken);
+var apiResponse = new SocialApi().GetFollowings(accessToken).Result;
 ```
 
 
@@ -1436,7 +1436,7 @@ Get the following user list from the user's social account.<br><br><b>Supported 
 
 var accessToken = "accessToken"; //Required
 var nextCursor = "nextCursor"; //Required
-var apiResponse = new SocialApi().GetFollowingsWithCursor(accessToken, nextCursor);
+var apiResponse = new SocialApi().GetFollowingsWithCursor(accessToken, nextCursor).Result;
 ```
 
 
@@ -1448,7 +1448,7 @@ The Group API is used to get group data from the user's social account.<br><br><
 ```
 
 var accessToken = "accessToken"; //Required
-var apiResponse = new SocialApi().GetGroups(accessToken);
+var apiResponse = new SocialApi().GetGroups(accessToken).Result;
 ```
 
 
@@ -1461,7 +1461,7 @@ The Group API is used to get group data from the user's social account.<br><br><
 
 var accessToken = "accessToken"; //Required
 var nextCursor = "nextCursor"; //Required
-var apiResponse = new SocialApi().GetGroupsWithCursor(accessToken, nextCursor);
+var apiResponse = new SocialApi().GetGroupsWithCursor(accessToken, nextCursor).Result;
 ```
 
 
@@ -1473,7 +1473,7 @@ The Like API is used to get likes data from the user's social account.<br><br><b
 ```
 
 var accessToken = "accessToken"; //Required
-var apiResponse = new SocialApi().GetLikes(accessToken);
+var apiResponse = new SocialApi().GetLikes(accessToken).Result;
 ```
 
 
@@ -1486,7 +1486,7 @@ The Like API is used to get likes data from the user's social account.<br><br><b
 
 var accessToken = "accessToken"; //Required
 var nextCursor = "nextCursor"; //Required
-var apiResponse = new SocialApi().GetLikesWithCursor(accessToken, nextCursor);
+var apiResponse = new SocialApi().GetLikesWithCursor(accessToken, nextCursor).Result;
 ```
 
 
@@ -1498,7 +1498,7 @@ The Mention API is used to get mentions data from the user's social account.<br>
 ```
 
 var accessToken = "accessToken"; //Required
-var apiResponse = new SocialApi().GetMentions(accessToken);
+var apiResponse = new SocialApi().GetMentions(accessToken).Result;
 ```
 
 
@@ -1511,7 +1511,7 @@ The Page API is used to get the page data from the user's social account.<br><br
 
 var accessToken = "accessToken"; //Required
 var pageName = "pageName"; //Required
-var apiResponse = new SocialApi().GetPage(accessToken, pageName);
+var apiResponse = new SocialApi().GetPage(accessToken, pageName).Result;
 ```
 
 
@@ -1524,7 +1524,7 @@ The Photo API is used to get photo data from the user's social account.<br><br><
 
 var accessToken = "accessToken"; //Required
 var albumId = "albumId"; //Required
-var apiResponse = new SocialApi().GetPhotos(accessToken, albumId);
+var apiResponse = new SocialApi().GetPhotos(accessToken, albumId).Result;
 ```
 
 
@@ -1536,7 +1536,7 @@ The Post API is used to get post message data from the user's social account.<br
 ```
 
 var accessToken = "accessToken"; //Required
-var apiResponse = new SocialApi().GetPosts(accessToken);
+var apiResponse = new SocialApi().GetPosts(accessToken).Result;
 ```
 
 
@@ -1554,7 +1554,7 @@ var imageUrl = "imageUrl"; //Required
 var status = "status"; //Required
 var title = "title"; //Required
 var url = "url"; //Required
-var apiResponse = new SocialApi().GetTrackableStatusStats(accessToken, caption, description, imageUrl, status, title, url);
+var apiResponse = new SocialApi().GetTrackableStatusStats(accessToken, caption, description, imageUrl, status, title, url).Result;
 ```
 
 
@@ -1566,7 +1566,7 @@ The Trackable status API works very similar to the Status API but it returns a P
 ```
 
 var postId = "postId"; //Required
-var apiResponse = new SocialApi().TrackableStatusFetching(postId);
+var apiResponse = new SocialApi().TrackableStatusFetching(postId).Result;
 ```
 
 
@@ -1579,7 +1579,7 @@ The User Profile API is used to get social profile data from the user's social a
 
 var accessToken = "accessToken"; //Required
 string fields = null; //Optional
-var apiResponse = new SocialApi().GetSocialUserProfile(accessToken, fields);
+var apiResponse = new SocialApi().GetSocialUserProfile(accessToken, fields).Result;
 ```
 
 
@@ -1592,7 +1592,7 @@ The User Profile API is used to get the latest updated social profile data from 
 
 var accessToken = "accessToken"; //Required
 string fields = null; //Optional
-var apiResponse = new SocialApi().GetRefreshedSocialUserProfile(accessToken, fields);
+var apiResponse = new SocialApi().GetRefreshedSocialUserProfile(accessToken, fields).Result;
 ```
 
 
@@ -1605,7 +1605,7 @@ The Video API is used to get video files data from the user's social account.<br
 
 var accessToken = "accessToken"; //Required
 var nextCursor = "nextCursor"; //Required
-var apiResponse = new SocialApi().GetVideos(accessToken, nextCursor);
+var apiResponse = new SocialApi().GetVideos(accessToken, nextCursor).Result;
 ```
 
 
@@ -1658,7 +1658,7 @@ var objectName = "objectName"; //Required
 var objectRecordId = "objectRecordId"; //Required
 
 CustomObjectUpdateOperationType updateType = CustomObjectUpdateOperationType.Default; //Optional
-var apiResponse = new CustomObjectApi().UpdateCustomObjectByToken(accessToken, objectName, objectRecordId, customObject, updateType);
+var apiResponse = new CustomObjectApi().UpdateCustomObjectByToken(accessToken, objectName, objectRecordId, customObject, updateType).Result;
 ```
 
 
@@ -1674,7 +1674,7 @@ var objectRecordId = "objectRecordId"; //Required
 
 var uid = "uid"; //Required
 CustomObjectUpdateOperationType updateType = CustomObjectUpdateOperationType.Default; //Optional
-var apiResponse = new CustomObjectApi().UpdateCustomObjectByUid(objectName, objectRecordId, customObject, uid, updateType);
+var apiResponse = new CustomObjectApi().UpdateCustomObjectByUid(objectName, objectRecordId, customObject, uid, updateType).Result;
 ```
 
 
@@ -1688,7 +1688,7 @@ This API is used to write information in JSON format to the custom object for th
 var accessToken = "accessToken"; //Required
 var objectName = "objectName"; //Required
 
-var apiResponse = new CustomObjectApi().CreateCustomObjectByToken(accessToken, objectName, customObject);
+var apiResponse = new CustomObjectApi().CreateCustomObjectByToken(accessToken, objectName, customObject).Result;
 ```
 
 
@@ -1702,7 +1702,7 @@ This API is used to write information in JSON format to the custom object for th
 var objectName = "objectName"; //Required
 
 var uid = "uid"; //Required
-var apiResponse = new CustomObjectApi().CreateCustomObjectByUid(objectName, customObject, uid);
+var apiResponse = new CustomObjectApi().CreateCustomObjectByUid(objectName, customObject, uid).Result;
 ```
 
 
@@ -1715,7 +1715,7 @@ This API is used to retrieve the specified Custom Object data for the specified 
 
 var accessToken = "accessToken"; //Required
 var objectName = "objectName"; //Required
-var apiResponse = new CustomObjectApi().GetCustomObjectByToken(accessToken, objectName);
+var apiResponse = new CustomObjectApi().GetCustomObjectByToken(accessToken, objectName).Result;
 ```
 
 
@@ -1729,7 +1729,7 @@ This API is used to retrieve the Custom Object data for the specified account. [
 var accessToken = "accessToken"; //Required
 var objectName = "objectName"; //Required
 var objectRecordId = "objectRecordId"; //Required
-var apiResponse = new CustomObjectApi().GetCustomObjectByRecordIDAndToken(accessToken, objectName, objectRecordId);
+var apiResponse = new CustomObjectApi().GetCustomObjectByRecordIDAndToken(accessToken, objectName, objectRecordId).Result;
 ```
 
 
@@ -1742,7 +1742,7 @@ This API is used to retrieve all the custom objects by UID from cloud storage. [
 
 var objectName = "objectName"; //Required
 var uid = "uid"; //Required
-var apiResponse = new CustomObjectApi().GetCustomObjectByUid(objectName, uid);
+var apiResponse = new CustomObjectApi().GetCustomObjectByUid(objectName, uid).Result;
 ```
 
 
@@ -1756,7 +1756,7 @@ This API is used to retrieve the Custom Object data for the specified account. [
 var objectName = "objectName"; //Required
 var objectRecordId = "objectRecordId"; //Required
 var uid = "uid"; //Required
-var apiResponse = new CustomObjectApi().GetCustomObjectByRecordID(objectName, objectRecordId, uid);
+var apiResponse = new CustomObjectApi().GetCustomObjectByRecordID(objectName, objectRecordId, uid).Result;
 ```
 
 
@@ -1770,7 +1770,7 @@ This API is used to remove the specified Custom Object data using ObjectRecordId
 var accessToken = "accessToken"; //Required
 var objectName = "objectName"; //Required
 var objectRecordId = "objectRecordId"; //Required
-var apiResponse = new CustomObjectApi().DeleteCustomObjectByToken(accessToken, objectName, objectRecordId);
+var apiResponse = new CustomObjectApi().DeleteCustomObjectByToken(accessToken, objectName, objectRecordId).Result;
 ```
 
 
@@ -1784,7 +1784,7 @@ This API is used to remove the specified Custom Object data using ObjectRecordId
 var objectName = "objectName"; //Required
 var objectRecordId = "objectRecordId"; //Required
 var uid = "uid"; //Required
-var apiResponse = new CustomObjectApi().DeleteCustomObjectByRecordID(objectName, objectRecordId, uid);
+var apiResponse = new CustomObjectApi().DeleteCustomObjectByRecordID(objectName, objectRecordId, uid).Result;
 ```
 
 
@@ -1823,7 +1823,7 @@ Otp ="<Otp>",
 Password ="<Password>",
 Phone ="<Phone>"
 }; //Required
-var apiResponse = new PhoneAuthenticationApi().ResetPasswordByPhoneOTP(resetPasswordByOTPModel);
+var apiResponse = new PhoneAuthenticationApi().ResetPasswordByPhoneOTP(resetPasswordByOTPModel).Result;
 ```
 
 
@@ -1838,7 +1838,7 @@ var otp = "otp"; //Required
 var phone = "phone"; //Required
 string fields = null; //Optional
 var smsTemplate = "smsTemplate"; //Optional
-var apiResponse = new PhoneAuthenticationApi().PhoneVerificationByOTP(otp, phone, fields, smsTemplate);
+var apiResponse = new PhoneAuthenticationApi().PhoneVerificationByOTP(otp, phone, fields, smsTemplate).Result;
 ```
 
 
@@ -1852,7 +1852,7 @@ This API is used to consume the verification code sent to verify a user's phone 
 var accessToken = "accessToken"; //Required
 var otp = "otp"; //Required
 var smsTemplate = "smsTemplate"; //Optional
-var apiResponse = new PhoneAuthenticationApi().PhoneVerificationOTPByAccessToken(accessToken, otp, smsTemplate);
+var apiResponse = new PhoneAuthenticationApi().PhoneVerificationOTPByAccessToken(accessToken, otp, smsTemplate).Result;
 ```
 
 
@@ -1866,7 +1866,7 @@ This API is used to update the login Phone Number of users [More Info](https://w
 var accessToken = "accessToken"; //Required
 var phone = "phone"; //Required
 var smsTemplate = "smsTemplate"; //Optional
-var apiResponse = new PhoneAuthenticationApi().UpdatePhoneNumber(accessToken, phone, smsTemplate);
+var apiResponse = new PhoneAuthenticationApi().UpdatePhoneNumber(accessToken, phone, smsTemplate).Result;
 ```
 
 
@@ -1884,7 +1884,7 @@ Phone ="<Phone>"
 string fields = null; //Optional
 var loginUrl = "loginUrl"; //Optional
 var smsTemplate = "smsTemplate"; //Optional
-var apiResponse = new PhoneAuthenticationApi().LoginByPhone(phoneAuthenticationModel, fields, loginUrl, smsTemplate);
+var apiResponse = new PhoneAuthenticationApi().LoginByPhone(phoneAuthenticationModel, fields, loginUrl, smsTemplate).Result;
 ```
 
 
@@ -1897,7 +1897,7 @@ This API is used to send the OTP to reset the account password. [More Info](http
 
 var phone = "phone"; //Required
 var smsTemplate = "smsTemplate"; //Optional
-var apiResponse = new PhoneAuthenticationApi().ForgotPasswordByPhoneOTP(phone, smsTemplate);
+var apiResponse = new PhoneAuthenticationApi().ForgotPasswordByPhoneOTP(phone, smsTemplate).Result;
 ```
 
 
@@ -1910,7 +1910,7 @@ This API is used to resend a verification OTP to verify a user's Phone Number. T
 
 var phone = "phone"; //Required
 var smsTemplate = "smsTemplate"; //Optional
-var apiResponse = new PhoneAuthenticationApi().PhoneResendVerificationOTP(phone, smsTemplate);
+var apiResponse = new PhoneAuthenticationApi().PhoneResendVerificationOTP(phone, smsTemplate).Result;
 ```
 
 
@@ -1924,7 +1924,7 @@ This API is used to resend a verification OTP to verify a user's Phone Number in
 var accessToken = "accessToken"; //Required
 var phone = "phone"; //Required
 var smsTemplate = "smsTemplate"; //Optional
-var apiResponse = new PhoneAuthenticationApi().PhoneResendVerificationOTPByToken(accessToken, phone, smsTemplate);
+var apiResponse = new PhoneAuthenticationApi().PhoneResendVerificationOTPByToken(accessToken, phone, smsTemplate).Result;
 ```
 
 
@@ -1947,7 +1947,7 @@ var options = "options"; //Optional
 var smsTemplate = "smsTemplate"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
 var welcomeEmailTemplate = "welcomeEmailTemplate"; //Optional
-var apiResponse = new PhoneAuthenticationApi().UserRegistrationByPhone(authUserRegistrationModel, sott, fields, options, smsTemplate, verificationUrl, welcomeEmailTemplate);
+var apiResponse = new PhoneAuthenticationApi().UserRegistrationByPhone(authUserRegistrationModel, sott, fields, options, smsTemplate, verificationUrl, welcomeEmailTemplate).Result;
 ```
 
 
@@ -1959,7 +1959,7 @@ This API is used to check the Phone Number exists or not on your site. [More Inf
 ```
 
 var phone = "phone"; //Required
-var apiResponse = new PhoneAuthenticationApi().CheckPhoneNumberAvailability(phone);
+var apiResponse = new PhoneAuthenticationApi().CheckPhoneNumberAvailability(phone).Result;
 ```
 
 
@@ -1971,7 +1971,7 @@ This API is used to delete the Phone ID on a user's account via the access_token
 ```
 
 var accessToken = "accessToken"; //Required
-var apiResponse = new PhoneAuthenticationApi().RemovePhoneIDByAccessToken(accessToken);
+var apiResponse = new PhoneAuthenticationApi().RemovePhoneIDByAccessToken(accessToken).Result;
 ```
 
 
@@ -2019,7 +2019,7 @@ MultiFactorAuthModelWithLockout multiFactorAuthModelWithLockout = new MultiFacto
 Otp ="<Otp>"
 }; //Required
 string fields = null; //Optional
-var apiResponse = new MultiFactorAuthenticationApi().MFAUpdateSetting(accessToken, multiFactorAuthModelWithLockout, fields);
+var apiResponse = new MultiFactorAuthenticationApi().MFAUpdateSetting(accessToken, multiFactorAuthModelWithLockout, fields).Result;
 ```
 
 
@@ -2036,7 +2036,7 @@ GoogleAuthenticatorCode ="<GoogleAuthenticatorCode>"
 }; //Required
 string fields = null; //Optional
 var smsTemplate = "smsTemplate"; //Optional
-var apiResponse = new MultiFactorAuthenticationApi().MFAUpdateByAccessToken(accessToken, multiFactorAuthModelByGoogleAuthenticatorCode, fields, smsTemplate);
+var apiResponse = new MultiFactorAuthenticationApi().MFAUpdateByAccessToken(accessToken, multiFactorAuthModelByGoogleAuthenticatorCode, fields, smsTemplate).Result;
 ```
 
 
@@ -2050,7 +2050,7 @@ This API is used to update the Multi-factor authentication phone number by sendi
 var accessToken = "accessToken"; //Required
 var phoneNo2FA = "phoneNo2FA"; //Required
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
-var apiResponse = new MultiFactorAuthenticationApi().MFAUpdatePhoneNumberByToken(accessToken, phoneNo2FA, smsTemplate2FA);
+var apiResponse = new MultiFactorAuthenticationApi().MFAUpdatePhoneNumberByToken(accessToken, phoneNo2FA, smsTemplate2FA).Result;
 ```
 
 
@@ -2067,7 +2067,7 @@ Otp ="<Otp>"
 var secondFactorAuthenticationToken = "secondFactorAuthenticationToken"; //Required
 string fields = null; //Optional
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
-var apiResponse = new MultiFactorAuthenticationApi().MFAValidateOTPByPhone(multiFactorAuthModelWithLockout, secondFactorAuthenticationToken, fields, smsTemplate2FA);
+var apiResponse = new MultiFactorAuthenticationApi().MFAValidateOTPByPhone(multiFactorAuthModelWithLockout, secondFactorAuthenticationToken, fields, smsTemplate2FA).Result;
 ```
 
 
@@ -2082,7 +2082,7 @@ var googleAuthenticatorCode = "googleAuthenticatorCode"; //Required
 var secondFactorAuthenticationToken = "secondFactorAuthenticationToken"; //Required
 string fields = null; //Optional
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
-var apiResponse = new MultiFactorAuthenticationApi().MFAValidateGoogleAuthCode(googleAuthenticatorCode, secondFactorAuthenticationToken, fields, smsTemplate2FA);
+var apiResponse = new MultiFactorAuthenticationApi().MFAValidateGoogleAuthCode(googleAuthenticatorCode, secondFactorAuthenticationToken, fields, smsTemplate2FA).Result;
 ```
 
 
@@ -2098,7 +2098,7 @@ BackupCode ="<BackupCode>"
 }; //Required
 var secondFactorAuthenticationToken = "secondFactorAuthenticationToken"; //Required
 string fields = null; //Optional
-var apiResponse = new MultiFactorAuthenticationApi().MFAValidateBackupCode(multiFactorAuthModelByBackupCode, secondFactorAuthenticationToken, fields);
+var apiResponse = new MultiFactorAuthenticationApi().MFAValidateBackupCode(multiFactorAuthModelByBackupCode, secondFactorAuthenticationToken, fields).Result;
 ```
 
 
@@ -2112,7 +2112,7 @@ This API is used to update (if configured) the phone number used for Multi-facto
 var phoneNo2FA = "phoneNo2FA"; //Required
 var secondFactorAuthenticationToken = "secondFactorAuthenticationToken"; //Required
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
-var apiResponse = new MultiFactorAuthenticationApi().MFAUpdatePhoneNumber(phoneNo2FA, secondFactorAuthenticationToken, smsTemplate2FA);
+var apiResponse = new MultiFactorAuthenticationApi().MFAUpdatePhoneNumber(phoneNo2FA, secondFactorAuthenticationToken, smsTemplate2FA).Result;
 ```
 
 
@@ -2131,7 +2131,7 @@ var loginUrl = "loginUrl"; //Optional
 var smsTemplate = "smsTemplate"; //Optional
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
-var apiResponse = new MultiFactorAuthenticationApi().MFALoginByEmail(email, password, emailTemplate, fields, loginUrl, smsTemplate, smsTemplate2FA, verificationUrl);
+var apiResponse = new MultiFactorAuthenticationApi().MFALoginByEmail(email, password, emailTemplate, fields, loginUrl, smsTemplate, smsTemplate2FA, verificationUrl).Result;
 ```
 
 
@@ -2150,7 +2150,7 @@ var loginUrl = "loginUrl"; //Optional
 var smsTemplate = "smsTemplate"; //Optional
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
-var apiResponse = new MultiFactorAuthenticationApi().MFALoginByUserName(password, username, emailTemplate, fields, loginUrl, smsTemplate, smsTemplate2FA, verificationUrl);
+var apiResponse = new MultiFactorAuthenticationApi().MFALoginByUserName(password, username, emailTemplate, fields, loginUrl, smsTemplate, smsTemplate2FA, verificationUrl).Result;
 ```
 
 
@@ -2169,7 +2169,7 @@ var loginUrl = "loginUrl"; //Optional
 var smsTemplate = "smsTemplate"; //Optional
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
-var apiResponse = new MultiFactorAuthenticationApi().MFALoginByPhone(password, phone, emailTemplate, fields, loginUrl, smsTemplate, smsTemplate2FA, verificationUrl);
+var apiResponse = new MultiFactorAuthenticationApi().MFALoginByPhone(password, phone, emailTemplate, fields, loginUrl, smsTemplate, smsTemplate2FA, verificationUrl).Result;
 ```
 
 
@@ -2182,7 +2182,7 @@ This API is used to configure the Multi-factor authentication after login by usi
 
 var accessToken = "accessToken"; //Required
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
-var apiResponse = new MultiFactorAuthenticationApi().MFAConfigureByAccessToken(accessToken, smsTemplate2FA);
+var apiResponse = new MultiFactorAuthenticationApi().MFAConfigureByAccessToken(accessToken, smsTemplate2FA).Result;
 ```
 
 
@@ -2194,7 +2194,7 @@ This API is used to get a set of backup codes via access_token to allow the user
 ```
 
 var accessToken = "accessToken"; //Required
-var apiResponse = new MultiFactorAuthenticationApi().MFABackupCodeByAccessToken(accessToken);
+var apiResponse = new MultiFactorAuthenticationApi().MFABackupCodeByAccessToken(accessToken).Result;
 ```
 
 
@@ -2206,7 +2206,7 @@ API is used to reset the backup codes on a given account via the access_token. T
 ```
 
 var accessToken = "accessToken"; //Required
-var apiResponse = new MultiFactorAuthenticationApi().MFAResetBackupCodeByAccessToken(accessToken);
+var apiResponse = new MultiFactorAuthenticationApi().MFAResetBackupCodeByAccessToken(accessToken).Result;
 ```
 
 
@@ -2219,7 +2219,7 @@ This API is used to resending the verification OTP to the provided phone number 
 
 var secondFactorAuthenticationToken = "secondFactorAuthenticationToken"; //Required
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
-var apiResponse = new MultiFactorAuthenticationApi().MFAResendOTP(secondFactorAuthenticationToken, smsTemplate2FA);
+var apiResponse = new MultiFactorAuthenticationApi().MFAResendOTP(secondFactorAuthenticationToken, smsTemplate2FA).Result;
 ```
 
 
@@ -2231,7 +2231,7 @@ This API is used to reset the backup codes on a given account via the UID. This 
 ```
 
 var uid = "uid"; //Required
-var apiResponse = new MultiFactorAuthenticationApi().MFABackupCodeByUid(uid);
+var apiResponse = new MultiFactorAuthenticationApi().MFABackupCodeByUid(uid).Result;
 ```
 
 
@@ -2243,7 +2243,7 @@ This API is used to reset the backup codes on a given account via the UID. This 
 ```
 
 var uid = "uid"; //Required
-var apiResponse = new MultiFactorAuthenticationApi().MFAResetBackupCodeByUid(uid);
+var apiResponse = new MultiFactorAuthenticationApi().MFAResetBackupCodeByUid(uid).Result;
 ```
 
 
@@ -2256,7 +2256,7 @@ This API Resets the Google Authenticator configurations on a given account via t
 
 var accessToken = "accessToken"; //Required
 var googleAuthenticator = true; //Required
-var apiResponse = new MultiFactorAuthenticationApi().MFAResetGoogleAuthByToken(accessToken, googleAuthenticator);
+var apiResponse = new MultiFactorAuthenticationApi().MFAResetGoogleAuthByToken(accessToken, googleAuthenticator).Result;
 ```
 
 
@@ -2269,7 +2269,7 @@ This API resets the SMS Authenticator configurations on a given account via the 
 
 var accessToken = "accessToken"; //Required
 var otpAuthenticator = true; //Required
-var apiResponse = new MultiFactorAuthenticationApi().MFAResetSMSAuthByToken(accessToken, otpAuthenticator);
+var apiResponse = new MultiFactorAuthenticationApi().MFAResetSMSAuthByToken(accessToken, otpAuthenticator).Result;
 ```
 
 
@@ -2282,7 +2282,7 @@ This API resets the SMS Authenticator configurations on a given account via the 
 
 var otpAuthenticator = true; //Required
 var uid = "uid"; //Required
-var apiResponse = new MultiFactorAuthenticationApi().MFAResetSMSAuthenticatorByUid(otpAuthenticator, uid);
+var apiResponse = new MultiFactorAuthenticationApi().MFAResetSMSAuthenticatorByUid(otpAuthenticator, uid).Result;
 ```
 
 
@@ -2295,7 +2295,7 @@ This API resets the Google Authenticator configurations on a given account via t
 
 var googleAuthenticator = true; //Required
 var uid = "uid"; //Required
-var apiResponse = new MultiFactorAuthenticationApi().MFAResetGoogleAuthenticatorByUid(googleAuthenticator, uid);
+var apiResponse = new MultiFactorAuthenticationApi().MFAResetGoogleAuthenticatorByUid(googleAuthenticator, uid).Result;
 ```
 
 
@@ -2336,7 +2336,7 @@ ResetPINByResetToken resetPINByResetToken = new ResetPINByResetToken{
 PIN ="<PIN>",
 ResetToken ="<ResetToken>"
 }; //Required
-var apiResponse = new PINAuthenticationApi().ResetPINByResetToken(resetPINByResetToken);
+var apiResponse = new PINAuthenticationApi().ResetPINByResetToken(resetPINByResetToken).Result;
 ```
 
 
@@ -2354,7 +2354,7 @@ SecurityAnswer = new Dictionary<String,String>{
 ["QuestionID"] = "Answer"
 }
 }; //Required
-var apiResponse = new PINAuthenticationApi().ResetPINByEmailAndSecurityAnswer(resetPINBySecurityQuestionAnswerAndEmailModel);
+var apiResponse = new PINAuthenticationApi().ResetPINByEmailAndSecurityAnswer(resetPINBySecurityQuestionAnswerAndEmailModel).Result;
 ```
 
 
@@ -2372,7 +2372,7 @@ SecurityAnswer = new Dictionary<String,String>{
 },
 Username ="<Username>"
 }; //Required
-var apiResponse = new PINAuthenticationApi().ResetPINByUsernameAndSecurityAnswer(resetPINBySecurityQuestionAnswerAndUsernameModel);
+var apiResponse = new PINAuthenticationApi().ResetPINByUsernameAndSecurityAnswer(resetPINBySecurityQuestionAnswerAndUsernameModel).Result;
 ```
 
 
@@ -2390,7 +2390,7 @@ SecurityAnswer = new Dictionary<String,String>{
 ["QuestionID"] = "Answer"
 }
 }; //Required
-var apiResponse = new PINAuthenticationApi().ResetPINByPhoneAndSecurityAnswer(resetPINBySecurityQuestionAnswerAndPhoneModel);
+var apiResponse = new PINAuthenticationApi().ResetPINByPhoneAndSecurityAnswer(resetPINBySecurityQuestionAnswerAndPhoneModel).Result;
 ```
 
 
@@ -2406,7 +2406,7 @@ ChangePINModel changePINModel = new ChangePINModel{
 NewPIN ="<NewPIN>",
 OldPIN ="<OldPIN>"
 }; //Required
-var apiResponse = new PINAuthenticationApi().ChangePINByAccessToken(accessToken, changePINModel);
+var apiResponse = new PINAuthenticationApi().ChangePINByAccessToken(accessToken, changePINModel).Result;
 ```
 
 
@@ -2422,7 +2422,7 @@ Otp ="<Otp>",
 Phone ="<Phone>",
 PIN ="<PIN>"
 }; //Required
-var apiResponse = new PINAuthenticationApi().ResetPINByPhoneAndOtp(resetPINByPhoneAndOTPModel);
+var apiResponse = new PINAuthenticationApi().ResetPINByPhoneAndOtp(resetPINByPhoneAndOTPModel).Result;
 ```
 
 
@@ -2438,7 +2438,7 @@ Email ="<Email>",
 Otp ="<Otp>",
 PIN ="<PIN>"
 }; //Required
-var apiResponse = new PINAuthenticationApi().ResetPINByEmailAndOtp(resetPINByEmailAndOtpModel);
+var apiResponse = new PINAuthenticationApi().ResetPINByEmailAndOtp(resetPINByEmailAndOtpModel).Result;
 ```
 
 
@@ -2454,7 +2454,7 @@ Otp ="<Otp>",
 PIN ="<PIN>",
 Username ="<Username>"
 }; //Required
-var apiResponse = new PINAuthenticationApi().ResetPINByUsernameAndOtp(resetPINByUsernameAndOtpModel);
+var apiResponse = new PINAuthenticationApi().ResetPINByUsernameAndOtp(resetPINByUsernameAndOtpModel).Result;
 ```
 
 
@@ -2469,7 +2469,7 @@ LoginByPINModel loginByPINModel = new LoginByPINModel{
 PIN ="<PIN>"
 }; //Required
 var sessionToken = "sessionToken"; //Required
-var apiResponse = new PINAuthenticationApi().PINLogin(loginByPINModel, sessionToken);
+var apiResponse = new PINAuthenticationApi().PINLogin(loginByPINModel, sessionToken).Result;
 ```
 
 
@@ -2485,7 +2485,7 @@ Email ="<Email>"
 }; //Required
 var emailTemplate = "emailTemplate"; //Optional
 var resetPINUrl = "resetPINUrl"; //Optional
-var apiResponse = new PINAuthenticationApi().SendForgotPINEmailByEmail(forgotPINLinkByEmailModel, emailTemplate, resetPINUrl);
+var apiResponse = new PINAuthenticationApi().SendForgotPINEmailByEmail(forgotPINLinkByEmailModel, emailTemplate, resetPINUrl).Result;
 ```
 
 
@@ -2501,7 +2501,7 @@ UserName ="<UserName>"
 }; //Required
 var emailTemplate = "emailTemplate"; //Optional
 var resetPINUrl = "resetPINUrl"; //Optional
-var apiResponse = new PINAuthenticationApi().SendForgotPINEmailByUsername(forgotPINLinkByUserNameModel, emailTemplate, resetPINUrl);
+var apiResponse = new PINAuthenticationApi().SendForgotPINEmailByUsername(forgotPINLinkByUserNameModel, emailTemplate, resetPINUrl).Result;
 ```
 
 
@@ -2516,7 +2516,7 @@ ForgotPINOtpByPhoneModel forgotPINOtpByPhoneModel = new ForgotPINOtpByPhoneModel
 Phone ="<Phone>"
 }; //Required
 var smsTemplate = "smsTemplate"; //Optional
-var apiResponse = new PINAuthenticationApi().SendForgotPINSMSByPhone(forgotPINOtpByPhoneModel, smsTemplate);
+var apiResponse = new PINAuthenticationApi().SendForgotPINSMSByPhone(forgotPINOtpByPhoneModel, smsTemplate).Result;
 ```
 
 
@@ -2531,7 +2531,7 @@ PINRequiredModel pinRequiredModel = new PINRequiredModel{
 PIN ="<PIN>"
 }; //Required
 var pinAuthToken = "pinAuthToken"; //Required
-var apiResponse = new PINAuthenticationApi().SetPINByPinAuthToken(pinRequiredModel, pinAuthToken);
+var apiResponse = new PINAuthenticationApi().SetPINByPinAuthToken(pinRequiredModel, pinAuthToken).Result;
 ```
 
 
@@ -2543,7 +2543,7 @@ This API is used to invalidate pin session token. [More Info](https://www.loginr
 ```
 
 var sessionToken = "sessionToken"; //Required
-var apiResponse = new PINAuthenticationApi().InValidatePinSessionToken(sessionToken);
+var apiResponse = new PINAuthenticationApi().InValidatePinSessionToken(sessionToken).Result;
 ```
 
 
@@ -2579,7 +2579,7 @@ var accessToken = "accessToken"; //Required
 ReauthByOtpModel reauthByOtpModel = new ReauthByOtpModel{
 Otp ="<Otp>"
 }; //Required
-var apiResponse = new ReAuthenticationApi().MFAReAuthenticateByOTP(accessToken, reauthByOtpModel);
+var apiResponse = new ReAuthenticationApi().MFAReAuthenticateByOTP(accessToken, reauthByOtpModel).Result;
 ```
 
 
@@ -2594,7 +2594,7 @@ var accessToken = "accessToken"; //Required
 ReauthByBackupCodeModel reauthByBackupCodeModel = new ReauthByBackupCodeModel{
 BackupCode ="<BackupCode>"
 }; //Required
-var apiResponse = new ReAuthenticationApi().MFAReAuthenticateByBackupCode(accessToken, reauthByBackupCodeModel);
+var apiResponse = new ReAuthenticationApi().MFAReAuthenticateByBackupCode(accessToken, reauthByBackupCodeModel).Result;
 ```
 
 
@@ -2609,7 +2609,7 @@ var accessToken = "accessToken"; //Required
 ReauthByGoogleAuthenticatorCodeModel reauthByGoogleAuthenticatorCodeModel = new ReauthByGoogleAuthenticatorCodeModel{
 GoogleAuthenticatorCode ="<GoogleAuthenticatorCode>"
 }; //Required
-var apiResponse = new ReAuthenticationApi().MFAReAuthenticateByGoogleAuth(accessToken, reauthByGoogleAuthenticatorCodeModel);
+var apiResponse = new ReAuthenticationApi().MFAReAuthenticateByGoogleAuth(accessToken, reauthByGoogleAuthenticatorCodeModel).Result;
 ```
 
 
@@ -2625,7 +2625,7 @@ PasswordEventBasedAuthModelWithLockout passwordEventBasedAuthModelWithLockout = 
 Password ="<Password>"
 }; //Required
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
-var apiResponse = new ReAuthenticationApi().MFAReAuthenticateByPassword(accessToken, passwordEventBasedAuthModelWithLockout, smsTemplate2FA);
+var apiResponse = new ReAuthenticationApi().MFAReAuthenticateByPassword(accessToken, passwordEventBasedAuthModelWithLockout, smsTemplate2FA).Result;
 ```
 
 
@@ -2641,7 +2641,7 @@ PINAuthEventBasedAuthModelWithLockout pinAuthEventBasedAuthModelWithLockout = ne
 PIN ="<PIN>"
 }; //Required
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
-var apiResponse = new ReAuthenticationApi().VerifyPINAuthentication(accessToken, pinAuthEventBasedAuthModelWithLockout, smsTemplate2FA);
+var apiResponse = new ReAuthenticationApi().VerifyPINAuthentication(accessToken, pinAuthEventBasedAuthModelWithLockout, smsTemplate2FA).Result;
 ```
 
 
@@ -2656,7 +2656,7 @@ EventBasedMultiFactorToken eventBasedMultiFactorToken = new EventBasedMultiFacto
 SecondFactorValidationToken ="<SecondFactorValidationToken>"
 }; //Required
 var uid = "uid"; //Required
-var apiResponse = new ReAuthenticationApi().VerifyMultiFactorOtpReauthentication(eventBasedMultiFactorToken, uid);
+var apiResponse = new ReAuthenticationApi().VerifyMultiFactorOtpReauthentication(eventBasedMultiFactorToken, uid).Result;
 ```
 
 
@@ -2671,7 +2671,7 @@ EventBasedMultiFactorToken eventBasedMultiFactorToken = new EventBasedMultiFacto
 SecondFactorValidationToken ="<SecondFactorValidationToken>"
 }; //Required
 var uid = "uid"; //Required
-var apiResponse = new ReAuthenticationApi().VerifyMultiFactorPasswordReauthentication(eventBasedMultiFactorToken, uid);
+var apiResponse = new ReAuthenticationApi().VerifyMultiFactorPasswordReauthentication(eventBasedMultiFactorToken, uid).Result;
 ```
 
 
@@ -2686,7 +2686,7 @@ EventBasedMultiFactorToken eventBasedMultiFactorToken = new EventBasedMultiFacto
 SecondFactorValidationToken ="<SecondFactorValidationToken>"
 }; //Required
 var uid = "uid"; //Required
-var apiResponse = new ReAuthenticationApi().VerifyMultiFactorPINReauthentication(eventBasedMultiFactorToken, uid);
+var apiResponse = new ReAuthenticationApi().VerifyMultiFactorPINReauthentication(eventBasedMultiFactorToken, uid).Result;
 ```
 
 
@@ -2699,7 +2699,7 @@ This API is used to trigger the Multi-Factor Autentication workflow for the prov
 
 var accessToken = "accessToken"; //Required
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
-var apiResponse = new ReAuthenticationApi().MFAReAuthenticate(accessToken, smsTemplate2FA);
+var apiResponse = new ReAuthenticationApi().MFAReAuthenticate(accessToken, smsTemplate2FA).Result;
 ```
 
 
@@ -2736,7 +2736,7 @@ ConsentOptionId ="<ConsentOptionId>",
 IsAccepted = true
 }}
 }; //Required
-var apiResponse = new ConsentManagementApi().UpdateConsentProfileByAccessToken(accessToken, consentUpdateModel);
+var apiResponse = new ConsentManagementApi().UpdateConsentProfileByAccessToken(accessToken, consentUpdateModel).Result;
 ```
 
 
@@ -2760,7 +2760,7 @@ Event ="<Event>",
 IsCustom = true
 }}
 }; //Required
-var apiResponse = new ConsentManagementApi().SubmitConsentByConsentToken(consentToken, consentSubmitModel);
+var apiResponse = new ConsentManagementApi().SubmitConsentByConsentToken(consentToken, consentSubmitModel).Result;
 ```
 
 
@@ -2784,7 +2784,7 @@ Event ="<Event>",
 IsCustom = true
 }}
 }; //Required
-var apiResponse = new ConsentManagementApi().SubmitConsentByAccessToken(accessToken, consentSubmitModel);
+var apiResponse = new ConsentManagementApi().SubmitConsentByAccessToken(accessToken, consentSubmitModel).Result;
 ```
 
 
@@ -2796,7 +2796,7 @@ This API is used to get the Consent logs of the user. [More Info](https://www.lo
 ```
 
 var uid = "uid"; //Required
-var apiResponse = new ConsentManagementApi().GetConsentLogsByUid(uid);
+var apiResponse = new ConsentManagementApi().GetConsentLogsByUid(uid).Result;
 ```
 
 
@@ -2808,7 +2808,7 @@ This API is used to fetch consent logs. [More Info](https://www.loginradius.com/
 ```
 
 var accessToken = "accessToken"; //Required
-var apiResponse = new ConsentManagementApi().GetConsentLogs(accessToken);
+var apiResponse = new ConsentManagementApi().GetConsentLogs(accessToken).Result;
 ```
 
 
@@ -2822,7 +2822,7 @@ This API is used to check if consent is submitted for a particular event or not.
 var accessToken = "accessToken"; //Required
 var @event = "@event"; //Required
 var isCustom = true; //Required
-var apiResponse = new ConsentManagementApi().VerifyConsentByAccessToken(accessToken, @event, isCustom);
+var apiResponse = new ConsentManagementApi().VerifyConsentByAccessToken(accessToken, @event, isCustom).Result;
 ```
 
 
@@ -2851,7 +2851,7 @@ This API verifies the provided token for Smart Login [More Info](https://www.log
 
 var verificationToken = "verificationToken"; //Required
 var welcomeEmailTemplate = "welcomeEmailTemplate"; //Optional
-var apiResponse = new SmartLoginApi().SmartLoginTokenVerification(verificationToken, welcomeEmailTemplate);
+var apiResponse = new SmartLoginApi().SmartLoginTokenVerification(verificationToken, welcomeEmailTemplate).Result;
 ```
 
 
@@ -2867,7 +2867,7 @@ var email = "email"; //Required
 var redirectUrl = "redirectUrl"; //Optional
 var smartLoginEmailTemplate = "smartLoginEmailTemplate"; //Optional
 var welcomeEmailTemplate = "welcomeEmailTemplate"; //Optional
-var apiResponse = new SmartLoginApi().SmartLoginByEmail(clientGuid, email, redirectUrl, smartLoginEmailTemplate, welcomeEmailTemplate);
+var apiResponse = new SmartLoginApi().SmartLoginByEmail(clientGuid, email, redirectUrl, smartLoginEmailTemplate, welcomeEmailTemplate).Result;
 ```
 
 
@@ -2883,7 +2883,7 @@ var username = "username"; //Required
 var redirectUrl = "redirectUrl"; //Optional
 var smartLoginEmailTemplate = "smartLoginEmailTemplate"; //Optional
 var welcomeEmailTemplate = "welcomeEmailTemplate"; //Optional
-var apiResponse = new SmartLoginApi().SmartLoginByUserName(clientGuid, username, redirectUrl, smartLoginEmailTemplate, welcomeEmailTemplate);
+var apiResponse = new SmartLoginApi().SmartLoginByUserName(clientGuid, username, redirectUrl, smartLoginEmailTemplate, welcomeEmailTemplate).Result;
 ```
 
 
@@ -2896,7 +2896,7 @@ This API is used to check if the Smart Login link has been clicked or not [More 
 
 var clientGuid = "clientGuid"; //Required
 string fields = null; //Optional
-var apiResponse = new SmartLoginApi().SmartLoginPing(clientGuid, fields);
+var apiResponse = new SmartLoginApi().SmartLoginPing(clientGuid, fields).Result;
 ```
 
 
@@ -2928,7 +2928,7 @@ var otp = "otp"; //Required
 var phone = "phone"; //Required
 string fields = null; //Optional
 var smsTemplate = "smsTemplate"; //Optional
-var apiResponse = new OneTouchLoginApi().OneTouchLoginOTPVerification(otp, phone, fields, smsTemplate);
+var apiResponse = new OneTouchLoginApi().OneTouchLoginOTPVerification(otp, phone, fields, smsTemplate).Result;
 ```
 
 
@@ -2947,7 +2947,7 @@ G_recaptcha_response ="<G-recaptcha-response>"
 var oneTouchLoginEmailTemplate = "oneTouchLoginEmailTemplate"; //Optional
 var redirecturl = "redirecturl"; //Optional
 var welcomeemailtemplate = "welcomeemailtemplate"; //Optional
-var apiResponse = new OneTouchLoginApi().OneTouchLoginByEmail(oneTouchLoginByEmailModel, oneTouchLoginEmailTemplate, redirecturl, welcomeemailtemplate);
+var apiResponse = new OneTouchLoginApi().OneTouchLoginByEmail(oneTouchLoginByEmailModel, oneTouchLoginEmailTemplate, redirecturl, welcomeemailtemplate).Result;
 ```
 
 
@@ -2963,7 +2963,7 @@ G_recaptcha_response ="<G-recaptcha-response>",
 Phone ="<Phone>"
 }; //Required
 var smsTemplate = "smsTemplate"; //Optional
-var apiResponse = new OneTouchLoginApi().OneTouchLoginByPhone(oneTouchLoginByPhoneModel, smsTemplate);
+var apiResponse = new OneTouchLoginApi().OneTouchLoginByPhone(oneTouchLoginByPhoneModel, smsTemplate).Result;
 ```
 
 
@@ -2976,7 +2976,7 @@ This API verifies the provided token for One Touch Login [More Info](https://www
 
 var verificationToken = "verificationToken"; //Required
 var welcomeEmailTemplate = "welcomeEmailTemplate"; //Optional
-var apiResponse = new OneTouchLoginApi().OneTouchEmailVerification(verificationToken, welcomeEmailTemplate);
+var apiResponse = new OneTouchLoginApi().OneTouchEmailVerification(verificationToken, welcomeEmailTemplate).Result;
 ```
 
 
@@ -2989,7 +2989,7 @@ This API is used to check if the One Touch Login link has been clicked or not. [
 
 var clientGuid = "clientGuid"; //Required
 string fields = null; //Optional
-var apiResponse = new OneTouchLoginApi().OneTouchLoginPing(clientGuid, fields);
+var apiResponse = new OneTouchLoginApi().OneTouchLoginPing(clientGuid, fields).Result;
 ```
 
 
@@ -3023,7 +3023,7 @@ Phone ="<Phone>"
 }; //Required
 string fields = null; //Optional
 var smsTemplate = "smsTemplate"; //Optional
-var apiResponse = new PasswordLessLoginApi().PasswordlessLoginPhoneVerification(passwordLessLoginOtpModel, fields, smsTemplate);
+var apiResponse = new PasswordLessLoginApi().PasswordlessLoginPhoneVerification(passwordLessLoginOtpModel, fields, smsTemplate).Result;
 ```
 
 
@@ -3036,7 +3036,7 @@ API can be used to send a One-time Passcode (OTP) provided that the account has 
 
 var phone = "phone"; //Required
 var smsTemplate = "smsTemplate"; //Optional
-var apiResponse = new PasswordLessLoginApi().PasswordlessLoginByPhone(phone, smsTemplate);
+var apiResponse = new PasswordLessLoginApi().PasswordlessLoginByPhone(phone, smsTemplate).Result;
 ```
 
 
@@ -3050,7 +3050,7 @@ This API is used to send a Passwordless Login verification link to the provided 
 var email = "email"; //Required
 var passwordLessLoginTemplate = "passwordLessLoginTemplate"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
-var apiResponse = new PasswordLessLoginApi().PasswordlessLoginByEmail(email, passwordLessLoginTemplate, verificationUrl);
+var apiResponse = new PasswordLessLoginApi().PasswordlessLoginByEmail(email, passwordLessLoginTemplate, verificationUrl).Result;
 ```
 
 
@@ -3064,7 +3064,7 @@ This API is used to send a Passwordless Login Verification Link to a customer by
 var username = "username"; //Required
 var passwordLessLoginTemplate = "passwordLessLoginTemplate"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
-var apiResponse = new PasswordLessLoginApi().PasswordlessLoginByUserName(username, passwordLessLoginTemplate, verificationUrl);
+var apiResponse = new PasswordLessLoginApi().PasswordlessLoginByUserName(username, passwordLessLoginTemplate, verificationUrl).Result;
 ```
 
 
@@ -3078,7 +3078,7 @@ This API is used to verify the Passwordless Login verification link. Note: If yo
 var verificationToken = "verificationToken"; //Required
 string fields = null; //Optional
 var welcomeEmailTemplate = "welcomeEmailTemplate"; //Optional
-var apiResponse = new PasswordLessLoginApi().PasswordlessLoginVerification(verificationToken, fields, welcomeEmailTemplate);
+var apiResponse = new PasswordLessLoginApi().PasswordlessLoginVerification(verificationToken, fields, welcomeEmailTemplate).Result;
 ```
 
 
@@ -3099,7 +3099,7 @@ This API is used to get the configurations which are set in the LoginRadius Dash
 
 
 ```
-var apiResponse = new ConfigurationApi().GetConfigurations();
+var apiResponse = new ConfigurationApi().GetConfigurations().Result;
 ```
 
 <h6 id="GetServerInfo-get-">Get Server Time (GET)</h6>
@@ -3110,7 +3110,7 @@ This API allows you to query your LoginRadius account for basic server informati
 ```
 
 var timeDifference = 0; //Optional
-var apiResponse = new ConfigurationApi().GetServerInfo(timeDifference);
+var apiResponse = new ConfigurationApi().GetServerInfo(timeDifference).Result;
 ```
 
 
@@ -3151,7 +3151,7 @@ AccountRolesModel accountRolesModel = new AccountRolesModel{
 Roles = new List<String>{"Roles"}
 }; //Required
 var uid = "uid"; //Required
-var apiResponse = new RoleApi().AssignRolesByUid(accountRolesModel, uid);
+var apiResponse = new RoleApi().AssignRolesByUid(accountRolesModel, uid).Result;
 ```
 
 
@@ -3172,7 +3172,7 @@ Roles = new List<String>{"Roles"}
 }}
 }; //Required
 var uid = "uid"; //Required
-var apiResponse = new RoleApi().UpdateRoleContextByUid(accountRoleContextModel, uid);
+var apiResponse = new RoleApi().UpdateRoleContextByUid(accountRoleContextModel, uid).Result;
 ```
 
 
@@ -3187,7 +3187,7 @@ PermissionsModel permissionsModel = new PermissionsModel{
 Permissions = new List<String>{"Permissions"}
 }; //Required
 var role = "role"; //Required
-var apiResponse = new RoleApi().AddRolePermissions(permissionsModel, role);
+var apiResponse = new RoleApi().AddRolePermissions(permissionsModel, role).Result;
 ```
 
 
@@ -3207,7 +3207,7 @@ Permissions = new Dictionary<String,Boolean>{
 }
 }}
 }; //Required
-var apiResponse = new RoleApi().CreateRoles(rolesModel);
+var apiResponse = new RoleApi().CreateRoles(rolesModel).Result;
 ```
 
 
@@ -3219,7 +3219,7 @@ API is used to retrieve all the assigned roles of a particular User. [More Info]
 ```
 
 var uid = "uid"; //Required
-var apiResponse = new RoleApi().GetRolesByUid(uid);
+var apiResponse = new RoleApi().GetRolesByUid(uid).Result;
 ```
 
 
@@ -3231,7 +3231,7 @@ This API Gets the contexts that have been configured and the associated roles an
 ```
 
 var uid = "uid"; //Required
-var apiResponse = new RoleApi().GetRoleContextByUid(uid);
+var apiResponse = new RoleApi().GetRoleContextByUid(uid).Result;
 ```
 
 
@@ -3243,7 +3243,7 @@ The API is used to retrieve role context by the context name. [More Info](https:
 ```
 
 var contextName = "contextName"; //Required
-var apiResponse = new RoleApi().GetRoleContextByContextName(contextName);
+var apiResponse = new RoleApi().GetRoleContextByContextName(contextName).Result;
 ```
 
 
@@ -3254,7 +3254,7 @@ This API retrieves the complete list of created roles with permissions of your a
 
 ```
 
-var apiResponse = new RoleApi().GetRolesList();
+var apiResponse = new RoleApi().GetRolesList().Result;
 ```
 
 
@@ -3269,7 +3269,7 @@ AccountRolesModel accountRolesModel = new AccountRolesModel{
 Roles = new List<String>{"Roles"}
 }; //Required
 var uid = "uid"; //Required
-var apiResponse = new RoleApi().UnassignRolesByUid(accountRolesModel, uid);
+var apiResponse = new RoleApi().UnassignRolesByUid(accountRolesModel, uid).Result;
 ```
 
 
@@ -3282,7 +3282,7 @@ This API Deletes the specified Role Context [More Info](https://www.loginradius.
 
 var contextName = "contextName"; //Required
 var uid = "uid"; //Required
-var apiResponse = new RoleApi().DeleteRoleContextByUid(contextName, uid);
+var apiResponse = new RoleApi().DeleteRoleContextByUid(contextName, uid).Result;
 ```
 
 
@@ -3298,7 +3298,7 @@ RoleContextRemoveRoleModel roleContextRemoveRoleModel = new RoleContextRemoveRol
 Roles = new List<String>{"Roles"}
 }; //Required
 var uid = "uid"; //Required
-var apiResponse = new RoleApi().DeleteRolesFromRoleContextByUid(contextName, roleContextRemoveRoleModel, uid);
+var apiResponse = new RoleApi().DeleteRolesFromRoleContextByUid(contextName, roleContextRemoveRoleModel, uid).Result;
 ```
 
 
@@ -3314,7 +3314,7 @@ RoleContextAdditionalPermissionRemoveRoleModel roleContextAdditionalPermissionRe
 AdditionalPermissions = new List<String>{"AdditionalPermissions"}
 }; //Required
 var uid = "uid"; //Required
-var apiResponse = new RoleApi().DeleteAdditionalPermissionFromRoleContextByUid(contextName, roleContextAdditionalPermissionRemoveRoleModel, uid);
+var apiResponse = new RoleApi().DeleteAdditionalPermissionFromRoleContextByUid(contextName, roleContextAdditionalPermissionRemoveRoleModel, uid).Result;
 ```
 
 
@@ -3326,7 +3326,7 @@ This API is used to delete the role. [More Info](https://www.loginradius.com/doc
 ```
 
 var role = "role"; //Required
-var apiResponse = new RoleApi().DeleteRole(role);
+var apiResponse = new RoleApi().DeleteRole(role).Result;
 ```
 
 
@@ -3341,7 +3341,7 @@ PermissionsModel permissionsModel = new PermissionsModel{
 Permissions = new List<String>{"Permissions"}
 }; //Required
 var role = "role"; //Required
-var apiResponse = new RoleApi().RemoveRolePermissions(permissionsModel, role);
+var apiResponse = new RoleApi().RemoveRolePermissions(permissionsModel, role).Result;
 ```
 
 
@@ -3378,7 +3378,7 @@ Type ="<Type>",
 Value ="<Value>"
 }; //Required
 var recordId = "recordId"; //Required
-var apiResponse = new CustomRegistrationDataApi().UpdateRegistrationData(registrationDataUpdateModel, recordId);
+var apiResponse = new CustomRegistrationDataApi().UpdateRegistrationData(registrationDataUpdateModel, recordId).Result;
 ```
 
 
@@ -3391,7 +3391,7 @@ This API allows you to validate code for a particular dropdown member. [More Inf
 
 var code = "code"; //Required
 var recordId = "recordId"; //Required
-var apiResponse = new CustomRegistrationDataApi().ValidateRegistrationDataCode(code, recordId);
+var apiResponse = new CustomRegistrationDataApi().ValidateRegistrationDataCode(code, recordId).Result;
 ```
 
 
@@ -3413,7 +3413,7 @@ Type ="<Type>",
 Value ="<Value>"
 }}
 }; //Required
-var apiResponse = new CustomRegistrationDataApi().AddRegistrationData(registrationDataCreateModelList);
+var apiResponse = new CustomRegistrationDataApi().AddRegistrationData(registrationDataCreateModelList).Result;
 ```
 
 
@@ -3428,7 +3428,7 @@ var type = "type"; //Required
 var limit = 0; //Optional
 var parentId = "parentId"; //Optional
 var skip = 0; //Optional
-var apiResponse = new CustomRegistrationDataApi().AuthGetRegistrationData(type, limit, parentId, skip);
+var apiResponse = new CustomRegistrationDataApi().AuthGetRegistrationData(type, limit, parentId, skip).Result;
 ```
 
 
@@ -3443,7 +3443,7 @@ var type = "type"; //Required
 var limit = 0; //Optional
 var parentId = "parentId"; //Optional
 var skip = 0; //Optional
-var apiResponse = new CustomRegistrationDataApi().GetRegistrationData(type, limit, parentId, skip);
+var apiResponse = new CustomRegistrationDataApi().GetRegistrationData(type, limit, parentId, skip).Result;
 ```
 
 
@@ -3455,7 +3455,7 @@ This API allows you to delete an item from a dropdown list. [More Info](https://
 ```
 
 var recordId = "recordId"; //Required
-var apiResponse = new CustomRegistrationDataApi().DeleteRegistrationData(recordId);
+var apiResponse = new CustomRegistrationDataApi().DeleteRegistrationData(recordId).Result;
 ```
 
 
@@ -3467,7 +3467,7 @@ This API allows you to delete all records contained in a datasource. [More Info]
 ```
 
 var type = "type"; //Required
-var apiResponse = new CustomRegistrationDataApi().DeleteAllRecordsByDataSource(type);
+var apiResponse = new CustomRegistrationDataApi().DeleteAllRecordsByDataSource(type).Result;
 ```
 
 
@@ -3514,7 +3514,7 @@ var rbaOneclickEmailTemplate = "rbaOneclickEmailTemplate"; //Optional
 var rbaOTPSmsTemplate = "rbaOTPSmsTemplate"; //Optional
 var smsTemplate = "smsTemplate"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
-var apiResponse = new RiskBasedAuthenticationApi().RBALoginByEmail(emailAuthenticationModel, emailTemplate, fields, loginUrl, passwordDelegation, passwordDelegationApp, rbaBrowserEmailTemplate, rbaBrowserSmsTemplate, rbaCityEmailTemplate, rbaCitySmsTemplate, rbaCountryEmailTemplate, rbaCountrySmsTemplate, rbaIpEmailTemplate, rbaIpSmsTemplate, rbaOneclickEmailTemplate, rbaOTPSmsTemplate, smsTemplate, verificationUrl);
+var apiResponse = new RiskBasedAuthenticationApi().RBALoginByEmail(emailAuthenticationModel, emailTemplate, fields, loginUrl, passwordDelegation, passwordDelegationApp, rbaBrowserEmailTemplate, rbaBrowserSmsTemplate, rbaCityEmailTemplate, rbaCitySmsTemplate, rbaCountryEmailTemplate, rbaCountrySmsTemplate, rbaIpEmailTemplate, rbaIpSmsTemplate, rbaOneclickEmailTemplate, rbaOTPSmsTemplate, smsTemplate, verificationUrl).Result;
 ```
 
 
@@ -3546,7 +3546,7 @@ var rbaOneclickEmailTemplate = "rbaOneclickEmailTemplate"; //Optional
 var rbaOTPSmsTemplate = "rbaOTPSmsTemplate"; //Optional
 var smsTemplate = "smsTemplate"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
-var apiResponse = new RiskBasedAuthenticationApi().RBALoginByUserName(userNameAuthenticationModel, emailTemplate, fields, loginUrl, passwordDelegation, passwordDelegationApp, rbaBrowserEmailTemplate, rbaBrowserSmsTemplate, rbaCityEmailTemplate, rbaCitySmsTemplate, rbaCountryEmailTemplate, rbaCountrySmsTemplate, rbaIpEmailTemplate, rbaIpSmsTemplate, rbaOneclickEmailTemplate, rbaOTPSmsTemplate, smsTemplate, verificationUrl);
+var apiResponse = new RiskBasedAuthenticationApi().RBALoginByUserName(userNameAuthenticationModel, emailTemplate, fields, loginUrl, passwordDelegation, passwordDelegationApp, rbaBrowserEmailTemplate, rbaBrowserSmsTemplate, rbaCityEmailTemplate, rbaCitySmsTemplate, rbaCountryEmailTemplate, rbaCountrySmsTemplate, rbaIpEmailTemplate, rbaIpSmsTemplate, rbaOneclickEmailTemplate, rbaOTPSmsTemplate, smsTemplate, verificationUrl).Result;
 ```
 
 
@@ -3578,7 +3578,7 @@ var rbaOneclickEmailTemplate = "rbaOneclickEmailTemplate"; //Optional
 var rbaOTPSmsTemplate = "rbaOTPSmsTemplate"; //Optional
 var smsTemplate = "smsTemplate"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
-var apiResponse = new RiskBasedAuthenticationApi().RBALoginByPhone(phoneAuthenticationModel, emailTemplate, fields, loginUrl, passwordDelegation, passwordDelegationApp, rbaBrowserEmailTemplate, rbaBrowserSmsTemplate, rbaCityEmailTemplate, rbaCitySmsTemplate, rbaCountryEmailTemplate, rbaCountrySmsTemplate, rbaIpEmailTemplate, rbaIpSmsTemplate, rbaOneclickEmailTemplate, rbaOTPSmsTemplate, smsTemplate, verificationUrl);
+var apiResponse = new RiskBasedAuthenticationApi().RBALoginByPhone(phoneAuthenticationModel, emailTemplate, fields, loginUrl, passwordDelegation, passwordDelegationApp, rbaBrowserEmailTemplate, rbaBrowserSmsTemplate, rbaCityEmailTemplate, rbaCitySmsTemplate, rbaCountryEmailTemplate, rbaCountrySmsTemplate, rbaIpEmailTemplate, rbaIpSmsTemplate, rbaOneclickEmailTemplate, rbaOTPSmsTemplate, smsTemplate, verificationUrl).Result;
 ```
 
 
@@ -3603,7 +3603,7 @@ This API allows you to generate SOTT with a given expiration time. [More Info](h
 ```
 
 var timeDifference = 0; //Optional
-var apiResponse = new SottApi().GenerateSott(timeDifference);
+var apiResponse = new SottApi().GenerateSott(timeDifference).Result;
 ```
 
 
@@ -3635,7 +3635,7 @@ The API is used to get LoginRadius access token by sending Facebook's access tok
 ```
 
 var fbAccessToken = "fbAccessToken"; //Required
-var apiResponse = new NativeSocialApi().GetAccessTokenByFacebookAccessToken(fbAccessToken);
+var apiResponse = new NativeSocialApi().GetAccessTokenByFacebookAccessToken(fbAccessToken).Result;
 ```
 
 
@@ -3648,7 +3648,7 @@ The API is used to get LoginRadius access token by sending Twitter's access toke
 
 var twAccessToken = "twAccessToken"; //Required
 var twTokenSecret = "twTokenSecret"; //Required
-var apiResponse = new NativeSocialApi().GetAccessTokenByTwitterAccessToken(twAccessToken, twTokenSecret);
+var apiResponse = new NativeSocialApi().GetAccessTokenByTwitterAccessToken(twAccessToken, twTokenSecret).Result;
 ```
 
 
@@ -3662,7 +3662,7 @@ The API is used to get LoginRadius access token by sending Google's access token
 var googleAccessToken = "googleAccessToken"; //Required
 var clientId = "clientId"; //Optional
 var refreshToken = "refreshToken"; //Optional
-var apiResponse = new NativeSocialApi().GetAccessTokenByGoogleAccessToken(googleAccessToken, clientId, refreshToken);
+var apiResponse = new NativeSocialApi().GetAccessTokenByGoogleAccessToken(googleAccessToken, clientId, refreshToken).Result;
 ```
 
 
@@ -3674,7 +3674,7 @@ This API is used to Get LoginRadius Access Token using google jwt id token for g
 ```
 
 var idToken = "idToken"; //Required
-var apiResponse = new NativeSocialApi().GetAccessTokenByGoogleJWTAccessToken(idToken);
+var apiResponse = new NativeSocialApi().GetAccessTokenByGoogleJWTAccessToken(idToken).Result;
 ```
 
 
@@ -3686,7 +3686,7 @@ The API is used to get LoginRadius access token by sending Linkedin's access tok
 ```
 
 var lnAccessToken = "lnAccessToken"; //Required
-var apiResponse = new NativeSocialApi().GetAccessTokenByLinkedinAccessToken(lnAccessToken);
+var apiResponse = new NativeSocialApi().GetAccessTokenByLinkedinAccessToken(lnAccessToken).Result;
 ```
 
 
@@ -3698,7 +3698,7 @@ The API is used to get LoginRadius access token by sending Foursquare's access t
 ```
 
 var fsAccessToken = "fsAccessToken"; //Required
-var apiResponse = new NativeSocialApi().GetAccessTokenByFoursquareAccessToken(fsAccessToken);
+var apiResponse = new NativeSocialApi().GetAccessTokenByFoursquareAccessToken(fsAccessToken).Result;
 ```
 
 
@@ -3710,7 +3710,7 @@ The API is used to get LoginRadius access token by sending Vkontakte's access to
 ```
 
 var vkAccessToken = "vkAccessToken"; //Required
-var apiResponse = new NativeSocialApi().GetAccessTokenByVkontakteAccessToken(vkAccessToken);
+var apiResponse = new NativeSocialApi().GetAccessTokenByVkontakteAccessToken(vkAccessToken).Result;
 ```
 
 
@@ -3722,7 +3722,7 @@ The API is used to get LoginRadius access token by sending Google's AuthCode. It
 ```
 
 var googleAuthcode = "googleAuthcode"; //Required
-var apiResponse = new NativeSocialApi().GetAccessTokenByGoogleAuthCode(googleAuthcode);
+var apiResponse = new NativeSocialApi().GetAccessTokenByGoogleAuthCode(googleAuthcode).Result;
 ```
 
 
@@ -3753,7 +3753,7 @@ WebHookSubscribeModel webHookSubscribeModel = new WebHookSubscribeModel{
 Event ="<Event>",
 TargetUrl ="<TargetUrl>"
 }; //Required
-var apiResponse = new WebHookApi().WebHookSubscribe(webHookSubscribeModel);
+var apiResponse = new WebHookApi().WebHookSubscribe(webHookSubscribeModel).Result;
 ```
 
 
@@ -3765,7 +3765,7 @@ This API is used to fatch all the subscribed URLs, for particular event [More In
 ```
 
 var @event = "@event"; //Required
-var apiResponse = new WebHookApi().GetWebHookSubscribedURLs(@event);
+var apiResponse = new WebHookApi().GetWebHookSubscribedURLs(@event).Result;
 ```
 
 
@@ -3776,7 +3776,7 @@ API can be used to test a subscribed WebHook. [More Info](https://www.loginradiu
 
 ```
 
-var apiResponse = new WebHookApi().WebhookTest();
+var apiResponse = new WebHookApi().WebhookTest().Result;
 ```
 
 
@@ -3791,12 +3791,32 @@ WebHookSubscribeModel webHookSubscribeModel = new WebHookSubscribeModel{
 Event ="<Event>",
 TargetUrl ="<TargetUrl>"
 }; //Required
-var apiResponse = new WebHookApi().WebHookUnsubscribe(webHookSubscribeModel);
+var apiResponse = new WebHookApi().WebHookUnsubscribe(webHookSubscribeModel).Result;
 ```
 
 
+### JWT Token Validate
 
+This is the inbuilt SDK JWT Token Validate method and we are using the JwtSecurityTokenHandler for this.The JwtSecurityTokenHandler class in the System.IdentityModel.Tokens.Jwt (opens new window)package will handle the low-level details of validating a JWT.
 
+This method will return an instance of JwtSecurityToken if the token is valid. But in the case of any type error the method return System.Exception in the same class.
+
+Note:- This method is supported only .NET 45 or later / .NetStandard 2.0 or later
+
+```
+JwtValidationParameters jwtParameters = new JwtValidationParameters
+{
+  JwtToken = "",
+  Secret = ""
+};
+
+var jwt = new JwtTokenValidation().validateJwtToken(jwtParameters);
+  if(jwt.Error != null) {
+
+    // write your code here
+  }
+
+```
 
 
 

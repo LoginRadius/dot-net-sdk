@@ -11,6 +11,7 @@ using LoginRadiusSDK.V2.Util;
 using LoginRadiusSDK.V2.Models.ResponseModels;
 using LoginRadiusSDK.V2.Models.RequestModels;
 using LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects;
+using System.Threading.Tasks;
 
 namespace LoginRadiusSDK.V2.Api.Advanced
 {
@@ -24,7 +25,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition of Complete Multi-Factor Authentication Settings data</returns>
         /// 14.3
 
-        public ApiResponse<MultiFactorAuthenticationSettingsResponse> MFAReAuthenticate(string accessToken, string smsTemplate2FA = null)
+        public async Task<ApiResponse<MultiFactorAuthenticationSettingsResponse>> MFAReAuthenticate(string accessToken, string smsTemplate2FA = null)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -42,7 +43,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/account/reauth/2fa";
             
-            return ConfigureAndExecute<MultiFactorAuthenticationSettingsResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<MultiFactorAuthenticationSettingsResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API is used to re-authenticate via Multi-factor authentication by passing the One Time Password received via SMS
@@ -52,7 +53,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Complete user Multi-Factor Authentication Token data</returns>
         /// 14.4
 
-        public ApiResponse<EventBasedMultiFactorAuthenticationToken> MFAReAuthenticateByOTP(string accessToken, ReauthByOtpModel reauthByOtpModel)
+        public async Task<ApiResponse<EventBasedMultiFactorAuthenticationToken>> MFAReAuthenticateByOTP(string accessToken, ReauthByOtpModel reauthByOtpModel)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -70,7 +71,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/account/reauth/2fa/otp";
             
-            return ConfigureAndExecute<EventBasedMultiFactorAuthenticationToken>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(reauthByOtpModel));
+            return await ConfigureAndExecute<EventBasedMultiFactorAuthenticationToken>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(reauthByOtpModel));
         }
         /// <summary>
         /// This API is used to re-authenticate by set of backup codes via access_token on the site that has Multi-factor authentication enabled in re-authentication for the user that does not have the device
@@ -80,7 +81,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Complete user Multi-Factor Authentication Token data</returns>
         /// 14.5
 
-        public ApiResponse<EventBasedMultiFactorAuthenticationToken> MFAReAuthenticateByBackupCode(string accessToken, ReauthByBackupCodeModel reauthByBackupCodeModel)
+        public async Task<ApiResponse<EventBasedMultiFactorAuthenticationToken>> MFAReAuthenticateByBackupCode(string accessToken, ReauthByBackupCodeModel reauthByBackupCodeModel)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -98,7 +99,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/account/reauth/2fa/backupcode";
             
-            return ConfigureAndExecute<EventBasedMultiFactorAuthenticationToken>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(reauthByBackupCodeModel));
+            return await ConfigureAndExecute<EventBasedMultiFactorAuthenticationToken>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(reauthByBackupCodeModel));
         }
         /// <summary>
         /// This API is used to re-authenticate via Multi-factor-authentication by passing the google authenticator code
@@ -108,7 +109,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Complete user Multi-Factor Authentication Token data</returns>
         /// 14.6
 
-        public ApiResponse<EventBasedMultiFactorAuthenticationToken> MFAReAuthenticateByGoogleAuth(string accessToken, ReauthByGoogleAuthenticatorCodeModel reauthByGoogleAuthenticatorCodeModel)
+        public async Task<ApiResponse<EventBasedMultiFactorAuthenticationToken>> MFAReAuthenticateByGoogleAuth(string accessToken, ReauthByGoogleAuthenticatorCodeModel reauthByGoogleAuthenticatorCodeModel)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -126,7 +127,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/account/reauth/2fa/googleauthenticatorcode";
             
-            return ConfigureAndExecute<EventBasedMultiFactorAuthenticationToken>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(reauthByGoogleAuthenticatorCodeModel));
+            return await ConfigureAndExecute<EventBasedMultiFactorAuthenticationToken>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(reauthByGoogleAuthenticatorCodeModel));
         }
         /// <summary>
         /// This API is used to re-authenticate via Multi-factor-authentication by passing the password
@@ -137,7 +138,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Complete user Multi-Factor Authentication Token data</returns>
         /// 14.7
 
-        public ApiResponse<EventBasedMultiFactorAuthenticationToken> MFAReAuthenticateByPassword(string accessToken, PasswordEventBasedAuthModelWithLockout passwordEventBasedAuthModelWithLockout,
+        public async Task<ApiResponse<EventBasedMultiFactorAuthenticationToken>> MFAReAuthenticateByPassword(string accessToken, PasswordEventBasedAuthModelWithLockout passwordEventBasedAuthModelWithLockout,
         string smsTemplate2FA = null)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
@@ -160,7 +161,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/account/reauth/password";
             
-            return ConfigureAndExecute<EventBasedMultiFactorAuthenticationToken>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(passwordEventBasedAuthModelWithLockout));
+            return await ConfigureAndExecute<EventBasedMultiFactorAuthenticationToken>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(passwordEventBasedAuthModelWithLockout));
         }
         /// <summary>
         /// This API is used on the server-side to validate and verify the re-authentication token created by the MFA re-authentication API. This API checks re-authentications created by OTP.
@@ -170,7 +171,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 18.38
 
-        public ApiResponse<PostValidationResponse> VerifyMultiFactorOtpReauthentication(EventBasedMultiFactorToken eventBasedMultiFactorToken, string uid)
+        public async Task<ApiResponse<PostValidationResponse>> VerifyMultiFactorOtpReauthentication(EventBasedMultiFactorToken eventBasedMultiFactorToken, string uid)
         {
             if (eventBasedMultiFactorToken == null)
             {
@@ -188,7 +189,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = $"identity/v2/manage/account/{uid}/reauth/2fa";
             
-            return ConfigureAndExecute<PostValidationResponse>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(eventBasedMultiFactorToken));
+            return await ConfigureAndExecute<PostValidationResponse>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(eventBasedMultiFactorToken));
         }
         /// <summary>
         /// This API is used on the server-side to validate and verify the re-authentication token created by the MFA re-authentication API. This API checks re-authentications created by password.
@@ -198,7 +199,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 18.39
 
-        public ApiResponse<PostValidationResponse> VerifyMultiFactorPasswordReauthentication(EventBasedMultiFactorToken eventBasedMultiFactorToken, string uid)
+        public async Task<ApiResponse<PostValidationResponse>> VerifyMultiFactorPasswordReauthentication(EventBasedMultiFactorToken eventBasedMultiFactorToken, string uid)
         {
             if (eventBasedMultiFactorToken == null)
             {
@@ -216,7 +217,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = $"identity/v2/manage/account/{uid}/reauth/password";
             
-            return ConfigureAndExecute<PostValidationResponse>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(eventBasedMultiFactorToken));
+            return await ConfigureAndExecute<PostValidationResponse>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(eventBasedMultiFactorToken));
         }
         /// <summary>
         /// This API is used on the server-side to validate and verify the re-authentication token created by the MFA re-authentication API. This API checks re-authentications created by PIN.
@@ -226,7 +227,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 18.40
 
-        public ApiResponse<PostValidationResponse> VerifyMultiFactorPINReauthentication(EventBasedMultiFactorToken eventBasedMultiFactorToken, string uid)
+        public async Task<ApiResponse<PostValidationResponse>> VerifyMultiFactorPINReauthentication(EventBasedMultiFactorToken eventBasedMultiFactorToken, string uid)
         {
             if (eventBasedMultiFactorToken == null)
             {
@@ -244,7 +245,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = $"identity/v2/manage/account/{uid}/reauth/pin";
             
-            return ConfigureAndExecute<PostValidationResponse>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(eventBasedMultiFactorToken));
+            return await ConfigureAndExecute<PostValidationResponse>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(eventBasedMultiFactorToken));
         }
         /// <summary>
         /// This API is used to validate the triggered MFA authentication flow with a password.
@@ -255,7 +256,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Response containing Definition response of MFA reauthentication</returns>
         /// 42.13
 
-        public ApiResponse<EventBasedMultiFactorAuthenticationToken> VerifyPINAuthentication(string accessToken, PINAuthEventBasedAuthModelWithLockout pINAuthEventBasedAuthModelWithLockout,
+        public async Task<ApiResponse<EventBasedMultiFactorAuthenticationToken>> VerifyPINAuthentication(string accessToken, PINAuthEventBasedAuthModelWithLockout pINAuthEventBasedAuthModelWithLockout,
         string smsTemplate2FA = null)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
@@ -278,7 +279,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/account/reauth/pin";
             
-            return ConfigureAndExecute<EventBasedMultiFactorAuthenticationToken>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(pINAuthEventBasedAuthModelWithLockout));
+            return await ConfigureAndExecute<EventBasedMultiFactorAuthenticationToken>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(pINAuthEventBasedAuthModelWithLockout));
         }
     }
 }

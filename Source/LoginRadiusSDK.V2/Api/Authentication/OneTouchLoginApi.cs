@@ -12,6 +12,7 @@ using LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects;
 using LoginRadiusSDK.V2.Models.RequestModels;
 using LoginRadiusSDK.V2.Models.ResponseModels;
 using LoginRadiusSDK.V2.Models.ResponseModels.UserProfile;
+using System.Threading.Tasks;
 
 namespace LoginRadiusSDK.V2.Api.Authentication
 {
@@ -27,7 +28,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 1.2
 
-        public ApiResponse<PostResponse> OneTouchLoginByEmail(OneTouchLoginByEmailModel oneTouchLoginByEmailModel, string oneTouchLoginEmailTemplate = null,
+        public async Task<ApiResponse<PostResponse>> OneTouchLoginByEmail(OneTouchLoginByEmailModel oneTouchLoginByEmailModel, string oneTouchLoginEmailTemplate = null,
         string redirecturl = null, string welcomeemailtemplate = null)
         {
             if (oneTouchLoginByEmailModel == null)
@@ -53,7 +54,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/onetouchlogin/email";
             
-            return ConfigureAndExecute<PostResponse>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(oneTouchLoginByEmailModel));
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(oneTouchLoginByEmailModel));
         }
         /// <summary>
         /// This API is used to send one time password to a given phone number for a frictionless login/registration.
@@ -63,7 +64,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 1.4
 
-        public ApiResponse<PostResponse> OneTouchLoginByPhone(OneTouchLoginByPhoneModel oneTouchLoginByPhoneModel, string smsTemplate = null)
+        public async Task<ApiResponse<PostResponse>> OneTouchLoginByPhone(OneTouchLoginByPhoneModel oneTouchLoginByPhoneModel, string smsTemplate = null)
         {
             if (oneTouchLoginByPhoneModel == null)
             {
@@ -80,7 +81,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/onetouchlogin/phone";
             
-            return ConfigureAndExecute<PostResponse>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(oneTouchLoginByPhoneModel));
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(oneTouchLoginByPhoneModel));
         }
         /// <summary>
         /// This API is used to verify the otp for One Touch Login.
@@ -92,7 +93,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response Containing Access Token and Complete Profile Data</returns>
         /// 1.5
 
-        public ApiResponse<AccessToken<UserProfile>> OneTouchLoginOTPVerification(string otp, string phone,
+        public async Task<ApiResponse<AccessToken<UserProfile>>> OneTouchLoginOTPVerification(string otp, string phone,
         string fields = "", string smsTemplate = null)
         {
             if (string.IsNullOrWhiteSpace(otp))
@@ -124,7 +125,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/onetouchlogin/phone/verify";
             
-            return ConfigureAndExecute<AccessToken<UserProfile>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<AccessToken<UserProfile>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
         /// This API verifies the provided token for One Touch Login
@@ -134,7 +135,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Complete verified response data</returns>
         /// 8.4.2
 
-        public ApiResponse<VerifiedResponse> OneTouchEmailVerification(string verificationToken, string welcomeEmailTemplate = null)
+        public async Task<ApiResponse<VerifiedResponse>> OneTouchEmailVerification(string verificationToken, string welcomeEmailTemplate = null)
         {
             if (string.IsNullOrWhiteSpace(verificationToken))
             {
@@ -152,7 +153,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/email/onetouchlogin";
             
-            return ConfigureAndExecute<VerifiedResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<VerifiedResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API is used to check if the One Touch Login link has been clicked or not.
@@ -162,7 +163,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing User Profile Data and access token</returns>
         /// 9.21.2
 
-        public ApiResponse<AccessToken<Identity>> OneTouchLoginPing(string clientGuid, string fields = "")
+        public async Task<ApiResponse<AccessToken<Identity>>> OneTouchLoginPing(string clientGuid, string fields = "")
         {
             if (string.IsNullOrWhiteSpace(clientGuid))
             {
@@ -180,7 +181,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/login/smartlogin/ping";
             
-            return ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
     }
 }

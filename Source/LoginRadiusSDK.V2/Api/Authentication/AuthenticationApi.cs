@@ -13,6 +13,7 @@ using LoginRadiusSDK.V2.Models.ResponseModels;
 using LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects;
 using LoginRadiusSDK.V2.Models.ResponseModels.UserProfile;
 using LoginRadiusSDK.V2.Models.RequestModels;
+using System.Threading.Tasks;
 
 namespace LoginRadiusSDK.V2.Api.Authentication
 {
@@ -31,7 +32,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation and UserProfile data</returns>
         /// 5.4
 
-        public ApiResponse<UserProfilePostResponse<Identity>> UpdateProfileByAccessToken(string accessToken, object payload,
+        public async Task<ApiResponse<UserProfilePostResponse<Identity>>> UpdateProfileByAccessToken(string accessToken, object payload,
         string emailTemplate = null, string fields = "", bool? nullSupport = null, string smsTemplate = null, string verificationUrl = null)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
@@ -70,7 +71,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/account";
 
-            return ConfigureAndExecute<UserProfilePostResponse<Identity>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(payload));
+            return await ConfigureAndExecute<UserProfilePostResponse<Identity>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(payload));
         }
 
         /// <summary>
@@ -80,7 +81,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition for Complete SecurityQuestions data</returns>
         /// 2.1
 
-        public ApiResponse<List<SecurityQuestions>> GetSecurityQuestionsByEmail(string email)
+        public async Task<ApiResponse<List<SecurityQuestions>>> GetSecurityQuestionsByEmail(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
             {
@@ -94,7 +95,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/securityquestion/email";
             
-            return ConfigureAndExecute<List<SecurityQuestions>>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<List<SecurityQuestions>>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API is used to retrieve the list of questions that are configured on the respective LoginRadius site.
@@ -103,7 +104,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition for Complete SecurityQuestions data</returns>
         /// 2.2
 
-        public ApiResponse<List<SecurityQuestions>> GetSecurityQuestionsByUserName(string userName)
+        public async Task<ApiResponse<List<SecurityQuestions>>> GetSecurityQuestionsByUserName(string userName)
         {
             if (string.IsNullOrWhiteSpace(userName))
             {
@@ -117,7 +118,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/securityquestion/username";
             
-            return ConfigureAndExecute<List<SecurityQuestions>>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<List<SecurityQuestions>>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API is used to retrieve the list of questions that are configured on the respective LoginRadius site.
@@ -126,7 +127,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition for Complete SecurityQuestions data</returns>
         /// 2.3
 
-        public ApiResponse<List<SecurityQuestions>> GetSecurityQuestionsByPhone(string phone)
+        public async Task<ApiResponse<List<SecurityQuestions>>> GetSecurityQuestionsByPhone(string phone)
         {
             if (string.IsNullOrWhiteSpace(phone))
             {
@@ -140,7 +141,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/securityquestion/phone";
             
-            return ConfigureAndExecute<List<SecurityQuestions>>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<List<SecurityQuestions>>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API is used to retrieve the list of questions that are configured on the respective LoginRadius site.
@@ -149,7 +150,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition for Complete SecurityQuestions data</returns>
         /// 2.4
 
-        public ApiResponse<List<SecurityQuestions>> GetSecurityQuestionsByAccessToken(string accessToken)
+        public async Task<ApiResponse<List<SecurityQuestions>>> GetSecurityQuestionsByAccessToken(string accessToken)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -163,7 +164,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/securityquestion/accesstoken";
             
-            return ConfigureAndExecute<List<SecurityQuestions>>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<List<SecurityQuestions>>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This api validates access token, if valid then returns a response with its expiry otherwise error.
@@ -172,7 +173,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Token data</returns>
         /// 4.1
 
-        public ApiResponse<AccessToken> AuthValidateAccessToken(string accessToken)
+        public async Task<ApiResponse<AccessToken>> AuthValidateAccessToken(string accessToken)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -186,7 +187,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/access_token/validate";
             
-            return ConfigureAndExecute<AccessToken>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<AccessToken>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This api call invalidates the active access token or expires an access token's validity.
@@ -196,7 +197,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 4.2
 
-        public ApiResponse<PostResponse> AuthInValidateAccessToken(string accessToken, bool preventRefresh = false)
+        public async Task<ApiResponse<PostResponse>> AuthInValidateAccessToken(string accessToken, bool preventRefresh = false)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -214,7 +215,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/access_token/invalidate";
             
-            return ConfigureAndExecute<PostResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This api call provide the active access token Information
@@ -223,7 +224,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Token Information</returns>
         /// 4.3
 
-        public ApiResponse<TokenInfoResponseModel> GetAccessTokenInfo(string accessToken)
+        public async Task<ApiResponse<TokenInfoResponseModel>> GetAccessTokenInfo(string accessToken)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -237,7 +238,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/access_token";
             
-            return ConfigureAndExecute<TokenInfoResponseModel>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<TokenInfoResponseModel>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API retrieves a copy of the user data based on the access_token.
@@ -247,7 +248,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition for Complete profile data</returns>
         /// 5.2
 
-        public ApiResponse<Identity> GetProfileByAccessToken(string accessToken, string fields = "")
+        public async Task<ApiResponse<Identity>> GetProfileByAccessToken(string accessToken, string fields = "")
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -265,7 +266,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/account";
             
-            return ConfigureAndExecute<Identity>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<Identity>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API sends a welcome email
@@ -275,7 +276,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 5.3
 
-        public ApiResponse<PostResponse> SendWelcomeEmail(string accessToken, string welcomeEmailTemplate = null)
+        public async Task<ApiResponse<PostResponse>> SendWelcomeEmail(string accessToken, string welcomeEmailTemplate = null)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -293,7 +294,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/account/sendwelcomeemail";
             
-            return ConfigureAndExecute<PostResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API is used to update the user's profile by passing the access_token.
@@ -307,7 +308,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation and UserProfile data</returns>
         /// 5.4
 
-        public ApiResponse<UserProfilePostResponse<Identity>> UpdateProfileByAccessToken(string accessToken, UserProfileUpdateModel userProfileUpdateModel,
+        public async Task<ApiResponse<UserProfilePostResponse<Identity>>> UpdateProfileByAccessToken(string accessToken, UserProfileUpdateModel userProfileUpdateModel,
         string emailTemplate = null, string fields = "", string smsTemplate = null, string verificationUrl = null)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
@@ -342,7 +343,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/account";
             
-            return ConfigureAndExecute<UserProfilePostResponse<Identity>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(userProfileUpdateModel));
+            return await ConfigureAndExecute<UserProfilePostResponse<Identity>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(userProfileUpdateModel));
         }
         /// <summary>
         /// This API will send a confirmation email for account deletion to the customer's email when passed the customer's access token
@@ -353,7 +354,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Delete Request</returns>
         /// 5.5
 
-        public ApiResponse<DeleteRequestAcceptResponse> DeleteAccountWithEmailConfirmation(string accessToken, string deleteUrl = null,
+        public async Task<ApiResponse<DeleteRequestAcceptResponse>> DeleteAccountWithEmailConfirmation(string accessToken, string deleteUrl = null,
         string emailTemplate = null)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
@@ -376,7 +377,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/account";
             
-            return ConfigureAndExecute<DeleteRequestAcceptResponse>(HttpMethod.DELETE, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<DeleteRequestAcceptResponse>(HttpMethod.DELETE, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API is used to delete an account by passing it a delete token.
@@ -385,7 +386,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 5.6
 
-        public ApiResponse<PostResponse> DeleteAccountByDeleteToken(string deleteToken)
+        public async Task<ApiResponse<PostResponse>> DeleteAccountByDeleteToken(string deleteToken)
         {
             if (string.IsNullOrWhiteSpace(deleteToken))
             {
@@ -399,7 +400,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/account/delete";
             
-            return ConfigureAndExecute<PostResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API is used to allow a customer with a valid access_token to unlock their account provided that they successfully pass the prompted Bot Protection challenges. The Block or Suspend block types are not applicable for this API. For additional details see our Auth Security Configuration documentation.You are only required to pass the Post Parameters that correspond to the prompted challenges.
@@ -409,7 +410,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 5.15
 
-        public ApiResponse<PostResponse> UnlockAccountByToken(string accessToken, UnlockProfileModel unlockProfileModel)
+        public async Task<ApiResponse<PostResponse>> UnlockAccountByToken(string accessToken, UnlockProfileModel unlockProfileModel)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -427,7 +428,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/account/unlock";
             
-            return ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(unlockProfileModel));
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(unlockProfileModel));
         }
         /// <summary>
         /// This API is used to check the email exists or not on your site.
@@ -436,7 +437,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition Complete ExistResponse data</returns>
         /// 8.1
 
-        public ApiResponse<ExistResponse> CheckEmailAvailability(string email)
+        public async Task<ApiResponse<ExistResponse>> CheckEmailAvailability(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
             {
@@ -450,7 +451,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/email";
             
-            return ConfigureAndExecute<ExistResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<ExistResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API is used to verify the email of user. Note: This API will only return the full profile if you have 'Enable auto login after email verification' set in your LoginRadius Admin Console's Email Workflow settings under 'Verification Email'.
@@ -462,7 +463,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation, UserProfile data and Access Token</returns>
         /// 8.2
 
-        public ApiResponse<UserProfilePostResponse<AccessToken<Identity>>> VerifyEmail(string verificationToken, string fields = "",
+        public async Task<ApiResponse<UserProfilePostResponse<AccessToken<Identity>>>> VerifyEmail(string verificationToken, string fields = "",
         string url = null, string welcomeEmailTemplate = null)
         {
             if (string.IsNullOrWhiteSpace(verificationToken))
@@ -489,7 +490,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/email";
             
-            return ConfigureAndExecute<UserProfilePostResponse<AccessToken<Identity>>>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<UserProfilePostResponse<AccessToken<Identity>>>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API is used to verify the email of user when the OTP Email verification flow is enabled, please note that you must contact LoginRadius to have this feature enabled.
@@ -501,7 +502,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation, UserProfile data and Access Token</returns>
         /// 8.3
 
-        public ApiResponse<UserProfilePostResponse<AccessToken<Identity>>> VerifyEmailByOTP(EmailVerificationByOtpModel emailVerificationByOtpModel, string fields = "",
+        public async Task<ApiResponse<UserProfilePostResponse<AccessToken<Identity>>>> VerifyEmailByOTP(EmailVerificationByOtpModel emailVerificationByOtpModel, string fields = "",
         string url = null, string welcomeEmailTemplate = null)
         {
             if (emailVerificationByOtpModel == null)
@@ -527,7 +528,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/email";
             
-            return ConfigureAndExecute<UserProfilePostResponse<AccessToken<Identity>>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(emailVerificationByOtpModel));
+            return await ConfigureAndExecute<UserProfilePostResponse<AccessToken<Identity>>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(emailVerificationByOtpModel));
         }
         /// <summary>
         /// This API is used to add additional emails to a user's account.
@@ -540,7 +541,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 8.5
 
-        public ApiResponse<PostResponse> AddEmail(string accessToken, string email,
+        public async Task<ApiResponse<PostResponse>> AddEmail(string accessToken, string email,
         string type, string emailTemplate = null, string verificationUrl = null)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
@@ -577,7 +578,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/email";
             
-            return ConfigureAndExecute<PostResponse>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
         /// This API is used to remove additional emails from a user's account.
@@ -587,7 +588,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Delete Request</returns>
         /// 8.6
 
-        public ApiResponse<DeleteResponse> RemoveEmail(string accessToken, string email)
+        public async Task<ApiResponse<DeleteResponse>> RemoveEmail(string accessToken, string email)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -610,7 +611,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/email";
             
-            return ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
         /// This API retrieves a copy of the user data based on the Email
@@ -623,7 +624,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing User Profile Data and access token</returns>
         /// 9.2.1
 
-        public ApiResponse<AccessToken<Identity>> LoginByEmail(EmailAuthenticationModel emailAuthenticationModel, string emailTemplate = null,
+        public async Task<ApiResponse<AccessToken<Identity>>> LoginByEmail(EmailAuthenticationModel emailAuthenticationModel, string emailTemplate = null,
         string fields = "", string loginUrl = null, string verificationUrl = null)
         {
             if (emailAuthenticationModel == null)
@@ -653,7 +654,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/login";
             
-            return ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(emailAuthenticationModel));
+            return await ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(emailAuthenticationModel));
         }
         /// <summary>
         /// This API retrieves a copy of the user data based on the Username
@@ -666,7 +667,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing User Profile Data and access token</returns>
         /// 9.2.2
 
-        public ApiResponse<AccessToken<Identity>> LoginByUserName(UserNameAuthenticationModel userNameAuthenticationModel, string emailTemplate = null,
+        public async Task<ApiResponse<AccessToken<Identity>>> LoginByUserName(UserNameAuthenticationModel userNameAuthenticationModel, string emailTemplate = null,
         string fields = "", string loginUrl = null, string verificationUrl = null)
         {
             if (userNameAuthenticationModel == null)
@@ -696,7 +697,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/login";
             
-            return ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(userNameAuthenticationModel));
+            return await ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(userNameAuthenticationModel));
         }
         /// <summary>
         /// This API is used to send the reset password url to a specified account. Note: If you have the UserName workflow enabled, you may replace the 'email' parameter with 'username'
@@ -707,7 +708,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 10.1
 
-        public ApiResponse<PostResponse> ForgotPassword(string email, string resetPasswordUrl,
+        public async Task<ApiResponse<PostResponse>> ForgotPassword(string email, string resetPasswordUrl,
         string emailTemplate = null)
         {
             if (string.IsNullOrWhiteSpace(email))
@@ -735,7 +736,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/password";
             
-            return ConfigureAndExecute<PostResponse>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
         /// This API is used to reset password for the specified account by security question
@@ -744,7 +745,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Validation data and access token</returns>
         /// 10.3.1
 
-        public ApiResponse<UserProfilePostResponse<AccessToken>> ResetPasswordBySecurityAnswerAndEmail(ResetPasswordBySecurityAnswerAndEmailModel resetPasswordBySecurityAnswerAndEmailModel)
+        public async Task<ApiResponse<UserProfilePostResponse<AccessToken>>> ResetPasswordBySecurityAnswerAndEmail(ResetPasswordBySecurityAnswerAndEmailModel resetPasswordBySecurityAnswerAndEmailModel)
         {
             if (resetPasswordBySecurityAnswerAndEmailModel == null)
             {
@@ -757,7 +758,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/password/securityanswer";
             
-            return ConfigureAndExecute<UserProfilePostResponse<AccessToken>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(resetPasswordBySecurityAnswerAndEmailModel));
+            return await ConfigureAndExecute<UserProfilePostResponse<AccessToken>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(resetPasswordBySecurityAnswerAndEmailModel));
         }
         /// <summary>
         /// This API is used to reset password for the specified account by security question
@@ -766,7 +767,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Validation data and access token</returns>
         /// 10.3.2
 
-        public ApiResponse<UserProfilePostResponse<AccessToken>> ResetPasswordBySecurityAnswerAndPhone(ResetPasswordBySecurityAnswerAndPhoneModel resetPasswordBySecurityAnswerAndPhoneModel)
+        public async Task<ApiResponse<UserProfilePostResponse<AccessToken>>> ResetPasswordBySecurityAnswerAndPhone(ResetPasswordBySecurityAnswerAndPhoneModel resetPasswordBySecurityAnswerAndPhoneModel)
         {
             if (resetPasswordBySecurityAnswerAndPhoneModel == null)
             {
@@ -779,7 +780,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/password/securityanswer";
             
-            return ConfigureAndExecute<UserProfilePostResponse<AccessToken>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(resetPasswordBySecurityAnswerAndPhoneModel));
+            return await ConfigureAndExecute<UserProfilePostResponse<AccessToken>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(resetPasswordBySecurityAnswerAndPhoneModel));
         }
         /// <summary>
         /// This API is used to reset password for the specified account by security question
@@ -788,7 +789,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Validation data and access token</returns>
         /// 10.3.3
 
-        public ApiResponse<UserProfilePostResponse<AccessToken>> ResetPasswordBySecurityAnswerAndUserName(ResetPasswordBySecurityAnswerAndUserNameModel resetPasswordBySecurityAnswerAndUserNameModel)
+        public async Task<ApiResponse<UserProfilePostResponse<AccessToken>>> ResetPasswordBySecurityAnswerAndUserName(ResetPasswordBySecurityAnswerAndUserNameModel resetPasswordBySecurityAnswerAndUserNameModel)
         {
             if (resetPasswordBySecurityAnswerAndUserNameModel == null)
             {
@@ -801,7 +802,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/password/securityanswer";
             
-            return ConfigureAndExecute<UserProfilePostResponse<AccessToken>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(resetPasswordBySecurityAnswerAndUserNameModel));
+            return await ConfigureAndExecute<UserProfilePostResponse<AccessToken>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(resetPasswordBySecurityAnswerAndUserNameModel));
         }
         /// <summary>
         /// This API is used to set a new password for the specified account.
@@ -810,7 +811,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Validation data and access token</returns>
         /// 10.7.1
 
-        public ApiResponse<UserProfilePostResponse<AccessToken>> ResetPasswordByResetToken(ResetPasswordByResetTokenModel resetPasswordByResetTokenModel)
+        public async Task<ApiResponse<UserProfilePostResponse<AccessToken>>> ResetPasswordByResetToken(ResetPasswordByResetTokenModel resetPasswordByResetTokenModel)
         {
             if (resetPasswordByResetTokenModel == null)
             {
@@ -823,7 +824,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/password/reset";
             
-            return ConfigureAndExecute<UserProfilePostResponse<AccessToken>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(resetPasswordByResetTokenModel));
+            return await ConfigureAndExecute<UserProfilePostResponse<AccessToken>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(resetPasswordByResetTokenModel));
         }
         /// <summary>
         /// This API is used to set a new password for the specified account.
@@ -832,7 +833,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Validation data and access token</returns>
         /// 10.7.2
 
-        public ApiResponse<UserProfilePostResponse<AccessToken>> ResetPasswordByEmailOTP(ResetPasswordByEmailAndOtpModel resetPasswordByEmailAndOtpModel)
+        public async Task<ApiResponse<UserProfilePostResponse<AccessToken>>> ResetPasswordByEmailOTP(ResetPasswordByEmailAndOtpModel resetPasswordByEmailAndOtpModel)
         {
             if (resetPasswordByEmailAndOtpModel == null)
             {
@@ -845,7 +846,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/password/reset";
             
-            return ConfigureAndExecute<UserProfilePostResponse<AccessToken>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(resetPasswordByEmailAndOtpModel));
+            return await ConfigureAndExecute<UserProfilePostResponse<AccessToken>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(resetPasswordByEmailAndOtpModel));
         }
         /// <summary>
         /// This API is used to set a new password for the specified account if you are using the username as the unique identifier in your workflow
@@ -854,7 +855,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Validation data and access token</returns>
         /// 10.7.3
 
-        public ApiResponse<UserProfilePostResponse<AccessToken>> ResetPasswordByOTPAndUserName(ResetPasswordByUserNameModel resetPasswordByUserNameModel)
+        public async Task<ApiResponse<UserProfilePostResponse<AccessToken>>> ResetPasswordByOTPAndUserName(ResetPasswordByUserNameModel resetPasswordByUserNameModel)
         {
             if (resetPasswordByUserNameModel == null)
             {
@@ -867,7 +868,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/password/reset";
             
-            return ConfigureAndExecute<UserProfilePostResponse<AccessToken>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(resetPasswordByUserNameModel));
+            return await ConfigureAndExecute<UserProfilePostResponse<AccessToken>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(resetPasswordByUserNameModel));
         }
         /// <summary>
         /// This API is used to change the accounts password based on the previous password
@@ -878,7 +879,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 10.8
 
-        public ApiResponse<PostResponse> ChangePassword(string accessToken, string newPassword,
+        public async Task<ApiResponse<PostResponse>> ChangePassword(string accessToken, string newPassword,
         string oldPassword)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
@@ -907,7 +908,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/password/change";
             
-            return ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
         /// This API is used to link up a social provider account with the specified account based on the access token and the social providers user access token.
@@ -917,7 +918,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 12.1
 
-        public ApiResponse<PostResponse> LinkSocialIdentities(string accessToken, string candidateToken)
+        public async Task<ApiResponse<PostResponse>> LinkSocialIdentities(string accessToken, string candidateToken)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -940,7 +941,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/socialidentity";
             
-            return ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
         /// This API is used to unlink up a social provider account with the specified account based on the access token and the social providers user access token. The unlinked account will automatically get removed from your database.
@@ -951,7 +952,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Delete Request</returns>
         /// 12.2
 
-        public ApiResponse<DeleteResponse> UnlinkSocialIdentities(string accessToken, string provider,
+        public async Task<ApiResponse<DeleteResponse>> UnlinkSocialIdentities(string accessToken, string provider,
         string providerId)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
@@ -980,7 +981,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/socialidentity";
             
-            return ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
         /// This API is called just after account linking API and it prevents the raas profile of the second account from getting created.
@@ -990,7 +991,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition for Complete SocialUserProfile data</returns>
         /// 12.3
 
-        public ApiResponse<SocialUserProfile> GetSocialIdentity(string accessToken, string fields = "")
+        public async Task<ApiResponse<SocialUserProfile>> GetSocialIdentity(string accessToken, string fields = "")
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -1008,7 +1009,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/socialidentity";
             
-            return ConfigureAndExecute<SocialUserProfile>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<SocialUserProfile>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API is used to set or change UserName by access token.
@@ -1018,7 +1019,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 13.1
 
-        public ApiResponse<PostResponse> SetOrChangeUserName(string accessToken, string username)
+        public async Task<ApiResponse<PostResponse>> SetOrChangeUserName(string accessToken, string username)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -1041,7 +1042,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/username";
             
-            return ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
         /// This API is used to check the UserName exists or not on your site.
@@ -1050,7 +1051,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition Complete ExistResponse data</returns>
         /// 13.2
 
-        public ApiResponse<ExistResponse> CheckUserNameAvailability(string username)
+        public async Task<ApiResponse<ExistResponse>> CheckUserNameAvailability(string username)
         {
             if (string.IsNullOrWhiteSpace(username))
             {
@@ -1064,7 +1065,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/username";
             
-            return ConfigureAndExecute<ExistResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<ExistResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API is used to update the privacy policy stored in the user's profile by providing the access_token of the user accepting the privacy policy
@@ -1074,7 +1075,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition for Complete profile data</returns>
         /// 15.1
 
-        public ApiResponse<Identity> AcceptPrivacyPolicy(string accessToken, string fields = "")
+        public async Task<ApiResponse<Identity>> AcceptPrivacyPolicy(string accessToken, string fields = "")
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -1092,7 +1093,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/privacypolicy/accept";
             
-            return ConfigureAndExecute<Identity>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<Identity>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API will return all the accepted privacy policies for the user by providing the access_token of that user.
@@ -1101,7 +1102,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Complete Policy History data</returns>
         /// 15.2
 
-        public ApiResponse<PrivacyPolicyHistoryResponse> GetPrivacyPolicyHistoryByAccessToken(string accessToken)
+        public async Task<ApiResponse<PrivacyPolicyHistoryResponse>> GetPrivacyPolicyHistoryByAccessToken(string accessToken)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -1115,7 +1116,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/privacypolicy/history";
             
-            return ConfigureAndExecute<PrivacyPolicyHistoryResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<PrivacyPolicyHistoryResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API creates a user in the database as well as sends a verification email to the user.
@@ -1130,7 +1131,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation, UserProfile data and Access Token</returns>
         /// 17.1.1
 
-        public ApiResponse<UserProfilePostResponse<AccessToken<Identity>>> UserRegistrationByEmail(AuthUserRegistrationModel authUserRegistrationModel, string sott,
+        public async Task<ApiResponse<UserProfilePostResponse<AccessToken<Identity>>>> UserRegistrationByEmail(AuthUserRegistrationModel authUserRegistrationModel, string sott,
         string emailTemplate = null, string fields = "", string options = "", string verificationUrl = null, string welcomeEmailTemplate = null)
         {
             if (authUserRegistrationModel == null)
@@ -1169,7 +1170,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/register";
             
-            return ConfigureAndExecute<UserProfilePostResponse<AccessToken<Identity>>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(authUserRegistrationModel));
+            return await ConfigureAndExecute<UserProfilePostResponse<AccessToken<Identity>>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(authUserRegistrationModel));
         }
         /// <summary>
         /// This API creates a user in the database as well as sends a verification email to the user.
@@ -1184,7 +1185,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation, UserProfile data and Access Token</returns>
         /// 17.2
 
-        public ApiResponse<UserProfilePostResponse<AccessToken<Identity>>> UserRegistrationByCaptcha(AuthUserRegistrationModelWithCaptcha authUserRegistrationModelWithCaptcha, string emailTemplate = null,
+        public async Task<ApiResponse<UserProfilePostResponse<AccessToken<Identity>>>> UserRegistrationByCaptcha(AuthUserRegistrationModelWithCaptcha authUserRegistrationModelWithCaptcha, string emailTemplate = null,
         string fields = "", string options = "", string smsTemplate = null, string verificationUrl = null, string welcomeEmailTemplate = null)
         {
             if (authUserRegistrationModelWithCaptcha == null)
@@ -1222,7 +1223,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/register/captcha";
             
-            return ConfigureAndExecute<UserProfilePostResponse<AccessToken<Identity>>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(authUserRegistrationModelWithCaptcha));
+            return await ConfigureAndExecute<UserProfilePostResponse<AccessToken<Identity>>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(authUserRegistrationModelWithCaptcha));
         }
         /// <summary>
         /// This API resends the verification email to the user.
@@ -1233,7 +1234,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 17.3
 
-        public ApiResponse<PostResponse> AuthResendEmailVerification(string email, string emailTemplate = null,
+        public async Task<ApiResponse<PostResponse>> AuthResendEmailVerification(string email, string emailTemplate = null,
         string verificationUrl = null)
         {
             if (string.IsNullOrWhiteSpace(email))
@@ -1260,7 +1261,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/register";
             
-            return ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
     }
 }

@@ -12,6 +12,7 @@ using LoginRadiusSDK.V2.Models.ResponseModels;
 using LoginRadiusSDK.V2.Models.ResponseModels.UserProfile;
 using LoginRadiusSDK.V2.Models.RequestModels;
 using LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects;
+using System.Threading.Tasks;
 
 namespace LoginRadiusSDK.V2.Api.Authentication
 {
@@ -25,7 +26,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing User Profile Data and access token</returns>
         /// 9.22
 
-        public ApiResponse<AccessToken<Identity>> PINLogin(LoginByPINModel loginByPINModel, string sessionToken)
+        public async Task<ApiResponse<AccessToken<Identity>>> PINLogin(LoginByPINModel loginByPINModel, string sessionToken)
         {
             if (loginByPINModel == null)
             {
@@ -43,7 +44,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/login/pin";
             
-            return ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(loginByPINModel));
+            return await ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(loginByPINModel));
         }
         /// <summary>
         /// This API sends the reset pin email to specified email address.
@@ -54,7 +55,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 42.1
 
-        public ApiResponse<PostResponse> SendForgotPINEmailByEmail(ForgotPINLinkByEmailModel forgotPINLinkByEmailModel, string emailTemplate = null,
+        public async Task<ApiResponse<PostResponse>> SendForgotPINEmailByEmail(ForgotPINLinkByEmailModel forgotPINLinkByEmailModel, string emailTemplate = null,
         string resetPINUrl = null)
         {
             if (forgotPINLinkByEmailModel == null)
@@ -76,7 +77,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/pin/forgot/email";
             
-            return ConfigureAndExecute<PostResponse>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(forgotPINLinkByEmailModel));
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(forgotPINLinkByEmailModel));
         }
         /// <summary>
         /// This API sends the reset pin email using username.
@@ -87,7 +88,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 42.2
 
-        public ApiResponse<PostResponse> SendForgotPINEmailByUsername(ForgotPINLinkByUserNameModel forgotPINLinkByUserNameModel, string emailTemplate = null,
+        public async Task<ApiResponse<PostResponse>> SendForgotPINEmailByUsername(ForgotPINLinkByUserNameModel forgotPINLinkByUserNameModel, string emailTemplate = null,
         string resetPINUrl = null)
         {
             if (forgotPINLinkByUserNameModel == null)
@@ -109,7 +110,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/pin/forgot/username";
             
-            return ConfigureAndExecute<PostResponse>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(forgotPINLinkByUserNameModel));
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(forgotPINLinkByUserNameModel));
         }
         /// <summary>
         /// This API is used to reset pin using reset token.
@@ -118,7 +119,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 42.3
 
-        public ApiResponse<PostResponse> ResetPINByResetToken(ResetPINByResetToken resetPINByResetToken)
+        public async Task<ApiResponse<PostResponse>> ResetPINByResetToken(ResetPINByResetToken resetPINByResetToken)
         {
             if (resetPINByResetToken == null)
             {
@@ -131,7 +132,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/pin/reset/token";
             
-            return ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(resetPINByResetToken));
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(resetPINByResetToken));
         }
         /// <summary>
         /// This API is used to reset pin using security question answer and email.
@@ -140,7 +141,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 42.4
 
-        public ApiResponse<PostResponse> ResetPINByEmailAndSecurityAnswer(ResetPINBySecurityQuestionAnswerAndEmailModel resetPINBySecurityQuestionAnswerAndEmailModel)
+        public async Task<ApiResponse<PostResponse>> ResetPINByEmailAndSecurityAnswer(ResetPINBySecurityQuestionAnswerAndEmailModel resetPINBySecurityQuestionAnswerAndEmailModel)
         {
             if (resetPINBySecurityQuestionAnswerAndEmailModel == null)
             {
@@ -153,7 +154,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/pin/reset/securityanswer/email";
             
-            return ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(resetPINBySecurityQuestionAnswerAndEmailModel));
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(resetPINBySecurityQuestionAnswerAndEmailModel));
         }
         /// <summary>
         /// This API is used to reset pin using security question answer and username.
@@ -162,7 +163,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 42.5
 
-        public ApiResponse<PostResponse> ResetPINByUsernameAndSecurityAnswer(ResetPINBySecurityQuestionAnswerAndUsernameModel resetPINBySecurityQuestionAnswerAndUsernameModel)
+        public async Task<ApiResponse<PostResponse>> ResetPINByUsernameAndSecurityAnswer(ResetPINBySecurityQuestionAnswerAndUsernameModel resetPINBySecurityQuestionAnswerAndUsernameModel)
         {
             if (resetPINBySecurityQuestionAnswerAndUsernameModel == null)
             {
@@ -175,7 +176,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/pin/reset/securityanswer/username";
             
-            return ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(resetPINBySecurityQuestionAnswerAndUsernameModel));
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(resetPINBySecurityQuestionAnswerAndUsernameModel));
         }
         /// <summary>
         /// This API is used to reset pin using security question answer and phone.
@@ -184,7 +185,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 42.6
 
-        public ApiResponse<PostResponse> ResetPINByPhoneAndSecurityAnswer(ResetPINBySecurityQuestionAnswerAndPhoneModel resetPINBySecurityQuestionAnswerAndPhoneModel)
+        public async Task<ApiResponse<PostResponse>> ResetPINByPhoneAndSecurityAnswer(ResetPINBySecurityQuestionAnswerAndPhoneModel resetPINBySecurityQuestionAnswerAndPhoneModel)
         {
             if (resetPINBySecurityQuestionAnswerAndPhoneModel == null)
             {
@@ -197,7 +198,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/pin/reset/securityanswer/phone";
             
-            return ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(resetPINBySecurityQuestionAnswerAndPhoneModel));
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(resetPINBySecurityQuestionAnswerAndPhoneModel));
         }
         /// <summary>
         /// This API sends the OTP to specified phone number
@@ -207,7 +208,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response Containing Validation Data and SMS Data</returns>
         /// 42.7
 
-        public ApiResponse<UserProfilePostResponse<SMSResponseData>> SendForgotPINSMSByPhone(ForgotPINOtpByPhoneModel forgotPINOtpByPhoneModel, string smsTemplate = null)
+        public async Task<ApiResponse<UserProfilePostResponse<SMSResponseData>>> SendForgotPINSMSByPhone(ForgotPINOtpByPhoneModel forgotPINOtpByPhoneModel, string smsTemplate = null)
         {
             if (forgotPINOtpByPhoneModel == null)
             {
@@ -224,7 +225,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/pin/forgot/otp";
             
-            return ConfigureAndExecute<UserProfilePostResponse<SMSResponseData>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(forgotPINOtpByPhoneModel));
+            return await ConfigureAndExecute<UserProfilePostResponse<SMSResponseData>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(forgotPINOtpByPhoneModel));
         }
         /// <summary>
         /// This API is used to change a user's PIN using access token.
@@ -234,7 +235,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 42.8
 
-        public ApiResponse<PostResponse> ChangePINByAccessToken(string accessToken, ChangePINModel changePINModel)
+        public async Task<ApiResponse<PostResponse>> ChangePINByAccessToken(string accessToken, ChangePINModel changePINModel)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -252,7 +253,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/pin/change";
             
-            return ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(changePINModel));
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(changePINModel));
         }
         /// <summary>
         /// This API is used to reset pin using phoneId and OTP.
@@ -261,7 +262,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 42.9
 
-        public ApiResponse<PostResponse> ResetPINByPhoneAndOtp(ResetPINByPhoneAndOTPModel resetPINByPhoneAndOTPModel)
+        public async Task<ApiResponse<PostResponse>> ResetPINByPhoneAndOtp(ResetPINByPhoneAndOTPModel resetPINByPhoneAndOTPModel)
         {
             if (resetPINByPhoneAndOTPModel == null)
             {
@@ -274,7 +275,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/pin/reset/otp/phone";
             
-            return ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(resetPINByPhoneAndOTPModel));
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(resetPINByPhoneAndOTPModel));
         }
         /// <summary>
         /// This API is used to reset pin using email and OTP.
@@ -283,7 +284,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 42.10
 
-        public ApiResponse<PostResponse> ResetPINByEmailAndOtp(ResetPINByEmailAndOtpModel resetPINByEmailAndOtpModel)
+        public async Task<ApiResponse<PostResponse>> ResetPINByEmailAndOtp(ResetPINByEmailAndOtpModel resetPINByEmailAndOtpModel)
         {
             if (resetPINByEmailAndOtpModel == null)
             {
@@ -296,7 +297,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/pin/reset/otp/email";
             
-            return ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(resetPINByEmailAndOtpModel));
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(resetPINByEmailAndOtpModel));
         }
         /// <summary>
         /// This API is used to reset pin using username and OTP.
@@ -305,7 +306,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 42.11
 
-        public ApiResponse<PostResponse> ResetPINByUsernameAndOtp(ResetPINByUsernameAndOtpModel resetPINByUsernameAndOtpModel)
+        public async Task<ApiResponse<PostResponse>> ResetPINByUsernameAndOtp(ResetPINByUsernameAndOtpModel resetPINByUsernameAndOtpModel)
         {
             if (resetPINByUsernameAndOtpModel == null)
             {
@@ -318,7 +319,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/pin/reset/otp/username";
             
-            return ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(resetPINByUsernameAndOtpModel));
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(resetPINByUsernameAndOtpModel));
         }
         /// <summary>
         /// This API is used to change a user's PIN using Pin Auth token.
@@ -328,7 +329,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing User Profile Data and access token</returns>
         /// 42.12
 
-        public ApiResponse<AccessToken<Identity>> SetPINByPinAuthToken(PINRequiredModel pINRequiredModel, string pinAuthToken)
+        public async Task<ApiResponse<AccessToken<Identity>>> SetPINByPinAuthToken(PINRequiredModel pINRequiredModel, string pinAuthToken)
         {
             if (pINRequiredModel == null)
             {
@@ -346,7 +347,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/pin/set/pinauthtoken";
             
-            return ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(pINRequiredModel));
+            return await ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(pINRequiredModel));
         }
         /// <summary>
         /// This API is used to invalidate pin session token.
@@ -355,7 +356,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 44.1
 
-        public ApiResponse<PostResponse> InValidatePinSessionToken(string sessionToken)
+        public async Task<ApiResponse<PostResponse>> InValidatePinSessionToken(string sessionToken)
         {
             if (string.IsNullOrWhiteSpace(sessionToken))
             {
@@ -369,7 +370,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/session_token/invalidate";
             
-            return ConfigureAndExecute<PostResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
     }
 }

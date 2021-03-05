@@ -1,5 +1,14 @@
 > **LoginRadius .NET SDK Change Log** provides information regarding what has changed, more specifically what changes, improvements and bug fix has been made to the SDK. For more details please refer to the [LoginRadius API Documention](https://docs.loginradius.com/api/v2/sdk-libraries/aspnet)
 
+
+# Version 11.0.0
+Release on **March 05, 2021**
+
+## Enhancements
+
+- Updated all API Methods in async/await to solving thread performance or scalability problems.
+- Added new JWT Token Validate Method in SDK.
+
 # Version 10.0.0
 Release on **September 30, 2019**
 

@@ -11,6 +11,7 @@ using LoginRadiusSDK.V2.Util;
 using LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects;
 using LoginRadiusSDK.V2.Models.ResponseModels;
 using LoginRadiusSDK.V2.Models.ResponseModels.UserProfile;
+using System.Threading.Tasks;
 
 namespace LoginRadiusSDK.V2.Api.Authentication
 {
@@ -24,7 +25,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Complete verified response data</returns>
         /// 8.4.1
 
-        public ApiResponse<VerifiedResponse> SmartLoginTokenVerification(string verificationToken, string welcomeEmailTemplate = null)
+        public async Task<ApiResponse<VerifiedResponse>> SmartLoginTokenVerification(string verificationToken, string welcomeEmailTemplate = null)
         {
             if (string.IsNullOrWhiteSpace(verificationToken))
             {
@@ -42,7 +43,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/email/smartlogin";
             
-            return ConfigureAndExecute<VerifiedResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<VerifiedResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API sends a Smart Login link to the user's Email Id.
@@ -55,7 +56,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 9.17.1
 
-        public ApiResponse<PostResponse> SmartLoginByEmail(string clientGuid, string email,
+        public async Task<ApiResponse<PostResponse>> SmartLoginByEmail(string clientGuid, string email,
         string redirectUrl = null, string smartLoginEmailTemplate = null, string welcomeEmailTemplate = null)
         {
             if (string.IsNullOrWhiteSpace(clientGuid))
@@ -87,7 +88,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/login/smartlogin";
             
-            return ConfigureAndExecute<PostResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API sends a Smart Login link to the user's Email Id.
@@ -100,7 +101,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 9.17.2
 
-        public ApiResponse<PostResponse> SmartLoginByUserName(string clientGuid, string username,
+        public async Task<ApiResponse<PostResponse>> SmartLoginByUserName(string clientGuid, string username,
         string redirectUrl = null, string smartLoginEmailTemplate = null, string welcomeEmailTemplate = null)
         {
             if (string.IsNullOrWhiteSpace(clientGuid))
@@ -132,7 +133,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/login/smartlogin";
             
-            return ConfigureAndExecute<PostResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API is used to check if the Smart Login link has been clicked or not
@@ -142,7 +143,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <returns>Response containing User Profile Data and access token</returns>
         /// 9.21.1
 
-        public ApiResponse<AccessToken<Identity>> SmartLoginPing(string clientGuid, string fields = "")
+        public async Task<ApiResponse<AccessToken<Identity>>> SmartLoginPing(string clientGuid, string fields = "")
         {
             if (string.IsNullOrWhiteSpace(clientGuid))
             {
@@ -160,7 +161,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/login/smartlogin/ping";
             
-            return ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
     }
 }
