@@ -14,7 +14,7 @@ namespace LoginRadiusSDK.V2.Util
     /// <summary>
     /// Helper methods for this SDK.
     /// </summary>
-    internal class SDKUtil
+    internal static class SDKUtil
     {
         /// <summary>
         /// Formats the URI path for REST calls.
@@ -157,34 +157,6 @@ namespace LoginRadiusSDK.V2.Util
                 }
             }
             return formatString;
-        }
-
-        /// <summary>
-        /// Split the URI and form a Object array using the query string and values
-        /// in the provided map. The return object array is populated only if the map
-        /// contains valid value for the query name. The object array contains null
-        /// values if there is no value found in the map
-        /// </summary>
-        /// <param name="pattern"></param>
-        /// <param name="parameters"></param>
-        /// <returns></returns>
-        private static Object[] SplitParameters(string pattern, Dictionary<string, string> parameters)
-        {
-            List<Object> objectList = new List<Object>();
-#if !NETSTANDARD1_3
-            string[] query = pattern.Split('?');
-            if (query.Length == 2 && query[1].Contains("={"))
-            {
-                NameValueCollection queryParts = HttpUtility.ParseQueryString(query[1]);
-
-                foreach (string k in queryParts.AllKeys)
-                {
-                    string val;
-                    objectList.Add(parameters.TryGetValue(k.Trim(), out val) ? val : null);
-                }
-            }
-#endif
-            return objectList.ToArray();
         }
 
         /// <summary>

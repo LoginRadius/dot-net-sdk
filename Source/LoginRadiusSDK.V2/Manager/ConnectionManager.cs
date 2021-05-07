@@ -59,10 +59,9 @@ namespace LoginRadiusSDK.V2
             httpRequest.Timeout = connectionTimeout;
 
             // Set request proxy for tunnelling http requests via a proxy server
-            Uri proxyUri;
             if (config.ContainsKey(LRConfigConstants.HttpProxyAddressConfig) &&
                 !string.IsNullOrWhiteSpace(config[LRConfigConstants.HttpProxyAddressConfig]) &&
-                Uri.TryCreate(config[LRConfigConstants.HttpProxyAddressConfig], UriKind.Absolute, out proxyUri))
+                Uri.TryCreate(config[LRConfigConstants.HttpProxyAddressConfig], UriKind.Absolute, out var proxyUri))
             {
                 WebProxy requestProxy = new WebProxy {Address = new Uri(config[LRConfigConstants.HttpProxyAddressConfig])};
                 if (config.ContainsKey(LRConfigConstants.HttpProxyCredentialConfig) && !string.IsNullOrWhiteSpace(config[LRConfigConstants.HttpProxyCredentialConfig]))

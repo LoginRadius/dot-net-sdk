@@ -43,7 +43,7 @@ namespace LoginRadiusSDK.V2
         public string Setting(string name)
         {
             NameValueConfigurationElement config = Settings[name];
-            return ((config == null) ? null : config.Value);
+            return config?.Value;
         }
     }
 #endif
