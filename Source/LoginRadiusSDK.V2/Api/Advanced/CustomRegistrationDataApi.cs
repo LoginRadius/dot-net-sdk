@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using LoginRadiusSDK.V2.Common;
+using System.Threading.Tasks;
 using LoginRadiusSDK.V2.Util;
 using LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects;
 using LoginRadiusSDK.V2.Models.RequestModels;
-using System.Threading.Tasks;
 
 namespace LoginRadiusSDK.V2.Api.Advanced
 {
@@ -128,7 +128,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
             return await ConfigureAndExecute<List<RegistrationDataField>>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
-        /// This API allows you to fill data into a dropdown list which you have created for user Registeration. For more details on how to use this API please see our Custom Registration Data Overview
+        /// This API allows you to fill data into a dropdown list which you have created for user Registration. For more details on how to use this API please see our Custom Registration Data Overview
         /// </summary>
         /// <param name="registrationDataCreateModelList">Model Class containing Definition of List of Registration Data</param>
         /// <returns>Response containing Definition of Complete Validation data</returns>

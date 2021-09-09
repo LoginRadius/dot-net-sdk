@@ -139,7 +139,13 @@ Example : In appsettings.json, add following statement -
 "ApiRequestSigning" : "false"
 ```
 
+X-Origin-IP
+LoginRadius allows you add X-Origin-IP in your headers and it determines the IP address of the client's request,this can also be useful to overcome analytics discrepancies where the analytics depend on header data.
 
+
+```
+"originIp" : "<Client-Ip-Address>"
+```
 
 ## APIs
 
@@ -159,7 +165,8 @@ List of APIs in this Section:<br>
 [PUT : Auth Reset Password by OTP](#ResetPasswordByEmailOTP-put-)<br>
 [PUT : Auth Reset Password by OTP and UserName](#ResetPasswordByOTPAndUserName-put-)<br>
 [PUT : Auth Change Password](#ChangePassword-put-)<br>
-[PUT : Auth Link Social Identities](#LinkSocialIdentities-put-)<br>
+[POST : Auth Link Social Identities](#LinkSocialIdentities-post-)<br>
+[POST : Auth Link Social Identities By Ping](#LinkSocialIdentitiesByPing-post-)<br>
 [PUT : Auth Set or Change UserName](#SetOrChangeUserName-put-)<br>
 [PUT : Auth Resend Email Verification](#AuthResendEmailVerification-put-)<br>
 [POST : Auth Add Email](#AddEmail-post-)<br>
@@ -178,6 +185,7 @@ List of APIs in this Section:<br>
 [GET : Auth Read all Profiles by Token](#GetProfileByAccessToken-get-)<br>
 [GET : Auth Send Welcome Email](#SendWelcomeEmail-get-)<br>
 [GET : Auth Delete Account](#DeleteAccountByDeleteToken-get-)<br>
+[GET : Get Profile By Ping](#GetProfileByPing-get-)<br>
 [GET : Auth Check Email Availability](#CheckEmailAvailability-get-)<br>
 [GET : Auth Verify Email](#VerifyEmail-get-)<br>
 [GET : Auth Social Identity](#GetSocialIdentity-get-)<br>
@@ -359,7 +367,7 @@ var apiResponse = new AuthenticationApi().ChangePassword(accessToken, newPasswor
 ```
 
 
-<h6 id="LinkSocialIdentities-put-">Auth Link Social Identities (PUT)</h6>
+<h6 id="LinkSocialIdentities-post-">Auth Link Social Identities (POST)</h6>
 This API is used to link up a social provider account with the specified account based on the access token and the social providers user access token. [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/authentication/auth-link-social-identities)
 
 
@@ -371,6 +379,17 @@ var candidateToken = "candidateToken"; //Required
 var apiResponse = new AuthenticationApi().LinkSocialIdentities(accessToken, candidateToken).Result;
 ```
 
+<h6 id="LinkSocialIdentitiesByPing-post-">Auth Link Social Identities By Ping (POST)</h6>
+This API is used to link up a social provider account with an existing LoginRadius account on the basis of ping and the social providers user access token. [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/authentication/auth-link-social-identities-by-ping)
+
+
+
+```
+
+var accessToken = "accessToken"; //Required
+var clientGuid = "clientGuid"; //Required
+var apiResponse = new AuthenticationApi().LinkSocialIdentitiesByPing(accessToken, clientGuid);
+```
 
 <h6 id="SetOrChangeUserName-put-">Auth Set or Change UserName (PUT)</h6>
 This API is used to set or change UserName by access token. [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/authentication/auth-set-or-change-user-name/)
@@ -616,8 +635,12 @@ This API retrieves a copy of the user data based on the access_token. [More Info
 
 var accessToken = "accessToken"; //Required
 string fields = null; //Optional
-var apiResponse = new AuthenticationApi().GetProfileByAccessToken(accessToken, fields).Result;
+var emailTemplate = "emailTemplate"; //Optional
+var verificationUrl = "verificationUrl"; //Optional
+var welcomeEmailTemplate = "welcomeEmailTemplate"; //Optional
+var apiResponse = new AuthenticationApi().GetProfileByAccessToken(accessToken,fields, emailTemplate, verificationUrl, welcomeEmailTemplate).Result;
 ```
+
 
 
 <h6 id="SendWelcomeEmail-get-">Auth Send Welcome Email (GET)</h6>
@@ -642,6 +665,21 @@ This API is used to delete an account by passing it a delete token. [More Info](
 
 var deleteToken = "deleteToken"; //Required
 var apiResponse = new AuthenticationApi().DeleteAccountByDeleteToken(deleteToken).Result;
+```
+
+<h6 id="GetProfileByPing-get-">Get Profile By Ping (GET)</h6>
+This API is used to get a user's profile using the clientGuid parameter if no callback feature enabled [More Info](/api/v2/customer-identity-api/authentication/auth-get-profile-by-ping/)
+
+
+
+```
+
+var clientGuid = "clientGuid"; //Required
+var emailTemplate = "emailTemplate"; //Optional
+string fields = null; //Optional
+var verificationUrl = "verificationUrl"; //Optional
+var welcomeEmailTemplate = "welcomeEmailTemplate"; //Optional
+var apiResponse = new AuthenticationApi().GetProfileByPing(clientGuid, emailTemplate, fields, verificationUrl, welcomeEmailTemplate).Result;
 ```
 
 
@@ -1157,7 +1195,6 @@ List of APIs in this Section:<br>
 [GET : Get Post](#GetPosts-get-)<br>
 [GET : Get Trackable Status Stats](#GetTrackableStatusStats-get-)<br>
 [GET : Trackable Status Fetching](#TrackableStatusFetching-get-)<br>
-[GET : User Profile](#GetSocialUserProfile-get-)<br>
 [GET : Refresh User Profile](#GetRefreshedSocialUserProfile-get-)<br>
 [GET : Video](#GetVideos-get-)<br>
 
@@ -1238,7 +1275,8 @@ The Refresh Access Token API is used to refresh the provider access token after 
 
 var accessToken = "accessToken"; //Required
 var expiresIn = 0; //Optional
-var apiResponse = new SocialApi().RefreshAccessToken(accessToken, expiresIn).Result;
+var isWeb = true; //Optional
+var apiResponse = new SocialApi().RefreshAccessToken(accessToken, expiresIn, isWeb).Result;
 ```
 
 
@@ -1567,19 +1605,6 @@ The Trackable status API works very similar to the Status API but it returns a P
 
 var postId = "postId"; //Required
 var apiResponse = new SocialApi().TrackableStatusFetching(postId).Result;
-```
-
-
-<h6 id="GetSocialUserProfile-get-">User Profile (GET)</h6>
-The User Profile API is used to get social profile data from the user's social account after authentication.<br><br><b>Supported Providers:</b>  All [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/social-login/user-profile)
-
-
-
-```
-
-var accessToken = "accessToken"; //Required
-string fields = null; //Optional
-var apiResponse = new SocialApi().GetSocialUserProfile(accessToken, fields).Result;
 ```
 
 
@@ -1987,28 +2012,39 @@ List of APIs in this Section:<br>
 [PUT : Update MFA Setting](#MFAUpdateSetting-put-)<br>
 [PUT : Update MFA by Access Token](#MFAUpdateByAccessToken-put-)<br>
 [PUT : MFA Update Phone Number by Token](#MFAUpdatePhoneNumberByToken-put-)<br>
+[PUT : Verify MFA Email OTP by Access Token](#MFAValidateEmailOtpByAccessToken-put-)<br>
+[PUT : Update MFA Security Question by Access Token](#MFASecurityQuestionAnswerByAccessToken-put-)<br>
 [PUT : MFA Validate OTP](#MFAValidateOTPByPhone-put-)<br>
 [PUT : MFA Validate Google Auth Code](#MFAValidateGoogleAuthCode-put-)<br>
 [PUT : MFA Validate Backup code](#MFAValidateBackupCode-put-)<br>
 [PUT : MFA Update Phone Number](#MFAUpdatePhoneNumber-put-)<br>
+[PUT : Verify MFA Email OTP by MFA Token](#MFAValidateEmailOtp-put-)<br>
+[PUT : Update MFA Security Question by MFA Token](#MFASecurityQuestionAnswer-put-)<br>
 [POST : MFA Email Login](#MFALoginByEmail-post-)<br>
 [POST : MFA UserName Login](#MFALoginByUserName-post-)<br>
 [POST : MFA Phone Login](#MFALoginByPhone-post-)<br>
+[POST : Send MFA Email OTP by MFA Token](#MFAEmailOTP-post-)<br>
+[POST : Verify MFA Security Question by MFA Token](#MFASecurityQuestionAnswerVerification-post-)<br>
 [GET : MFA Validate Access Token](#MFAConfigureByAccessToken-get-)<br>
 [GET : MFA Backup Code by Access Token](#MFABackupCodeByAccessToken-get-)<br>
 [GET : Reset Backup Code by Access Token](#MFAResetBackupCodeByAccessToken-get-)<br>
+[GET : Send MFA Email OTP by Access Token](#MFAEmailOtpByAccessToken-get-)<br>
 [GET : MFA Resend Otp](#MFAResendOTP-get-)<br>
 [GET : MFA Backup Code by UID](#MFABackupCodeByUid-get-)<br>
 [GET : MFA Reset Backup Code by UID](#MFAResetBackupCodeByUid-get-)<br>
 [DELETE : MFA Reset Google Authenticator by Token](#MFAResetGoogleAuthByToken-delete-)<br>
 [DELETE : MFA Reset SMS Authenticator by Token](#MFAResetSMSAuthByToken-delete-)<br>
+[DELETE : Reset MFA Email OTP Authenticator By Access Token](#MFAResetEmailOtpAuthenticatorByAccessToken-delete-)<br>
+[DELETE : MFA Reset Security Question Authenticator By Access Token](#MFAResetSecurityQuestionAuthenticatorByAccessToken-delete-)<br>
 [DELETE : MFA Reset SMS Authenticator By UID](#MFAResetSMSAuthenticatorByUid-delete-)<br>
 [DELETE : MFA Reset Google Authenticator By UID](#MFAResetGoogleAuthenticatorByUid-delete-)<br>
+[DELETE : Reset MFA Email OTP Authenticator Settings by Uid](#MFAResetEmailOtpAuthenticatorByUid-delete-)<br>
+[DELETE : Reset MFA Security Question Authenticator Settings by Uid](#MFAResetSecurityQuestionAuthenticatorByUid-delete-)<br>
 
 
 
 <h6 id="MFAUpdateSetting-put-">Update MFA Setting (PUT)</h6>
-This API is used to trigger the Multi-factor authentication settings after login for secure actions [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/multi-factor-authentication/sms-authenticator/update-mfa-setting/)
+This API is used to trigger the Multi-factor authentication settings after login for secure actions [More Info](/api/v2/customer-identity-api/multi-factor-authentication/sms-authenticator/update-mfa-setting/)
 
 
 
@@ -2024,7 +2060,7 @@ var apiResponse = new MultiFactorAuthenticationApi().MFAUpdateSetting(accessToke
 
 
 <h6 id="MFAUpdateByAccessToken-put-">Update MFA by Access Token (PUT)</h6>
-This API is used to Enable Multi-factor authentication by access token on user login [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/multi-factor-authentication/google-authenticator/update-mfa-by-access-token/)
+This API is used to Enable Multi-factor authentication by access token on user login [More Info](/api/v2/customer-identity-api/multi-factor-authentication/google-authenticator/update-mfa-by-access-token/)
 
 
 
@@ -2041,7 +2077,7 @@ var apiResponse = new MultiFactorAuthenticationApi().MFAUpdateByAccessToken(acce
 
 
 <h6 id="MFAUpdatePhoneNumberByToken-put-">MFA Update Phone Number by Token (PUT)</h6>
-This API is used to update the Multi-factor authentication phone number by sending the verification OTP to the provided phone number [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/multi-factor-authentication/sms-authenticator/mfa-update-phone-number-by-token/)
+This API is used to update the Multi-factor authentication phone number by sending the verification OTP to the provided phone number [More Info](/api/v2/customer-identity-api/multi-factor-authentication/sms-authenticator/mfa-update-phone-number-by-token/)
 
 
 
@@ -2054,8 +2090,45 @@ var apiResponse = new MultiFactorAuthenticationApi().MFAUpdatePhoneNumberByToken
 ```
 
 
+<h6 id="MFAValidateEmailOtpByAccessToken-put-">Verify MFA Email OTP by Access Token (PUT)</h6>
+This API is used to set up MFA Email OTP authenticator on profile after login. [More Info](/api/v2/customer-identity-api/multi-factor-authentication/verify-mfa-otp-by-access-token/)
+
+
+
+```
+
+var accessToken = "accessToken"; //Required
+MultiFactorAuthModelByEmailOtpWithLockout multiFactorAuthModelByEmailOtpWithLockout = new MultiFactorAuthModelByEmailOtpWithLockout{
+  EmailId="emailid",
+  Otp="otp"
+}; //Required
+var apiResponse = new MultiFactorAuthenticationApi().MFAValidateEmailOtpByAccessToken(accessToken, multiFactorAuthModelByEmailOtpWithLockout).Result;
+```
+
+
+<h6 id="MFASecurityQuestionAnswerByAccessToken-put-">Update MFA Security Question by Access Token (PUT)</h6>
+This API is used to set up MFA Security Question authenticator on profile after login. [More Info](/api/v2/customer-identity-api/multi-factor-authentication/update-mfa-security-question-by-access-token)
+
+
+
+```
+
+var accessToken = "accessToken"; //Required
+SecurityQuestionAnswerModelByAccessToken securityQuestionAnswerModelByAccessToken = new SecurityQuestionAnswerModelByAccessToken{
+ReplaceSecurityQuestionAnswer = false,
+SecurityQuestionAnswer = new List<SecurityQuestionOptionalModel> { 
+new SecurityQuestionOptionalModel
+{
+QuestionId="",
+Answer=""       
+}}
+};  //Required
+var apiResponse = new MultiFactorAuthenticationApi().MFASecurityQuestionAnswerByAccessToken(accessToken, securityQuestionAnswerModelByAccessToken).Result;
+```
+
+
 <h6 id="MFAValidateOTPByPhone-put-">MFA Validate OTP (PUT)</h6>
-This API is used to login via Multi-factor authentication by passing the One Time Password received via SMS [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/multi-factor-authentication/sms-authenticator/mfa-validate-otp/)
+This API is used to login via Multi-factor authentication by passing the One Time Password received via SMS [More Info](/api/v2/customer-identity-api/multi-factor-authentication/sms-authenticator/mfa-validate-otp/)
 
 
 
@@ -2067,12 +2140,16 @@ Otp ="<Otp>"
 var secondFactorAuthenticationToken = "secondFactorAuthenticationToken"; //Required
 string fields = null; //Optional
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
-var apiResponse = new MultiFactorAuthenticationApi().MFAValidateOTPByPhone(multiFactorAuthModelWithLockout, secondFactorAuthenticationToken, fields, smsTemplate2FA).Result;
+var rbaBrowserEmailTemplate = "rbaBrowserEmailTemplate"; //Optional
+var rbaCityEmailTemplate = "rbaCityEmailTemplate"; //Optional
+var rbaCountryEmailTemplate = "rbaCountryEmailTemplate"; //Optional
+var rbaIpEmailTemplate = "rbaIpEmailTemplate"; //Optional
+var apiResponse = new MultiFactorAuthenticationApi().MFAValidateOTPByPhone(multiFactorAuthModelWithLockout, secondFactorAuthenticationToken, fields, smsTemplate2FA, rbaBrowserEmailTemplate, rbaCityEmailTemplate, rbaCountryEmailTemplate, rbaIpEmailTemplate).Result;
 ```
 
 
 <h6 id="MFAValidateGoogleAuthCode-put-">MFA Validate Google Auth Code (PUT)</h6>
-This API is used to login via Multi-factor-authentication by passing the google authenticator code. [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/multi-factor-authentication/google-authenticator/mfa-validate-google-auth-code/)
+This API is used to login via Multi-factor-authentication by passing the google authenticator code. [More Info](/api/v2/customer-identity-api/multi-factor-authentication/google-authenticator/mfa-validate-google-auth-code/)
 
 
 
@@ -2081,13 +2158,16 @@ This API is used to login via Multi-factor-authentication by passing the google 
 var googleAuthenticatorCode = "googleAuthenticatorCode"; //Required
 var secondFactorAuthenticationToken = "secondFactorAuthenticationToken"; //Required
 string fields = null; //Optional
-var smsTemplate2FA = "smsTemplate2FA"; //Optional
-var apiResponse = new MultiFactorAuthenticationApi().MFAValidateGoogleAuthCode(googleAuthenticatorCode, secondFactorAuthenticationToken, fields, smsTemplate2FA).Result;
+var rbaBrowserEmailTemplate = "rbaBrowserEmailTemplate"; //Optional
+var rbaCityEmailTemplate = "rbaCityEmailTemplate"; //Optional
+var rbaCountryEmailTemplate = "rbaCountryEmailTemplate"; //Optional
+var rbaIpEmailTemplate = "rbaIpEmailTemplate"; //Optional
+var apiResponse = new MultiFactorAuthenticationApi().MFAValidateGoogleAuthCode(googleAuthenticatorCode, secondFactorAuthenticationToken, fields, rbaBrowserEmailTemplate, rbaCityEmailTemplate, rbaCountryEmailTemplate, rbaIpEmailTemplate).Result;
 ```
 
 
 <h6 id="MFAValidateBackupCode-put-">MFA Validate Backup code (PUT)</h6>
-This API is used to validate the backup code provided by the user and if valid, we return an access_token allowing the user to login incases where Multi-factor authentication (MFA) is enabled and the secondary factor is unavailable. When a user initially downloads the Backup codes, We generate 10 codes, each code can only be consumed once. if any user attempts to go over the number of invalid login attempts configured in the Dashboard then the account gets blocked automatically [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/multi-factor-authentication/backup-codes/mfa-validate-backup-code/)
+This API is used to validate the backup code provided by the user and if valid, we return an access token allowing the user to login incases where Multi-factor authentication (MFA) is enabled and the secondary factor is unavailable. When a user initially downloads the Backup codes, We generate 10 codes, each code can only be consumed once. if any user attempts to go over the number of invalid login attempts configured in the Dashboard then the account gets blocked automatically [More Info](/api/v2/customer-identity-api/multi-factor-authentication/backup-codes/mfa-validate-backup-code/)
 
 
 
@@ -2098,12 +2178,16 @@ BackupCode ="<BackupCode>"
 }; //Required
 var secondFactorAuthenticationToken = "secondFactorAuthenticationToken"; //Required
 string fields = null; //Optional
-var apiResponse = new MultiFactorAuthenticationApi().MFAValidateBackupCode(multiFactorAuthModelByBackupCode, secondFactorAuthenticationToken, fields).Result;
+var rbaBrowserEmailTemplate = "rbaBrowserEmailTemplate"; //Optional
+var rbaCityEmailTemplate = "rbaCityEmailTemplate"; //Optional
+var rbaCountryEmailTemplate = "rbaCountryEmailTemplate"; //Optional
+var rbaIpEmailTemplate = "rbaIpEmailTemplate"; //Optional
+var apiResponse = new MultiFactorAuthenticationApi().MFAValidateBackupCode(multiFactorAuthModelByBackupCode, secondFactorAuthenticationToken, fields, rbaBrowserEmailTemplate, rbaCityEmailTemplate, rbaCountryEmailTemplate, rbaIpEmailTemplate).Result;
 ```
 
 
 <h6 id="MFAUpdatePhoneNumber-put-">MFA Update Phone Number (PUT)</h6>
-This API is used to update (if configured) the phone number used for Multi-factor authentication by sending the verification OTP to the provided phone number [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/multi-factor-authentication/sms-authenticator/mfa-update-phone-number/)
+This API is used to update (if configured) the phone number used for Multi-factor authentication by sending the verification OTP to the provided phone number [More Info](/api/v2/customer-identity-api/multi-factor-authentication/sms-authenticator/mfa-update-phone-number/)
 
 
 
@@ -2116,8 +2200,49 @@ var apiResponse = new MultiFactorAuthenticationApi().MFAUpdatePhoneNumber(phoneN
 ```
 
 
+<h6 id="MFAValidateEmailOtp-put-">Verify MFA Email OTP by MFA Token (PUT)</h6>
+This API is used to Verify MFA Email OTP by MFA Token [More Info](/api/v2/customer-identity-api/multi-factor-authentication/verify-mfa-email-otp-by-mfa-token/)
+
+
+
+```
+
+MultiFactorAuthModelByEmailOtp multiFactorAuthModelByEmailOtp = new MultiFactorAuthModelByEmailOtp{
+  EmailId="emailId",
+  Otp="otp"
+}; //Required
+var secondFactorAuthenticationToken = "secondFactorAuthenticationToken"; //Required
+var rbaBrowserEmailTemplate = "rbaBrowserEmailTemplate"; //Optional
+var rbaCityEmailTemplate = "rbaCityEmailTemplate"; //Optional
+var rbaCountryEmailTemplate = "rbaCountryEmailTemplate"; //Optional
+var rbaIpEmailTemplate = "rbaIpEmailTemplate"; //Optional
+var apiResponse = new MultiFactorAuthenticationApi().MFAValidateEmailOtp(multiFactorAuthModelByEmailOtp, secondFactorAuthenticationToken, rbaBrowserEmailTemplate, rbaCityEmailTemplate, rbaCountryEmailTemplate, rbaIpEmailTemplate).Result;
+```
+
+
+<h6 id="MFASecurityQuestionAnswer-put-">Update MFA Security Question by MFA Token (PUT)</h6>
+This API is used to set the security questions on the profile with the MFA token when MFA flow is required. [More Info](/api/v2/customer-identity-api/multi-factor-authentication/update-mfa-security-question-by-mfa-token/)
+
+
+
+```
+
+SecurityQuestionAnswerUpdateModel securityQuestionAnswerUpdateModel = new SecurityQuestionAnswerUpdateModel {
+SecurityQuestionAnswer = new List<SecurityQuestionModel> {
+new SecurityQuestionModel
+{
+QuestionId="db7****8a73e4******bd9****8c20",
+Answer="<answer"
+}
+}
+}; //Required
+var secondFactorAuthenticationToken = "secondFactorAuthenticationToken"; //Required
+var apiResponse = new MultiFactorAuthenticationApi().MFASecurityQuestionAnswer(securityQuestionAnswerUpdateModel, secondFactorAuthenticationToken).Result;
+```
+
+
 <h6 id="MFALoginByEmail-post-">MFA Email Login (POST)</h6>
-This API can be used to login by emailid on a Multi-factor authentication enabled LoginRadius site. [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/multi-factor-authentication/mfa-email-login)
+This API can be used to login by emailid on a Multi-factor authentication enabled LoginRadius site. [More Info](/api/v2/customer-identity-api/multi-factor-authentication/mfa-email-login)
 
 
 
@@ -2131,12 +2256,13 @@ var loginUrl = "loginUrl"; //Optional
 var smsTemplate = "smsTemplate"; //Optional
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
-var apiResponse = new MultiFactorAuthenticationApi().MFALoginByEmail(email, password, emailTemplate, fields, loginUrl, smsTemplate, smsTemplate2FA, verificationUrl).Result;
+var emailTemplate2FA = "emailTemplate2FA"; //Optional
+var apiResponse = new MultiFactorAuthenticationApi().MFALoginByEmail(email, password, emailTemplate, fields, loginUrl, smsTemplate, smsTemplate2FA, verificationUrl, emailTemplate2FA).Result;
 ```
 
 
 <h6 id="MFALoginByUserName-post-">MFA UserName Login (POST)</h6>
-This API can be used to login by username on a Multi-factor authentication enabled LoginRadius site. [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/multi-factor-authentication/mfa-user-name-login)
+This API can be used to login by username on a Multi-factor authentication enabled LoginRadius site. [More Info](/api/v2/customer-identity-api/multi-factor-authentication/mfa-user-name-login)
 
 
 
@@ -2150,12 +2276,13 @@ var loginUrl = "loginUrl"; //Optional
 var smsTemplate = "smsTemplate"; //Optional
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
-var apiResponse = new MultiFactorAuthenticationApi().MFALoginByUserName(password, username, emailTemplate, fields, loginUrl, smsTemplate, smsTemplate2FA, verificationUrl).Result;
+var emailTemplate2FA = "emailTemplate2FA"; //Optional
+var apiResponse = new MultiFactorAuthenticationApi().MFALoginByUserName(password, username, emailTemplate, fields, loginUrl, smsTemplate, smsTemplate2FA, verificationUrl, emailTemplate2FA).Result;
 ```
 
 
 <h6 id="MFALoginByPhone-post-">MFA Phone Login (POST)</h6>
-This API can be used to login by Phone on a Multi-factor authentication enabled LoginRadius site. [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/multi-factor-authentication/mfa-phone-login)
+This API can be used to login by Phone on a Multi-factor authentication enabled LoginRadius site. [More Info](/api/v2/customer-identity-api/multi-factor-authentication/mfa-phone-login)
 
 
 
@@ -2169,12 +2296,55 @@ var loginUrl = "loginUrl"; //Optional
 var smsTemplate = "smsTemplate"; //Optional
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
-var apiResponse = new MultiFactorAuthenticationApi().MFALoginByPhone(password, phone, emailTemplate, fields, loginUrl, smsTemplate, smsTemplate2FA, verificationUrl).Result;
+var emailTemplate2FA = "emailTemplate2FA"; //Optional
+var apiResponse = new MultiFactorAuthenticationApi().MFALoginByPhone(password, phone, emailTemplate, fields, loginUrl, smsTemplate, smsTemplate2FA, verificationUrl, emailTemplate2FA).Result;
+```
+
+
+<h6 id="MFAEmailOTP-post-">Send MFA Email OTP by MFA Token (POST)</h6>
+An API designed to send the MFA Email OTP to the email. [More Info](/api/v2/customer-identity-api/multi-factor-authentication/send-mfa-email-otp-by-mfa-token/)
+
+
+
+```
+
+EmailIdModel emailIdModel = new EmailIdModel{
+EmailId= "emailId"
+}; //Required
+var secondFactorAuthenticationToken = "secondFactorAuthenticationToken"; //Required
+var emailTemplate2FA = "emailTemplate2FA"; //Optional
+var apiResponse = new MultiFactorAuthenticationApi().MFAEmailOTP(emailIdModel, secondFactorAuthenticationToken, emailTemplate2FA).Result;
+```
+
+
+<h6 id="MFASecurityQuestionAnswerVerification-post-">Verify MFA Security Question by MFA Token (POST)</h6>
+This API is used to login to a user's account during the second MFA step via answering the security questions.[More Info](/api/v2/customer-identity-api/multi-factor-authentication/verify-mfa-security-question-by-mfa-token/)
+
+
+
+```
+
+SecurityQuestionAnswerUpdateModel securityQuestionAnswerUpdateModel = new SecurityQuestionAnswerUpdateModel
+{
+SecurityQuestionAnswer =new List<SecurityQuestionModel>{
+new SecurityQuestionModel
+{
+QuestionId = "db7****8a73e4******bd9****8c20",
+Answer = "<answer>"
+}
+}
+}; //Required
+var secondFactorAuthenticationToken = "secondFactorAuthenticationToken"; //Required
+var rbaBrowserEmailTemplate = "rbaBrowserEmailTemplate"; //Optional
+var rbaCityEmailTemplate = "rbaCityEmailTemplate"; //Optional
+var rbaCountryEmailTemplate = "rbaCountryEmailTemplate"; //Optional
+var rbaIpEmailTemplate = "rbaIpEmailTemplate"; //Optional
+var apiResponse = new MultiFactorAuthenticationApi().MFASecurityQuestionAnswerVerification(securityQuestionAnswerUpdateModel, secondFactorAuthenticationToken, rbaBrowserEmailTemplate, rbaCityEmailTemplate, rbaCountryEmailTemplate, rbaIpEmailTemplate).Result;
 ```
 
 
 <h6 id="MFAConfigureByAccessToken-get-">MFA Validate Access Token (GET)</h6>
-This API is used to configure the Multi-factor authentication after login by using the access_token when MFA is set as optional on the LoginRadius site. [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/multi-factor-authentication/mfa-validate-access-token/)
+This API is used to configure the Multi-factor authentication after login by using the access token when MFA is set as optional on the LoginRadius site. [More Info](/api/v2/customer-identity-api/multi-factor-authentication/mfa-validate-access-token/)
 
 
 
@@ -2187,7 +2357,7 @@ var apiResponse = new MultiFactorAuthenticationApi().MFAConfigureByAccessToken(a
 
 
 <h6 id="MFABackupCodeByAccessToken-get-">MFA Backup Code by Access Token (GET)</h6>
-This API is used to get a set of backup codes via access_token to allow the user login on a site that has Multi-factor Authentication enabled in the event that the user does not have a secondary factor available. We generate 10 codes, each code can only be consumed once. If any user attempts to go over the number of invalid login attempts configured in the Dashboard then the account gets blocked automatically [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/multi-factor-authentication/backup-codes/mfa-backup-code-by-access-token/)
+This API is used to get a set of backup codes via access token to allow the user login on a site that has Multi-factor Authentication enabled in the event that the user does not have a secondary factor available. We generate 10 codes, each code can only be consumed once. If any user attempts to go over the number of invalid login attempts configured in the Dashboard then the account gets blocked automatically [More Info](/api/v2/customer-identity-api/multi-factor-authentication/backup-codes/mfa-backup-code-by-access-token/)
 
 
 
@@ -2199,7 +2369,7 @@ var apiResponse = new MultiFactorAuthenticationApi().MFABackupCodeByAccessToken(
 
 
 <h6 id="MFAResetBackupCodeByAccessToken-get-">Reset Backup Code by Access Token (GET)</h6>
-API is used to reset the backup codes on a given account via the access_token. This API call will generate 10 new codes, each code can only be consumed once [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/multi-factor-authentication/backup-codes/mfa-reset-backup-code-by-access-token/)
+API is used to reset the backup codes on a given account via the access token. This API call will generate 10 new codes, each code can only be consumed once [More Info](/api/v2/customer-identity-api/multi-factor-authentication/backup-codes/mfa-reset-backup-code-by-access-token/)
 
 
 
@@ -2210,8 +2380,22 @@ var apiResponse = new MultiFactorAuthenticationApi().MFAResetBackupCodeByAccessT
 ```
 
 
+<h6 id="MFAEmailOtpByAccessToken-get-">Send MFA Email OTP by Access Token (GET)</h6>
+This API is created to send the OTP to the email if email OTP authenticator is enabled in app's MFA configuration. [More Info](/api/v2/customer-identity-api/multi-factor-authentication/send-mfa-email-otp-by-access-token/)
+
+
+
+```
+
+var accessToken = "accessToken"; //Required
+var emailId = "emailId"; //Required
+var emailTemplate2FA = "emailTemplate2FA"; //Optional
+var apiResponse = new MultiFactorAuthenticationApi().MFAEmailOtpByAccessToken(accessToken, emailId, emailTemplate2FA).Result;
+```
+
+
 <h6 id="MFAResendOTP-get-">MFA Resend Otp (GET)</h6>
-This API is used to resending the verification OTP to the provided phone number [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/multi-factor-authentication/resend-twofactorauthentication-otp/)
+This API is used to resending the verification OTP to the provided phone number [More Info](/api/v2/customer-identity-api/multi-factor-authentication/resend-twofactorauthentication-otp/)
 
 
 
@@ -2224,7 +2408,7 @@ var apiResponse = new MultiFactorAuthenticationApi().MFAResendOTP(secondFactorAu
 
 
 <h6 id="MFABackupCodeByUid-get-">MFA Backup Code by UID (GET)</h6>
-This API is used to reset the backup codes on a given account via the UID. This API call will generate 10 new codes, each code can only be consumed once. [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/multi-factor-authentication/backup-codes/mfa-backup-code-by-uid/)
+This API is used to reset the backup codes on a given account via the UID. This API call will generate 10 new codes, each code can only be consumed once. [More Info](/api/v2/customer-identity-api/multi-factor-authentication/backup-codes/mfa-backup-code-by-uid/)
 
 
 
@@ -2236,7 +2420,7 @@ var apiResponse = new MultiFactorAuthenticationApi().MFABackupCodeByUid(uid).Res
 
 
 <h6 id="MFAResetBackupCodeByUid-get-">MFA Reset Backup Code by UID (GET)</h6>
-This API is used to reset the backup codes on a given account via the UID. This API call will generate 10 new codes, each code can only be consumed once. [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/multi-factor-authentication/backup-codes/mfa-reset-backup-code-by-uid/)
+This API is used to reset the backup codes on a given account via the UID. This API call will generate 10 new codes, each code can only be consumed once. [More Info](/api/v2/customer-identity-api/multi-factor-authentication/backup-codes/mfa-reset-backup-code-by-uid/)
 
 
 
@@ -2248,7 +2432,7 @@ var apiResponse = new MultiFactorAuthenticationApi().MFAResetBackupCodeByUid(uid
 
 
 <h6 id="MFAResetGoogleAuthByToken-delete-">MFA Reset Google Authenticator by Token (DELETE)</h6>
-This API Resets the Google Authenticator configurations on a given account via the access_token [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/multi-factor-authentication/google-authenticator/mfa-reset-google-authenticator-by-token/)
+This API Resets the Google Authenticator configurations on a given account via the access token [More Info](/api/v2/customer-identity-api/multi-factor-authentication/google-authenticator/mfa-reset-google-authenticator-by-token/)
 
 
 
@@ -2261,7 +2445,7 @@ var apiResponse = new MultiFactorAuthenticationApi().MFAResetGoogleAuthByToken(a
 
 
 <h6 id="MFAResetSMSAuthByToken-delete-">MFA Reset SMS Authenticator by Token (DELETE)</h6>
-This API resets the SMS Authenticator configurations on a given account via the access_token. [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/multi-factor-authentication/sms-authenticator/mfa-reset-sms-authenticator-by-token/)
+This API resets the SMS Authenticator configurations on a given account via the access token. [More Info](/api/v2/customer-identity-api/multi-factor-authentication/sms-authenticator/mfa-reset-sms-authenticator-by-token/)
 
 
 
@@ -2273,8 +2457,32 @@ var apiResponse = new MultiFactorAuthenticationApi().MFAResetSMSAuthByToken(acce
 ```
 
 
+<h6 id="MFAResetEmailOtpAuthenticatorByAccessToken-delete-">Reset MFA Email OTP Authenticator By Access Token (DELETE)</h6>
+This API is used to reset the Email OTP Authenticator settings for an MFA-enabled user [More Info](/api/v2/customer-identity-api/multi-factor-authentication/reset-mfa-email-otp-authenticator-access-token/)
+
+
+
+```
+
+var accessToken = "accessToken"; //Required
+var apiResponse = new MultiFactorAuthenticationApi().MFAResetEmailOtpAuthenticatorByAccessToken(accessToken).Result;
+```
+
+
+<h6 id="MFAResetSecurityQuestionAuthenticatorByAccessToken-delete-">MFA Reset Security Question Authenticator By Access Token (DELETE)</h6>
+This API is used to Reset MFA Security Question Authenticator By Access Token [More Info](/api/v2/customer-identity-api/multi-factor-authentication/reset-mfa-security-question-by-access-token/)
+
+
+
+```
+
+var accessToken = "accessToken"; //Required
+var apiResponse = new MultiFactorAuthenticationApi().MFAResetSecurityQuestionAuthenticatorByAccessToken(accessToken).Result;
+```
+
+
 <h6 id="MFAResetSMSAuthenticatorByUid-delete-">MFA Reset SMS Authenticator By UID (DELETE)</h6>
-This API resets the SMS Authenticator configurations on a given account via the UID. [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/multi-factor-authentication/sms-authenticator/mfa-reset-sms-authenticator-by-uid/)
+This API resets the SMS Authenticator configurations on a given account via the UID. [More Info](/api/v2/customer-identity-api/multi-factor-authentication/sms-authenticator/mfa-reset-sms-authenticator-by-uid/)
 
 
 
@@ -2287,7 +2495,7 @@ var apiResponse = new MultiFactorAuthenticationApi().MFAResetSMSAuthenticatorByU
 
 
 <h6 id="MFAResetGoogleAuthenticatorByUid-delete-">MFA Reset Google Authenticator By UID (DELETE)</h6>
-This API resets the Google Authenticator configurations on a given account via the UID. [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/multi-factor-authentication/google-authenticator/mfa-reset-google-authenticator-by-uid/)
+This API resets the Google Authenticator configurations on a given account via the UID. [More Info](/api/v2/customer-identity-api/multi-factor-authentication/google-authenticator/mfa-reset-google-authenticator-by-uid/)
 
 
 
@@ -2296,6 +2504,30 @@ This API resets the Google Authenticator configurations on a given account via t
 var googleAuthenticator = true; //Required
 var uid = "uid"; //Required
 var apiResponse = new MultiFactorAuthenticationApi().MFAResetGoogleAuthenticatorByUid(googleAuthenticator, uid).Result;
+```
+
+
+<h6 id="MFAResetEmailOtpAuthenticatorByUid-delete-">Reset MFA Email OTP Authenticator Settings by Uid (DELETE)</h6>
+This API is used to reset the Email OTP Authenticator settings for an MFA-enabled user. [More Info](/api/v2/customer-identity-api/multi-factor-authentication/backup-codes/reset-mfa-email-otp-authenticator-settings-by-uid/)
+
+
+
+```
+
+var uid = "uid"; //Required
+var apiResponse = new MultiFactorAuthenticationApi().MFAResetEmailOtpAuthenticatorByUid(uid).Result;
+```
+
+
+<h6 id="MFAResetSecurityQuestionAuthenticatorByUid-delete-">Reset MFA Security Question Authenticator Settings by Uid (DELETE)</h6>
+This API is used to reset the Security Question Authenticator settings for an MFA-enabled user. [More Info](/api/v2/customer-identity-api/multi-factor-authentication/backup-codes/reset-mfa-security-question-authenticator-settings-by-uid/)
+
+
+
+```
+
+var uid = "uid"; //Required
+var apiResponse = new MultiFactorAuthenticationApi().MFAResetSecurityQuestionAuthenticatorByUid(uid).Result;
 ```
 
 
@@ -2551,7 +2783,6 @@ var apiResponse = new PINAuthenticationApi().InValidatePinSessionToken(sessionTo
 
 
 
-
 ### ReAuthentication API
 
 
@@ -2561,15 +2792,18 @@ List of APIs in this Section:<br>
 [PUT : Validate MFA by Google Authenticator Code](#MFAReAuthenticateByGoogleAuth-put-)<br>
 [PUT : Validate MFA by Password](#MFAReAuthenticateByPassword-put-)<br>
 [PUT : MFA Re-authentication by PIN](#VerifyPINAuthentication-put-)<br>
+[PUT : MFA Re-authentication by Email OTP](#ReAuthValidateEmailOtp-put-)<br>
 [POST : Verify Multifactor OTP Authentication](#VerifyMultiFactorOtpReauthentication-post-)<br>
 [POST : Verify Multifactor Password Authentication](#VerifyMultiFactorPasswordReauthentication-post-)<br>
 [POST : Verify Multifactor PIN Authentication](#VerifyMultiFactorPINReauthentication-post-)<br>
+[POST : MFA Re-authentication by Security Question](#ReAuthBySecurityQuestion-post-)<br>
 [GET : Multi Factor Re-Authenticate](#MFAReAuthenticate-get-)<br>
+[GET : Send MFA Re-auth Email OTP by Access Token](#ReAuthSendEmailOtp-get-)<br>
 
 
 
 <h6 id="MFAReAuthenticateByOTP-put-">Validate MFA by OTP (PUT)</h6>
-This API is used to re-authenticate via Multi-factor authentication by passing the One Time Password received via SMS [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/re-authentication/mfa/re-auth-by-otp/)
+This API is used to re-authenticate via Multi-factor authentication by passing the One Time Password received via SMS [More Info](/api/v2/customer-identity-api/re-authentication/mfa/re-auth-by-otp/)
 
 
 
@@ -2584,7 +2818,7 @@ var apiResponse = new ReAuthenticationApi().MFAReAuthenticateByOTP(accessToken, 
 
 
 <h6 id="MFAReAuthenticateByBackupCode-put-">Validate MFA by Backup Code (PUT)</h6>
-This API is used to re-authenticate by set of backup codes via access_token on the site that has Multi-factor authentication enabled in re-authentication for the user that does not have the device [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/re-authentication/mfa/re-auth-by-backup-code/)
+This API is used to re-authenticate by set of backup codes via access token on the site that has Multi-factor authentication enabled in re-authentication for the user that does not have the device [More Info](/api/v2/customer-identity-api/re-authentication/mfa/re-auth-by-backup-code/)
 
 
 
@@ -2599,7 +2833,7 @@ var apiResponse = new ReAuthenticationApi().MFAReAuthenticateByBackupCode(access
 
 
 <h6 id="MFAReAuthenticateByGoogleAuth-put-">Validate MFA by Google Authenticator Code (PUT)</h6>
-This API is used to re-authenticate via Multi-factor-authentication by passing the google authenticator code [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/multi-factor-authentication/re-authentication/re-auth-by-google-authenticator-code)
+This API is used to re-authenticate via Multi-factor-authentication by passing the google authenticator code [More Info](/api/v2/customer-identity-api/multi-factor-authentication/re-authentication/re-auth-by-google-authenticator-code)
 
 
 
@@ -2614,7 +2848,7 @@ var apiResponse = new ReAuthenticationApi().MFAReAuthenticateByGoogleAuth(access
 
 
 <h6 id="MFAReAuthenticateByPassword-put-">Validate MFA by Password (PUT)</h6>
-This API is used to re-authenticate via Multi-factor-authentication by passing the password [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/multi-factor-authentication/re-authentication/re-auth-by-password)
+This API is used to re-authenticate via Multi-factor-authentication by passing the password [More Info](/api/v2/customer-identity-api/multi-factor-authentication/re-authentication/re-auth-by-password)
 
 
 
@@ -2630,7 +2864,7 @@ var apiResponse = new ReAuthenticationApi().MFAReAuthenticateByPassword(accessTo
 
 
 <h6 id="VerifyPINAuthentication-put-">MFA Re-authentication by PIN (PUT)</h6>
-This API is used to validate the triggered MFA authentication flow with a password. [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/re-authentication/pin/re-auth-by-pin/)
+This API is used to validate the triggered MFA authentication flow with a password. [More Info](/api/v2/customer-identity-api/re-authentication/pin/re-auth-by-pin/)
 
 
 
@@ -2645,8 +2879,24 @@ var apiResponse = new ReAuthenticationApi().VerifyPINAuthentication(accessToken,
 ```
 
 
+<h6 id="ReAuthValidateEmailOtp-put-">MFA Re-authentication by Email OTP (PUT)</h6>
+This API is used to validate the triggered MFA authentication flow with an Email OTP. [More Info](/api/v2/customer-identity-api/multi-factor-authentication/re-authentication/mfa-re-auth-by-email-otp/)
+
+
+
+```
+
+var accessToken = "accessToken"; //Required
+ReauthByEmailOtpModel reauthByEmailOtpModel = new ReauthByEmailOtpModel{
+EmailId="emailId",
+Otp="otp"
+}; //Required
+var apiResponse = new ReAuthenticationApi().ReAuthValidateEmailOtp(accessToken, reauthByEmailOtpModel).Result;
+```
+
+
 <h6 id="VerifyMultiFactorOtpReauthentication-post-">Verify Multifactor OTP Authentication (POST)</h6>
-This API is used on the server-side to validate and verify the re-authentication token created by the MFA re-authentication API. This API checks re-authentications created by OTP. [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/re-authentication/mfa/re-auth-validate-mfa/)
+This API is used on the server-side to validate and verify the re-authentication token created by the MFA re-authentication API. This API checks re-authentications created by OTP. [More Info](/api/v2/customer-identity-api/re-authentication/mfa/re-auth-validate-mfa/)
 
 
 
@@ -2661,7 +2911,7 @@ var apiResponse = new ReAuthenticationApi().VerifyMultiFactorOtpReauthentication
 
 
 <h6 id="VerifyMultiFactorPasswordReauthentication-post-">Verify Multifactor Password Authentication (POST)</h6>
-This API is used on the server-side to validate and verify the re-authentication token created by the MFA re-authentication API. This API checks re-authentications created by password. [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/re-authentication/re-auth-validate-password/)
+This API is used on the server-side to validate and verify the re-authentication token created by the MFA re-authentication API. This API checks re-authentications created by password. [More Info](/api/v2/customer-identity-api/re-authentication/re-auth-validate-password/)
 
 
 
@@ -2676,7 +2926,7 @@ var apiResponse = new ReAuthenticationApi().VerifyMultiFactorPasswordReauthentic
 
 
 <h6 id="VerifyMultiFactorPINReauthentication-post-">Verify Multifactor PIN Authentication (POST)</h6>
-This API is used on the server-side to validate and verify the re-authentication token created by the MFA re-authentication API. This API checks re-authentications created by PIN. [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/re-authentication/pin/re-auth-validate-pin/)
+This API is used on the server-side to validate and verify the re-authentication token created by the MFA re-authentication API. This API checks re-authentications created by PIN. [More Info](/api/v2/customer-identity-api/re-authentication/pin/re-auth-validate-pin/)
 
 
 
@@ -2690,8 +2940,30 @@ var apiResponse = new ReAuthenticationApi().VerifyMultiFactorPINReauthentication
 ```
 
 
+<h6 id="ReAuthBySecurityQuestion-post-">MFA Re-authentication by Security Question (POST)</h6>
+This API is used to validate the triggered MFA re-authentication flow with security questions answers. [More Info](/api/v2/customer-identity-api/multi-factor-authentication/re-authentication/mfa-re-authentication-by-security-question/)
+
+
+
+```
+
+var accessToken = "accessToken"; //Required
+SecurityQuestionAnswerUpdateModel securityQuestionAnswerUpdateModel = new SecurityQuestionAnswerUpdateModel
+{
+SecurityQuestionAnswer = new List<SecurityQuestionModel> {
+new SecurityQuestionModel
+{
+QuestionId = "db7****8a73e4******bd9****8c20",
+Answer = "<answer>"
+}
+}
+}; //Required
+var apiResponse = new ReAuthenticationApi().ReAuthBySecurityQuestion(accessToken, securityQuestionAnswerUpdateModel).Result;
+```
+
+
 <h6 id="MFAReAuthenticate-get-">Multi Factor Re-Authenticate (GET)</h6>
-This API is used to trigger the Multi-Factor Autentication workflow for the provided access_token [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/multi-factor-authentication/re-authentication/re-auth-trigger/)
+This API is used to trigger the Multi-Factor Autentication workflow for the provided access token [More Info](/api/v2/customer-identity-api/multi-factor-authentication/re-authentication/re-auth-trigger/)
 
 
 
@@ -2700,6 +2972,20 @@ This API is used to trigger the Multi-Factor Autentication workflow for the prov
 var accessToken = "accessToken"; //Required
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
 var apiResponse = new ReAuthenticationApi().MFAReAuthenticate(accessToken, smsTemplate2FA).Result;
+```
+
+
+<h6 id="ReAuthSendEmailOtp-get-">Send MFA Re-auth Email OTP by Access Token (GET)</h6>
+This API is used to send the MFA Email OTP to the email for Re-authentication [More Info](/api/v2/customer-identity-api/multi-factor-authentication/re-authentication/send-mfa-re-auth-email-otp-by-access-token/)
+
+
+
+```
+
+var accessToken = "accessToken"; //Required
+var emailId = "emailId"; //Required
+var emailTemplate2FA = "emailTemplate2FA"; //Optional
+var apiResponse = new ReAuthenticationApi().ReAuthSendEmailOtp(accessToken, emailId, emailTemplate2FA).Result;
 ```
 
 
@@ -3003,6 +3289,8 @@ var apiResponse = new OneTouchLoginApi().OneTouchLoginPing(clientGuid, fields).R
 
 List of APIs in this Section:<br>
 [PUT : Passwordless Login Phone Verification](#PasswordlessLoginPhoneVerification-put-)<br>
+[POST : Passwordless Login Verification By Email And OTP ](#PasswordlessLoginVerificationByEmailAndOTP-post-)<br>
+[POST : Passwordless Login Verification By User Name And OTP](#PasswordlessLoginVerificationByUserNameAndOTP-post-)<br>
 [GET : Passwordless Login by Phone](#PasswordlessLoginByPhone-get-)<br>
 [GET : Passwordless Login By Email](#PasswordlessLoginByEmail-get-)<br>
 [GET : Passwordless Login By UserName](#PasswordlessLoginByUserName-get-)<br>
@@ -3011,7 +3299,7 @@ List of APIs in this Section:<br>
 
 
 <h6 id="PasswordlessLoginPhoneVerification-put-">Passwordless Login Phone Verification (PUT)</h6>
-This API verifies an account by OTP and allows the customer to login. [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/passwordless-login/passwordless-login-phone-verification)
+This API verifies an account by OTP and allows the customer to login. [More Info](/api/v2/customer-identity-api/passwordless-login/passwordless-login-phone-verification)
 
 
 
@@ -3027,8 +3315,40 @@ var apiResponse = new PasswordLessLoginApi().PasswordlessLoginPhoneVerification(
 ```
 
 
+<h6 id="PasswordlessLoginVerificationByEmailAndOTP-post-">Passwordless Login Verification By Email And OTP  (POST)</h6>
+This API is used to verify the otp sent to the email when doing a passwordless login.  [More Info](/api/v2/customer-identity-api/passwordless-login/passwordless-login-verification-by-email-and-otp)
+
+
+
+```
+
+PasswordLessLoginByEmailAndOtpModel passwordLessLoginByEmailAndOtpModel = new PasswordLessLoginByEmailAndOtpModel{
+  Otp ="<Otp>",
+  Email ="<Email>"
+}; //Required
+string fields = null; //Optional
+var apiResponse = new PasswordLessLoginApi().PasswordlessLoginVerificationByEmailAndOTP(passwordLessLoginByEmailAndOtpModel, fields).Result;
+```
+
+
+<h6 id="PasswordlessLoginVerificationByUserNameAndOTP-post-">Passwordless Login Verification By User Name And OTP (POST)</h6>
+This API is used to verify the otp sent to the email when doing a passwordless login. [More Info](/api/v2/customer-identity-api/passwordless-login/passwordless-login-verification-by-username-and-otp)
+
+
+
+```
+
+PasswordLessLoginByUserNameAndOtpModel passwordLessLoginByUserNameAndOtpModel = new PasswordLessLoginByUserNameAndOtpModel{
+  Otp ="<Otp>",
+  UserName ="<UserName>"
+}; //Required
+string fields = null; //Optional
+var apiResponse = new PasswordLessLoginApi().PasswordlessLoginVerificationByUserNameAndOTP(passwordLessLoginByUserNameAndOtpModel, fields).Result;
+```
+
+
 <h6 id="PasswordlessLoginByPhone-get-">Passwordless Login by Phone (GET)</h6>
-API can be used to send a One-time Passcode (OTP) provided that the account has a verified PhoneID [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/passwordless-login/passwordless-login-by-phone)
+API can be used to send a One-time Passcode (OTP) provided that the account has a verified PhoneID [More Info](/api/v2/customer-identity-api/passwordless-login/passwordless-login-by-phone)
 
 
 
@@ -3041,7 +3361,7 @@ var apiResponse = new PasswordLessLoginApi().PasswordlessLoginByPhone(phone, sms
 
 
 <h6 id="PasswordlessLoginByEmail-get-">Passwordless Login By Email (GET)</h6>
-This API is used to send a Passwordless Login verification link to the provided Email ID [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/passwordless-login/passwordless-login-by-email)
+This API is used to send a Passwordless Login verification link to the provided Email ID [More Info](/api/v2/customer-identity-api/passwordless-login/passwordless-login-by-email)
 
 
 
@@ -3055,7 +3375,7 @@ var apiResponse = new PasswordLessLoginApi().PasswordlessLoginByEmail(email, pas
 
 
 <h6 id="PasswordlessLoginByUserName-get-">Passwordless Login By UserName (GET)</h6>
-This API is used to send a Passwordless Login Verification Link to a customer by providing their UserName [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/passwordless-login/passwordless-login-by-username)
+This API is used to send a Passwordless Login Verification Link to a customer by providing their UserName [More Info](/api/v2/customer-identity-api/passwordless-login/passwordless-login-by-username)
 
 
 
@@ -3069,7 +3389,7 @@ var apiResponse = new PasswordLessLoginApi().PasswordlessLoginByUserName(usernam
 
 
 <h6 id="PasswordlessLoginVerification-get-">Passwordless Login Verification (GET)</h6>
-This API is used to verify the Passwordless Login verification link. Note: If you are using Passwordless Login by Phone you will need to use the Passwordless Login Phone Verification API [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/passwordless-login/passwordless-login-verification)
+This API is used to verify the Passwordless Login verification link. Note: If you are using Passwordless Login by Phone you will need to use the Passwordless Login Phone Verification API [More Info](/api/v2/customer-identity-api/passwordless-login/passwordless-login-verification)
 
 
 
@@ -3622,6 +3942,8 @@ List of APIs in this Section:<br>
 [GET : Access Token using google JWT token for Native Mobile Login](#GetAccessTokenByGoogleJWTAccessToken-get-)<br>
 [GET : Access Token via Linkedin Token](#GetAccessTokenByLinkedinAccessToken-get-)<br>
 [GET : Get Access Token By Foursquare Access Token](#GetAccessTokenByFoursquareAccessToken-get-)<br>
+[GET : Access Token via Apple Id Code](#GetAccessTokenByAppleIdCode-get-)<br>
+[GET : Access Token via WeChat Code](#GetAccessTokenByWeChatCode-get-)<br>
 [GET : Access Token via Vkontakte Token](#GetAccessTokenByVkontakteAccessToken-get-)<br>
 [GET : Access Token via Google AuthCode](#GetAccessTokenByGoogleAuthCode-get-)<br>
 
@@ -3635,7 +3957,8 @@ The API is used to get LoginRadius access token by sending Facebook's access tok
 ```
 
 var fbAccessToken = "fbAccessToken"; //Required
-var apiResponse = new NativeSocialApi().GetAccessTokenByFacebookAccessToken(fbAccessToken).Result;
+var socialAppName = "socialAppName"; //Optional
+var apiResponse = new NativeSocialApi().GetAccessTokenByFacebookAccessToken(fbAccessToken, socialAppName).Result;
 ```
 
 
@@ -3648,7 +3971,8 @@ The API is used to get LoginRadius access token by sending Twitter's access toke
 
 var twAccessToken = "twAccessToken"; //Required
 var twTokenSecret = "twTokenSecret"; //Required
-var apiResponse = new NativeSocialApi().GetAccessTokenByTwitterAccessToken(twAccessToken, twTokenSecret).Result;
+var socialAppName = "socialAppName"; //Optional
+var apiResponse = new NativeSocialApi().GetAccessTokenByTwitterAccessToken(twAccessToken, twTokenSecret, socialAppName).Result;
 ```
 
 
@@ -3662,7 +3986,8 @@ The API is used to get LoginRadius access token by sending Google's access token
 var googleAccessToken = "googleAccessToken"; //Required
 var clientId = "clientId"; //Optional
 var refreshToken = "refreshToken"; //Optional
-var apiResponse = new NativeSocialApi().GetAccessTokenByGoogleAccessToken(googleAccessToken, clientId, refreshToken).Result;
+var socialAppName = "socialAppName"; //Optional
+var apiResponse = new NativeSocialApi().GetAccessTokenByGoogleAccessToken(googleAccessToken, clientId, refreshToken, socialAppName).Result;
 ```
 
 
@@ -3686,7 +4011,8 @@ The API is used to get LoginRadius access token by sending Linkedin's access tok
 ```
 
 var lnAccessToken = "lnAccessToken"; //Required
-var apiResponse = new NativeSocialApi().GetAccessTokenByLinkedinAccessToken(lnAccessToken).Result;
+var socialAppName = "socialAppName"; //Optional
+var apiResponse = new NativeSocialApi().GetAccessTokenByLinkedinAccessToken(lnAccessToken, socialAppName).Result;
 ```
 
 
@@ -3701,6 +4027,29 @@ var fsAccessToken = "fsAccessToken"; //Required
 var apiResponse = new NativeSocialApi().GetAccessTokenByFoursquareAccessToken(fsAccessToken).Result;
 ```
 
+<h6 id="GetAccessTokenByAppleIdCode-get-">Access Token via Apple Id Code (GET)</h6>
+The API is used to get LoginRadius access token by sending a valid Apple ID OAuth Code. It will be valid for the specific duration of time specified in the response. [More Info](/api/v2/customer-identity-api/social-login/native-social-login-api/access-token-via-apple-id-code)
+
+
+
+```
+
+var code = "code"; //Required
+var socialAppName = "socialAppName"; //Optional
+var apiResponse = new NativeSocialApi().GetAccessTokenByAppleIdCode(code, socialAppName);
+```
+
+
+<h6 id="GetAccessTokenByWeChatCode-get-">Access Token via WeChat Code (GET)</h6>
+This API is used to retrieve a LoginRadius access token by passing in a valid WeChat OAuth Code. [More Info](/api/v2/customer-identity-api/social-login/native-social-login-api/access-token-via-wechat-code)
+
+
+
+```
+
+var code = "code"; //Required
+var apiResponse = new NativeSocialApi().GetAccessTokenByWeChatCode(code);
+```
 
 <h6 id="GetAccessTokenByVkontakteAccessToken-get-">Access Token via Vkontakte Token (GET)</h6>
 The API is used to get LoginRadius access token by sending Vkontakte's access token. It will be valid for the specific duration of time specified in the response. [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/social-login/native-social-login-api/access-token-via-vkontakte-token)
@@ -3722,7 +4071,8 @@ The API is used to get LoginRadius access token by sending Google's AuthCode. It
 ```
 
 var googleAuthcode = "googleAuthcode"; //Required
-var apiResponse = new NativeSocialApi().GetAccessTokenByGoogleAuthCode(googleAuthcode).Result;
+var socialAppName = "socialAppName"; //Optional
+var apiResponse = new NativeSocialApi().GetAccessTokenByGoogleAuthCode(googleAuthcode,socialAppName).Result;
 ```
 
 
@@ -3822,4 +4172,3 @@ var jwt = new JwtTokenValidation().validateJwtToken(jwtParameters);
 
 ## Demo
 We have configured a sample ASP.net project with extended social profile data, webhook Apis, Account APis. You can get a copy of our demo project at [GitHub](https://github.com/LoginRadius/dot-net-sdk/tree/master/Samples/dot-net-demo).
-

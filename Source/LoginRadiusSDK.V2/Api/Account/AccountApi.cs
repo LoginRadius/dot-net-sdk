@@ -7,12 +7,12 @@
 
 using System;
 using LoginRadiusSDK.V2.Common;
+using System.Threading.Tasks;
 using LoginRadiusSDK.V2.Util;
 using LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects;
 using LoginRadiusSDK.V2.Models.ResponseModels.UserProfile;
 using LoginRadiusSDK.V2.Models.RequestModels;
 using LoginRadiusSDK.V2.Models.ResponseModels;
-using System.Threading.Tasks;
 
 namespace LoginRadiusSDK.V2.Api.Account
 {
@@ -608,9 +608,9 @@ namespace LoginRadiusSDK.V2.Api.Account
             return await ConfigureAndExecute<Identity>(HttpMethod.DELETE, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
-        /// This API is used to refresh an access_token via it's associated refresh_token.
+        /// This API is used to refresh an access token via it's associated refresh token.
         /// </summary>
-        /// <param name="refreshToken">LoginRadius refresh_token</param>
+        /// <param name="refreshToken">LoginRadius refresh token</param>
         /// <returns>Response containing Definition of Complete Token data</returns>
         /// 18.31
 
@@ -634,7 +634,7 @@ namespace LoginRadiusSDK.V2.Api.Account
         /// <summary>
         /// The Revoke Refresh Access Token API is used to revoke a refresh token or the Provider Access Token, revoking an existing refresh token will invalidate the refresh token but the associated access token will work until the expiry.
         /// </summary>
-        /// <param name="refreshToken">LoginRadius refresh_token</param>
+        /// <param name="refreshToken">LoginRadius refresh token</param>
         /// <returns>Response containing Definition of Delete Request</returns>
         /// 18.32
 

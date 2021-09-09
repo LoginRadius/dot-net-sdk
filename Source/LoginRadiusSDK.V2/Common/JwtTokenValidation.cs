@@ -10,7 +10,7 @@ namespace LoginRadiusSDK.V2.Common
 {
 #if NETSTANDARD2_0 || NET45
 
-	public class JwtTokenValidation
+    public class JwtTokenValidation
 	{
 
 		public JwtResponse validateJwtToken(JwtValidationParameters jwt)

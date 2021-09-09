@@ -7,18 +7,18 @@
 
 using System;
 using LoginRadiusSDK.V2.Common;
+using System.Threading.Tasks;
 using LoginRadiusSDK.V2.Util;
 using LoginRadiusSDK.V2.Models.ResponseModels;
 using LoginRadiusSDK.V2.Models.RequestModels;
 using LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects;
-using System.Threading.Tasks;
 
 namespace LoginRadiusSDK.V2.Api.Advanced
 {
     public class ReAuthenticationApi : LoginRadiusResource
     {
         /// <summary>
-        /// This API is used to trigger the Multi-Factor Autentication workflow for the provided access_token
+        /// This API is used to trigger the Multi-Factor Autentication workflow for the provided access token
         /// </summary>
         /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
         /// <param name="smsTemplate2FA">SMS Template Name</param>
@@ -74,7 +74,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
             return await ConfigureAndExecute<EventBasedMultiFactorAuthenticationToken>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(reauthByOtpModel));
         }
         /// <summary>
-        /// This API is used to re-authenticate by set of backup codes via access_token on the site that has Multi-factor authentication enabled in re-authentication for the user that does not have the device
+        /// This API is used to re-authenticate by set of backup codes via access token on the site that has Multi-factor authentication enabled in re-authentication for the user that does not have the device
         /// </summary>
         /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
         /// <param name="reauthByBackupCodeModel">Model Class containing Definition for MFA Reauthentication by Backup code</param>
@@ -280,6 +280,97 @@ namespace LoginRadiusSDK.V2.Api.Advanced
             var resourcePath = "identity/v2/auth/account/reauth/pin";
             
             return await ConfigureAndExecute<EventBasedMultiFactorAuthenticationToken>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(pINAuthEventBasedAuthModelWithLockout));
+        }
+        /// <summary>
+        /// This API is used to validate the triggered MFA authentication flow with an Email OTP.
+        /// </summary>
+        /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
+        /// <param name="reauthByEmailOtpModel">payload</param>
+        /// <returns>Response containing Definition response of MFA reauthentication</returns>
+        /// 42.14
+
+        public async Task<ApiResponse<EventBasedMultiFactorAuthenticationToken>> ReAuthValidateEmailOtp(string accessToken, ReauthByEmailOtpModel reauthByEmailOtpModel)
+        {
+            if (string.IsNullOrWhiteSpace(accessToken))
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(accessToken));
+            }
+            if (reauthByEmailOtpModel == null)
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(reauthByEmailOtpModel));
+            }
+            var queryParameters = new QueryParameters
+            {
+                { "access_token", accessToken },
+                { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] }
+            };
+
+            var resourcePath = "identity/v2/auth/account/reauth/2fa/otp/email/verify";
+            
+            return await ConfigureAndExecute<EventBasedMultiFactorAuthenticationToken>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(reauthByEmailOtpModel));
+        }
+        /// <summary>
+        /// This API is used to send the MFA Email OTP to the email for Re-authentication
+        /// </summary>
+        /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
+        /// <param name="emailId">EmailId</param>
+        /// <param name="emailTemplate2FA">EmailTemplate2FA</param>
+        /// <returns>Response containing Definition of Complete Validation data</returns>
+        /// 42.15
+
+        public async Task<ApiResponse<PostResponse>> ReAuthSendEmailOtp(string accessToken, string emailId,
+        string emailTemplate2FA = null)
+        {
+            if (string.IsNullOrWhiteSpace(accessToken))
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(accessToken));
+            }
+            if (string.IsNullOrWhiteSpace(emailId))
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(emailId));
+            }
+            var queryParameters = new QueryParameters
+            {
+                { "access_token", accessToken },
+                { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] },
+                { "emailId", emailId }
+            };
+            if (!string.IsNullOrWhiteSpace(emailTemplate2FA))
+            {
+               queryParameters.Add("emailTemplate2FA", emailTemplate2FA);
+            }
+
+            var resourcePath = "identity/v2/auth/account/reauth/2fa/otp/email";
+            
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
+        }
+        /// <summary>
+        /// This API is used to validate the triggered MFA re-authentication flow with security questions answers.
+        /// </summary>
+        /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
+        /// <param name="securityQuestionAnswerUpdateModel">payload</param>
+        /// <returns>Response containing Definition response of MFA reauthentication</returns>
+        /// 42.16
+
+        public async Task<ApiResponse<EventBasedMultiFactorAuthenticationToken>> ReAuthBySecurityQuestion(string accessToken, SecurityQuestionAnswerUpdateModel securityQuestionAnswerUpdateModel)
+        {
+            if (string.IsNullOrWhiteSpace(accessToken))
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(accessToken));
+            }
+            if (securityQuestionAnswerUpdateModel == null)
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(securityQuestionAnswerUpdateModel));
+            }
+            var queryParameters = new QueryParameters
+            {
+                { "access_token", accessToken },
+                { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] }
+            };
+
+            var resourcePath = "identity/v2/auth/account/reauth/2fa/securityquestionanswer/verify";
+            
+            return await ConfigureAndExecute<EventBasedMultiFactorAuthenticationToken>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(securityQuestionAnswerUpdateModel));
         }
     }
 }

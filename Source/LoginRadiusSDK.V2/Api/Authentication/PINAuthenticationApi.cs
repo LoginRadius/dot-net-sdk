@@ -7,19 +7,19 @@
 
 using System;
 using LoginRadiusSDK.V2.Common;
+using System.Threading.Tasks;
 using LoginRadiusSDK.V2.Util;
 using LoginRadiusSDK.V2.Models.ResponseModels;
 using LoginRadiusSDK.V2.Models.ResponseModels.UserProfile;
 using LoginRadiusSDK.V2.Models.RequestModels;
 using LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects;
-using System.Threading.Tasks;
 
 namespace LoginRadiusSDK.V2.Api.Authentication
 {
     public class PINAuthenticationApi : LoginRadiusResource
     {
         /// <summary>
-        /// This API is used to login a user by pin and session_token.
+        /// This API is used to login a user by pin and session token.
         /// </summary>
         /// <param name="loginByPINModel">Model Class containing Definition of payload for LoginByPin API</param>
         /// <param name="sessionToken">Session Token of user</param>

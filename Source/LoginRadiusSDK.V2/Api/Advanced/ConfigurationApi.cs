@@ -6,9 +6,9 @@
 //-----------------------------------------------------------------------
 
 using LoginRadiusSDK.V2.Common;
+using System.Threading.Tasks;
 using LoginRadiusSDK.V2.Util;
 using LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects;
-using System.Threading.Tasks;
 
 namespace LoginRadiusSDK.V2.Api.Advanced
 {
@@ -26,10 +26,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
                 { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] }
             };
             var resourcePath = "ciam/appinfo";
-
             return await ConfigureAndExecute<ConfigResponseModel>(HttpMethod.GET, resourcePath, queryParameters, null);
-
-
         }
 
         /// <summary>

@@ -1,12 +1,81 @@
 > **LoginRadius .NET SDK Change Log** provides information regarding what has changed, more specifically what changes, improvements and bug fix has been made to the SDK. For more details please refer to the [LoginRadius API Documention](https://docs.loginradius.com/api/v2/sdk-libraries/aspnet)
 
 
+# Version 11.2.0
+
+Release on **September 7, 2021**
+
+## Enhancements
+- Minor code refactor.
+- Support for appsettings.Environment.json : For example, the appsettings.Production.json and appsettings.Development.json files. The environment version of the file is loaded based on the IHostingEnvironment.EnvironmentName.
+- Added X-Origin-IP header support.
+- Added 429 error code handling for "Too Many Request in a particular time frame".
+- Updated Jquery with latest version(3.6.0) in SDK Demo
+
+## Added new multiple APIs for better user experience
+- MFAEmailOtpByAccessToken
+- MFAValidateEmailOtpByAccessToken
+- MFAResetEmailOtpAuthenticatorByAccessToken
+- MFASecurityQuestionAnswerByAccessToken
+- MFAResetSecurityQuestionAuthenticatorByAccessToken
+- MFAEmailOTP
+- MFAValidateEmailOtp
+- MFASecurityQuestionAnswer
+- MFASecurityQuestionAnswerVerification
+- MFAResetEmailOtpAuthenticatorByUid
+- MFAResetSecurityQuestionAuthenticatorByUid
+- ReAuthValidateEmailOtp
+- ReAuthSendEmailOtp
+- ReAuthBySecurityQuestion
+- PasswordlessLoginVerificationByUserNameAndOTP
+- PasswordlessLoginVerificationByEmailAndOTP
+- GetProfileByPing
+- GetAccessTokenByWeChatCode
+- GetAccessTokenByAppleIdCode
+- LinkSocialIdentitiesByPing (POST)
+- linkSocialIdentities(POST)
+
+## Removed APIs:
+
+- GetSocialUserProfile
+- linkSocialIdentity (PUT)
+- getSocialIdentity (GET)
+
+#### Added `EmailTemplate2FA` parameter in the following API 
+- MFALoginByEmail
+- MFALoginByUserName
+- MFALoginByPhone
+
+#### Added 	`RbaBrowserEmailTemplate`, `RbaCityEmailTemplate` ,`RbaCountryEmailTemplate` , `RbaIpEmailTemplate` parameter in the following API 
+- MFAValidateOTPByPhone
+- MFAValidateGoogleAuthCode
+- MFAValidateBackupCode
+
+#### Added 	`emailTemplate`, `verificationUrl` ,`welcomeEmailTemplate`  parameter in the following API 
+
+- GetProfileByAccessToken
+
+## Removed `smsTemplate2FA`  parameter from the following API
+
+- mfaValidateGoogleAuthCode
+
+#### Added 	`isWeb`  parameter in the following API 
+- RefreshAccessToken
+
+#### Added 	`socialAppName`  parameter in the following Native Social Login API 
+- GetAccessTokenByFacebookAccessToken
+- GetAccessTokenByTwitterAccessToken
+- GetAccessTokenByGoogleAccessToken
+- GetAccessTokenByLinkedinAccessToken
+- GetAccessTokenByAppleIdCode
+- GetAccessTokenByGoogleAuthCode
+
 # Version 11.0.0
 Release on **March 05, 2021**
 
 ## Enhancements
 
-- Updated all API Methods in async/await to solving thread performance or scalability problems.
+- Updated all API Method in async/await to solving thread performance or scalability problems.
 - Added new JWT Token Validate Method in SDK.
 
 # Version 10.0.0

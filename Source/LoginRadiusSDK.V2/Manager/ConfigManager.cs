@@ -160,13 +160,18 @@ namespace LoginRadiusSDK.V2
 
             valStr = string.IsNullOrWhiteSpace(LoginRadiusSdkGlobalConfig.DomainName)
                ? _sdkConfigHandler.Setting(LRConfigConstants.DomainName)
-               :LoginRadiusSdkGlobalConfig.DomainName;
+               : LoginRadiusSdkGlobalConfig.DomainName;
             _configValues.TryAdd(LRConfigConstants.DomainName, valStr);
 
             valStr = string.IsNullOrWhiteSpace(LoginRadiusSdkGlobalConfig.ApiRegion)
                ? _sdkConfigHandler.Setting(LRConfigConstants.ApiRegion)
                : LoginRadiusSdkGlobalConfig.ApiRegion;
             _configValues.TryAdd(LRConfigConstants.ApiRegion, valStr);
+
+            valStr = string.IsNullOrWhiteSpace(LoginRadiusSdkGlobalConfig.OriginIp)
+              ? _sdkConfigHandler.Setting(LRConfigConstants.OriginIp)
+              : LoginRadiusSdkGlobalConfig.OriginIp;
+            _configValues.TryAdd(LRConfigConstants.OriginIp, valStr);
 
             return _configValues;
         }

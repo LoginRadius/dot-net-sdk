@@ -50,7 +50,7 @@
         /// </summary>
         public const string ConfigSection = "loginradius";
 
-        
+
         /// <summary>
         /// The new domain name
         /// </summary>
@@ -60,6 +60,11 @@
         /// The region name
         /// </summary>
         public const string ApiRegion = "apiRegion";
+
+        /// <summary>
+        /// The OriginIp name
+        /// </summary>
+        public const string OriginIp = "originIp";
 
 
     }

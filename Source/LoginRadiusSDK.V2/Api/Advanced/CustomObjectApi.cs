@@ -7,15 +7,15 @@
 
 using System;
 using LoginRadiusSDK.V2.Common;
+using System.Threading.Tasks;
 using LoginRadiusSDK.V2.Util;
 using LoginRadiusSDK.V2.Models.ResponseModels;
 using LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects;
 using LoginRadiusSDK.V2.Models.Enums;
-using System.Threading.Tasks;
 
 namespace LoginRadiusSDK.V2.Api.Advanced
 {
-   public class CustomObjectApi : LoginRadiusResource
+    public class CustomObjectApi : LoginRadiusResource
     {
         /// <summary>
         /// This API is used to write information in JSON format to the custom object for the specified account.

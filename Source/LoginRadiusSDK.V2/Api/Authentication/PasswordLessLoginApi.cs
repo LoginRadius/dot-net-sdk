@@ -7,12 +7,12 @@
 
 using System;
 using LoginRadiusSDK.V2.Common;
+using System.Threading.Tasks;
 using LoginRadiusSDK.V2.Util;
 using LoginRadiusSDK.V2.Models.ResponseModels;
 using LoginRadiusSDK.V2.Models.ResponseModels.UserProfile;
 using LoginRadiusSDK.V2.Models.RequestModels;
 using LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects;
-using System.Threading.Tasks;
 
 namespace LoginRadiusSDK.V2.Api.Authentication
 {
@@ -180,6 +180,60 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             var resourcePath = "identity/v2/auth/login/passwordlesslogin/email/verify";
             
             return await ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.GET, resourcePath, queryParameters, null);
+        }
+        /// <summary>
+        /// This API is used to verify the otp sent to the email when doing a passwordless login. 
+        /// </summary>
+        /// <param name="passwordLessLoginByEmailAndOtpModel">payload</param>
+        /// <param name="fields">Fields</param>
+        /// <returns>Response containing User Profile Data and access token</returns>
+        /// 9.23
+
+        public async Task<ApiResponse<AccessToken<Identity>>> PasswordlessLoginVerificationByEmailAndOTP(PasswordLessLoginByEmailAndOtpModel passwordLessLoginByEmailAndOtpModel, string fields = "")
+        {
+            if (passwordLessLoginByEmailAndOtpModel == null)
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(passwordLessLoginByEmailAndOtpModel));
+            }
+            var queryParameters = new QueryParameters
+            {
+                { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] }
+            };
+            if (!string.IsNullOrWhiteSpace(fields))
+            {
+               queryParameters.Add("fields", fields);
+            }
+
+            var resourcePath = "identity/v2/auth/login/passwordlesslogin/email/verifyotp";
+            
+            return await ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(passwordLessLoginByEmailAndOtpModel));
+        }
+        /// <summary>
+        /// This API is used to verify the otp sent to the email when doing a passwordless login.
+        /// </summary>
+        /// <param name="passwordLessLoginByUserNameAndOtpModel">payload</param>
+        /// <param name="fields">Fields</param>
+        /// <returns>Response containing User Profile Data and access token</returns>
+        /// 9.24
+
+        public async Task<ApiResponse<AccessToken<Identity>>> PasswordlessLoginVerificationByUserNameAndOTP(PasswordLessLoginByUserNameAndOtpModel passwordLessLoginByUserNameAndOtpModel, string fields = "")
+        {
+            if (passwordLessLoginByUserNameAndOtpModel == null)
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(passwordLessLoginByUserNameAndOtpModel));
+            }
+            var queryParameters = new QueryParameters
+            {
+                { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] }
+            };
+            if (!string.IsNullOrWhiteSpace(fields))
+            {
+               queryParameters.Add("fields", fields);
+            }
+
+            var resourcePath = "identity/v2/auth/login/passwordlesslogin/username/verifyotp";
+            
+            return await ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(passwordLessLoginByUserNameAndOtpModel));
         }
     }
 }

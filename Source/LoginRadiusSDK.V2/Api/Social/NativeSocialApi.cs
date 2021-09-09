@@ -7,9 +7,9 @@
 
 using System;
 using LoginRadiusSDK.V2.Common;
+using System.Threading.Tasks;
 using LoginRadiusSDK.V2.Util;
 using LoginRadiusSDK.V2.Models.ResponseModels;
-using System.Threading.Tasks;
 
 namespace LoginRadiusSDK.V2.Api.Social
 {
@@ -19,10 +19,11 @@ namespace LoginRadiusSDK.V2.Api.Social
         /// The API is used to get LoginRadius access token by sending Facebook's access token. It will be valid for the specific duration of time specified in the response.
         /// </summary>
         /// <param name="fbAccessToken">Facebook Access Token</param>
+        /// <param name="socialAppName">Name of Social provider APP</param>
         /// <returns>Response containing Definition of Complete Token data</returns>
         /// 20.3
 
-        public async Task<ApiResponse<AccessToken>> GetAccessTokenByFacebookAccessToken(string fbAccessToken)
+        public async Task<ApiResponse<AccessToken>> GetAccessTokenByFacebookAccessToken(string fbAccessToken, string socialAppName = null)
         {
             if (string.IsNullOrWhiteSpace(fbAccessToken))
             {
@@ -33,6 +34,10 @@ namespace LoginRadiusSDK.V2.Api.Social
                 { "fb_Access_Token", fbAccessToken },
                 { "key", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] }
             };
+            if (!string.IsNullOrWhiteSpace(socialAppName))
+            {
+               queryParameters.Add("socialAppName", socialAppName);
+            }
 
             var resourcePath = "api/v2/access_token/facebook";
             
@@ -43,10 +48,12 @@ namespace LoginRadiusSDK.V2.Api.Social
         /// </summary>
         /// <param name="twAccessToken">Twitter Access Token</param>
         /// <param name="twTokenSecret">Twitter Token Secret</param>
+        /// <param name="socialAppName">Name of Social provider APP</param>
         /// <returns>Response containing Definition of Complete Token data</returns>
         /// 20.4
 
-        public async Task<ApiResponse<AccessToken>> GetAccessTokenByTwitterAccessToken(string twAccessToken, string twTokenSecret)
+        public async Task<ApiResponse<AccessToken>> GetAccessTokenByTwitterAccessToken(string twAccessToken, string twTokenSecret,
+        string socialAppName = null)
         {
             if (string.IsNullOrWhiteSpace(twAccessToken))
             {
@@ -62,6 +69,10 @@ namespace LoginRadiusSDK.V2.Api.Social
                 { "tw_Access_Token", twAccessToken },
                 { "tw_Token_Secret", twTokenSecret }
             };
+            if (!string.IsNullOrWhiteSpace(socialAppName))
+            {
+               queryParameters.Add("socialAppName", socialAppName);
+            }
 
             var resourcePath = "api/v2/access_token/twitter";
             
@@ -72,12 +83,13 @@ namespace LoginRadiusSDK.V2.Api.Social
         /// </summary>
         /// <param name="googleAccessToken">Google Access Token</param>
         /// <param name="clientId">Google Client ID</param>
-        /// <param name="refreshToken">LoginRadius refresh_token</param>
+        /// <param name="refreshToken">LoginRadius refresh token</param>
+        /// <param name="socialAppName">Name of Social provider APP</param>
         /// <returns>Response containing Definition of Complete Token data</returns>
         /// 20.5
 
         public async Task<ApiResponse<AccessToken>> GetAccessTokenByGoogleAccessToken(string googleAccessToken, string clientId = null,
-        string refreshToken = null)
+        string refreshToken = null, string socialAppName = null)
         {
             if (string.IsNullOrWhiteSpace(googleAccessToken))
             {
@@ -95,6 +107,10 @@ namespace LoginRadiusSDK.V2.Api.Social
             if (!string.IsNullOrWhiteSpace(refreshToken))
             {
                queryParameters.Add("refresh_token", refreshToken);
+            }
+            if (!string.IsNullOrWhiteSpace(socialAppName))
+            {
+               queryParameters.Add("socialAppName", socialAppName);
             }
 
             var resourcePath = "api/v2/access_token/google";
@@ -128,10 +144,11 @@ namespace LoginRadiusSDK.V2.Api.Social
         /// The API is used to get LoginRadius access token by sending Linkedin's access token. It will be valid for the specific duration of time specified in the response.
         /// </summary>
         /// <param name="lnAccessToken">Linkedin Access Token</param>
+        /// <param name="socialAppName">Name of Social provider APP</param>
         /// <returns>Response containing Definition of Complete Token data</returns>
         /// 20.7
 
-        public async Task<ApiResponse<AccessToken>> GetAccessTokenByLinkedinAccessToken(string lnAccessToken)
+        public async Task<ApiResponse<AccessToken>> GetAccessTokenByLinkedinAccessToken(string lnAccessToken, string socialAppName = null)
         {
             if (string.IsNullOrWhiteSpace(lnAccessToken))
             {
@@ -142,6 +159,10 @@ namespace LoginRadiusSDK.V2.Api.Social
                 { "key", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] },
                 { "ln_Access_Token", lnAccessToken }
             };
+            if (!string.IsNullOrWhiteSpace(socialAppName))
+            {
+               queryParameters.Add("socialAppName", socialAppName);
+            }
 
             var resourcePath = "api/v2/access_token/linkedin";
             
@@ -167,6 +188,57 @@ namespace LoginRadiusSDK.V2.Api.Social
             };
 
             var resourcePath = "api/v2/access_token/foursquare";
+            
+            return await ConfigureAndExecute<AccessToken>(HttpMethod.GET, resourcePath, queryParameters, null);
+        }
+        /// <summary>
+        /// The API is used to get LoginRadius access token by sending a valid Apple ID OAuth Code. It will be valid for the specific duration of time specified in the response.
+        /// </summary>
+        /// <param name="code">Apple Code</param>
+        /// <param name="socialAppName">Name of Social provider APP</param>
+        /// <returns>Response containing Definition of Complete Token data</returns>
+        /// 20.12
+
+        public async Task<ApiResponse<AccessToken>> GetAccessTokenByAppleIdCode(string code, string socialAppName = null)
+        {
+            if (string.IsNullOrWhiteSpace(code))
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(code));
+            }
+            var queryParameters = new QueryParameters
+            {
+                { "code", code },
+                { "key", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] }
+            };
+            if (!string.IsNullOrWhiteSpace(socialAppName))
+            {
+               queryParameters.Add("socialAppName", socialAppName);
+            }
+
+            var resourcePath = "api/v2/access_token/apple";
+            
+            return await ConfigureAndExecute<AccessToken>(HttpMethod.GET, resourcePath, queryParameters, null);
+        }
+        /// <summary>
+        /// This API is used to retrieve a LoginRadius access token by passing in a valid WeChat OAuth Code.
+        /// </summary>
+        /// <param name="code">WeChat Code</param>
+        /// <returns>Response containing Definition of Complete Token data</returns>
+        /// 20.13
+
+        public async Task<ApiResponse<AccessToken>> GetAccessTokenByWeChatCode(string code)
+        {
+            if (string.IsNullOrWhiteSpace(code))
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(code));
+            }
+            var queryParameters = new QueryParameters
+            {
+                { "code", code },
+                { "key", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] }
+            };
+
+            var resourcePath = "api/v2/access_token/wechat";
             
             return await ConfigureAndExecute<AccessToken>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
@@ -197,10 +269,11 @@ namespace LoginRadiusSDK.V2.Api.Social
         /// The API is used to get LoginRadius access token by sending Google's AuthCode. It will be valid for the specific duration of time specified in the response.
         /// </summary>
         /// <param name="googleAuthcode">Google AuthCode</param>
+        /// <param name="socialAppName">Name of Social provider APP</param>
         /// <returns>Response containing Definition of Complete Token data</returns>
         /// 20.16
 
-        public async Task<ApiResponse<AccessToken>> GetAccessTokenByGoogleAuthCode(string googleAuthcode)
+        public async Task<ApiResponse<AccessToken>> GetAccessTokenByGoogleAuthCode(string googleAuthcode, string socialAppName = null)
         {
             if (string.IsNullOrWhiteSpace(googleAuthcode))
             {
@@ -211,6 +284,10 @@ namespace LoginRadiusSDK.V2.Api.Social
                 { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] },
                 { "google_authcode", googleAuthcode }
             };
+            if (!string.IsNullOrWhiteSpace(socialAppName))
+            {
+               queryParameters.Add("socialAppName", socialAppName);
+            }
 
             var resourcePath = "api/v2/access_token/google";
             

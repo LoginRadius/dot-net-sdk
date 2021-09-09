@@ -2,7 +2,9 @@ using System.Collections.Concurrent;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using LoginRadiusSDK.V2.Common;
 using LoginRadiusSDK.V2.Exception;
+using Newtonsoft.Json;
 
 namespace LoginRadiusSDK.V2.Http
 {
@@ -327,7 +329,20 @@ namespace LoginRadiusSDK.V2.Http
             if (ex.Status == WebExceptionStatus.ProtocolError)
             {
                 var httpWebResponse = (HttpWebResponse)ex.Response;
+                if (httpWebResponse != null && httpWebResponse.StatusCode.Equals((HttpStatusCode)429))
+                {
+                    ApiExceptionResponse apiExceptionResponse = new ApiExceptionResponse
+                    {
+                        ErrorCode = 429,
+                        Message = "Too many request in particular time frame",
+                        Description = "Too many request in particular time frame",
+                        IsProviderError = false,
+                        ProviderErrorResponse = null
+                    };
 
+                    throw new LoginRadiusException(ex.Message, ex, JsonConvert.SerializeObject(apiExceptionResponse));
+
+                }
                 // If the HTTP status code is flagged as one where we
                 // should continue retrying, then ignore the exception
                 // and continue with the retry attempt.

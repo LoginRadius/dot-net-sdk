@@ -7,12 +7,12 @@
 
 using System;
 using LoginRadiusSDK.V2.Common;
+using System.Threading.Tasks;
 using LoginRadiusSDK.V2.Util;
 using LoginRadiusSDK.V2.Models.ResponseModels;
 using LoginRadiusSDK.V2.Models.ResponseModels.UserProfile;
 using LoginRadiusSDK.V2.Models.RequestModels;
 using LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects;
-using System.Threading.Tasks;
 
 namespace LoginRadiusSDK.V2.Api.Authentication
 {
@@ -323,7 +323,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             return await ConfigureAndExecute<ExistResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
-        /// This API is used to delete the Phone ID on a user's account via the access_token
+        /// This API is used to delete the Phone ID on a user's account via the access token
         /// </summary>
         /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
         /// <returns>Response containing Definition of Delete Request</returns>

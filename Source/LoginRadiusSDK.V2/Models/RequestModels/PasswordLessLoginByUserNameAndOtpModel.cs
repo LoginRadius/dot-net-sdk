@@ -6,33 +6,32 @@
 //-----------------------------------------------------------------------
 
 using Newtonsoft.Json;
-using LoginRadiusSDK.V2.Models.Enums;
 namespace LoginRadiusSDK.V2.Models.RequestModels
 
 {
 
     /// <summary>
-    ///	Model Class containing Definition for Externallds Property
+    ///	
     /// </summary>
-    public class ExternalIds
+    public class PasswordLessLoginByUserNameAndOtpModel
     {
 		/// <summary>
-		///	Languages operation Type
+		///	
 		/// </summary>
-		[JsonProperty(PropertyName = "Op")]
-        public  OperationType? Op {get;set;}
+		[JsonProperty(PropertyName = "Otp")]
+        public  string Otp {get;set;}
 
 		/// <summary>
-		///	ExternalId source
+		///	
 		/// </summary>
-		[JsonProperty(PropertyName = "Source")]
-        public  string Source {get;set;}
+		[JsonProperty(PropertyName = "UserName")]
+        public  string UserName {get;set;}
 
 		/// <summary>
-		///	External source id
+		///	
 		/// </summary>
-		[JsonProperty(PropertyName = "SourceId")]
-        public  string SourceId {get;set;}
+		[JsonProperty(PropertyName = "welcomeEmailTemplate")]
+        public  string WelcomeEmailTemplate {get;set;}
 
     }
 }

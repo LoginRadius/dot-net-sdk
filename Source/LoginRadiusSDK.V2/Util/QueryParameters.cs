@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 #if !NETSTANDARD1_3
 using System.Web;
 #endif
@@ -18,24 +19,20 @@ namespace LoginRadiusSDK.V2.Util
         /// <returns>A URL-formatted string containing the query parameters</returns>
         public string ToUrlFormattedString()
         {
-            string result = "";
+            var result = new StringBuilder();
             foreach (KeyValuePair<string, string> pair in this)
             {
-                if (string.IsNullOrEmpty(pair.Value))
+                if (!string.IsNullOrEmpty(pair.Value))
                 {
-                    result += "";
-                }
-                else
-                {
-                    result += string.IsNullOrEmpty(result) ? "?" : "&";
+                    result.Append(result.Length == 0 ? "?" : "&");
 #if NETSTANDARD1_3
-                    result += $"{pair.Key}={System.Net.WebUtility.UrlEncode(pair.Value)}";
+                    result.Append($"{pair.Key}={System.Net.WebUtility.UrlEncode(pair.Value)}");
 #else
-                    result += $"{pair.Key}={HttpUtility.UrlEncode(pair.Value)}";
+                    result.Append($"{pair.Key}={HttpUtility.UrlEncode(pair.Value)}");
 #endif
                 }
             }
-            return result;
+            return result.ToString();
         }
 
         public void AddRange<T>(ICollection<T> target, IEnumerable<T> source)
@@ -48,7 +45,7 @@ namespace LoginRadiusSDK.V2.Util
                 target.Add(element);
         }
 
-        
+
 
 
         public void TryAdd(string key, string value)

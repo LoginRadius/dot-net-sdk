@@ -8,12 +8,12 @@
 using System;
 using System.Collections.Generic;
 using LoginRadiusSDK.V2.Common;
+using System.Threading.Tasks;
 using LoginRadiusSDK.V2.Util;
 using LoginRadiusSDK.V2.Models.ResponseModels;
 using LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects;
 using LoginRadiusSDK.V2.Models.RequestModels;
 using LoginRadiusSDK.V2.Models.ResponseModels.UserProfile;
-using System.Threading.Tasks;
 
 namespace LoginRadiusSDK.V2.Api.Social
 {
@@ -46,11 +46,13 @@ namespace LoginRadiusSDK.V2.Api.Social
         /// The Refresh Access Token API is used to refresh the provider access token after authentication. It will be valid for up to 60 days on LoginRadius depending on the provider. In order to use the access token in other APIs, always refresh the token using this API.<br><br><b>Supported Providers :</b> Facebook,Yahoo,Google,Twitter, Linkedin.<br><br> Contact LoginRadius support team to enable this API.
         /// </summary>
         /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
-        /// <param name="expiresIn">Allows you to specify a desired expiration time in minutes for the newly issued access_token.</param>
+        /// <param name="expiresIn">Allows you to specify a desired expiration time in minutes for the newly issued access token.</param>
+        /// <param name="isWeb">Is web or not.</param>
         /// <returns>Response containing Definition of Complete Token data</returns>
         /// 20.2
 
-        public async Task<ApiResponse<AccessToken>> RefreshAccessToken(string accessToken, int? expiresIn = 0)
+        public async Task<ApiResponse<AccessToken>> RefreshAccessToken(string accessToken, int? expiresIn = 0,
+        bool isWeb = false)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -64,6 +66,10 @@ namespace LoginRadiusSDK.V2.Api.Social
             if (expiresIn != null)
             {
                queryParameters.Add("expiresIn", expiresIn.ToString());
+            }
+            if (isWeb != false)
+            {
+               queryParameters.Add("isWeb", isWeb.ToString());
             }
 
             var resourcePath = "api/v2/access_token/refresh";
@@ -881,33 +887,6 @@ namespace LoginRadiusSDK.V2.Api.Social
             var resourcePath = "api/v2/status/trackable";
             
             return await ConfigureAndExecute<StatusUpdateStats>(HttpMethod.GET, resourcePath, queryParameters, null);
-        }
-        /// <summary>
-        /// The User Profile API is used to get social profile data from the user's social account after authentication.<br><br><b>Supported Providers:</b>  All
-        /// </summary>
-        /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
-        /// <param name="fields">The fields parameter filters the API response so that the response only includes a specific set of fields</param>
-        /// <returns>Response containing Definition for Complete UserProfile data</returns>
-        /// 38.1
-
-        public async Task<ApiResponse<UserProfile>> GetSocialUserProfile(string accessToken, string fields = "")
-        {
-            if (string.IsNullOrWhiteSpace(accessToken))
-            {
-               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(accessToken));
-            }
-            var queryParameters = new QueryParameters
-            {
-                { "access_token", accessToken }
-            };
-            if (!string.IsNullOrWhiteSpace(fields))
-            {
-               queryParameters.Add("fields", fields);
-            }
-
-            var resourcePath = "api/v2/userprofile";
-            
-            return await ConfigureAndExecute<UserProfile>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// The User Profile API is used to get the latest updated social profile data from the user's social account after authentication. The social profile will be retrieved via oAuth and OpenID protocols. The data is normalized into LoginRadius' standard data format. This API should be called using the access token retrieved from the refresh access token API.

@@ -167,19 +167,25 @@ namespace LoginRadiusSDK.V2.Common
                 Uri uniformResourceIdentifier;
                 var apiPath = resource;
                 var endPoint = GetEndpoint(apiPath,out Dictionary<string, string> authHeaders, queryParameters);
-                if (ConfigDictionary[LRConfigConstants.ApiRequestSigning] != null && ConfigDictionary[LRConfigConstants.ApiRequestSigning] == "true" && authHeaders.Count>0)
+                if (headers == null)
+                {
+                    headers = new Dictionary<string, string>();
+                }
+             
+                if (ConfigDictionary[LRConfigConstants.ApiRequestSigning] != null && ConfigDictionary[LRConfigConstants.ApiRequestSigning] == "true" && authHeaders!=null && authHeaders.Count>0)
                 {
                     var time = DateTime.UtcNow.AddMinutes(15).ToString("yyyy-M-d h:m:s tt");
                     var hash = CreateHash(ConfigDictionary[LRConfigConstants.LoginRadiusApiSecret], endPoint, httpMethod.ToString(), time, payload);
                     authHeaders.Remove("apiSecret");
-                    if (headers == null)
-                    {
-                        headers = new Dictionary<string, string>();
-                    }
-
                     headers.Add("digest", "SHA-256=" + hash);
                     headers.Add("X-Request-Expires", time);
                 }
+                if (ConfigDictionary.ContainsKey(LRConfigConstants.OriginIp) && !string.IsNullOrWhiteSpace(ConfigDictionary[LRConfigConstants.OriginIp]))
+                {
+                    headers.Add("X-Origin-IP",  ConfigDictionary[LRConfigConstants.OriginIp]);
+
+                }
+
                 var baseUri = new Uri(endPoint);
                 if (apiPath != null)
                 {

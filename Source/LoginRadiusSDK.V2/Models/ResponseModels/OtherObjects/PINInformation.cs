@@ -23,6 +23,12 @@ namespace LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects
         public  DateTime? LastPINChangeDate {get;set;}
 
 		/// <summary>
+		///	Last PIN Change Token
+		/// </summary>
+		[JsonProperty(PropertyName = "LastPINChangeToken")]
+        public  string LastPINChangeToken {get;set;}
+
+		/// <summary>
 		///	PIN of user
 		/// </summary>
 		[JsonProperty(PropertyName = "PIN")]

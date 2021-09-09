@@ -8,12 +8,12 @@
 using System;
 using System.Collections.Generic;
 using LoginRadiusSDK.V2.Common;
+using System.Threading.Tasks;
 using LoginRadiusSDK.V2.Util;
 using LoginRadiusSDK.V2.Models.ResponseModels;
 using LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects;
 using LoginRadiusSDK.V2.Models.ResponseModels.UserProfile;
 using LoginRadiusSDK.V2.Models.RequestModels;
-using System.Threading.Tasks;
 
 namespace LoginRadiusSDK.V2.Api.Authentication
 {
@@ -193,7 +193,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// This api call invalidates the active access token or expires an access token's validity.
         /// </summary>
         /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
-        /// <param name="preventRefresh">Boolean value that when set as true, in addition of the access_token being invalidated, it will no longer have the capability of being refreshed.</param>
+        /// <param name="preventRefresh">Boolean value that when set as true, in addition of the access token being invalidated, it will no longer have the capability of being refreshed.</param>
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 4.2
 
@@ -241,14 +241,18 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             return await ConfigureAndExecute<TokenInfoResponseModel>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
-        /// This API retrieves a copy of the user data based on the access_token.
+        /// This API retrieves a copy of the user data based on the access token.
         /// </summary>
         /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
         /// <param name="fields">The fields parameter filters the API response so that the response only includes a specific set of fields</param>
+        /// <param name="emailTemplate"></param>
+        /// <param name="verificationUrl"></param>
+        /// <param name="welcomeEmailTemplate"></param>
         /// <returns>Response containing Definition for Complete profile data</returns>
         /// 5.2
 
-        public async Task<ApiResponse<Identity>> GetProfileByAccessToken(string accessToken, string fields = "")
+        public async Task<ApiResponse<Identity>> GetProfileByAccessToken(string accessToken,string fields = "",
+        string emailTemplate = null, string verificationUrl = null, string welcomeEmailTemplate = null)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -262,6 +266,18 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             if (!string.IsNullOrWhiteSpace(fields))
             {
                queryParameters.Add("fields", fields);
+            }
+            if (!string.IsNullOrWhiteSpace(emailTemplate))
+            {
+               queryParameters.Add("emailTemplate", emailTemplate);
+            }
+            if (!string.IsNullOrWhiteSpace(verificationUrl))
+            {
+               queryParameters.Add("verificationUrl", verificationUrl);
+            }
+            if (!string.IsNullOrWhiteSpace(welcomeEmailTemplate))
+            {
+               queryParameters.Add("welcomeEmailTemplate", welcomeEmailTemplate);
             }
 
             var resourcePath = "identity/v2/auth/account";
@@ -297,7 +313,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             return await ConfigureAndExecute<PostResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
-        /// This API is used to update the user's profile by passing the access_token.
+        /// This API is used to update the user's profile by passing the access token.
         /// </summary>
         /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
         /// <param name="userProfileUpdateModel">Model Class containing Definition of payload for User Profile update API</param>
@@ -403,7 +419,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             return await ConfigureAndExecute<PostResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
-        /// This API is used to allow a customer with a valid access_token to unlock their account provided that they successfully pass the prompted Bot Protection challenges. The Block or Suspend block types are not applicable for this API. For additional details see our Auth Security Configuration documentation.You are only required to pass the Post Parameters that correspond to the prompted challenges.
+        /// This API is used to allow a customer with a valid access token to unlock their account provided that they successfully pass the prompted Bot Protection challenges. The Block or Suspend block types are not applicable for this API. For additional details see our Auth Security Configuration documentation.You are only required to pass the Post Parameters that correspond to the prompted challenges.
         /// </summary>
         /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
         /// <param name="unlockProfileModel">Payload containing Unlock Profile API</param>
@@ -429,6 +445,50 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             var resourcePath = "identity/v2/auth/account/unlock";
             
             return await ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(unlockProfileModel));
+        }
+        /// <summary>
+        /// This API is used to get a user's profile using the clientGuid parameter if no callback feature enabled
+        /// </summary>
+        /// <param name="clientGuid">ClientGuid</param>
+        /// <param name="emailTemplate">EmailTemplate</param>
+        /// <param name="fields">Fields</param>
+        /// <param name="verificationUrl">VerificationUrl</param>
+        /// <param name="welcomeEmailTemplate">WelcomeEmailTemplate</param>
+        /// <returns>Response containing User Profile Data and access token</returns>
+        /// 5.16
+
+        public async Task<ApiResponse<AccessToken<Identity>>> GetProfileByPing(string clientGuid, string emailTemplate = null,
+        string fields = "", string verificationUrl = null, string welcomeEmailTemplate = null)
+        {
+            if (string.IsNullOrWhiteSpace(clientGuid))
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(clientGuid));
+            }
+            var queryParameters = new QueryParameters
+            {
+                { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] },
+                { "clientGuid", clientGuid }
+            };
+            if (!string.IsNullOrWhiteSpace(emailTemplate))
+            {
+               queryParameters.Add("emailTemplate", emailTemplate);
+            }
+            if (!string.IsNullOrWhiteSpace(fields))
+            {
+               queryParameters.Add("fields", fields);
+            }
+            if (!string.IsNullOrWhiteSpace(verificationUrl))
+            {
+               queryParameters.Add("verificationUrl", verificationUrl);
+            }
+            if (!string.IsNullOrWhiteSpace(welcomeEmailTemplate))
+            {
+               queryParameters.Add("welcomeEmailTemplate", welcomeEmailTemplate);
+            }
+
+            var resourcePath = "identity/v2/auth/account/ping";
+            
+            return await ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API is used to check the email exists or not on your site.
@@ -911,39 +971,6 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             return await ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
-        /// This API is used to link up a social provider account with the specified account based on the access token and the social providers user access token.
-        /// </summary>
-        /// <param name="accessToken">Access_Token</param>
-        /// <param name="candidateToken">Access token of the account to be linked</param>
-        /// <returns>Response containing Definition of Complete Validation data</returns>
-        /// 12.1
-
-        public async Task<ApiResponse<PostResponse>> LinkSocialIdentities(string accessToken, string candidateToken)
-        {
-            if (string.IsNullOrWhiteSpace(accessToken))
-            {
-               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(accessToken));
-            }
-            if (string.IsNullOrWhiteSpace(candidateToken))
-            {
-               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(candidateToken));
-            }
-            var queryParameters = new QueryParameters
-            {
-                { "access_token", accessToken },
-                { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] }
-            };
-
-            var bodyParameters = new BodyParameters
-            {
-                { "candidateToken", candidateToken }
-            };
-
-            var resourcePath = "identity/v2/auth/socialidentity";
-            
-            return await ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
-        }
-        /// <summary>
         /// This API is used to unlink up a social provider account with the specified account based on the access token and the social providers user access token. The unlinked account will automatically get removed from your database.
         /// </summary>
         /// <param name="accessToken">Access_Token</param>
@@ -984,32 +1011,70 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             return await ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
-        /// This API is called just after account linking API and it prevents the raas profile of the second account from getting created.
+        /// This API is used to link up a social provider account with an existing LoginRadius account on the basis of access token and the social providers user access token.
         /// </summary>
         /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
-        /// <param name="fields">The fields parameter filters the API response so that the response only includes a specific set of fields</param>
-        /// <returns>Response containing Definition for Complete SocialUserProfile data</returns>
-        /// 12.3
+        /// <param name="candidateToken">Access token of the account to be linked</param>
+        /// <returns>Response containing Definition of Complete Validation data</returns>
+        /// 12.4
 
-        public async Task<ApiResponse<SocialUserProfile>> GetSocialIdentity(string accessToken, string fields = "")
+        public async Task<ApiResponse<PostResponse>> LinkSocialIdentities(string accessToken, string candidateToken)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
                throw new ArgumentException(BaseConstants.ValidationMessage, nameof(accessToken));
+            }
+            if (string.IsNullOrWhiteSpace(candidateToken))
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(candidateToken));
             }
             var queryParameters = new QueryParameters
             {
                 { "access_token", accessToken },
                 { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] }
             };
-            if (!string.IsNullOrWhiteSpace(fields))
+
+            var bodyParameters = new BodyParameters
             {
-               queryParameters.Add("fields", fields);
-            }
+                { "candidateToken", candidateToken }
+            };
 
             var resourcePath = "identity/v2/auth/socialidentity";
             
-            return await ConfigureAndExecute<SocialUserProfile>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+        }
+        /// <summary>
+        /// This API is used to link up a social provider account with an existing LoginRadius account on the basis of ping and the social providers user access token.
+        /// </summary>
+        /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
+        /// <param name="clientGuid">Unique ID generated by client</param>
+        /// <returns>Response containing Definition of Complete Validation data</returns>
+        /// 12.5
+
+        public async Task<ApiResponse<PostResponse>> LinkSocialIdentitiesByPing(string accessToken, string clientGuid)
+        {
+            if (string.IsNullOrWhiteSpace(accessToken))
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(accessToken));
+            }
+            if (string.IsNullOrWhiteSpace(clientGuid))
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(clientGuid));
+            }
+            var queryParameters = new QueryParameters
+            {
+                { "access_token", accessToken },
+                { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] }
+            };
+
+            var bodyParameters = new BodyParameters
+            {
+                { "clientGuid", clientGuid }
+            };
+
+            var resourcePath = "identity/v2/auth/socialidentity";
+            
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
         /// This API is used to set or change UserName by access token.
@@ -1068,7 +1133,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             return await ConfigureAndExecute<ExistResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
-        /// This API is used to update the privacy policy stored in the user's profile by providing the access_token of the user accepting the privacy policy
+        /// This API is used to update the privacy policy stored in the user's profile by providing the access token of the user accepting the privacy policy
         /// </summary>
         /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
         /// <param name="fields">The fields parameter filters the API response so that the response only includes a specific set of fields</param>
@@ -1096,7 +1161,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             return await ConfigureAndExecute<Identity>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
-        /// This API will return all the accepted privacy policies for the user by providing the access_token of that user.
+        /// This API will return all the accepted privacy policies for the user by providing the access token of that user.
         /// </summary>
         /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
         /// <returns>Complete Policy History data</returns>

@@ -7,7 +7,7 @@ namespace LoginRadiusSDK.V2
     /// </summary>
     public static class BaseConstants
     {
-        
+
         /// <summary>
         /// Configuration LoginRadius API Secret Header Key
         /// </summary>
@@ -28,7 +28,7 @@ namespace LoginRadiusSDK.V2
         /// </summary>
         public const string AccessTokenBearerHeader = "Bearer ";
 
-       
+
         /// <summary>
         /// Content Type HTTP Header
         /// </summary>
@@ -50,6 +50,7 @@ namespace LoginRadiusSDK.V2
         /// </summary>
         public static string SdkVersion => SDKUtil.GetAssemblyVersionForType(typeof(BaseConstants));
 
+        public static string ASPNETCORE_ENVIRONMENT = "ASPNETCORE_ENVIRONMENT";
         /// <summary>
         /// The name of this SDK.
         /// </summary>

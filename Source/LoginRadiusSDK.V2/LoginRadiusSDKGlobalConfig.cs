@@ -9,6 +9,7 @@ namespace LoginRadiusSDK.V2
         public static int ConnectionTimeout { get; set; }
         public static int RequestRetries { get; set; }
         public static string ApiRegion { get; set; }
+        public static string OriginIp { get; set; }
 
         private static string _apiKey;
 

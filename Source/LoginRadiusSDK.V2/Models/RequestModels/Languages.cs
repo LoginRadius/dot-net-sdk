@@ -31,7 +31,7 @@ namespace LoginRadiusSDK.V2.Models.RequestModels
 		/// <summary>
 		///	Languages operation Type
 		/// </summary>
-		[JsonProperty(PropertyName = "op")]
+		[JsonProperty(PropertyName = "Op")]
         public  OperationType? Op {get;set;}
 
 		/// <summary>

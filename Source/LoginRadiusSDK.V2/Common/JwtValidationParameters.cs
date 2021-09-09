@@ -1,5 +1,4 @@
-﻿using System;
-namespace LoginRadiusSDK.V2.Common
+﻿namespace LoginRadiusSDK.V2.Common
 {
     public class JwtValidationParameters
     {
