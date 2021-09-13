@@ -1,11 +1,7 @@
-name: NetLicensing C# Client - Release
-
+name: release-to-nuget-package-manager
 on:
-  workflow_run:
-    workflows: ["NetLicensing C# Client - CI"]
+  push:
     branches: [ master ]
-    types:
-      - completed
 
 jobs:
   publish-nuget:
