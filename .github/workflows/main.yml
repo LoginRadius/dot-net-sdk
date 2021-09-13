@@ -16,8 +16,9 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build Source/LoginRadiusSDK.V2/LoginRadiusSDK.V2.csproj --configuration Release --no-restore
+      run: dotnet build  --configuration Release --no-restore
     - name: Publish LoginRadiusSDK
       uses: brandedoutcast/publish-nuget@v2.5.2
       with:
+          PROJECT_FILE_PATH: Source/LoginRadiusSDK.V2
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
