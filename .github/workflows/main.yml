@@ -1,11 +1,8 @@
 name: LoginRadius Dotnet SDK Nuget Package Manager - Release
 
 on:
-  workflow_run:
-    workflows: [" LoginRadius Dotnet SDK Nuget Package Manager - CI"]
+ push:
     branches: [ master ]
-    types:
-      - completed
 
 jobs:
   publish-nuget:
