@@ -1,26 +1,30 @@
-name: LoginRadius Dotnet SDK Nuget Package Manager - Release
-
-on:
- push:
-    branches: [ master ]
-
-jobs:
-  publish-nuget:
-    runs-on: windows-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: '3.1.402'
-    - name: Install dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
-    - name: Publish to NuGet
-      uses: brandedoutcast/publish-nuget@v2
-      with:
-        PROJECT_FILE_PATH: Source/LoginRadiusSDK.V2/LoginRadiusSDK.V2.csproj
-        VERSION_REGEX: '^\s*<PackageVersion>(.*)<\/PackageVersion>\s*$'
-        TAG_FORMAT: '*'
-        NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+name: .NET Core  
+  
+on:  
+  push:  
+    branches: [ master ]  
+  pull_request:  
+    branches: [ master ]  
+  
+jobs:  
+  build:  
+  
+    runs-on: ubuntu-latest  
+  
+    steps:  
+    - uses: actions/checkout@v2  
+    - name: Setup .NET Core  
+      uses: actions/setup-dotnet@v1  
+      with:  
+        dotnet-version: 3.1.101  
+    - name: Install dependencies  
+      run: dotnet restore  
+    - name: Build  
+      run: dotnet build --configuration Release --no-restore  
+    - name: Test  
+      run: dotnet test --no-restore --verbosity normal  
+    - name: Publish  
+      uses: brandedoutcast/publish-nuget@v2.5.2  
+      with:   
+       PROJECT_FILE_PATH: Source/LoginRadiusSDK.V2/LoginRadiusSDK.V2.csproj
+       NUGET_KEY: ${{secrets.NUGET_API_KEY}}  
