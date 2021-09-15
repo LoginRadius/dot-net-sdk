@@ -14,7 +14,7 @@ jobs:
     - name: Build with dotnet
       run: dotnet build Source/LoginRadiusSDK.V2/LoginRadiusSDK.V2.csproj --configuration Release
     - name: Test with dotnet
-      run: dotnet test
+      run: dotnet test Source/LoginRadiusSDK.V2/LoginRadiusSDK.V2.csproj
     - name: Pack with dotnet
       run: dotnet pack Source/LoginRadiusSDK.V2/LoginRadiusSDK.V2.csproj --output nuget-packages --configuration Release
     - name: Push with dotnet
