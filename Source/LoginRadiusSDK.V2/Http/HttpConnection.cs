@@ -128,7 +128,7 @@ namespace LoginRadiusSDK.V2.Http
 
             HttpWebRequest newHttpRequest = connMngr.GetConnection(config, url);
             newHttpRequest.Method = httpRequest.Method;
-            newHttpRequest.Accept = httpRequest.Accept;  
+            newHttpRequest.Accept = httpRequest.Accept;
             newHttpRequest.ContentType = httpRequest.ContentType;
 
 #if !NETSTANDARD1_3
@@ -287,7 +287,7 @@ namespace LoginRadiusSDK.V2.Http
                         }
                     }
 #endif
-                    } while (retries++ < retriesConfigured);
+                } while (retries++ < retriesConfigured);
             }
             catch (LoginRadiusException)
             {
@@ -326,10 +326,9 @@ namespace LoginRadiusSDK.V2.Http
             // Protocol errors indicate the remote host received the
             // request, but responded with an error (usually a 4xx or
             // 5xx error).
-            if (ex.Status == WebExceptionStatus.ProtocolError)
+            if (ex.Status == WebExceptionStatus.ProtocolError && ex.Response is HttpWebResponse httpWebResponse)
             {
-                var httpWebResponse = (HttpWebResponse)ex.Response;
-                if (httpWebResponse != null && httpWebResponse.StatusCode.Equals((HttpStatusCode)429))
+                if (httpWebResponse.StatusCode.Equals((HttpStatusCode)429))
                 {
                     ApiExceptionResponse apiExceptionResponse = new ApiExceptionResponse
                     {
@@ -346,14 +345,13 @@ namespace LoginRadiusSDK.V2.Http
                 // If the HTTP status code is flagged as one where we
                 // should continue retrying, then ignore the exception
                 // and continue with the retry attempt.
-                if (httpWebResponse != null &&
-                    (httpWebResponse.StatusCode == HttpStatusCode.GatewayTimeout ||
-                     httpWebResponse.StatusCode == HttpStatusCode.RequestTimeout ||
-                     httpWebResponse.StatusCode == HttpStatusCode.BadGateway))
+                if (httpWebResponse.StatusCode == HttpStatusCode.GatewayTimeout ||
+                    httpWebResponse.StatusCode == HttpStatusCode.RequestTimeout ||
+                    httpWebResponse.StatusCode == HttpStatusCode.BadGateway)
                 {
                     return;
                 }
-                if (httpWebResponse != null && httpWebResponse.StatusCode.Equals(HttpStatusCode.Forbidden))
+                if (httpWebResponse.StatusCode.Equals(HttpStatusCode.Forbidden))
                 {
                     throw new LoginRadiusException(ex.Message, ex, response);
                 }
