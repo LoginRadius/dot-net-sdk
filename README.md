@@ -4167,8 +4167,32 @@ var jwt = new JwtTokenValidation().validateJwtToken(jwtParameters);
   }
 
 ```
+### Generate SOTT Manually
 
+SOTT is a secure one-time token that can be created using the API key, API secret, and a timestamp ( start time and end time ). You can manually create a SOTT using the following util function. 
 
+```
+LoginRadiusSecureOneTimeToken _sott = new LoginRadiusSecureOneTimeToken();
+
+// You can pass the start and end time interval and the SOTT will be valid for this time duration, StartTime and EndTime are optional but if passing the value then both value need to be passed.
+
+var sott = new SottRequest
+{
+
+StartTime = "2017-05-15 07:10:42", // Valid Start Date with Date and time
+
+EndTime="2017-05-15 07:20:42" // Valid End Date with Date and time
+};
+
+//The LoginRadius API key and primary API secret can be passed additionally, If the credentials will not be passed then this SOTT function will pick the API credentials from the SDK configuration.  
+
+var apiKey = ""; //(Optional) LoginRadius Api Key.
+
+var apiSecret = ""; //(Optional) LoginRadius Api Secret (Only Primary Api Secret is used to generate the SOTT manually).
+
+var generatedSott=_sott.GetSott(sott,apiKey,apiSecret);
+
+```
 
 ## Demo
 We have configured a sample ASP.net project with extended social profile data, webhook Apis, Account APis. You can get a copy of our demo project at [GitHub](https://github.com/LoginRadius/dot-net-sdk/tree/master/Samples/dot-net-demo).

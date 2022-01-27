@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Concurrent;
 using System.IO;
 using System.Net;
@@ -128,7 +129,7 @@ namespace LoginRadiusSDK.V2.Http
 
             HttpWebRequest newHttpRequest = connMngr.GetConnection(config, url);
             newHttpRequest.Method = httpRequest.Method;
-            newHttpRequest.Accept = httpRequest.Accept;  
+            newHttpRequest.Accept = httpRequest.Accept;
             newHttpRequest.ContentType = httpRequest.ContentType;
 
 #if !NETSTANDARD1_3
@@ -283,11 +284,11 @@ namespace LoginRadiusSDK.V2.Http
                         }
                         else
                         {
-                            throw new LoginRadiusException(ex.Message, ex, null);
+                            throw new LoginRadiusException(ex.Message, ex);
                         }
                     }
 #endif
-                    } while (retries++ < retriesConfigured);
+                } while (retries++ < retriesConfigured);
             }
             catch (LoginRadiusException)
             {
@@ -326,43 +327,37 @@ namespace LoginRadiusSDK.V2.Http
             // Protocol errors indicate the remote host received the
             // request, but responded with an error (usually a 4xx or
             // 5xx error).
-            if (ex.Status == WebExceptionStatus.ProtocolError)
+            if (ex.Status == WebExceptionStatus.ProtocolError && ex.Response is HttpWebResponse httpWebResponse)
             {
-                var httpWebResponse = (HttpWebResponse)ex.Response;
-                if (httpWebResponse != null && httpWebResponse.StatusCode.Equals((HttpStatusCode)429))
+                if (httpWebResponse.StatusCode.Equals((HttpStatusCode)429))
                 {
-                    ApiExceptionResponse apiExceptionResponse = new ApiExceptionResponse
-                    {
-                        ErrorCode = 429,
-                        Message = "Too many request in particular time frame",
-                        Description = "Too many request in particular time frame",
-                        IsProviderError = false,
-                        ProviderErrorResponse = null
-                    };
-
-                    throw new LoginRadiusException(ex.Message, ex, JsonConvert.SerializeObject(apiExceptionResponse));
+                    throw new LoginRadiusException("Too many request in particular time frame", ex, response, (HttpStatusCode)429);
 
                 }
                 // If the HTTP status code is flagged as one where we
                 // should continue retrying, then ignore the exception
                 // and continue with the retry attempt.
-                if (httpWebResponse != null &&
-                    (httpWebResponse.StatusCode == HttpStatusCode.GatewayTimeout ||
-                     httpWebResponse.StatusCode == HttpStatusCode.RequestTimeout ||
-                     httpWebResponse.StatusCode == HttpStatusCode.BadGateway))
+                if (httpWebResponse.StatusCode == HttpStatusCode.GatewayTimeout ||
+                    httpWebResponse.StatusCode == HttpStatusCode.RequestTimeout ||
+                    httpWebResponse.StatusCode == HttpStatusCode.BadGateway)
                 {
                     return;
                 }
-                if (httpWebResponse != null && httpWebResponse.StatusCode.Equals(HttpStatusCode.Forbidden))
+
+                // If the httpWebResponse.StatusCode is defined in the HttpStatusCode then throw the LoginRadiusException 
+
+                if (Enum.IsDefined(typeof(HttpStatusCode), httpWebResponse.StatusCode))
                 {
-                    throw new LoginRadiusException(ex.Message, ex, response);
+                    throw new LoginRadiusException(ex.Message, ex, response, (HttpStatusCode)httpWebResponse.StatusCode);
                 }
+
                 rethrowEx = new HttpException(ex.Message, response, httpWebResponse.StatusCode, ex.Status,
                     httpWebResponse.Headers, httpRequest);
             }
             else if (ex.Status == WebExceptionStatus.Timeout)
             {
                 string message;
+
                 // For connection timeout errors, include the connection timeout value that was used.
 #if NetFramework
                 message = $"{ex.Message} (HTTP request timeout was set to {httpRequest.Timeout}ms)";

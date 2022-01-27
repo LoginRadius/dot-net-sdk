@@ -239,12 +239,10 @@ namespace LoginRadiusSDK.V2.Common
             }
             catch (ConnectionException ex)
             {
+
                 try
                 {
-                    if (ex.Response == string.Empty)
-                    {
-                        throw;
-                    }
+
                     var exception = new ApiResponse<T>
                     {
                         RestException = JsonConvert.DeserializeObject<ApiExceptionResponse>(ex.Response)
@@ -253,13 +251,20 @@ namespace LoginRadiusSDK.V2.Common
                 }
                 catch
                 {
-                    throw ex;
+                    return new ApiResponse<T> { OtherException = ex.Response };
                 }
             }
             catch (LoginRadiusException e)
             {
-                // If get a LoginRadius, just rethrow to preserve the stack trace.
-                return new ApiResponse<T> { RestException = e.ErrorResponse };
+                // Response will be either in Json String or or only having string value 
+                if (!string.IsNullOrEmpty(e.Response) && JsonFormatter.ValidateJSON(e.Response))
+                {
+                    return new ApiResponse<T> { RestException = e.ErrorResponse };
+                }
+                else
+                {
+                    return new ApiResponse<T> { OtherException = e.Response };
+                }
             }
             catch (System.Exception ex)
             {

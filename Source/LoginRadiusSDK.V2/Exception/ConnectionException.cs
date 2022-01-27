@@ -1,3 +1,6 @@
+using LoginRadiusSDK.V2.Common;
+using LoginRadiusSDK.V2.Util.Serialization;
+using Newtonsoft.Json;
 using System.Net;
 
 namespace LoginRadiusSDK.V2.Exception
@@ -27,9 +30,25 @@ namespace LoginRadiusSDK.V2.Exception
         public ConnectionException(string message, string response, WebExceptionStatus status,
             HttpWebRequest request) : base(message)
         {
-            Response = response;
             WebExceptionStatus = status;
             Request = request;
+            if (!string.IsNullOrEmpty(response) && JsonFormatter.ValidateJSON(response))
+            {
+                Response = response;
+            }
+            else
+            {
+                ApiExceptionResponse apiExceptionResponse = new ApiExceptionResponse
+                {
+                    Message = "ConnectionException",
+                    ErrorCode = (int?)status,
+                    Description = message,
+                    IsProviderError = false,
+                    ProviderErrorResponse = null
+                };
+                Response = JsonConvert.SerializeObject(apiExceptionResponse); ;
+            }
+
         }
 
         /// <summary>

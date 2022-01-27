@@ -10,18 +10,29 @@ using System.Security.Cryptography;
 
 namespace LoginRadiusSDK.V2.Common
 {
-    public  class LoginRadiusSecureOneTimeToken
+    public class LoginRadiusSecureOneTimeToken
     {
-        public  string GetSott(Sott sottAuth)
+
+        /// <summary>
+        /// Generate SOTT Manually.
+        /// </summary>
+        /// <param name="sottAuth">Model Class containing Definition of payload for SOTT</param>
+        /// <param name="apiKey">LoginRadius Api Key.</param>
+        /// <param name="apiSecret">LoginRadius Api Secret.</param>
+        /// <returns>Response containing SOTT</returns>
+        /// 
+
+        public string GetSott(Sott sottAuth, string apiKey = "", string apiSecret = "")
         {
-            string secret = LoginRadiusResource.ConfigDictionary[LRConfigConstants.LoginRadiusApiSecret];
-            string key = LoginRadiusResource.ConfigDictionary[LRConfigConstants.LoginRadiusApiKey];
+            string secret = !string.IsNullOrWhiteSpace(apiSecret) ? apiSecret : LoginRadiusResource.ConfigDictionary[LRConfigConstants.LoginRadiusApiSecret];
+
+            string key = !string.IsNullOrWhiteSpace(apiKey) ? apiKey : LoginRadiusResource.ConfigDictionary[LRConfigConstants.LoginRadiusApiKey];
 
             if (!string.IsNullOrWhiteSpace(secret) && !string.IsNullOrWhiteSpace(key))
             {
                 string tempToken;
 
-                if (sottAuth.StartTime != null && sottAuth.EndTime != null)
+                if (!string.IsNullOrWhiteSpace(sottAuth.StartTime) && !string.IsNullOrWhiteSpace(sottAuth.EndTime))
                 {
                     tempToken =
                         $"{Convert.ToDateTime(sottAuth.StartTime).ToString("yyyy/M/d H:m:s", CultureInfo.InvariantCulture)}#{key}#{Convert.ToDateTime(sottAuth.EndTime).ToString("yyyy/M/d H:m:s", CultureInfo.InvariantCulture)}";

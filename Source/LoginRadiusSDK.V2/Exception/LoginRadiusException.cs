@@ -1,5 +1,7 @@
 ﻿using LoginRadiusSDK.V2.Common;
 using LoginRadiusSDK.V2.Util.Serialization;
+using Newtonsoft.Json;
+using System.Net;
 
 namespace LoginRadiusSDK.V2.Exception
 {
@@ -69,15 +71,36 @@ namespace LoginRadiusSDK.V2.Exception
         }
 
         /// <summary>
-        /// LoginRadiusException
+        ///  LoginRadiusException
         /// </summary>
         /// <param name="message"></param>
         /// <param name="innerException"></param>
         /// <param name="response"></param>
-        public LoginRadiusException(string message, System.Exception innerException, string response)
+        /// <param name="statusCode"></param>
+        public LoginRadiusException(string message, System.Exception innerException, string response, HttpStatusCode statusCode)
             : base(message, innerException)
         {
-            Response = response;
+
+            if (!string.IsNullOrEmpty(response) && JsonFormatter.ValidateJSON(response))
+            {
+                Response = response;
+            }
+            else
+            {
+                ApiExceptionResponse apiExceptionResponse = new ApiExceptionResponse
+                {
+                    Message = message,
+                    ErrorCode = (int?)statusCode,
+                    Description = message,
+                    IsProviderError = false,
+                    ProviderErrorResponse = null
+                };
+
+                Response = JsonConvert.SerializeObject(apiExceptionResponse);
+
+            }
+
+
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using System;
 
@@ -75,6 +76,25 @@ namespace LoginRadiusSDK.V2.Util.Serialization
             // Raise the event if any other object has subscribed to this error.
             var handler = DeserializationError;
             handler?.Invoke(new JsonFormatterDeserializationErrorEventArgs { Message = e.ErrorContext.Error.Message });
+        }
+
+        /// <summary>
+        /// This function will be used to validate the Json Data into the string and return true if the string contains Json data.
+        /// </summary>
+        /// <param name="s">Json String</param>
+        
+        public static bool ValidateJSON(this string s)
+        {
+            try
+            {
+                JToken.Parse(s);
+                return true;
+            }
+            catch (JsonReaderException ex)
+            {
+
+                return false;
+            }
         }
     }
 }
