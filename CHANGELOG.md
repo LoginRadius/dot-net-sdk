@@ -1,5 +1,14 @@
 > **LoginRadius .NET SDK Change Log** provides information regarding what has changed, more specifically what changes, improvements and bug fix has been made to the SDK. For more details please refer to the [LoginRadius API Documention](https://docs.loginradius.com/api/v2/sdk-libraries/aspnet)
 
+# Version 11.4.0
+
+Release on **June 01, 2022**
+
+## Enhancements
+
+- Added additional parameter `TimeDifference` & `getLrServerTime` in `GetSott` function.
+- Enhancement in `README.md` file.
+
 # Version 11.3.0
 
 Release on **January 28, 2022**
