@@ -1,5 +1,13 @@
 > **LoginRadius .NET SDK Change Log** provides information regarding what has changed, more specifically what changes, improvements and bug fix has been made to the SDK. For more details please refer to the [LoginRadius API Documention](https://docs.loginradius.com/api/v2/sdk-libraries/aspnet)
 
+# Version 11.4.1
+
+Release on **August 04, 2022**
+
+## Enhancements
+
+- Updated Newtonsoft.Json library 12.0.2 to 13.0.1
+
 # Version 11.4.0
 
 Release on **June 01, 2022**
