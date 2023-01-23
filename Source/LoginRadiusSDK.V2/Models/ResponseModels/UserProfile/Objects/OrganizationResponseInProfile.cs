@@ -6,26 +6,20 @@
 //-----------------------------------------------------------------------
 
 using Newtonsoft.Json;
-namespace LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects
+namespace LoginRadiusSDK.V2.Models.ResponseModels.UserProfile.Objects
 
 {
 
     /// <summary>
-    ///	Response containing Definition of Complete Album data
+    ///	Response containing Definition for OrganizationResponseInProfile
     /// </summary>
-    public class FacebookAlbumImages
+    public class OrganizationResponseInProfile
     {
 		/// <summary>
-		///	Photo dimensions
+		///	ID of the User
 		/// </summary>
-		[JsonProperty(PropertyName = "Dimensions")]
-        public  string Dimensions {get;set;}
-
-		/// <summary>
-		///	Images
-		/// </summary>
-		[JsonProperty(PropertyName = "Image")]
-        public  string Image {get;set;}
+		[JsonProperty(PropertyName = "Id")]
+        public  string Id {get;set;}
 
     }
 }

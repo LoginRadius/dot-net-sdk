@@ -355,11 +355,13 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <param name="smsTemplate">SMS Template name</param>
         /// <param name="verificationUrl">Email verification url</param>
         /// <param name="welcomeEmailTemplate">Name of the welcome email template</param>
+        /// <param name="emailTemplate">Name of the email template</param>
         /// <returns>Response containing Definition of Complete Validation, UserProfile data and Access Token</returns>
         /// 17.1.2
 
         public async Task<ApiResponse<UserProfilePostResponse<AccessToken<Identity>>>> UserRegistrationByPhone(AuthUserRegistrationModel authUserRegistrationModel, string sott,
-        string fields = "", string options = "", string smsTemplate = null, string verificationUrl = null, string welcomeEmailTemplate = null)
+        string fields = "", string options = "", string smsTemplate = null, string verificationUrl = null,
+        string welcomeEmailTemplate = null, string emailTemplate = null)
         {
             if (authUserRegistrationModel == null)
             {
@@ -393,6 +395,10 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             if (!string.IsNullOrWhiteSpace(welcomeEmailTemplate))
             {
                queryParameters.Add("welcomeEmailTemplate", welcomeEmailTemplate);
+            }
+            if (!string.IsNullOrWhiteSpace(emailTemplate))
+            {
+               queryParameters.Add("emailTemplate", emailTemplate);
             }
 
             var resourcePath = "identity/v2/auth/register";

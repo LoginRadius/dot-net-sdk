@@ -22,23 +22,4 @@ namespace LoginRadiusSDK.V2.Models.ResponseModels
         public  bool IsPosted {get;set;}
 
     }
-	
-	/// <summary>
-	///	Response containing Definition for Complete Validation and profile data
-	/// </summary>
-    public class PostMethodResponse<T>
-    {
-		/// <summary>
-		///	Complete user profile data
-		/// </summary>
-		[JsonProperty(PropertyName = "data")]
-        public  T Data {get;set;}
-
-		/// <summary>
-		///	check data is posted
-		/// </summary>
-		[JsonProperty(PropertyName = "isPosted")]
-        public  bool IsPosted {get;set;}
-
-    }
 }

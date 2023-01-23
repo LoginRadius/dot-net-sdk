@@ -1,5 +1,49 @@
 > **LoginRadius .NET SDK Change Log** provides information regarding what has changed, more specifically what changes, improvements and bug fix has been made to the SDK. For more details please refer to the [LoginRadius API Documention](https://docs.loginradius.com/api/v2/sdk-libraries/aspnet)
 
+# Version 11.5.0
+
+Release on **January 23, 2023**
+
+
+## Enhancements
+- Added `emailTemplate` parameter in `UserRegistrationByPhone` Api
+
+## Removed (Deprecated) APIs:
+- `AuthGetRegistrationData`
+- `ValidateRegistrationDataCode`
+- `GetRegistrationData`
+- `AddRegistrationData`
+- `UpdateRegistrationData`
+- `DeleteRegistrationData`
+- `DeleteAllRecordsByDataSource`
+- `GetAccessTokenByVkontakteAccessToken`
+- `GetAlbum`
+- `GetAlbumsWithCursor`
+- `GetAudios`
+- `GetAudiosWithCursor`
+- `GetCheckIns`
+- `GetCheckInsWithCursor`
+- `GetContacts`
+- `GetEvents`
+- `GetEventsWithCursor`
+- `GetFollowings`
+- `GetFollowingsWithCursor`
+- `GetGroups`
+- `GetGroupsWithCursor`
+- `GetLikes`
+- `GetLikesWithCursor`
+- `GetMentions`
+- `PostMessage`
+- `GetPage`
+- `GetPhotos`
+- `GetPosts`
+- `StatusPosting`
+- `TrackableStatusPosting`
+- `GetTrackableStatusStats`
+- `TrackableStatusFetching`
+- `GetVideos`
+- `GetRefreshedSocialUserProfile`
+
 # Version 11.4.1
 
 Release on **August 04, 2022**

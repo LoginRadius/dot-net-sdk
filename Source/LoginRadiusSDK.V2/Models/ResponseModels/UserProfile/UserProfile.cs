@@ -122,6 +122,12 @@ namespace LoginRadiusSDK.V2.Models.ResponseModels.UserProfile
         public  int? NoOfLogins {get;set;}
 
 		/// <summary>
+		///	
+		/// </summary>
+		[JsonProperty(PropertyName = "Organizations")]
+        public  List<OrganizationResponseInProfile> Organizations {get;set;}
+
+		/// <summary>
 		///	Password for the email
 		/// </summary>
 		[JsonProperty(PropertyName = "Password")]

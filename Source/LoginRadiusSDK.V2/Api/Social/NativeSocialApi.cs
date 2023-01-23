@@ -243,29 +243,6 @@ namespace LoginRadiusSDK.V2.Api.Social
             return await ConfigureAndExecute<AccessToken>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
-        /// The API is used to get LoginRadius access token by sending Vkontakte's access token. It will be valid for the specific duration of time specified in the response.
-        /// </summary>
-        /// <param name="vkAccessToken">Vkontakte Access Token</param>
-        /// <returns>Response containing Definition of Complete Token data</returns>
-        /// 20.15
-
-        public async Task<ApiResponse<AccessToken>> GetAccessTokenByVkontakteAccessToken(string vkAccessToken)
-        {
-            if (string.IsNullOrWhiteSpace(vkAccessToken))
-            {
-               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(vkAccessToken));
-            }
-            var queryParameters = new QueryParameters
-            {
-                { "key", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] },
-                { "vk_access_token", vkAccessToken }
-            };
-
-            var resourcePath = "api/v2/access_token/vkontakte";
-            
-            return await ConfigureAndExecute<AccessToken>(HttpMethod.GET, resourcePath, queryParameters, null);
-        }
-        /// <summary>
         /// The API is used to get LoginRadius access token by sending Google's AuthCode. It will be valid for the specific duration of time specified in the response.
         /// </summary>
         /// <param name="googleAuthcode">Google AuthCode</param>
