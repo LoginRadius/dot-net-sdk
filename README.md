@@ -219,7 +219,7 @@ string fields = null; //Optional
 ; //Optional
 var smsTemplate = "smsTemplate"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
-var isVoiceOtp = true; //Optional
+var isVoiceOtp = false; //Optional
 var options = "options"; //Optional
 var apiResponse = new AuthenticationApi().UpdateProfileByAccessToken(accessToken, userProfileUpdateModel, emailTemplate, fields, smsTemplate, verificationUrl, isVoiceOtp, options).Result;
 ```
@@ -533,7 +533,7 @@ string fields = null; //Optional
 var options = "options"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
 var welcomeEmailTemplate = "welcomeEmailTemplate"; //Optional
-var isVoiceOtp = true; //Optional
+var isVoiceOtp = false; //Optional
 var apiResponse = new AuthenticationApi().UserRegistrationByEmail(authUserRegistrationModel, sott, emailTemplate, fields, options, verificationUrl, welcomeEmailTemplate, isVoiceOtp).Result;
 ```
 
@@ -563,7 +563,7 @@ var options = "options"; //Optional
 var smsTemplate = "smsTemplate"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
 var welcomeEmailTemplate = "welcomeEmailTemplate"; //Optional
-var isVoiceOtp = true; //Optional
+var isVoiceOtp = false; //Optional
 var apiResponse = new AuthenticationApi().UserRegistrationByCaptcha(authUserRegistrationModelWithCaptcha, emailTemplate, fields, options, smsTemplate, verificationUrl, welcomeEmailTemplate, isVoiceOtp).Result;
 ```
 
@@ -973,7 +973,7 @@ This API Allows you to reset the phone no verification of an end user’s accoun
 
 var uid = "uid"; //Required
 var smsTemplate = "smsTemplate"; //Optional
-var isVoiceOtp = true; //Optional
+var isVoiceOtp = false; //Optional
 var apiResponse = new AccountApi().ResetPhoneIDVerificationByUid(uid, smsTemplate, isVoiceOtp).Result;
 ```
 
@@ -1639,7 +1639,7 @@ var otp = "otp"; //Required
 var phone = "phone"; //Required
 string fields = null; //Optional
 var smsTemplate = "smsTemplate"; //Optional
-var isVoiceOtp = true; //Optional
+var isVoiceOtp = false; //Optional
 var apiResponse = new PhoneAuthenticationApi().PhoneVerificationByOTP(otp, phone, fields, smsTemplate, isVoiceOtp).Result;
 ```
 
@@ -1655,7 +1655,7 @@ This API is used to consume the verification code sent to verify a user's phone 
 var accessToken = "accessToken"; //Required
 var otp = "otp"; //Required
 var smsTemplate = "smsTemplate"; //Optional
-var isVoiceOtp = true; //Optional
+var isVoiceOtp = false; //Optional
 var apiResponse = new PhoneAuthenticationApi().PhoneVerificationOTPByAccessToken(accessToken, otp, smsTemplate, isVoiceOtp).Result;
 ```
 
@@ -1671,7 +1671,7 @@ This API is used to update the login Phone Number of users [More Info](https://w
 var accessToken = "accessToken"; //Required
 var phone = "phone"; //Required
 var smsTemplate = "smsTemplate"; //Optional
-var isVoiceOtp = true; //Optional
+var isVoiceOtp = false; //Optional
 var apiResponse = new PhoneAuthenticationApi().UpdatePhoneNumber(accessToken, phone, smsTemplate, isVoiceOtp).Result;
 ```
 
@@ -1705,7 +1705,7 @@ This API is used to send the OTP to reset the account password. [More Info](http
 
 var phone = "phone"; //Required
 var smsTemplate = "smsTemplate"; //Optional
-var isVoiceOtp = true; //Optional
+var isVoiceOtp = false; //Optional
 var apiResponse = new PhoneAuthenticationApi().ForgotPasswordByPhoneOTP(phone, smsTemplate, isVoiceOtp).Result;
 ```
 
@@ -1720,7 +1720,7 @@ This API is used to resend a verification OTP to verify a user's Phone Number. T
 
 var phone = "phone"; //Required
 var smsTemplate = "smsTemplate"; //Optional
-var isVoiceOtp = true; //Optional
+var isVoiceOtp = false; //Optional
 var apiResponse = new PhoneAuthenticationApi().PhoneResendVerificationOTP(phone, smsTemplate, isVoiceOtp).Result;
 ```
 
@@ -1765,7 +1765,7 @@ string fields = null; //Optional
 var smsTemplate = "smsTemplate"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
 var welcomeEmailTemplate = "welcomeEmailTemplate"; //Optional
-var isVoiceOtp = true; //Optional
+var isVoiceOtp = false; //Optional
 var options = "options"; //Optional
 var apiResponse = new PhoneAuthenticationApi().UserRegistrationByPhone(authUserRegistrationModel, sott, emailTemplate, fields, smsTemplate, verificationUrl, welcomeEmailTemplate, isVoiceOtp, options).Result;
 ```
@@ -1887,7 +1887,7 @@ This API is used to update the Multi-factor authentication phone number by sendi
 var accessToken = "accessToken"; //Required
 var phoneNo2FA = "phoneNo2FA"; //Required
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
-var isVoiceOtp = true; //Optional
+var isVoiceOtp = false; //Optional
 var options = "options"; //Optional
 var apiResponse = new MultiFactorAuthenticationApi().MFAUpdatePhoneNumberByToken(accessToken, phoneNo2FA, smsTemplate2FA, isVoiceOtp, options).Result;
 ```
@@ -1987,7 +1987,7 @@ var phoneNo2FA = "phoneNo2FA"; //Required
 var secondFactorAuthenticationToken = "secondFactorAuthenticationToken"; //Required
 var options = "options"; //Optional
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
-var isVoiceOtp = true; //Optional
+var isVoiceOtp = false; //Optional
 var apiResponse = new MultiFactorAuthenticationApi().MFAUpdatePhoneNumber(phoneNo2FA, secondFactorAuthenticationToken, options, smsTemplate2FA, isVoiceOtp).Result;
 ```
 
@@ -2077,7 +2077,7 @@ var smsTemplate = "smsTemplate"; //Optional
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
 var emailTemplate2FA = "emailTemplate2FA"; //Optional
-var isVoiceOtp = true; //Optional
+var isVoiceOtp = false; //Optional
 var options = "options"; //Optional
 var apiResponse = new MultiFactorAuthenticationApi().MFALoginByEmail(email, password, emailTemplate, fields, loginUrl, smsTemplate, smsTemplate2FA, verificationUrl, emailTemplate2FA, isVoiceOtp, options).Result;
 ```
@@ -2100,7 +2100,7 @@ var smsTemplate = "smsTemplate"; //Optional
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
 var emailTemplate2FA = "emailTemplate2FA"; //Optional
-var isVoiceOtp = true; //Optional
+var isVoiceOtp = false; //Optional
 var apiResponse = new MultiFactorAuthenticationApi().MFALoginByUserName(password, username, emailTemplate, fields, loginUrl, smsTemplate, smsTemplate2FA, verificationUrl, emailTemplate2FA, isVoiceOtp).Result;
 ```
 
@@ -2122,7 +2122,7 @@ var smsTemplate = "smsTemplate"; //Optional
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
 var emailTemplate2FA = "emailTemplate2FA"; //Optional
-var isVoiceOtp = true; //Optional
+var isVoiceOtp = false; //Optional
 var options = "options"; //Optional
 var apiResponse = new MultiFactorAuthenticationApi().MFALoginByPhone(password, phone, emailTemplate, emailTemplate2FA, fields, loginUrl, smsTemplate, smsTemplate2FA, verificationUrl, isVoiceOtp, options).Result;
 ```
@@ -2181,7 +2181,7 @@ This API is used to configure the Multi-factor authentication after login by usi
 ```c#
 
 var accessToken = "accessToken"; //Required
-var isvoiceotp = true; //Optional
+var isVoiceOtp = false; //Optional
 var apiResponse = new MultiFactorAuthenticationApi().MFAConfigureByAccessToken(accessToken, isvoiceotp).Result;
 ```
 
@@ -2237,7 +2237,7 @@ This API is used to resending the verification OTP to the provided phone number 
 
 var secondFactorAuthenticationToken = "secondFactorAuthenticationToken"; //Required
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
-var isVoiceOtp = true; //Optional
+var isVoiceOtp = false; //Optional
 var apiResponse = new MultiFactorAuthenticationApi().MFAResendOTP(secondFactorAuthenticationToken, smsTemplate2FA, isVoiceOtp).Result;
 ```
 
@@ -2605,7 +2605,7 @@ ForgotPINOtpByPhoneModel forgotPINOtpByPhoneModel = new ForgotPINOtpByPhoneModel
 Phone ="<Phone>"
 }; //Required
 var smsTemplate = "smsTemplate"; //Optional
-var isVoiceOtp = true; //Optional
+var isVoiceOtp = false; //Optional
 var apiResponse = new PINAuthenticationApi().SendForgotPINSMSByPhone(forgotPINOtpByPhoneModel, smsTemplate, isVoiceOtp).Result;
 ```
 
@@ -2838,7 +2838,7 @@ This API is used to trigger the Multi-Factor Autentication workflow for the prov
 
 var accessToken = "accessToken"; //Required
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
-var isVoiceOtp = true; //Optional
+var isVoiceOtp = false; //Optional
 var apiResponse = new ReAuthenticationApi().MFAReAuthenticate(accessToken, smsTemplate2FA, isVoiceOtp).Result;
 ```
 
@@ -3131,7 +3131,7 @@ G_recaptcha_response ="<G-recaptcha-response>",
 Phone ="<Phone>"
 }; //Required
 var smsTemplate = "smsTemplate"; //Optional
-var isVoiceOtp = true; //Optional
+var isVoiceOtp = false; //Optional
 var apiResponse = new OneTouchLoginApi().OneTouchLoginByPhone(oneTouchLoginByPhoneModel, smsTemplate, isVoiceOtp).Result;
 ```
 
@@ -3197,7 +3197,7 @@ Phone ="<Phone>"
 }; //Required
 string fields = null; //Optional
 var smsTemplate = "smsTemplate"; //Optional
-var isVoiceOtp = true; //Optional
+var isVoiceOtp = false; //Optional
 var apiResponse = new PasswordLessLoginApi().PasswordlessLoginPhoneVerification(passwordLessLoginOtpModel, fields, smsTemplate, isVoiceOtp).Result;
 ```
 
@@ -3246,7 +3246,7 @@ API can be used to send a One-time Passcode (OTP) provided that the account has 
 
 var phone = "phone"; //Required
 var smsTemplate = "smsTemplate"; //Optional
-var isVoiceOtp = true; //Optional
+var isVoiceOtp = false; //Optional
 var apiResponse = new PasswordLessLoginApi().PasswordlessLoginByPhone(phone, smsTemplate, isVoiceOtp).Result;
 ```
 
