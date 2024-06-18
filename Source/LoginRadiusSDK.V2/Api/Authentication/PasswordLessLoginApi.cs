@@ -24,11 +24,12 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <param name="passwordLessLoginOtpModel">Model Class containing Definition of payload for PasswordLessLoginOtpModel API</param>
         /// <param name="fields">The fields parameter filters the API response so that the response only includes a specific set of fields</param>
         /// <param name="smsTemplate">SMS Template name</param>
+        /// <param name="isVoiceOtp">Boolean, pass true if you wish to trigger voice OTP</param>
         /// <returns>Response containing User Profile Data and access token</returns>
         /// 9.6
 
         public async Task<ApiResponse<AccessToken<Identity>>> PasswordlessLoginPhoneVerification(PasswordLessLoginOtpModel passwordLessLoginOtpModel, string fields = "",
-        string smsTemplate = null)
+        string smsTemplate = null, bool isVoiceOtp = false)
         {
             if (passwordLessLoginOtpModel == null)
             {
@@ -46,6 +47,10 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             {
                queryParameters.Add("smsTemplate", smsTemplate);
             }
+            if (isVoiceOtp != false)
+            {
+               queryParameters.Add("isVoiceOtp", isVoiceOtp.ToString());
+            }
 
             var resourcePath = "identity/v2/auth/login/passwordlesslogin/otp/verify";
             
@@ -56,10 +61,12 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// </summary>
         /// <param name="phone">The Registered Phone Number</param>
         /// <param name="smsTemplate">SMS Template name</param>
+        /// <param name="isVoiceOtp">Boolean, pass true if you wish to trigger voice OTP</param>
         /// <returns>Response Containing Definition of SMS Data</returns>
         /// 9.15
 
-        public async Task<ApiResponse<GetResponse<SMSResponseData>>> PasswordlessLoginByPhone(string phone, string smsTemplate = null)
+        public async Task<ApiResponse<GetResponse<SmsResponseData>>> PasswordlessLoginByPhone(string phone, string smsTemplate = null,
+        bool isVoiceOtp = false)
         {
             if (string.IsNullOrWhiteSpace(phone))
             {
@@ -74,10 +81,14 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             {
                queryParameters.Add("smsTemplate", smsTemplate);
             }
+            if (isVoiceOtp != false)
+            {
+               queryParameters.Add("isVoiceOtp", isVoiceOtp.ToString());
+            }
 
             var resourcePath = "identity/v2/auth/login/passwordlesslogin/otp";
             
-            return await ConfigureAndExecute<GetResponse<SMSResponseData>>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<GetResponse<SmsResponseData>>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// This API is used to send a Passwordless Login verification link to the provided Email ID

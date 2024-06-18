@@ -22,10 +22,12 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// </summary>
         /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
         /// <param name="smsTemplate2FA">SMS Template Name</param>
+        /// <param name="isVoiceOtp">Boolean, pass true if you wish to trigger voice OTP</param>
         /// <returns>Response containing Definition of Complete Multi-Factor Authentication Settings data</returns>
         /// 14.3
 
-        public async Task<ApiResponse<MultiFactorAuthenticationSettingsResponse>> MFAReAuthenticate(string accessToken, string smsTemplate2FA = null)
+        public async Task<ApiResponse<MultiFactorAuthenticationSettingsResponse>> MFAReAuthenticate(string accessToken, string smsTemplate2FA = null,
+        bool isVoiceOtp = false)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -39,6 +41,10 @@ namespace LoginRadiusSDK.V2.Api.Advanced
             if (!string.IsNullOrWhiteSpace(smsTemplate2FA))
             {
                queryParameters.Add("smsTemplate2FA", smsTemplate2FA);
+            }
+            if (isVoiceOtp != false)
+            {
+               queryParameters.Add("isVoiceOtp", isVoiceOtp.ToString());
             }
 
             var resourcePath = "identity/v2/auth/account/reauth/2fa";
@@ -100,34 +106,6 @@ namespace LoginRadiusSDK.V2.Api.Advanced
             var resourcePath = "identity/v2/auth/account/reauth/2fa/backupcode";
             
             return await ConfigureAndExecute<EventBasedMultiFactorAuthenticationToken>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(reauthByBackupCodeModel));
-        }
-        /// <summary>
-        /// This API is used to re-authenticate via Multi-factor-authentication by passing the google authenticator code
-        /// </summary>
-        /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
-        /// <param name="reauthByGoogleAuthenticatorCodeModel">Model Class containing Definition for MFA Reauthentication by Google Authenticator</param>
-        /// <returns>Complete user Multi-Factor Authentication Token data</returns>
-        /// 14.6
-
-        public async Task<ApiResponse<EventBasedMultiFactorAuthenticationToken>> MFAReAuthenticateByGoogleAuth(string accessToken, ReauthByGoogleAuthenticatorCodeModel reauthByGoogleAuthenticatorCodeModel)
-        {
-            if (string.IsNullOrWhiteSpace(accessToken))
-            {
-               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(accessToken));
-            }
-            if (reauthByGoogleAuthenticatorCodeModel == null)
-            {
-               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(reauthByGoogleAuthenticatorCodeModel));
-            }
-            var queryParameters = new QueryParameters
-            {
-                { "access_token", accessToken },
-                { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] }
-            };
-
-            var resourcePath = "identity/v2/auth/account/reauth/2fa/googleauthenticatorcode";
-            
-            return await ConfigureAndExecute<EventBasedMultiFactorAuthenticationToken>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(reauthByGoogleAuthenticatorCodeModel));
         }
         /// <summary>
         /// This API is used to re-authenticate via Multi-factor-authentication by passing the password
@@ -371,6 +349,34 @@ namespace LoginRadiusSDK.V2.Api.Advanced
             var resourcePath = "identity/v2/auth/account/reauth/2fa/securityquestionanswer/verify";
             
             return await ConfigureAndExecute<EventBasedMultiFactorAuthenticationToken>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(securityQuestionAnswerUpdateModel));
+        }
+        /// <summary>
+        /// This API is used to validate the triggered MFA authentication flow with the Authenticator Code.
+        /// </summary>
+        /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
+        /// <param name="multiFactorAuthModelByAuthenticatorCode">Model Class containing Definition of payload for MultiFactorAuthModel By Authenticator Code API</param>
+        /// <returns>Complete user Multi-Factor Authentication Token data</returns>
+        /// 44.6
+
+        public async Task<ApiResponse<EventBasedMultiFactorAuthenticationToken>> MFAReAuthenticateByAuthenticatorCode(string accessToken, MultiFactorAuthModelByAuthenticatorCode multiFactorAuthModelByAuthenticatorCode)
+        {
+            if (string.IsNullOrWhiteSpace(accessToken))
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(accessToken));
+            }
+            if (multiFactorAuthModelByAuthenticatorCode == null)
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(multiFactorAuthModelByAuthenticatorCode));
+            }
+            var queryParameters = new QueryParameters
+            {
+                { "access_token", accessToken },
+                { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] }
+            };
+
+            var resourcePath = "identity/v2/auth/account/reauth/2fa/authenticatorcode";
+            
+            return await ConfigureAndExecute<EventBasedMultiFactorAuthenticationToken>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(multiFactorAuthModelByAuthenticatorCode));
         }
     }
 }

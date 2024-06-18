@@ -61,10 +61,12 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// </summary>
         /// <param name="oneTouchLoginByPhoneModel">Model Class containing Definition of payload for OneTouchLogin By PhoneModel API</param>
         /// <param name="smsTemplate">SMS Template name</param>
+        /// <param name="isVoiceOtp">Boolean, pass true if you wish to trigger voice OTP</param>
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 1.4
 
-        public async Task<ApiResponse<PostResponse>> OneTouchLoginByPhone(OneTouchLoginByPhoneModel oneTouchLoginByPhoneModel, string smsTemplate = null)
+        public async Task<ApiResponse<PostResponse>> OneTouchLoginByPhone(OneTouchLoginByPhoneModel oneTouchLoginByPhoneModel, string smsTemplate = null,
+        bool isVoiceOtp = false)
         {
             if (oneTouchLoginByPhoneModel == null)
             {
@@ -77,6 +79,10 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             if (!string.IsNullOrWhiteSpace(smsTemplate))
             {
                queryParameters.Add("smsTemplate", smsTemplate);
+            }
+            if (isVoiceOtp != false)
+            {
+               queryParameters.Add("isVoiceOtp", isVoiceOtp.ToString());
             }
 
             var resourcePath = "identity/v2/auth/onetouchlogin/phone";

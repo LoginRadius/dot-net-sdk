@@ -205,10 +205,12 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// </summary>
         /// <param name="forgotPINOtpByPhoneModel">Model Class containing Definition for Forgot Pin Otp By Phone API</param>
         /// <param name="smsTemplate"></param>
+        /// <param name="isVoiceOtp">Boolean, pass true if you wish to trigger voice OTP</param>
         /// <returns>Response Containing Validation Data and SMS Data</returns>
         /// 42.7
 
-        public async Task<ApiResponse<UserProfilePostResponse<SMSResponseData>>> SendForgotPINSMSByPhone(ForgotPINOtpByPhoneModel forgotPINOtpByPhoneModel, string smsTemplate = null)
+        public async Task<ApiResponse<UserProfilePostResponse<SmsResponseData>>> SendForgotPINSMSByPhone(ForgotPINOtpByPhoneModel forgotPINOtpByPhoneModel, string smsTemplate = null,
+        bool isVoiceOtp = false)
         {
             if (forgotPINOtpByPhoneModel == null)
             {
@@ -222,10 +224,14 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             {
                queryParameters.Add("smsTemplate", smsTemplate);
             }
+            if (isVoiceOtp != false)
+            {
+               queryParameters.Add("isVoiceOtp", isVoiceOtp.ToString());
+            }
 
             var resourcePath = "identity/v2/auth/pin/forgot/otp";
             
-            return await ConfigureAndExecute<UserProfilePostResponse<SMSResponseData>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(forgotPINOtpByPhoneModel));
+            return await ConfigureAndExecute<UserProfilePostResponse<SmsResponseData>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(forgotPINOtpByPhoneModel));
         }
         /// <summary>
         /// This API is used to change a user's PIN using access token.

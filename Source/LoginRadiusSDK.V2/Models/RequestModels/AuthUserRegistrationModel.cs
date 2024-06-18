@@ -410,7 +410,7 @@ namespace LoginRadiusSDK.V2.Models.RequestModels
 		///	PIN Info
 		/// </summary>
 		[JsonProperty(PropertyName = "PINInfo")]
-        public  PINModel PINInfo {get;set;}
+        public  PinModel PINInfo {get;set;}
 
 		/// <summary>
 		///	Array of Objects,strings Name and boolean IsPrimary

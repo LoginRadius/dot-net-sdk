@@ -11,7 +11,7 @@ namespace LoginRadiusSDK.V2.Models.RequestModels
 {
 
     /// <summary>
-    ///	Model Class containing Definition for CaptchaModel
+    ///	Model Class containing Definition for ReCaptchaBodyModel Property
     /// </summary>
     public class CaptchaModel
     {
@@ -20,6 +20,12 @@ namespace LoginRadiusSDK.V2.Models.RequestModels
 		/// </summary>
 		[JsonProperty(PropertyName = "g-recaptcha-response")]
         public  string G_recaptcha_response {get;set;}
+
+		/// <summary>
+		///	The acknowledgement received by Google in Google recaptcha authorisation process.
+		/// </summary>
+		[JsonProperty(PropertyName = "h-captcha-response")]
+        public  string H-captcha-response {get;set;}
 
 		/// <summary>
 		///	the value of the user's random string retrieved from the QQ captcha

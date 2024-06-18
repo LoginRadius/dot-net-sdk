@@ -245,7 +245,7 @@ namespace dot_net_demo.Controllers
 
         public IActionResult LRMfaValidate([FromQuery(Name = "auth")] String accessToken)
         {
-            var apiresponse = new MultiFactorAuthenticationApi().MFAConfigureByAccessToken(accessToken).Result;
+            var apiresponse = new MultiFactorAuthenticationApi().MFAConfigureByAccessToken(accessToken,false).Result;
 
             if (apiresponse.RestException != null)
             {

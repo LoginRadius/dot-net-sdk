@@ -6,26 +6,20 @@
 //-----------------------------------------------------------------------
 
 using Newtonsoft.Json;
-namespace LoginRadiusSDK.V2.Models.RequestModels
+namespace LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects
 
 {
 
     /// <summary>
-    ///	Model Class containing Definition for EmailVerificationByOtpModel API
+    ///	Response containing Definition for Complete AuthSendVerificationEmailForLinkingSocialProfiles API Response
     /// </summary>
-    public class EmailVerificationByOtpModel:LockoutModel
+    public class PostResponseResendEmailVerification
     {
 		/// <summary>
-		///	user's email
+		///	check data is posted
 		/// </summary>
-		[JsonProperty(PropertyName = "Email")]
-        public  string Email {get;set;}
-
-		/// <summary>
-		///	The Verification Code
-		/// </summary>
-		[JsonProperty(PropertyName = "Otp")]
-        public  string Otp {get;set;}
+		[JsonProperty(PropertyName = "IsPosted")]
+        public  bool IsPosted {get;set;}
 
 		/// <summary>
 		///	The uuid received in the response

@@ -5,27 +5,35 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 namespace LoginRadiusSDK.V2.Models.ResponseModels
 
 {
 
     /// <summary>
-    ///	Response containing Definition for Complete SMS data
+    ///	Response containing Definition for Complete MultiToken
     /// </summary>
-    public class SmsResponseData
+    public class MultiToken
     {
 		/// <summary>
-		///	Account Sid
+		///	
 		/// </summary>
-		[JsonProperty(PropertyName = "AccountSid")]
-        public  string AccountSid {get;set;}
+		[JsonProperty(PropertyName = "ExpiresIn")]
+        public  DateTime ExpiresIn {get;set;}
 
 		/// <summary>
-		///	Sid
+		///	Identity providers
 		/// </summary>
-		[JsonProperty(PropertyName = "Sid")]
-        public  string Sid {get;set;}
+		[JsonProperty(PropertyName = "IdentityProviders")]
+        public  List<string> IdentityProviders {get;set;}
+
+		/// <summary>
+		///	Token
+		/// </summary>
+		[JsonProperty(PropertyName = "Token")]
+        public  Guid Token {get;set;}
 
     }
 }

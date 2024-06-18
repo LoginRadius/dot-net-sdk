@@ -3,9 +3,7 @@ using System.Collections.Concurrent;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
-using LoginRadiusSDK.V2.Common;
 using LoginRadiusSDK.V2.Exception;
-using Newtonsoft.Json;
 
 namespace LoginRadiusSDK.V2.Http
 {

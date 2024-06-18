@@ -193,6 +193,7 @@ List of APIs in this Section:<br>
 [GET : Auth Check UserName Availability](#CheckUserNameAvailability-get-)<br>
 [GET : Auth Privacy Policy Accept](#AcceptPrivacyPolicy-get-)<br>
 [GET : Auth Privacy Policy History By Access Token](#GetPrivacyPolicyHistoryByAccessToken-get-)<br>
+[GET : Auth send verification Email for linking social profiles](#AuthSendVerificationEmailForLinkingSocialProfiles-get-)<br>
 [DELETE : Auth Delete Account with Email Confirmation](#DeleteAccountWithEmailConfirmation-delete-)<br>
 [DELETE : Auth Remove Email](#RemoveEmail-delete-)<br>
 [DELETE : Auth Unlink Social Identities](#UnlinkSocialIdentities-delete-)<br>
@@ -218,7 +219,9 @@ string fields = null; //Optional
 ; //Optional
 var smsTemplate = "smsTemplate"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
-var apiResponse = new AuthenticationApi().UpdateProfileByAccessToken(accessToken, userProfileUpdateModel, emailTemplate, fields, smsTemplate, verificationUrl).Result;
+var isVoiceOtp = true; //Optional
+var options = "options"; //Optional
+var apiResponse = new AuthenticationApi().UpdateProfileByAccessToken(accessToken, userProfileUpdateModel, emailTemplate, fields, smsTemplate, verificationUrl, isVoiceOtp, options).Result;
 ```
 
 
@@ -530,7 +533,8 @@ string fields = null; //Optional
 var options = "options"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
 var welcomeEmailTemplate = "welcomeEmailTemplate"; //Optional
-var apiResponse = new AuthenticationApi().UserRegistrationByEmail(authUserRegistrationModel, sott, emailTemplate, fields, options, verificationUrl, welcomeEmailTemplate).Result;
+var isVoiceOtp = true; //Optional
+var apiResponse = new AuthenticationApi().UserRegistrationByEmail(authUserRegistrationModel, sott, emailTemplate, fields, options, verificationUrl, welcomeEmailTemplate, isVoiceOtp).Result;
 ```
 
 
@@ -559,7 +563,8 @@ var options = "options"; //Optional
 var smsTemplate = "smsTemplate"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
 var welcomeEmailTemplate = "welcomeEmailTemplate"; //Optional
-var apiResponse = new AuthenticationApi().UserRegistrationByCaptcha(authUserRegistrationModelWithCaptcha, emailTemplate, fields, options, smsTemplate, verificationUrl, welcomeEmailTemplate).Result;
+var isVoiceOtp = true; //Optional
+var apiResponse = new AuthenticationApi().UserRegistrationByCaptcha(authUserRegistrationModelWithCaptcha, emailTemplate, fields, options, smsTemplate, verificationUrl, welcomeEmailTemplate, isVoiceOtp).Result;
 ```
 
 
@@ -741,7 +746,8 @@ var verificationToken = "verificationToken"; //Required
 string fields = null; //Optional
 var url = "url"; //Optional
 var welcomeEmailTemplate = "welcomeEmailTemplate"; //Optional
-var apiResponse = new AuthenticationApi().VerifyEmail(verificationToken, fields, url, welcomeEmailTemplate).Result;
+var uuid = "uuid"; //Optional
+var apiResponse = new AuthenticationApi().VerifyEmail(verificationToken, fields, url, welcomeEmailTemplate,uuid).Result;
 ```
 
 
@@ -796,6 +802,19 @@ This API will return all the accepted privacy policies for the user by providing
 
 var accessToken = "accessToken"; //Required
 var apiResponse = new AuthenticationApi().GetPrivacyPolicyHistoryByAccessToken(accessToken).Result;
+```
+
+<h6 id="AuthSendVerificationEmailForLinkingSocialProfiles-get-">Auth send verification Email for linking social profiles (GET)</h6>
+
+This API is used to Send verification email to the unverified email of the social profile. This API can be used only incase of optional verification workflow. [More Info](/api/v2/customer-identity-api/authentication/auth-send-verification-for-social-email/)
+
+
+
+```c#
+
+var accessToken = "accessToken"; //Required
+var clientguid = "clientguid"; //Required
+var apiResponse = new AuthenticationApi().AuthSendVerificationEmailForLinkingSocialProfiles(accessToken, clientguid);
 ```
 
 
@@ -862,6 +881,8 @@ List of APIs in this Section:<br>
 [POST : Account Create](#CreateAccount-post-)<br>
 [POST : Forgot Password token](#GetForgotPasswordToken-post-)<br>
 [POST : Email Verification token](#GetEmailVerificationToken-post-)<br>
+[POST : Multipurpose Email Token Generation API](#MultipurposeEmailTokenGeneration-post-)<br>
+[POST : Multipurpose SMS OTP Generation API](#MultipurposeSMSOTPGeneration-post-)<br>
 [GET : Get Privacy Policy History By Uid](#GetPrivacyPolicyHistoryByUid-get-)<br>
 [GET : Account Profiles by Email](#GetAccountProfileByEmail-get-)<br>
 [GET : Account Profiles by Username](#GetAccountProfileByUserName-get-)<br>
@@ -874,6 +895,7 @@ List of APIs in this Section:<br>
 [GET : Account Identities by Email](#GetAccountIdentitiesByEmail-get-)<br>
 [DELETE : Account Delete](#DeleteAccountByUid-delete-)<br>
 [DELETE : Account Remove Email](#RemoveEmail-delete-)<br>
+[DELETE : Revoke All Refresh Token](#RevokeAllRefreshToken-delete-)<br>
 [DELETE : Delete User Profiles By Email](#AccountDeleteByEmail-delete-)<br>
 
 
@@ -951,7 +973,8 @@ This API Allows you to reset the phone no verification of an end user’s accoun
 
 var uid = "uid"; //Required
 var smsTemplate = "smsTemplate"; //Optional
-var apiResponse = new AccountApi().ResetPhoneIDVerificationByUid(uid, smsTemplate).Result;
+var isVoiceOtp = true; //Optional
+var apiResponse = new AccountApi().ResetPhoneIDVerificationByUid(uid, smsTemplate, isVoiceOtp).Result;
 ```
 
 
@@ -1042,6 +1065,43 @@ This API Returns an Email Verification token. [More Info](https://www.loginradiu
 
 var email = "email"; //Required
 var apiResponse = new AccountApi().GetEmailVerificationToken(email).Result;
+```
+
+
+<h6 id="MultipurposeEmailTokenGeneration-post-">Multipurpose Email Token Generation API (POST)</h6>
+This API generate Email tokens and Email OTPs for Email verification, Add email, Forgot password, Delete user, Passwordless login, Forgot pin, One-touch login and Auto login. [More Info](/api/v2/customer-identity-api/multipurpose-token-and-sms-otp-generation-api/multipurpose-email-token-generation/)
+
+
+
+```c#
+
+MultiEmailToken multiEmailToken = new MultiEmailToken{
+Clientguid ="<Clientguid>",
+Email ="<Email>",
+Name ="<Name>",
+Type ="<Type>",
+Uid ="<Uid>",
+UserName ="<UserName>"
+}; //Required
+var tokentype = "tokentype"; //Required
+var apiResponse = new AccountApi().MultipurposeEmailTokenGeneration(multiEmailToken, tokentype);
+```
+
+
+<h6 id="MultipurposeSMSOTPGeneration-post-">Multipurpose SMS OTP Generation API (POST)</h6>
+This API generates SMS OTP for Add phone, Phone Id verification, Forgot password, Forgot pin, One-touch login, smart login and Passwordless login. [More Info](/api/v2/customer-identity-api/multipurpose-token-and-sms-otp-generation-api/multipurpose-sms-otp-generation/)
+
+
+
+```c#
+
+MultiToken multiToken = new MultiToken{
+Name ="<Name>",
+Phone ="<Phone>",
+Uid ="<Uid>"
+}; //Required
+var smsotptype = "smsotptype"; //Required
+var apiResponse = new AccountApi().MultipurposeSMSOTPGeneration(multiToken, smsotptype);
 ```
 
 
@@ -1207,6 +1267,16 @@ string fields = null; //Optional
 var apiResponse = new AccountApi().RemoveEmail(email, uid, fields).Result;
 ```
 
+<h6 id="RevokeAllRefreshToken-delete-">Revoke All Refresh Token (DELETE)</h6>
+The Revoke All Refresh Access Token API is used to revoke all refresh tokens for a specific user. [More Info](/api/v2/customer-identity-api/refresh-token/revoke-all-refresh-token/)
+
+
+
+```c#
+
+var uid = "uid"; //Required
+var apiResponse = new AccountApi().RevokeAllRefreshToken(uid);
+```
 
 <h6 id="AccountDeleteByEmail-delete-">Delete User Profiles By Email (DELETE)</h6>
 
@@ -1569,7 +1639,8 @@ var otp = "otp"; //Required
 var phone = "phone"; //Required
 string fields = null; //Optional
 var smsTemplate = "smsTemplate"; //Optional
-var apiResponse = new PhoneAuthenticationApi().PhoneVerificationByOTP(otp, phone, fields, smsTemplate).Result;
+var isVoiceOtp = true; //Optional
+var apiResponse = new PhoneAuthenticationApi().PhoneVerificationByOTP(otp, phone, fields, smsTemplate, isVoiceOtp).Result;
 ```
 
 
@@ -1584,7 +1655,8 @@ This API is used to consume the verification code sent to verify a user's phone 
 var accessToken = "accessToken"; //Required
 var otp = "otp"; //Required
 var smsTemplate = "smsTemplate"; //Optional
-var apiResponse = new PhoneAuthenticationApi().PhoneVerificationOTPByAccessToken(accessToken, otp, smsTemplate).Result;
+var isVoiceOtp = true; //Optional
+var apiResponse = new PhoneAuthenticationApi().PhoneVerificationOTPByAccessToken(accessToken, otp, smsTemplate, isVoiceOtp).Result;
 ```
 
 
@@ -1599,7 +1671,8 @@ This API is used to update the login Phone Number of users [More Info](https://w
 var accessToken = "accessToken"; //Required
 var phone = "phone"; //Required
 var smsTemplate = "smsTemplate"; //Optional
-var apiResponse = new PhoneAuthenticationApi().UpdatePhoneNumber(accessToken, phone, smsTemplate).Result;
+var isVoiceOtp = true; //Optional
+var apiResponse = new PhoneAuthenticationApi().UpdatePhoneNumber(accessToken, phone, smsTemplate, isVoiceOtp).Result;
 ```
 
 
@@ -1632,7 +1705,8 @@ This API is used to send the OTP to reset the account password. [More Info](http
 
 var phone = "phone"; //Required
 var smsTemplate = "smsTemplate"; //Optional
-var apiResponse = new PhoneAuthenticationApi().ForgotPasswordByPhoneOTP(phone, smsTemplate).Result;
+var isVoiceOtp = true; //Optional
+var apiResponse = new PhoneAuthenticationApi().ForgotPasswordByPhoneOTP(phone, smsTemplate, isVoiceOtp).Result;
 ```
 
 
@@ -1646,7 +1720,8 @@ This API is used to resend a verification OTP to verify a user's Phone Number. T
 
 var phone = "phone"; //Required
 var smsTemplate = "smsTemplate"; //Optional
-var apiResponse = new PhoneAuthenticationApi().PhoneResendVerificationOTP(phone, smsTemplate).Result;
+var isVoiceOtp = true; //Optional
+var apiResponse = new PhoneAuthenticationApi().PhoneResendVerificationOTP(phone, smsTemplate, isVoiceOtp).Result;
 ```
 
 
@@ -1685,13 +1760,14 @@ Password ="<Password>",
 PhoneId ="<PhoneId>"
 }; //Required
 var sott = "sott"; //Required
+var emailTemplate = "emailTemplate"; //Optional
 string fields = null; //Optional
-var options = "options"; //Optional
 var smsTemplate = "smsTemplate"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
 var welcomeEmailTemplate = "welcomeEmailTemplate"; //Optional
-var emailTemplate="emailTemplate"; //Optional
-var apiResponse = new PhoneAuthenticationApi().UserRegistrationByPhone(authUserRegistrationModel, sott, fields, options, smsTemplate, verificationUrl, welcomeEmailTemplate, emailTemplate).Result;
+var isVoiceOtp = true; //Optional
+var options = "options"; //Optional
+var apiResponse = new PhoneAuthenticationApi().UserRegistrationByPhone(authUserRegistrationModel, sott, emailTemplate, fields, smsTemplate, verificationUrl, welcomeEmailTemplate, isVoiceOtp, options).Result;
 ```
 
 
@@ -1736,11 +1812,12 @@ List of APIs in this Section:<br>
 [PUT : Verify MFA Email OTP by Access Token](#MFAValidateEmailOtpByAccessToken-put-)<br>
 [PUT : Update MFA Security Question by Access Token](#MFASecurityQuestionAnswerByAccessToken-put-)<br>
 [PUT : MFA Validate OTP](#MFAValidateOTPByPhone-put-)<br>
-[PUT : MFA Validate Google Auth Code](#MFAValidateGoogleAuthCode-put-)<br>
 [PUT : MFA Validate Backup code](#MFAValidateBackupCode-put-)<br>
 [PUT : MFA Update Phone Number](#MFAUpdatePhoneNumber-put-)<br>
 [PUT : Verify MFA Email OTP by MFA Token](#MFAValidateEmailOtp-put-)<br>
 [PUT : Update MFA Security Question by MFA Token](#MFASecurityQuestionAnswer-put-)<br>
+[PUT : MFA Validate Authenticator Code](#MFAValidateAuthenticatorCode-put-)<br>
+[PUT : MFA Verify Authenticator Code](#MFAVerifyAuthenticatorCode-put-)<br>
 [POST : MFA Email Login](#MFALoginByEmail-post-)<br>
 [POST : MFA UserName Login](#MFALoginByUserName-post-)<br>
 [POST : MFA Phone Login](#MFALoginByPhone-post-)<br>
@@ -1810,7 +1887,9 @@ This API is used to update the Multi-factor authentication phone number by sendi
 var accessToken = "accessToken"; //Required
 var phoneNo2FA = "phoneNo2FA"; //Required
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
-var apiResponse = new MultiFactorAuthenticationApi().MFAUpdatePhoneNumberByToken(accessToken, phoneNo2FA, smsTemplate2FA).Result;
+var isVoiceOtp = true; //Optional
+var options = "options"; //Optional
+var apiResponse = new MultiFactorAuthenticationApi().MFAUpdatePhoneNumberByToken(accessToken, phoneNo2FA, smsTemplate2FA, isVoiceOtp, options).Result;
 ```
 
 
@@ -1875,25 +1954,6 @@ var apiResponse = new MultiFactorAuthenticationApi().MFAValidateOTPByPhone(multi
 ```
 
 
-<h6 id="MFAValidateGoogleAuthCode-put-">MFA Validate Google Auth Code (PUT)</h6>
-
-This API is used to login via Multi-factor-authentication by passing the google authenticator code. [More Info](/api/v2/customer-identity-api/multi-factor-authentication/google-authenticator/mfa-validate-google-auth-code/)
-
-
-
-```c#
-
-var googleAuthenticatorCode = "googleAuthenticatorCode"; //Required
-var secondFactorAuthenticationToken = "secondFactorAuthenticationToken"; //Required
-string fields = null; //Optional
-var rbaBrowserEmailTemplate = "rbaBrowserEmailTemplate"; //Optional
-var rbaCityEmailTemplate = "rbaCityEmailTemplate"; //Optional
-var rbaCountryEmailTemplate = "rbaCountryEmailTemplate"; //Optional
-var rbaIpEmailTemplate = "rbaIpEmailTemplate"; //Optional
-var apiResponse = new MultiFactorAuthenticationApi().MFAValidateGoogleAuthCode(googleAuthenticatorCode, secondFactorAuthenticationToken, fields, rbaBrowserEmailTemplate, rbaCityEmailTemplate, rbaCountryEmailTemplate, rbaIpEmailTemplate).Result;
-```
-
-
 <h6 id="MFAValidateBackupCode-put-">MFA Validate Backup code (PUT)</h6>
 
 This API is used to validate the backup code provided by the user and if valid, we return an access token allowing the user to login incases where Multi-factor authentication (MFA) is enabled and the secondary factor is unavailable. When a user initially downloads the Backup codes, We generate 10 codes, each code can only be consumed once. if any user attempts to go over the number of invalid login attempts configured in the Dashboard then the account gets blocked automatically [More Info](/api/v2/customer-identity-api/multi-factor-authentication/backup-codes/mfa-validate-backup-code/)
@@ -1925,8 +1985,10 @@ This API is used to update (if configured) the phone number used for Multi-facto
 
 var phoneNo2FA = "phoneNo2FA"; //Required
 var secondFactorAuthenticationToken = "secondFactorAuthenticationToken"; //Required
+var options = "options"; //Optional
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
-var apiResponse = new MultiFactorAuthenticationApi().MFAUpdatePhoneNumber(phoneNo2FA, secondFactorAuthenticationToken, smsTemplate2FA).Result;
+var isVoiceOtp = true; //Optional
+var apiResponse = new MultiFactorAuthenticationApi().MFAUpdatePhoneNumber(phoneNo2FA, secondFactorAuthenticationToken, options, smsTemplate2FA, isVoiceOtp).Result;
 ```
 
 
@@ -1972,6 +2034,31 @@ var secondFactorAuthenticationToken = "secondFactorAuthenticationToken"; //Requi
 var apiResponse = new MultiFactorAuthenticationApi().MFASecurityQuestionAnswer(securityQuestionAnswerUpdateModel, secondFactorAuthenticationToken).Result;
 ```
 
+<h6 id="MFAValidateAuthenticatorCode-put-">MFA Validate Authenticator Code (PUT)</h6>
+This API is used to login to a user's account during the second MFA step with an Authenticator Code. [More Info](/api/v2/customer-identity-api/multi-factor-authentication/sms-authenticator/mfa-validate-authenticator-code/)
+
+
+
+```c#
+
+MultiFactorAuthModelByAuthenticatorCode multiFactorAuthModelByAuthenticatorCode = new MultiFactorAuthModelByAuthenticatorCode{}; //Required
+var secondfactorauthenticationtoken = "secondfactorauthenticationtoken"; //Required
+string fields = null; //Optional
+var apiResponse = new MultiFactorAuthenticationApi().MFAValidateAuthenticatorCode(multiFactorAuthModelByAuthenticatorCode, secondfactorauthenticationtoken, fields).Result;
+```
+
+<h6 id="MFAValidateAuthenticatorCode-put-">MFA Validate Authenticator Code (PUT)</h6>
+This API is used to login to a user's account during the second MFA step with an Authenticator Code. [More Info](/api/v2/customer-identity-api/multi-factor-authentication/sms-authenticator/mfa-validate-authenticator-code/)
+
+
+
+```c#
+
+MultiFactorAuthModelByAuthenticatorCode multiFactorAuthModelByAuthenticatorCode = new MultiFactorAuthModelByAuthenticatorCode{}; //Required
+var secondfactorauthenticationtoken = "secondfactorauthenticationtoken"; //Required
+string fields = null; //Optional
+var apiResponse = new MultiFactorAuthenticationApi().MFAValidateAuthenticatorCode(multiFactorAuthModelByAuthenticatorCode, secondfactorauthenticationtoken, fields).Result;
+```
 
 <h6 id="MFALoginByEmail-post-">MFA Email Login (POST)</h6>
 
@@ -1990,7 +2077,9 @@ var smsTemplate = "smsTemplate"; //Optional
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
 var emailTemplate2FA = "emailTemplate2FA"; //Optional
-var apiResponse = new MultiFactorAuthenticationApi().MFALoginByEmail(email, password, emailTemplate, fields, loginUrl, smsTemplate, smsTemplate2FA, verificationUrl, emailTemplate2FA).Result;
+var isVoiceOtp = true; //Optional
+var options = "options"; //Optional
+var apiResponse = new MultiFactorAuthenticationApi().MFALoginByEmail(email, password, emailTemplate, fields, loginUrl, smsTemplate, smsTemplate2FA, verificationUrl, emailTemplate2FA, isVoiceOtp, options).Result;
 ```
 
 
@@ -2011,7 +2100,8 @@ var smsTemplate = "smsTemplate"; //Optional
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
 var emailTemplate2FA = "emailTemplate2FA"; //Optional
-var apiResponse = new MultiFactorAuthenticationApi().MFALoginByUserName(password, username, emailTemplate, fields, loginUrl, smsTemplate, smsTemplate2FA, verificationUrl, emailTemplate2FA).Result;
+var isVoiceOtp = true; //Optional
+var apiResponse = new MultiFactorAuthenticationApi().MFALoginByUserName(password, username, emailTemplate, fields, loginUrl, smsTemplate, smsTemplate2FA, verificationUrl, emailTemplate2FA, isVoiceOtp).Result;
 ```
 
 
@@ -2032,7 +2122,9 @@ var smsTemplate = "smsTemplate"; //Optional
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
 var emailTemplate2FA = "emailTemplate2FA"; //Optional
-var apiResponse = new MultiFactorAuthenticationApi().MFALoginByPhone(password, phone, emailTemplate, fields, loginUrl, smsTemplate, smsTemplate2FA, verificationUrl, emailTemplate2FA).Result;
+var isVoiceOtp = true; //Optional
+var options = "options"; //Optional
+var apiResponse = new MultiFactorAuthenticationApi().MFALoginByPhone(password, phone, emailTemplate, emailTemplate2FA, fields, loginUrl, smsTemplate, smsTemplate2FA, verificationUrl, isVoiceOtp, options).Result;
 ```
 
 
@@ -2089,8 +2181,8 @@ This API is used to configure the Multi-factor authentication after login by usi
 ```c#
 
 var accessToken = "accessToken"; //Required
-var smsTemplate2FA = "smsTemplate2FA"; //Optional
-var apiResponse = new MultiFactorAuthenticationApi().MFAConfigureByAccessToken(accessToken, smsTemplate2FA).Result;
+var isvoiceotp = true; //Optional
+var apiResponse = new MultiFactorAuthenticationApi().MFAConfigureByAccessToken(accessToken, isvoiceotp).Result;
 ```
 
 
@@ -2145,7 +2237,8 @@ This API is used to resending the verification OTP to the provided phone number 
 
 var secondFactorAuthenticationToken = "secondFactorAuthenticationToken"; //Required
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
-var apiResponse = new MultiFactorAuthenticationApi().MFAResendOTP(secondFactorAuthenticationToken, smsTemplate2FA).Result;
+var isVoiceOtp = true; //Optional
+var apiResponse = new MultiFactorAuthenticationApi().MFAResendOTP(secondFactorAuthenticationToken, smsTemplate2FA, isVoiceOtp).Result;
 ```
 
 
@@ -2175,7 +2268,7 @@ var apiResponse = new MultiFactorAuthenticationApi().MFAResetBackupCodeByUid(uid
 ```
 
 
-<h6 id="MFAResetGoogleAuthByToken-delete-">MFA Reset Google Authenticator by Token (DELETE)</h6>
+<h6 id="MFAResetAuthenticatorByToken-delete-">MFA Reset Authenticator by Token (DELETE)</h6>
 
 This API Resets the Google Authenticator configurations on a given account via the access token [More Info](/api/v2/customer-identity-api/multi-factor-authentication/google-authenticator/mfa-reset-google-authenticator-by-token/)
 
@@ -2185,7 +2278,7 @@ This API Resets the Google Authenticator configurations on a given account via t
 
 var accessToken = "accessToken"; //Required
 var googleAuthenticator = true; //Required
-var apiResponse = new MultiFactorAuthenticationApi().MFAResetGoogleAuthByToken(accessToken, googleAuthenticator).Result;
+var apiResponse = new MultiFactorAuthenticationApi().MFAResetAuthenticatorByToken(accessToken, googleAuthenticator).Result;
 ```
 
 
@@ -2243,7 +2336,7 @@ var apiResponse = new MultiFactorAuthenticationApi().MFAResetSMSAuthenticatorByU
 ```
 
 
-<h6 id="MFAResetGoogleAuthenticatorByUid-delete-">MFA Reset Google Authenticator By UID (DELETE)</h6>
+<h6 id="MFAResetAuthenticatorByUid-delete-">MFA Reset Authenticator By UID (DELETE)</h6>
 
 This API resets the Google Authenticator configurations on a given account via the UID. [More Info](/api/v2/customer-identity-api/multi-factor-authentication/google-authenticator/mfa-reset-google-authenticator-by-uid/)
 
@@ -2251,9 +2344,9 @@ This API resets the Google Authenticator configurations on a given account via t
 
 ```c#
 
-var googleAuthenticator = true; //Required
+var authenticator = true; //Required
 var uid = "uid"; //Required
-var apiResponse = new MultiFactorAuthenticationApi().MFAResetGoogleAuthenticatorByUid(googleAuthenticator, uid).Result;
+var apiResponse = new MultiFactorAuthenticationApi().MFAResetAuthenticatorByUid(googleAuthenticator, uid).Result;
 ```
 
 
@@ -2512,7 +2605,8 @@ ForgotPINOtpByPhoneModel forgotPINOtpByPhoneModel = new ForgotPINOtpByPhoneModel
 Phone ="<Phone>"
 }; //Required
 var smsTemplate = "smsTemplate"; //Optional
-var apiResponse = new PINAuthenticationApi().SendForgotPINSMSByPhone(forgotPINOtpByPhoneModel, smsTemplate).Result;
+var isVoiceOtp = true; //Optional
+var apiResponse = new PINAuthenticationApi().SendForgotPINSMSByPhone(forgotPINOtpByPhoneModel, smsTemplate, isVoiceOtp).Result;
 ```
 
 
@@ -2555,10 +2649,10 @@ var apiResponse = new PINAuthenticationApi().InValidatePinSessionToken(sessionTo
 List of APIs in this Section:<br>
 [PUT : Validate MFA by OTP](#MFAReAuthenticateByOTP-put-)<br>
 [PUT : Validate MFA by Backup Code](#MFAReAuthenticateByBackupCode-put-)<br>
-[PUT : Validate MFA by Google Authenticator Code](#MFAReAuthenticateByGoogleAuth-put-)<br>
 [PUT : Validate MFA by Password](#MFAReAuthenticateByPassword-put-)<br>
 [PUT : MFA Re-authentication by PIN](#VerifyPINAuthentication-put-)<br>
 [PUT : MFA Re-authentication by Email OTP](#ReAuthValidateEmailOtp-put-)<br>
+[PUT : MFA Step-Up Authentication by Authenticator Code](#MFAReAuthenticateByAuthenticatorCode-put-)<br>
 [POST : Verify Multifactor OTP Authentication](#VerifyMultiFactorOtpReauthentication-post-)<br>
 [POST : Verify Multifactor Password Authentication](#VerifyMultiFactorPasswordReauthentication-post-)<br>
 [POST : Verify Multifactor PIN Authentication](#VerifyMultiFactorPINReauthentication-post-)<br>
@@ -2600,22 +2694,6 @@ var apiResponse = new ReAuthenticationApi().MFAReAuthenticateByBackupCode(access
 ```
 
 
-<h6 id="MFAReAuthenticateByGoogleAuth-put-">Validate MFA by Google Authenticator Code (PUT)</h6>
-
-This API is used to re-authenticate via Multi-factor-authentication by passing the google authenticator code [More Info](/api/v2/customer-identity-api/multi-factor-authentication/re-authentication/re-auth-by-google-authenticator-code)
-
-
-
-```c#
-
-var accessToken = "accessToken"; //Required
-ReauthByGoogleAuthenticatorCodeModel reauthByGoogleAuthenticatorCodeModel = new ReauthByGoogleAuthenticatorCodeModel{
-GoogleAuthenticatorCode ="<GoogleAuthenticatorCode>"
-}; //Required
-var apiResponse = new ReAuthenticationApi().MFAReAuthenticateByGoogleAuth(accessToken, reauthByGoogleAuthenticatorCodeModel).Result;
-```
-
-
 <h6 id="MFAReAuthenticateByPassword-put-">Validate MFA by Password (PUT)</h6>
 
 This API is used to re-authenticate via Multi-factor-authentication by passing the password [More Info](/api/v2/customer-identity-api/multi-factor-authentication/re-authentication/re-auth-by-password)
@@ -2650,6 +2728,7 @@ var apiResponse = new ReAuthenticationApi().VerifyPINAuthentication(accessToken,
 ```
 
 
+
 <h6 id="ReAuthValidateEmailOtp-put-">MFA Re-authentication by Email OTP (PUT)</h6>
 
 This API is used to validate the triggered MFA authentication flow with an Email OTP. [More Info](/api/v2/customer-identity-api/multi-factor-authentication/re-authentication/mfa-re-auth-by-email-otp/)
@@ -2666,6 +2745,17 @@ Otp="otp"
 var apiResponse = new ReAuthenticationApi().ReAuthValidateEmailOtp(accessToken, reauthByEmailOtpModel).Result;
 ```
 
+<h6 id="MFAReAuthenticateByAuthenticatorCode-put-">MFA Step-Up Authentication by Authenticator Code (PUT)</h6>
+This API is used to validate the triggered MFA authentication flow with the Authenticator Code. [More Info](/api/v2/customer-identity-api/re-authentication/mfa/re-auth-by-otp/)
+
+
+
+```c#
+
+var accessToken = "accessToken"; //Required
+MultiFactorAuthModelByAuthenticatorCode multiFactorAuthModelByAuthenticatorCode = new MultiFactorAuthModelByAuthenticatorCode{}; //Required
+var apiResponse = new ReAuthenticationApi().MFAReAuthenticateByAuthenticatorCode(accessToken, multiFactorAuthModelByAuthenticatorCode);
+```
 
 <h6 id="VerifyMultiFactorOtpReauthentication-post-">Verify Multifactor OTP Authentication (POST)</h6>
 
@@ -2748,7 +2838,8 @@ This API is used to trigger the Multi-Factor Autentication workflow for the prov
 
 var accessToken = "accessToken"; //Required
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
-var apiResponse = new ReAuthenticationApi().MFAReAuthenticate(accessToken, smsTemplate2FA).Result;
+var isVoiceOtp = true; //Optional
+var apiResponse = new ReAuthenticationApi().MFAReAuthenticate(accessToken, smsTemplate2FA, isVoiceOtp).Result;
 ```
 
 
@@ -3040,7 +3131,8 @@ G_recaptcha_response ="<G-recaptcha-response>",
 Phone ="<Phone>"
 }; //Required
 var smsTemplate = "smsTemplate"; //Optional
-var apiResponse = new OneTouchLoginApi().OneTouchLoginByPhone(oneTouchLoginByPhoneModel, smsTemplate).Result;
+var isVoiceOtp = true; //Optional
+var apiResponse = new OneTouchLoginApi().OneTouchLoginByPhone(oneTouchLoginByPhoneModel, smsTemplate, isVoiceOtp).Result;
 ```
 
 
@@ -3105,7 +3197,8 @@ Phone ="<Phone>"
 }; //Required
 string fields = null; //Optional
 var smsTemplate = "smsTemplate"; //Optional
-var apiResponse = new PasswordLessLoginApi().PasswordlessLoginPhoneVerification(passwordLessLoginOtpModel, fields, smsTemplate).Result;
+var isVoiceOtp = true; //Optional
+var apiResponse = new PasswordLessLoginApi().PasswordlessLoginPhoneVerification(passwordLessLoginOtpModel, fields, smsTemplate, isVoiceOtp).Result;
 ```
 
 
@@ -3153,7 +3246,8 @@ API can be used to send a One-time Passcode (OTP) provided that the account has 
 
 var phone = "phone"; //Required
 var smsTemplate = "smsTemplate"; //Optional
-var apiResponse = new PasswordLessLoginApi().PasswordlessLoginByPhone(phone, smsTemplate).Result;
+var isVoiceOtp = true; //Optional
+var apiResponse = new PasswordLessLoginApi().PasswordlessLoginByPhone(phone, smsTemplate, isVoiceOtp).Result;
 ```
 
 
@@ -3638,6 +3732,8 @@ List of APIs in this Section:<br>
 [GET : Access Token via Apple Id Code](#GetAccessTokenByAppleIdCode-get-)<br>
 [GET : Access Token via WeChat Code](#GetAccessTokenByWeChatCode-get-)<br>
 [GET : Access Token via Google AuthCode](#GetAccessTokenByGoogleAuthCode-get-)<br>
+[GET : Get Access Token via Custom JWT Token](#AccessTokenViaCustomJWTToken-get-)<br>
+
 
 
 
@@ -3766,6 +3862,17 @@ var socialAppName = "socialAppName"; //Optional
 var apiResponse = new NativeSocialApi().GetAccessTokenByGoogleAuthCode(googleAuthcode,socialAppName).Result;
 ```
 
+<h6 id="AccessTokenViaCustomJWTToken-get-">Get Access Token via Custom JWT Token (GET)</h6>
+This API is used to retrieve a LoginRadius access token by passing in a valid custom JWT token. [More Info](/api/v2/customer-identity-api/social-login/native-social-login-api/access-token-by-custom-jwt-token/)
+
+
+
+```c#
+
+var idToken = "idToken"; //Required
+var providername = "providername"; //Required
+var apiResponse = new NativeSocialApi().AccessTokenViaCustomJWTToken(idToken, providername);
+```
 
 
 
@@ -3837,6 +3944,25 @@ Event ="<Event>",
 TargetUrl ="<TargetUrl>"
 }; //Required
 var apiResponse = new WebHookApi().WebHookUnsubscribe(webHookSubscribeModel).Result;
+```
+
+### SlidingToken API
+
+
+List of APIs in this Section:<br>
+[GET : ](#SlidingAccessToken-get-)<br>
+
+
+
+<h6 id="SlidingAccessToken-get-"> (GET)</h6>
+ [More Info](/api/v2/customer-identity-api/unknown/SlidingToken--SlidingAccessToken)
+
+
+
+```
+
+var accessToken = "accessToken"; //Required
+var apiResponse = new SlidingTokenApi().SlidingAccessToken(accessToken);
 ```
 
 

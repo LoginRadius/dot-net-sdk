@@ -24,12 +24,13 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <param name="phoneAuthenticationModel">Model Class containing Definition of payload for PhoneAuthenticationModel API</param>
         /// <param name="fields">The fields parameter filters the API response so that the response only includes a specific set of fields</param>
         /// <param name="loginUrl">Url where the user is logging from</param>
+        /// <param name="options"></param>
         /// <param name="smsTemplate">SMS Template name</param>
         /// <returns>Response containing User Profile Data and access token</returns>
         /// 9.2.3
 
         public async Task<ApiResponse<AccessToken<Identity>>> LoginByPhone(PhoneAuthenticationModel phoneAuthenticationModel, string fields = "",
-        string loginUrl = null, string smsTemplate = null)
+        string loginUrl = null, string smsTemplate = null, string options = "")
         {
             if (phoneAuthenticationModel == null)
             {
@@ -51,6 +52,10 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             {
                queryParameters.Add("smsTemplate", smsTemplate);
             }
+            if (!string.IsNullOrWhiteSpace(options))
+            {
+               queryParameters.Add("options", options);
+            }
 
             var resourcePath = "identity/v2/auth/login";
             
@@ -61,10 +66,12 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// </summary>
         /// <param name="phone">New Phone Number</param>
         /// <param name="smsTemplate">SMS Template name</param>
+        /// <param name="isVoiceOtp">Boolean, pass true if you wish to trigger voice OTP</param>
         /// <returns>Response Containing Validation Data and SMS Data</returns>
         /// 10.4
 
-        public async Task<ApiResponse<UserProfilePostResponse<SMSResponseData>>> ForgotPasswordByPhoneOTP(string phone, string smsTemplate = null)
+        public async Task<ApiResponse<UserProfilePostResponse<SmsResponseData>>> ForgotPasswordByPhoneOTP(string phone, string smsTemplate = null,
+        bool isVoiceOtp = false)
         {
             if (string.IsNullOrWhiteSpace(phone))
             {
@@ -78,6 +85,10 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             {
                queryParameters.Add("smsTemplate", smsTemplate);
             }
+            if (isVoiceOtp != false)
+            {
+               queryParameters.Add("isVoiceOtp", isVoiceOtp.ToString());
+            }
 
             var bodyParameters = new BodyParameters
             {
@@ -86,7 +97,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/password/otp";
             
-            return await ConfigureAndExecute<UserProfilePostResponse<SMSResponseData>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<UserProfilePostResponse<SmsResponseData>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
         /// This API is used to reset the password
@@ -117,11 +128,12 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <param name="phone">New Phone Number</param>
         /// <param name="fields">The fields parameter filters the API response so that the response only includes a specific set of fields</param>
         /// <param name="smsTemplate">SMS Template name</param>
+        /// <param name="isVoiceOtp">Boolean, pass true if you wish to trigger voice OTP</param>
         /// <returns>Response containing User Profile Data and access token</returns>
         /// 11.1.1
 
         public async Task<ApiResponse<AccessToken<Identity>>> PhoneVerificationByOTP(string otp, string phone,
-        string fields = "", string smsTemplate = null)
+        string fields = "", string smsTemplate = null, bool isVoiceOtp = false)
         {
             if (string.IsNullOrWhiteSpace(otp))
             {
@@ -144,6 +156,10 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             {
                queryParameters.Add("smsTemplate", smsTemplate);
             }
+            if (isVoiceOtp != false)
+            {
+               queryParameters.Add("isVoiceOtp", isVoiceOtp.ToString());
+            }
 
             var bodyParameters = new BodyParameters
             {
@@ -160,11 +176,12 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
         /// <param name="otp">The Verification Code</param>
         /// <param name="smsTemplate">SMS Template name</param>
+        /// <param name="isVoiceOtp">Boolean, pass true if you wish to trigger voice OTP</param>
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 11.1.2
 
         public async Task<ApiResponse<PostResponse>> PhoneVerificationOTPByAccessToken(string accessToken, string otp,
-        string smsTemplate = null)
+        string smsTemplate = null, bool isVoiceOtp = false)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -184,6 +201,10 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             {
                queryParameters.Add("smsTemplate", smsTemplate);
             }
+            if (isVoiceOtp != false)
+            {
+               queryParameters.Add("isVoiceOtp", isVoiceOtp.ToString());
+            }
 
             var resourcePath = "identity/v2/auth/phone/otp";
             
@@ -194,10 +215,12 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// </summary>
         /// <param name="phone">New Phone Number</param>
         /// <param name="smsTemplate">SMS Template name</param>
+        /// <param name="isVoiceOtp">Boolean, pass true if you wish to trigger voice OTP</param>
         /// <returns>Response Containing Validation Data and SMS Data</returns>
         /// 11.2.1
 
-        public async Task<ApiResponse<UserProfilePostResponse<SMSResponseData>>> PhoneResendVerificationOTP(string phone, string smsTemplate = null)
+        public async Task<ApiResponse<UserProfilePostResponse<SmsResponseData>>> PhoneResendVerificationOTP(string phone, string smsTemplate = null,
+        bool isVoiceOtp = false)
         {
             if (string.IsNullOrWhiteSpace(phone))
             {
@@ -211,6 +234,10 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             {
                queryParameters.Add("smsTemplate", smsTemplate);
             }
+            if (isVoiceOtp != false)
+            {
+               queryParameters.Add("isVoiceOtp", isVoiceOtp.ToString());
+            }
 
             var bodyParameters = new BodyParameters
             {
@@ -219,7 +246,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/phone/otp";
             
-            return await ConfigureAndExecute<UserProfilePostResponse<SMSResponseData>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<UserProfilePostResponse<SmsResponseData>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
         /// This API is used to resend a verification OTP to verify a user's Phone Number in cases in which an active token already exists
@@ -227,11 +254,12 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
         /// <param name="phone">New Phone Number</param>
         /// <param name="smsTemplate">SMS Template name</param>
+        /// <param name="isVoiceOtp">Boolean, pass true if you wish to trigger voice OTP</param>
         /// <returns>Response Containing Validation Data and SMS Data</returns>
         /// 11.2.2
 
-        public async Task<ApiResponse<UserProfilePostResponse<SMSResponseData>>> PhoneResendVerificationOTPByToken(string accessToken, string phone,
-        string smsTemplate = null)
+        public async Task<ApiResponse<UserProfilePostResponse<SmsResponseData>>> PhoneResendVerificationOTPByToken(string accessToken, string phone,
+        string smsTemplate = null, bool isVoiceOtp = false)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -249,6 +277,10 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             if (!string.IsNullOrWhiteSpace(smsTemplate))
             {
                queryParameters.Add("smsTemplate", smsTemplate);
+            }
+            if (isVoiceOtp != false)
+            {
+               queryParameters.Add("isVoiceOtp", isVoiceOtp.ToString());
             }
 
             var bodyParameters = new BodyParameters
@@ -258,7 +290,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/phone/otp";
             
-            return await ConfigureAndExecute<UserProfilePostResponse<SMSResponseData>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<UserProfilePostResponse<SmsResponseData>>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
         /// This API is used to update the login Phone Number of users
@@ -266,11 +298,12 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
         /// <param name="phone">New Phone Number</param>
         /// <param name="smsTemplate">SMS Template name</param>
+        /// <param name="isVoiceOtp">Boolean, pass true if you wish to trigger voice OTP</param>
         /// <returns>Response Containing Validation Data and SMS Data</returns>
         /// 11.5
 
-        public async Task<ApiResponse<UserProfilePostResponse<SMSResponseData>>> UpdatePhoneNumber(string accessToken, string phone,
-        string smsTemplate = null)
+        public async Task<ApiResponse<UserProfilePostResponse<SmsResponseData>>> UpdatePhoneNumber(string accessToken, string phone,
+        string smsTemplate = null, bool isVoiceOtp = false)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -288,6 +321,10 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             if (!string.IsNullOrWhiteSpace(smsTemplate))
             {
                queryParameters.Add("smsTemplate", smsTemplate);
+            }
+            if (isVoiceOtp != false)
+            {
+               queryParameters.Add("isVoiceOtp", isVoiceOtp.ToString());
             }
 
             var bodyParameters = new BodyParameters
@@ -297,7 +334,7 @@ namespace LoginRadiusSDK.V2.Api.Authentication
 
             var resourcePath = "identity/v2/auth/phone";
             
-            return await ConfigureAndExecute<UserProfilePostResponse<SMSResponseData>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<UserProfilePostResponse<SmsResponseData>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
         /// This API is used to check the Phone Number exists or not on your site.
@@ -351,17 +388,18 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <param name="authUserRegistrationModel">Model Class containing Definition of payload for Auth User Registration API</param>
         /// <param name="sott">LoginRadius Secured One Time Token</param>
         /// <param name="fields">The fields parameter filters the API response so that the response only includes a specific set of fields</param>
-        /// <param name="options">PreventVerificationEmail (Specifying this value prevents the verification email from being sent. Only applicable if you have the optional email verification flow)</param>
         /// <param name="smsTemplate">SMS Template name</param>
         /// <param name="verificationUrl">Email verification url</param>
         /// <param name="welcomeEmailTemplate">Name of the welcome email template</param>
-        /// <param name="emailTemplate">Name of the email template</param>
+        /// <param name="emailTemplate"></param>
+        /// <param name="isVoiceOtp">Boolean, pass true if you wish to trigger voice OTP</param>
+        /// <param name="options">PreventVerificationEmail (Specifying this value prevents the verification email from being sent. Only applicable if you have the optional email verification flow)</param>
         /// <returns>Response containing Definition of Complete Validation, UserProfile data and Access Token</returns>
         /// 17.1.2
 
         public async Task<ApiResponse<UserProfilePostResponse<AccessToken<Identity>>>> UserRegistrationByPhone(AuthUserRegistrationModel authUserRegistrationModel, string sott,
         string fields = "", string options = "", string smsTemplate = null, string verificationUrl = null,
-        string welcomeEmailTemplate = null, string emailTemplate = null)
+        string welcomeEmailTemplate = null, string emailTemplate = null, bool isVoiceOtp = false)
         {
             if (authUserRegistrationModel == null)
             {
@@ -399,6 +437,10 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             if (!string.IsNullOrWhiteSpace(emailTemplate))
             {
                queryParameters.Add("emailTemplate", emailTemplate);
+            }
+            if (isVoiceOtp != false)
+            {
+               queryParameters.Add("isVoiceOtp", isVoiceOtp.ToString());
             }
 
             var resourcePath = "identity/v2/auth/register";
