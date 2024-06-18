@@ -1095,13 +1095,13 @@ This API generates SMS OTP for Add phone, Phone Id verification, Forgot password
 
 ```c#
 
-MultiToken multiToken = new MultiToken{
+MultiSmsOtp multiSmsOtp = new MultiSmsOtp{
 Name ="<Name>",
 Phone ="<Phone>",
 Uid ="<Uid>"
 }; //Required
 var smsotptype = "smsotptype"; //Required
-var apiResponse = new AccountApi().MultipurposeSMSOTPGeneration(multiToken, smsotptype);
+var apiResponse = new AccountApi().MultipurposeSMSOTPGeneration(multiSmsOtp, smsotptype);
 ```
 
 

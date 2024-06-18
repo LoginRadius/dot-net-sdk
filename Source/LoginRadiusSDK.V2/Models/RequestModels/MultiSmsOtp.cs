@@ -13,7 +13,7 @@ namespace LoginRadiusSDK.V2.Models.RequestModels
     /// <summary>
     ///	
     /// </summary>
-    public class MultiToken
+    public class MultiSmsOtp
     {
 		/// <summary>
 		///	

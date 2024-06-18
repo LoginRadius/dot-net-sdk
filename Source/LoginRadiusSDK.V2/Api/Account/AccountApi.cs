@@ -768,16 +768,16 @@ namespace LoginRadiusSDK.V2.Api.Account
         /// <summary>
         /// This API generates SMS OTP for Add phone, Phone Id verification, Forgot password, Forgot pin, One-touch login, smart login and Passwordless login.
         /// </summary>
-        /// <param name="MultiToken"></param>
+        /// <param name="MultiSmsOtp"></param>
         /// <param name="smsotptype">The identifier type for the OTP that we need to generate</param>
         /// <returns>Response containing Definition for Complete MultiToken</returns>
         /// 18.44
 
-        public async Task<ApiResponse<MultiToken>> MultipurposeSMSOTPGeneration(MultiToken multiToken, string smsotptype)
+        public async Task<ApiResponse<MultiToken>> MultipurposeSMSOTPGeneration(MultiSmsOtp multiSmsOtp, string smsotptype)
         {
-            if (multiToken == null)
+            if (multiSmsOtp == null)
             {
-               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(multiToken));
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(multiSmsOtp));
             }
             if (string.IsNullOrWhiteSpace(smsotptype))
             {
@@ -789,7 +789,7 @@ namespace LoginRadiusSDK.V2.Api.Account
 
             var resourcePath = $"identity/v2/manage/account/smsotp/{smsotptype}";
             
-            return await ConfigureAndExecute<MultiToken>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(multiToken));
+            return await ConfigureAndExecute<MultiToken>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(multiSmsOtp));
         }
         
     }
