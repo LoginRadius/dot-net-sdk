@@ -1084,7 +1084,7 @@ Uid ="<Uid>",
 UserName ="<UserName>"
 }; //Required
 var tokentype = "tokentype"; //Required
-var apiResponse = new AccountApi().MultipurposeEmailTokenGeneration(multiEmailToken, tokentype);
+var apiResponse = new AccountApi().MultipurposeEmailTokenGeneration(multiEmailToken, tokentype).Result;
 ```
 
 
@@ -1101,7 +1101,7 @@ Phone ="<Phone>",
 Uid ="<Uid>"
 }; //Required
 var smsotptype = "smsotptype"; //Required
-var apiResponse = new AccountApi().MultipurposeSMSOTPGeneration(multiSmsOtp, smsotptype);
+var apiResponse = new AccountApi().MultipurposeSMSOTPGeneration(multiSmsOtp, smsotptype).Result;
 ```
 
 
@@ -2035,29 +2035,33 @@ var apiResponse = new MultiFactorAuthenticationApi().MFASecurityQuestionAnswer(s
 ```
 
 <h6 id="MFAValidateAuthenticatorCode-put-">MFA Validate Authenticator Code (PUT)</h6>
-This API is used to login to a user's account during the second MFA step with an Authenticator Code. [More Info](/api/v2/customer-identity-api/multi-factor-authentication/sms-authenticator/mfa-validate-authenticator-code/)
+This API is used to login to a user's account during the second MFA step with an Authenticator Code. [More Info](/api/v2/customer-identity-api/multi-factor-authentication/authenticator/mfa-validate-authenticator-code/)
 
 
 
 ```c#
 
-MultiFactorAuthModelByAuthenticatorCode multiFactorAuthModelByAuthenticatorCode = new MultiFactorAuthModelByAuthenticatorCode{}; //Required
+MultiFactorAuthModelByAuthenticatorCode multiFactorAuthModelByAuthenticatorCode = new MultiFactorAuthModelByAuthenticatorCode{
+AuthenticatorCode ="<AuthenticatorCode>"
+}; //Required
 var secondfactorauthenticationtoken = "secondfactorauthenticationtoken"; //Required
 string fields = null; //Optional
 var apiResponse = new MultiFactorAuthenticationApi().MFAValidateAuthenticatorCode(multiFactorAuthModelByAuthenticatorCode, secondfactorauthenticationtoken, fields).Result;
 ```
 
-<h6 id="MFAValidateAuthenticatorCode-put-">MFA Validate Authenticator Code (PUT)</h6>
-This API is used to login to a user's account during the second MFA step with an Authenticator Code. [More Info](/api/v2/customer-identity-api/multi-factor-authentication/sms-authenticator/mfa-validate-authenticator-code/)
+<h6 id="MFAVerifyAuthenticatorCode-put-">MFA Verify Authenticator Code (PUT)</h6>
+This API is used to validate an Authenticator Code as part of the MFA process. [More Info](/api/v2/customer-identity-api/multi-factor-authentication/authenticator/mfa-verify-authenticator-code/)
 
 
 
 ```c#
 
-MultiFactorAuthModelByAuthenticatorCode multiFactorAuthModelByAuthenticatorCode = new MultiFactorAuthModelByAuthenticatorCode{}; //Required
-var secondfactorauthenticationtoken = "secondfactorauthenticationtoken"; //Required
+var accessToken = "accessToken"; //Required
+MultiFactorAuthModelByAuthenticatorCodeSecurityAnswer multiFactorAuthModelByAuthenticatorCodeSecurityAnswer = new MultiFactorAuthModelByAuthenticatorCodeSecurityAnswer{
+AuthenticatorCode ="<AuthenticatorCode>"
+}; //Required
 string fields = null; //Optional
-var apiResponse = new MultiFactorAuthenticationApi().MFAValidateAuthenticatorCode(multiFactorAuthModelByAuthenticatorCode, secondfactorauthenticationtoken, fields).Result;
+var apiResponse = new MultiFactorAuthenticationApi().MFAVerifyAuthenticatorCode(accessToken, multiFactorAuthModelByAuthenticatorCodeSecurityAnswer, fields).Result;
 ```
 
 <h6 id="MFALoginByEmail-post-">MFA Email Login (POST)</h6>

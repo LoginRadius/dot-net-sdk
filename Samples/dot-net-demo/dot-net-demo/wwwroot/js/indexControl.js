@@ -103,7 +103,7 @@ $("#btn-minimal-mfalogin-next").click(function () {
 
 $("#minimal-mfalogin-next").on('click', "#btn-minimal-mfalogin-login", function() {
     data = {
-        "googleauthenticatorcode" : $("#minimal-mfalogin-googlecode").val()    
+        "authenticatorcode" : $("#minimal-mfalogin-googlecode").val()    
     }
     
     $.ajax({
