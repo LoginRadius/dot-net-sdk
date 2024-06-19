@@ -16,6 +16,8 @@ Release on **June 19, 2024**
 - `AuthSendVerificationEmailForLinkingSocialProfiles `
 - `SlidingAccessToken`
 - `AccessTokenViaCustomJWTToken`
+- `MFAResetAuthenticatorByToken`
+- `MFAResetAuthenticatorByUid`
 
 ## Enhancements
 - Added `isVoiceOtp` parameter in `ResetPhoneIDVerificationByUid` API

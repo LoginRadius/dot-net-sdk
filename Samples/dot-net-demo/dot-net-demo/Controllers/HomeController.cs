@@ -235,7 +235,7 @@ namespace dot_net_demo.Controllers
 
         public IActionResult LRMfaResetGoogle([FromQuery(Name = "auth")] String accessToken)
         {
-            var apiresponse = new MultiFactorAuthenticationApi().MFAResetGoogleAuthByToken(accessToken, true).Result;
+            var apiresponse = new MultiFactorAuthenticationApi().MFAResetAuthenticatorByToken(accessToken, true).Result;
 
             if (apiresponse.RestException != null)
             {
