@@ -814,7 +814,7 @@ This API is used to Send verification email to the unverified email of the socia
 
 var accessToken = "accessToken"; //Required
 var clientguid = "clientguid"; //Required
-var apiResponse = new AuthenticationApi().AuthSendVerificationEmailForLinkingSocialProfiles(accessToken, clientguid);
+var apiResponse = new AuthenticationApi().AuthSendVerificationEmailForLinkingSocialProfiles(accessToken, clientguid).Result;
 ```
 
 
@@ -1275,7 +1275,7 @@ The Revoke All Refresh Access Token API is used to revoke all refresh tokens for
 ```c#
 
 var uid = "uid"; //Required
-var apiResponse = new AccountApi().RevokeAllRefreshToken(uid);
+var apiResponse = new AccountApi().RevokeAllRefreshToken(uid).Result;
 ```
 
 <h6 id="AccountDeleteByEmail-delete-">Delete User Profiles By Email (DELETE)</h6>
@@ -2758,7 +2758,7 @@ This API is used to validate the triggered MFA authentication flow with the Auth
 
 var accessToken = "accessToken"; //Required
 MultiFactorAuthModelByAuthenticatorCode multiFactorAuthModelByAuthenticatorCode = new MultiFactorAuthModelByAuthenticatorCode{}; //Required
-var apiResponse = new ReAuthenticationApi().MFAReAuthenticateByAuthenticatorCode(accessToken, multiFactorAuthModelByAuthenticatorCode);
+var apiResponse = new ReAuthenticationApi().MFAReAuthenticateByAuthenticatorCode(accessToken, multiFactorAuthModelByAuthenticatorCode).Result;
 ```
 
 <h6 id="VerifyMultiFactorOtpReauthentication-post-">Verify Multifactor OTP Authentication (POST)</h6>
@@ -3875,7 +3875,7 @@ This API is used to retrieve a LoginRadius access token by passing in a valid cu
 
 var idToken = "idToken"; //Required
 var providername = "providername"; //Required
-var apiResponse = new NativeSocialApi().AccessTokenViaCustomJWTToken(idToken, providername);
+var apiResponse = new NativeSocialApi().AccessTokenViaCustomJWTToken(idToken, providername).Result;
 ```
 
 
@@ -3963,10 +3963,10 @@ List of APIs in this Section:<br>
 
 
 
-```
+```c#
 
 var accessToken = "accessToken"; //Required
-var apiResponse = new SlidingTokenApi().SlidingAccessToken(accessToken);
+var apiResponse = new SlidingTokenApi().SlidingAccessToken(accessToken).Result;
 ```
 
 
