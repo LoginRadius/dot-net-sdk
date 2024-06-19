@@ -25,7 +25,7 @@ namespace LoginRadiusSDK.V2.Models.RequestModels
 		///	The acknowledgement received by Google in Google recaptcha authorisation process.
 		/// </summary>
 		[JsonProperty(PropertyName = "h-captcha-response")]
-        public  string H-captcha-response {get;set;}
+        public  string H_captcha_response {get;set;}
 
 		/// <summary>
 		///	the value of the user's random string retrieved from the QQ captcha
