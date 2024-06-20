@@ -1807,7 +1807,6 @@ var apiResponse = new PhoneAuthenticationApi().RemovePhoneIDByAccessToken(access
 
 List of APIs in this Section:<br>
 [PUT : Update MFA Setting](#MFAUpdateSetting-put-)<br>
-[PUT : Update MFA by Access Token](#MFAUpdateByAccessToken-put-)<br>
 [PUT : MFA Update Phone Number by Token](#MFAUpdatePhoneNumberByToken-put-)<br>
 [PUT : Verify MFA Email OTP by Access Token](#MFAValidateEmailOtpByAccessToken-put-)<br>
 [PUT : Update MFA Security Question by Access Token](#MFASecurityQuestionAnswerByAccessToken-put-)<br>
@@ -1855,24 +1854,6 @@ Otp ="<Otp>"
 }; //Required
 string fields = null; //Optional
 var apiResponse = new MultiFactorAuthenticationApi().MFAUpdateSetting(accessToken, multiFactorAuthModelWithLockout, fields).Result;
-```
-
-
-<h6 id="MFAUpdateByAccessToken-put-">Update MFA by Access Token (PUT)</h6>
-
-This API is used to Enable Multi-factor authentication by access token on user login [More Info](/api/v2/customer-identity-api/multi-factor-authentication/google-authenticator/update-mfa-by-access-token/)
-
-
-
-```c#
-
-var accessToken = "accessToken"; //Required
-MultiFactorAuthModelByGoogleAuthenticatorCode multiFactorAuthModelByGoogleAuthenticatorCode = new MultiFactorAuthModelByGoogleAuthenticatorCode{
-GoogleAuthenticatorCode ="<GoogleAuthenticatorCode>"
-}; //Required
-string fields = null; //Optional
-var smsTemplate = "smsTemplate"; //Optional
-var apiResponse = new MultiFactorAuthenticationApi().MFAUpdateByAccessToken(accessToken, multiFactorAuthModelByGoogleAuthenticatorCode, fields, smsTemplate).Result;
 ```
 
 
@@ -2186,7 +2167,7 @@ This API is used to configure the Multi-factor authentication after login by usi
 
 var accessToken = "accessToken"; //Required
 var isVoiceOtp = false; //Optional
-var apiResponse = new MultiFactorAuthenticationApi().MFAConfigureByAccessToken(accessToken, isvoiceotp).Result;
+var apiResponse = new MultiFactorAuthenticationApi().MFAConfigureByAccessToken(accessToken, isVoiceOtp).Result;
 ```
 
 
@@ -2350,7 +2331,7 @@ This API resets the Google Authenticator configurations on a given account via t
 
 var authenticator = true; //Required
 var uid = "uid"; //Required
-var apiResponse = new MultiFactorAuthenticationApi().MFAResetAuthenticatorByUid(googleAuthenticator, uid).Result;
+var apiResponse = new MultiFactorAuthenticationApi().MFAResetAuthenticatorByUid(authenticator, uid).Result;
 ```
 
 
@@ -2757,7 +2738,9 @@ This API is used to validate the triggered MFA authentication flow with the Auth
 ```c#
 
 var accessToken = "accessToken"; //Required
-MultiFactorAuthModelByAuthenticatorCode multiFactorAuthModelByAuthenticatorCode = new MultiFactorAuthModelByAuthenticatorCode{}; //Required
+MultiFactorAuthModelByAuthenticatorCode multiFactorAuthModelByAuthenticatorCode = new MultiFactorAuthModelByAuthenticatorCode{
+  AuthenticatorCode ="<AuthenticatorCode>"
+}; //Required
 var apiResponse = new ReAuthenticationApi().MFAReAuthenticateByAuthenticatorCode(accessToken, multiFactorAuthModelByAuthenticatorCode).Result;
 ```
 
@@ -3959,7 +3942,7 @@ List of APIs in this Section:<br>
 
 
 <h6 id="SlidingAccessToken-get-"> (GET)</h6>
- [More Info](/api/v2/customer-identity-api/unknown/SlidingToken--SlidingAccessToken)
+ This API is used to get access token and refresh token with the expired/nonexpired access token. [More Info](/api/v2/customer-identity-api/refresh-token/sliding-access-token)
 
 
 

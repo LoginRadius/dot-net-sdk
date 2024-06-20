@@ -22,11 +22,11 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// This API is used to configure the Multi-factor authentication after login by using the access token when MFA is set as optional on the LoginRadius site.
         /// </summary>
         /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
-        /// <param name="isvoiceotp">Boolean, pass true if you wish to trigger voice OTP</param>
+        /// <param name="isVoiceotp">Boolean, pass true if you wish to trigger voice OTP</param>
         /// <returns>Response containing Definition of Complete Multi-Factor Authentication Settings data</returns>
         /// 5.7
 
-        public async Task<ApiResponse<MultiFactorAuthenticationSettingsResponse>> MFAConfigureByAccessToken(string accessToken, bool? isvoiceotp = null)
+        public async Task<ApiResponse<MultiFactorAuthenticationSettingsResponse>> MFAConfigureByAccessToken(string accessToken, bool? isVoiceotp = null)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -37,9 +37,9 @@ namespace LoginRadiusSDK.V2.Api.Advanced
                 { "access_token", accessToken },
                 { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] }
             };
-            if (isvoiceotp != false)
+            if (isVoiceotp != false)
             {
-               queryParameters.Add("isvoiceotp", isvoiceotp.ToString());
+               queryParameters.Add("isvoiceotp", isVoiceotp.ToString());
             }
 
             var resourcePath = "identity/v2/auth/account/2fa";

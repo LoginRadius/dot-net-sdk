@@ -55,6 +55,7 @@ Release on **June 19, 2024**
 - `MFAReAuthenticateByGoogleAuth`
 - `MFAResetGoogleAuthByToken `
 - `MFAResetGoogleAuthenticatorByUid`
+- `MFAUpdateByAccessToken`
 
 
 # Version 11.5.0
