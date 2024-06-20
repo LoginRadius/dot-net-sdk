@@ -766,6 +766,36 @@ namespace LoginRadiusSDK.V2.Api.Account
             return await ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, null);
         }
         /// <summary>
+        /// This API is used to update a user's Uid. It will update all profiles, custom objects and consent management logs associated with the Uid.
+        /// </summary>
+        /// <param name="updateUidModel">Payload containing Update UID</param>
+        /// <param name="uid">UID, the unified identifier for each user account</param>
+        /// <returns>Response containing Definition of Complete Validation data</returns>
+        /// 18.41
+
+        public async Task<ApiResponse<PostResponse>> AccountUpdateUid(UpdateUidModel updateUidModel, string uid)
+        {
+            if (updateUidModel == null)
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(updateUidModel));
+            }
+            if (string.IsNullOrWhiteSpace(uid))
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(uid));
+            }
+            var queryParameters = new QueryParameters
+            {
+                { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] },
+                { "apiSecret", ConfigDictionary[LRConfigConstants.LoginRadiusApiSecret] },
+                { "uid", uid }
+            };
+
+            var resourcePath = "identity/v2/manage/account/uid";
+            
+            return await ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(updateUidModel));
+        }
+
+        /// <summary>
         /// This API generates SMS OTP for Add phone, Phone Id verification, Forgot password, Forgot pin, One-touch login, smart login and Passwordless login.
         /// </summary>
         /// <param name="MultiSmsOtp"></param>
