@@ -1966,10 +1966,10 @@ This API is used to update (if configured) the phone number used for Multi-facto
 
 var phoneNo2FA = "phoneNo2FA"; //Required
 var secondFactorAuthenticationToken = "secondFactorAuthenticationToken"; //Required
-var options = "options"; //Optional
 var smsTemplate2FA = "smsTemplate2FA"; //Optional
 var isVoiceOtp = false; //Optional
-var apiResponse = new MultiFactorAuthenticationApi().MFAUpdatePhoneNumber(phoneNo2FA, secondFactorAuthenticationToken, options, smsTemplate2FA, isVoiceOtp).Result;
+var options = "options"; //Optional
+var apiResponse = new MultiFactorAuthenticationApi().MFAUpdatePhoneNumber(phoneNo2FA, secondFactorAuthenticationToken, smsTemplate2FA, isVoiceOtp,options).Result;
 ```
 
 
