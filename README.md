@@ -405,7 +405,7 @@ This API is used to link up a social provider account with an existing LoginRadi
 
 var accessToken = "accessToken"; //Required
 var clientGuid = "clientGuid"; //Required
-var apiResponse = new AuthenticationApi().LinkSocialIdentitiesByPing(accessToken, clientGuid);
+var apiResponse = new AuthenticationApi().LinkSocialIdentitiesByPing(accessToken, clientGuid).Result;
 ```
 
 <h6 id="SetOrChangeUserName-put-">Auth Set or Change UserName (PUT)</h6>
@@ -1760,16 +1760,15 @@ Password ="<Password>",
 PhoneId ="<PhoneId>"
 }; //Required
 var sott = "sott"; //Required
-var emailTemplate = "emailTemplate"; //Optional
 string fields = null; //Optional
+var options = "options"; //Optional
 var smsTemplate = "smsTemplate"; //Optional
 var verificationUrl = "verificationUrl"; //Optional
 var welcomeEmailTemplate = "welcomeEmailTemplate"; //Optional
+var emailTemplate = "emailTemplate"; //Optional
 var isVoiceOtp = false; //Optional
-var options = "options"; //Optional
-var apiResponse = new PhoneAuthenticationApi().UserRegistrationByPhone(authUserRegistrationModel, sott, emailTemplate, fields, smsTemplate, verificationUrl, welcomeEmailTemplate, isVoiceOtp, options).Result;
+var apiResponse = new PhoneAuthenticationApi().UserRegistrationByPhone(authUserRegistrationModel, sott, fields, options,smsTemplate, verificationUrl, welcomeEmailTemplate, emailTemplate, isVoiceOtp).Result;
 ```
-
 
 <h6 id="CheckPhoneNumberAvailability-get-">Phone Number Availability (GET)</h6>
 
@@ -3818,7 +3817,7 @@ The API is used to get LoginRadius access token by sending a valid Apple ID OAut
 
 var code = "code"; //Required
 var socialAppName = "socialAppName"; //Optional
-var apiResponse = new NativeSocialApi().GetAccessTokenByAppleIdCode(code, socialAppName);
+var apiResponse = new NativeSocialApi().GetAccessTokenByAppleIdCode(code, socialAppName).Result;
 ```
 
 
@@ -3831,7 +3830,7 @@ This API is used to retrieve a LoginRadius access token by passing in a valid We
 ```c#
 
 var code = "code"; //Required
-var apiResponse = new NativeSocialApi().GetAccessTokenByWeChatCode(code);
+var apiResponse = new NativeSocialApi().GetAccessTokenByWeChatCode(code).Result;
 ```
 
 
@@ -3937,11 +3936,12 @@ var apiResponse = new WebHookApi().WebHookUnsubscribe(webHookSubscribeModel).Res
 
 
 List of APIs in this Section:<br>
-[GET : ](#SlidingAccessToken-get-)<br>
+[GET : Get Sliding Access Token](#SlidingAccessToken-get-)<br>
 
 
 
 <h6 id="SlidingAccessToken-get-"> (GET)</h6>
+
  This API is used to get access token and refresh token with the expired/nonexpired access token. [More Info](/api/v2/customer-identity-api/refresh-token/sliding-access-token)
 
 
