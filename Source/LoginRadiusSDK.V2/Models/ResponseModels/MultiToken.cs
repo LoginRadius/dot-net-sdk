@@ -33,7 +33,7 @@ namespace LoginRadiusSDK.V2.Models.ResponseModels
 		///	Token
 		/// </summary>
 		[JsonProperty(PropertyName = "Token")]
-        public  Guid Token {get;set;}
+        public string Token {get;set;}
 
     }
 }

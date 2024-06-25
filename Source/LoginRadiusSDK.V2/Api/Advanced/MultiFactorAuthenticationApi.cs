@@ -1161,7 +1161,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <returns>Complete user UserProfile data</returns>
         /// 44.8
 
-        public async Task<ApiResponse<MultiFactorAuthenticationResponse<Identity>>> MFAVerifyAuthenticatorCode(string accessToken, MultiFactorAuthModelByAuthenticatorCodeSecurityAnswer multiFactorAuthModelByAuthenticatorCodeSecurityAnswer,
+        public async Task<ApiResponse<UserProfile>> MFAVerifyAuthenticatorCode(string accessToken, MultiFactorAuthModelByAuthenticatorCodeSecurityAnswer multiFactorAuthModelByAuthenticatorCodeSecurityAnswer,
         string fields = "")
         {
             if (string.IsNullOrWhiteSpace(accessToken))
@@ -1184,7 +1184,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/account/2fa/verification/authenticatorcode";
             
-            return await ConfigureAndExecute<MultiFactorAuthenticationResponse<Identity>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(multiFactorAuthModelByAuthenticatorCodeSecurityAnswer));
+            return await ConfigureAndExecute<UserProfile>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(multiFactorAuthModelByAuthenticatorCodeSecurityAnswer));
         }
     }
 }
