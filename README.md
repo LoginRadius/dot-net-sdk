@@ -1069,7 +1069,8 @@ var apiResponse = new AccountApi().GetEmailVerificationToken(email).Result;
 
 
 <h6 id="MultipurposeEmailTokenGeneration-post-">Multipurpose Email Token Generation API (POST)</h6>
-This API generate Email tokens and Email OTPs for Email verification, Add email, Forgot password, Delete user, Passwordless login, Forgot pin, One-touch login and Auto login. [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/multipurpose-token-and-sms-otp-generation-api/multipurpose-email-token-generation/)
+
+This API generate Email tokens and Email OTPs for Email verification, Add email, Forgot password, Delete user, Passwordless login, Forgot pin, One-touch login and Auto login. [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/account/multipurpose-token-and-sms-otp-generation-api/multipurpose-email-token-generation/)
 
 
 
@@ -1090,7 +1091,7 @@ var apiResponse = new AccountApi().MultipurposeEmailTokenGeneration(multiEmailTo
 
 <h6 id="MultipurposeSMSOTPGeneration-post-">Multipurpose SMS OTP Generation API (POST)</h6>
 
-This API generates SMS OTP for Add phone, Phone Id verification, Forgot password, Forgot pin, One-touch login, smart login and Passwordless login. [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/multipurpose-token-and-sms-otp-generation-api/multipurpose-sms-otp-generation/)
+This API generates SMS OTP for Add phone, Phone Id verification, Forgot password, Forgot pin, One-touch login, smart login and Passwordless login. [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/account/multipurpose-token-and-sms-otp-generation-api/multipurpose-sms-otp-generation/)
 
 
 
@@ -2258,7 +2259,7 @@ var apiResponse = new MultiFactorAuthenticationApi().MFAResetBackupCodeByUid(uid
 
 <h6 id="MFAResetAuthenticatorByToken-delete-">MFA Reset Authenticator by Token (DELETE)</h6>
 
-This API Resets the Google Authenticator configurations on a given account via the access token [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/multi-factor-authentication/google-authenticator/mfa-reset-google-authenticator-by-token/)
+This API Resets the Google Authenticator configurations on a given account via the access token [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/multi-factor-authentication/authenticator/mfa-reset-authenticator-by-token/)
 
 
 
@@ -2326,7 +2327,7 @@ var apiResponse = new MultiFactorAuthenticationApi().MFAResetSMSAuthenticatorByU
 
 <h6 id="MFAResetAuthenticatorByUid-delete-">MFA Reset Authenticator By UID (DELETE)</h6>
 
-This API resets the Google Authenticator configurations on a given account via the UID. [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/multi-factor-authentication/google-authenticator/mfa-reset-google-authenticator-by-uid/)
+This API resets the Google Authenticator configurations on a given account via the UID. [More Info](https://www.loginradius.com/docs/api/v2/customer-identity-api/multi-factor-authentication/authenticator/mfa-reset-authenticator-by-uid/)
 
 
 
