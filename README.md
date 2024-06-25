@@ -1089,6 +1089,7 @@ var apiResponse = new AccountApi().MultipurposeEmailTokenGeneration(multiEmailTo
 
 
 <h6 id="MultipurposeSMSOTPGeneration-post-">Multipurpose SMS OTP Generation API (POST)</h6>
+
 This API generates SMS OTP for Add phone, Phone Id verification, Forgot password, Forgot pin, One-touch login, smart login and Passwordless login. [More Info](/api/v2/customer-identity-api/multipurpose-token-and-sms-otp-generation-api/multipurpose-sms-otp-generation/)
 
 
@@ -1268,6 +1269,7 @@ var apiResponse = new AccountApi().RemoveEmail(email, uid, fields).Result;
 ```
 
 <h6 id="RevokeAllRefreshToken-delete-">Revoke All Refresh Token (DELETE)</h6>
+
 The Revoke All Refresh Access Token API is used to revoke all refresh tokens for a specific user. [More Info](/api/v2/customer-identity-api/refresh-token/revoke-all-refresh-token/)
 
 
@@ -2015,6 +2017,7 @@ var apiResponse = new MultiFactorAuthenticationApi().MFASecurityQuestionAnswer(s
 ```
 
 <h6 id="MFAValidateAuthenticatorCode-put-">MFA Validate Authenticator Code (PUT)</h6>
+
 This API is used to login to a user's account during the second MFA step with an Authenticator Code. [More Info](/api/v2/customer-identity-api/multi-factor-authentication/authenticator/mfa-validate-authenticator-code/)
 
 
@@ -2030,6 +2033,7 @@ var apiResponse = new MultiFactorAuthenticationApi().MFAValidateAuthenticatorCod
 ```
 
 <h6 id="MFAVerifyAuthenticatorCode-put-">MFA Verify Authenticator Code (PUT)</h6>
+
 This API is used to validate an Authenticator Code as part of the MFA process. [More Info](/api/v2/customer-identity-api/multi-factor-authentication/authenticator/mfa-verify-authenticator-code/)
 
 
@@ -2730,6 +2734,7 @@ var apiResponse = new ReAuthenticationApi().ReAuthValidateEmailOtp(accessToken, 
 ```
 
 <h6 id="MFAReAuthenticateByAuthenticatorCode-put-">MFA Step-Up Authentication by Authenticator Code (PUT)</h6>
+
 This API is used to validate the triggered MFA authentication flow with the Authenticator Code. [More Info](/api/v2/customer-identity-api/re-authentication/mfa/re-auth-by-otp/)
 
 
@@ -3849,6 +3854,7 @@ var apiResponse = new NativeSocialApi().GetAccessTokenByGoogleAuthCode(googleAut
 ```
 
 <h6 id="AccessTokenViaCustomJWTToken-get-">Get Access Token via Custom JWT Token (GET)</h6>
+
 This API is used to retrieve a LoginRadius access token by passing in a valid custom JWT token. [More Info](/api/v2/customer-identity-api/social-login/native-social-login-api/access-token-by-custom-jwt-token/)
 
 

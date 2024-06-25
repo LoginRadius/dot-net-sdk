@@ -235,7 +235,7 @@ $("#btn-user-getcustomobj").click(function () {
 
 $("#btn-user-mfa-resetgoogle").click(function() {
     let data = {
-        "googleauthenticator": true
+        "authenticator": true
     }
 
     $.ajax({
@@ -248,7 +248,7 @@ $("#btn-user-mfa-resetgoogle").click(function() {
             $("#user-mfa-message").attr("class", "error-message");
         }
     }).done(function() { 
-        $("#user-mfa-message").text("Google Authenticator settings reset.");
+        $("#user-mfa-message").text("Authenticator settings reset.");
         $("#user-mfa-message").attr("class", "success-message");
     });
 });
