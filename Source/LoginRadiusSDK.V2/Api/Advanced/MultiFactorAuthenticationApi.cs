@@ -22,11 +22,11 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// This API is used to configure the Multi-factor authentication after login by using the access token when MFA is set as optional on the LoginRadius site.
         /// </summary>
         /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
-        /// <param name="smsTemplate2FA">SMS Template Name</param>
+        /// <param name="isVoiceOtp">Boolean, pass true if you wish to trigger voice OTP</param>
         /// <returns>Response containing Definition of Complete Multi-Factor Authentication Settings data</returns>
         /// 5.7
 
-        public async Task<ApiResponse<MultiFactorAuthenticationSettingsResponse>> MFAConfigureByAccessToken(string accessToken, string smsTemplate2FA = null)
+        public async Task<ApiResponse<MultiFactorAuthenticationSettingsResponse>> MFAConfigureByAccessToken(string accessToken, bool? isVoiceOtp = null)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -37,9 +37,9 @@ namespace LoginRadiusSDK.V2.Api.Advanced
                 { "access_token", accessToken },
                 { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] }
             };
-            if (!string.IsNullOrWhiteSpace(smsTemplate2FA))
+            if (isVoiceOtp != false)
             {
-               queryParameters.Add("smsTemplate2FA", smsTemplate2FA);
+               queryParameters.Add("isVoiceOtp", isVoiceOtp.ToString());
             }
 
             var resourcePath = "identity/v2/auth/account/2fa";
@@ -81,55 +81,18 @@ namespace LoginRadiusSDK.V2.Api.Advanced
             return await ConfigureAndExecute<Identity>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(multiFactorAuthModelWithLockout));
         }
         /// <summary>
-        /// This API is used to Enable Multi-factor authentication by access token on user login
-        /// </summary>
-        /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
-        /// <param name="multiFactorAuthModelByGoogleAuthenticatorCode">Model Class containing Definition of payload for MultiFactorAuthModel By GoogleAuthenticator Code API</param>
-        /// <param name="fields">The fields parameter filters the API response so that the response only includes a specific set of fields</param>
-        /// <param name="smsTemplate">SMS Template name</param>
-        /// <returns>Response containing Definition for Complete profile data</returns>
-        /// 5.10
-
-        public async Task<ApiResponse<Identity>> MFAUpdateByAccessToken(string accessToken, MultiFactorAuthModelByGoogleAuthenticatorCode multiFactorAuthModelByGoogleAuthenticatorCode,
-        string fields = "", string smsTemplate = null)
-        {
-            if (string.IsNullOrWhiteSpace(accessToken))
-            {
-               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(accessToken));
-            }
-            if (multiFactorAuthModelByGoogleAuthenticatorCode == null)
-            {
-               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(multiFactorAuthModelByGoogleAuthenticatorCode));
-            }
-            var queryParameters = new QueryParameters
-            {
-                { "access_token", accessToken },
-                { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] }
-            };
-            if (!string.IsNullOrWhiteSpace(fields))
-            {
-               queryParameters.Add("fields", fields);
-            }
-            if (!string.IsNullOrWhiteSpace(smsTemplate))
-            {
-               queryParameters.Add("smsTemplate", smsTemplate);
-            }
-
-            var resourcePath = "identity/v2/auth/account/2fa/verification/googleauthenticatorcode";
-            
-            return await ConfigureAndExecute<Identity>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(multiFactorAuthModelByGoogleAuthenticatorCode));
-        }
-        /// <summary>
         /// This API is used to update the Multi-factor authentication phone number by sending the verification OTP to the provided phone number
         /// </summary>
         /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
         /// <param name="phoneNo2FA">Phone Number For 2FA</param>
         /// <param name="smsTemplate2FA">SMS Template Name</param>
+        /// <param name="isVoiceOtp">Boolean, pass true if you wish to trigger voice OTP</param>
+        /// <param name="options">PreventVerificationEmail (Specifying this value prevents the verification email from being sent. Only applicable if you have the optional email verification flow)</param>
         /// <returns>Response containing Definition for Complete SMS data</returns>
         /// 5.11
 
-        public async Task<ApiResponse<SMSResponseData>> MFAUpdatePhoneNumberByToken(string accessToken, string phoneNo2FA,
-        string smsTemplate2FA = null)
+        public async Task<ApiResponse<SmsResponseData>> MFAUpdatePhoneNumberByToken(string accessToken, string phoneNo2FA,
+        string smsTemplate2FA = null, bool isVoiceOtp = false, string options = "")
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -148,6 +111,14 @@ namespace LoginRadiusSDK.V2.Api.Advanced
             {
                queryParameters.Add("smsTemplate2FA", smsTemplate2FA);
             }
+            if (isVoiceOtp != false)
+            {
+               queryParameters.Add("isVoiceOtp", isVoiceOtp.ToString());
+            }
+            if (!string.IsNullOrWhiteSpace(options))
+            {
+               queryParameters.Add("options", options);
+            }
 
             var bodyParameters = new BodyParameters
             {
@@ -156,17 +127,17 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/account/2fa";
             
-            return await ConfigureAndExecute<SMSResponseData>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<SmsResponseData>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
-        /// This API Resets the Google Authenticator configurations on a given account via the access token
+        /// This API Resets the Authenticator configurations on a given account via the access_token.
         /// </summary>
         /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
-        /// <param name="googleAuthenticator">boolean type value,Enable google Authenticator Code.</param>
+        /// <param name="authenticator">Pass true to remove Authenticator.</param>
         /// <returns>Response containing Definition of Delete Request</returns>
         /// 5.12.1
 
-        public async Task<ApiResponse<DeleteResponse>> MFAResetGoogleAuthByToken(string accessToken, bool googleAuthenticator)
+        public async Task<ApiResponse<DeleteResponse>> MFAResetAuthenticatorByToken(string accessToken, bool authenticator)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -180,7 +151,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var bodyParameters = new BodyParameters
             {
-                { "googleauthenticator", googleAuthenticator }
+                { "authenticator", authenticator }
             };
 
             var resourcePath = "identity/v2/auth/account/2fa/authenticator";
@@ -411,12 +382,14 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <param name="smsTemplate2FA">SMS Template Name</param>
         /// <param name="verificationUrl">Email verification url</param>
         /// <param name="emailTemplate2FA">2FA Email Template name</param>
+        /// <param name="isVoiceOtp">Boolean, pass true if you wish to trigger voice OTP</param>
+        /// <param name="options">PreventVerificationEmail (Specifying this value prevents the verification email from being sent. Only applicable if you have the optional email verification flow)</param>
         /// <returns>Complete user UserProfile data</returns>
         /// 9.8.1
 
         public async Task<ApiResponse<MultiFactorAuthenticationResponse<Identity>>> MFALoginByEmail(string email, string password,
-        string emailTemplate = null, string fields = "", string loginUrl = null, string smsTemplate = null,
-        string smsTemplate2FA = null, string verificationUrl = null, string emailTemplate2FA = null)
+        string emailTemplate = null, string fields = "", string loginUrl = null,string smsTemplate = null,
+        string smsTemplate2FA = null, string verificationUrl = null, string emailTemplate2FA = null, bool isVoiceOtp = false, string options = "")
         {
             if (string.IsNullOrWhiteSpace(email))
             {
@@ -458,6 +431,14 @@ namespace LoginRadiusSDK.V2.Api.Advanced
             {
                queryParameters.Add("emailTemplate2FA", emailTemplate2FA);
             }
+            if (isVoiceOtp != false)
+            {
+               queryParameters.Add("isVoiceOtp", isVoiceOtp.ToString());
+            }
+            if (!string.IsNullOrWhiteSpace(options))
+            {
+               queryParameters.Add("options", options);
+            }
 
             var bodyParameters = new BodyParameters
             {
@@ -481,12 +462,13 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <param name="smsTemplate2FA">SMS Template Name</param>
         /// <param name="verificationUrl">Email verification url</param>
         /// <param name="emailTemplate2FA">2FA Email Template name</param>
+        /// <param name="isVoiceOtp">Boolean, pass true if you wish to trigger voice OTP</param>
         /// <returns>Complete user UserProfile data</returns>
         /// 9.8.2
 
         public async Task<ApiResponse<MultiFactorAuthenticationResponse<Identity>>> MFALoginByUserName(string password, string username,
         string emailTemplate = null, string fields = "", string loginUrl = null, string smsTemplate = null,
-        string smsTemplate2FA = null, string verificationUrl = null, string emailTemplate2FA = null)
+        string smsTemplate2FA = null, string verificationUrl = null, string emailTemplate2FA = null, bool isVoiceOtp = false)
         {
             if (string.IsNullOrWhiteSpace(password))
             {
@@ -524,6 +506,10 @@ namespace LoginRadiusSDK.V2.Api.Advanced
             {
                queryParameters.Add("verificationUrl", verificationUrl);
             }
+            if (isVoiceOtp != false)
+            {
+               queryParameters.Add("isVoiceOtp", isVoiceOtp.ToString());
+            }
             if (!string.IsNullOrWhiteSpace(emailTemplate2FA))
             {
                queryParameters.Add("emailTemplate2FA", emailTemplate2FA);
@@ -551,12 +537,15 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <param name="smsTemplate2FA">SMS Template Name</param>
         /// <param name="verificationUrl">Email verification url</param>
         /// <param name="emailTemplate2FA">2FA Email Template name</param>
+        /// <param name="isVoiceOtp">Boolean, pass true if you wish to trigger voice OTP</param>
+        /// <param name="options">PreventVerificationEmail (Specifying this value prevents the verification email from being sent. Only applicable if you have the optional email verification flow)</param>
+
         /// <returns>Complete user UserProfile data</returns>
         /// 9.8.3
 
         public async Task<ApiResponse<MultiFactorAuthenticationResponse<Identity>>> MFALoginByPhone(string password, string phone,
         string emailTemplate = null, string fields = "", string loginUrl = null, string smsTemplate = null,
-        string smsTemplate2FA = null, string verificationUrl = null, string emailTemplate2FA = null)
+        string smsTemplate2FA = null, string verificationUrl = null, string emailTemplate2FA = null, bool isVoiceOtp = false, string options = "")
         {
             if (string.IsNullOrWhiteSpace(password))
             {
@@ -597,6 +586,14 @@ namespace LoginRadiusSDK.V2.Api.Advanced
             if (!string.IsNullOrWhiteSpace(emailTemplate2FA))
             {
                queryParameters.Add("emailTemplate2FA", emailTemplate2FA);
+            }
+            if (isVoiceOtp != false)
+            {
+               queryParameters.Add("isVoiceOtp", isVoiceOtp.ToString());
+            }
+            if (!string.IsNullOrWhiteSpace(options))
+            {
+               queryParameters.Add("options", options);
             }
 
             var bodyParameters = new BodyParameters
@@ -669,65 +666,6 @@ namespace LoginRadiusSDK.V2.Api.Advanced
             return await ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(multiFactorAuthModelWithLockout));
         }
         /// <summary>
-        /// This API is used to login via Multi-factor-authentication by passing the google authenticator code.
-        /// </summary>
-        /// <param name="googleAuthenticatorCode">The code generated by google authenticator app after scanning QR code</param>
-        /// <param name="secondFactorAuthenticationToken">SecondFactorAuthenticationToken</param>
-        /// <param name="fields">The fields parameter filters the API response so that the response only includes a specific set of fields</param>
-        /// <param name="rbaBrowserEmailTemplate">RbaBrowserEmailTemplate</param>
-        /// <param name="rbaCityEmailTemplate">RbaCityEmailTemplate</param>
-        /// <param name="rbaCountryEmailTemplate">RbaCountryEmailTemplate</param>
-        /// <param name="rbaIpEmailTemplate">RbaIpEmailTemplate</param>
-        /// <returns>Complete user UserProfile data</returns>
-        /// 9.13
-
-        public async Task<ApiResponse<AccessToken<Identity>>> MFAValidateGoogleAuthCode(string googleAuthenticatorCode, string secondFactorAuthenticationToken,
-        string fields = "", string rbaBrowserEmailTemplate = null, string rbaCityEmailTemplate = null, string rbaCountryEmailTemplate = null, string rbaIpEmailTemplate = null)
-        {
-            if (string.IsNullOrWhiteSpace(googleAuthenticatorCode))
-            {
-               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(googleAuthenticatorCode));
-            }
-            if (string.IsNullOrWhiteSpace(secondFactorAuthenticationToken))
-            {
-               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(secondFactorAuthenticationToken));
-            }
-            var queryParameters = new QueryParameters
-            {
-                { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] },
-                { "secondFactorAuthenticationToken", secondFactorAuthenticationToken }
-            };
-            if (!string.IsNullOrWhiteSpace(fields))
-            {
-               queryParameters.Add("fields", fields);
-            }
-            if (!string.IsNullOrWhiteSpace(rbaBrowserEmailTemplate))
-            {
-               queryParameters.Add("rbaBrowserEmailTemplate", rbaBrowserEmailTemplate);
-            }
-            if (!string.IsNullOrWhiteSpace(rbaCityEmailTemplate))
-            {
-               queryParameters.Add("rbaCityEmailTemplate", rbaCityEmailTemplate);
-            }
-            if (!string.IsNullOrWhiteSpace(rbaCountryEmailTemplate))
-            {
-               queryParameters.Add("rbaCountryEmailTemplate", rbaCountryEmailTemplate);
-            }
-            if (!string.IsNullOrWhiteSpace(rbaIpEmailTemplate))
-            {
-               queryParameters.Add("rbaIpEmailTemplate", rbaIpEmailTemplate);
-            }
-
-            var bodyParameters = new BodyParameters
-            {
-                { "googleAuthenticatorCode", googleAuthenticatorCode }
-            };
-
-            var resourcePath = "identity/v2/auth/login/2fa/verification/googleauthenticatorcode";
-            
-            return await ConfigureAndExecute<AccessToken<Identity>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
-        }
-        /// <summary>
         /// This API is used to validate the backup code provided by the user and if valid, we return an access token allowing the user to login incases where Multi-factor authentication (MFA) is enabled and the secondary factor is unavailable. When a user initially downloads the Backup codes, We generate 10 codes, each code can only be consumed once. if any user attempts to go over the number of invalid login attempts configured in the Dashboard then the account gets blocked automatically
         /// </summary>
         /// <param name="multiFactorAuthModelByBackupCode">Model Class containing Definition of payload for MultiFactorAuth By BackupCode API</param>
@@ -787,11 +725,13 @@ namespace LoginRadiusSDK.V2.Api.Advanced
         /// <param name="phoneNo2FA">Phone Number For 2FA</param>
         /// <param name="secondFactorAuthenticationToken">A Uniquely generated MFA identifier token after successful authentication</param>
         /// <param name="smsTemplate2FA">SMS Template Name</param>
+        /// <param name="isVoiceOtp">Boolean, pass true if you wish to trigger voice OTP</param>
+        /// <param name="options">PreventVerificationEmail (Specifying this value prevents the verification email from being sent. Only applicable if you have the optional email verification flow)</param>
         /// <returns>Response containing Definition for Complete SMS data</returns>
         /// 9.16
 
-        public async Task<ApiResponse<SMSResponseData>> MFAUpdatePhoneNumber(string phoneNo2FA, string secondFactorAuthenticationToken,
-        string smsTemplate2FA = null)
+        public async Task<ApiResponse<SmsResponseData>> MFAUpdatePhoneNumber(string phoneNo2FA, string secondFactorAuthenticationToken,
+        string smsTemplate2FA = null, bool isVoiceOtp = false, string options = "")
         {
             if (string.IsNullOrWhiteSpace(phoneNo2FA))
             {
@@ -810,6 +750,14 @@ namespace LoginRadiusSDK.V2.Api.Advanced
             {
                queryParameters.Add("smsTemplate2FA", smsTemplate2FA);
             }
+            if (isVoiceOtp != false)
+            {
+               queryParameters.Add("isVoiceOtp", isVoiceOtp.ToString());
+            }
+            if (!string.IsNullOrWhiteSpace(options))
+            {
+               queryParameters.Add("options", options);
+            }
 
             var bodyParameters = new BodyParameters
             {
@@ -818,17 +766,19 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var resourcePath = "identity/v2/auth/login/2fa";
             
-            return await ConfigureAndExecute<SMSResponseData>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+            return await ConfigureAndExecute<SmsResponseData>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
         /// This API is used to resending the verification OTP to the provided phone number
         /// </summary>
         /// <param name="secondFactorAuthenticationToken">A Uniquely generated MFA identifier token after successful authentication</param>
         /// <param name="smsTemplate2FA">SMS Template Name</param>
+        /// <param name="isVoiceOtp">Boolean, pass true if you wish to trigger voice OTP</param>
         /// <returns>Response containing Definition for Complete SMS data</returns>
         /// 9.17
 
-        public async Task<ApiResponse<SMSResponseData>> MFAResendOTP(string secondFactorAuthenticationToken, string smsTemplate2FA = null)
+        public async Task<ApiResponse<SmsResponseData>> MFAResendOTP(string secondFactorAuthenticationToken, string smsTemplate2FA = null,
+        bool isVoiceOtp = false)
         {
             if (string.IsNullOrWhiteSpace(secondFactorAuthenticationToken))
             {
@@ -843,10 +793,14 @@ namespace LoginRadiusSDK.V2.Api.Advanced
             {
                queryParameters.Add("smsTemplate2FA", smsTemplate2FA);
             }
+            if (isVoiceOtp != false)
+            {
+               queryParameters.Add("isVoiceOtp", isVoiceOtp.ToString());
+            }
 
             var resourcePath = "identity/v2/auth/login/2fa/resend";
             
-            return await ConfigureAndExecute<SMSResponseData>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<SmsResponseData>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
         /// An API designed to send the MFA Email OTP to the email.
@@ -1039,14 +993,14 @@ namespace LoginRadiusSDK.V2.Api.Advanced
             return await ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, ConvertToJson(bodyParameters));
         }
         /// <summary>
-        /// This API resets the Google Authenticator configurations on a given account via the UID.
+        /// This API resets the Authenticator configurations on a given account via the UID.
         /// </summary>
-        /// <param name="googleAuthenticator">boolean type value,Enable google Authenticator Code.</param>
+        /// <param name="authenticator">Pass true to remove Authenticator.</param>
         /// <param name="uid">UID, the unified identifier for each user account</param>
         /// <returns>Response containing Definition of Delete Request</returns>
         /// 18.21.2
 
-        public async Task<ApiResponse<DeleteResponse>> MFAResetGoogleAuthenticatorByUid(bool googleAuthenticator, string uid)
+        public async Task<ApiResponse<DeleteResponse>> MFAResetAuthenticatorByUid(bool authenticator, string uid)
         {
             if (string.IsNullOrWhiteSpace(uid))
             {
@@ -1061,7 +1015,7 @@ namespace LoginRadiusSDK.V2.Api.Advanced
 
             var bodyParameters = new BodyParameters
             {
-                { "googleauthenticator", googleAuthenticator }
+                { "authenticator", authenticator }
             };
 
             var resourcePath = "identity/v2/manage/account/2fa/authenticator";
@@ -1163,6 +1117,74 @@ namespace LoginRadiusSDK.V2.Api.Advanced
             var resourcePath = "identity/v2/manage/account/2fa/authenticator/securityquestionanswer";
             
             return await ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, null);
+        }
+        /// <summary>
+        /// This API is used to login to a user's account during the second MFA step with an Authenticator Code.
+        /// </summary>
+        /// <param name="multiFactorAuthModelByAuthenticatorCode">Model Class containing Definition of payload for MultiFactorAuthModel By Authenticator Code API</param>
+        /// <param name="secondfactorauthenticationtoken">A Uniquely generated MFA identifier token after successful authentication</param>
+        /// <param name="fields">The fields parameter filters the API response so that the response only includes a specific set of fields</param>
+        /// <returns>Complete user UserProfile data</returns>
+        /// 44.7
+
+        public async Task<ApiResponse<MultiFactorAuthenticationResponse<Identity>>> MFAValidateAuthenticatorCode(MultiFactorAuthModelByAuthenticatorCode multiFactorAuthModelByAuthenticatorCode, string secondfactorauthenticationtoken,
+        string fields = "")
+        {
+            if (multiFactorAuthModelByAuthenticatorCode == null)
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(multiFactorAuthModelByAuthenticatorCode));
+            }
+            if (string.IsNullOrWhiteSpace(secondfactorauthenticationtoken))
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(secondfactorauthenticationtoken));
+            }
+            var queryParameters = new QueryParameters
+            {
+                { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] },
+                { "secondfactorauthenticationtoken", secondfactorauthenticationtoken }
+            };
+            if (!string.IsNullOrWhiteSpace(fields))
+            {
+               queryParameters.Add("fields", fields);
+            }
+
+            var resourcePath = "identity/v2/auth/login/2fa/verification/authenticatorcode";
+            
+            return await ConfigureAndExecute<MultiFactorAuthenticationResponse<Identity>>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(multiFactorAuthModelByAuthenticatorCode));
+        }
+        /// <summary>
+        /// This API is used to validate an Authenticator Code as part of the MFA process.
+        /// </summary>
+        /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
+        /// <param name="multiFactorAuthModelByAuthenticatorCodeSecurityAnswer">Model Class containing Definition of payload for MultiFactorAuthModel By Authenticator Code API with security answer</param>
+        /// <param name="fields">The fields parameter filters the API response so that the response only includes a specific set of fields</param>
+        /// <returns>Complete user UserProfile data</returns>
+        /// 44.8
+
+        public async Task<ApiResponse<UserProfile>> MFAVerifyAuthenticatorCode(string accessToken, MultiFactorAuthModelByAuthenticatorCodeSecurityAnswer multiFactorAuthModelByAuthenticatorCodeSecurityAnswer,
+        string fields = "")
+        {
+            if (string.IsNullOrWhiteSpace(accessToken))
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(accessToken));
+            }
+            if (multiFactorAuthModelByAuthenticatorCodeSecurityAnswer == null)
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(multiFactorAuthModelByAuthenticatorCodeSecurityAnswer));
+            }
+            var queryParameters = new QueryParameters
+            {
+                { "access_token", accessToken },
+                { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] }
+            };
+            if (!string.IsNullOrWhiteSpace(fields))
+            {
+               queryParameters.Add("fields", fields);
+            }
+
+            var resourcePath = "identity/v2/auth/account/2fa/verification/authenticatorcode";
+            
+            return await ConfigureAndExecute<UserProfile>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(multiFactorAuthModelByAuthenticatorCodeSecurityAnswer));
         }
     }
 }

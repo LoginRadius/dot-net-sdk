@@ -25,8 +25,8 @@ namespace LoginRadiusSDK.V2.Models.ResponseModels
 		/// <summary>
 		///	Cursor value if not all contacts can be retrieved once.
 		/// </summary>
-		[JsonProperty(PropertyName = "nextcursor")]
-        public  int Nextcursor {get;set;}
+		[JsonProperty(PropertyName = "nextCursor")]
+        public  int NextCursor {get;set;}
 
     }
 }

@@ -511,10 +511,12 @@ namespace LoginRadiusSDK.V2.Api.Account
         /// </summary>
         /// <param name="uid">UID, the unified identifier for each user account</param>
         /// <param name="smsTemplate">SMS Template name</param>
+        /// <param name="isVoiceOtp">Boolean, pass true if you wish to trigger voice OTP</param>
         /// <returns>Response containing Definition of Complete Validation data</returns>
         /// 18.27
 
-        public async Task<ApiResponse<PostResponse>> ResetPhoneIDVerificationByUid(string uid, string smsTemplate = "")
+        public async Task<ApiResponse<PostResponse>> ResetPhoneIDVerificationByUid(string uid, string smsTemplate = "",
+        bool isVoiceOtp = false)
         {
             if (string.IsNullOrWhiteSpace(uid))
             {
@@ -528,6 +530,10 @@ namespace LoginRadiusSDK.V2.Api.Account
             if (!string.IsNullOrWhiteSpace(smsTemplate))
             {
                queryParameters.Add("smsTemplate", smsTemplate);
+            }
+            if (isVoiceOtp != false)
+            {
+               queryParameters.Add("isVoiceOtp", isVoiceOtp.ToString());
             }
 
             var resourcePath = $"identity/v2/manage/account/{uid}/invalidatephone";
@@ -656,6 +662,57 @@ namespace LoginRadiusSDK.V2.Api.Account
             return await ConfigureAndExecute<DeleteResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
+        /// The Revoke All Refresh Access Token API is used to revoke all refresh tokens for a specific user.
+        /// </summary>
+        /// <param name="uid">UID, the unified identifier for each user account</param>
+        /// <returns>Response containing Definition of Delete Request</returns>
+        /// 18.33
+
+        public async Task<ApiResponse<DeleteResponse>> RevokeAllRefreshToken(string uid)
+        {
+            if (string.IsNullOrWhiteSpace(uid))
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(uid));
+            }
+            var queryParameters = new QueryParameters
+            {
+                { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] },
+                { "apiSecret", ConfigDictionary[LRConfigConstants.LoginRadiusApiSecret] }
+            };
+
+            var resourcePath = $"identity/v2/manage/account/{uid}/access_token/refresh/revoke";
+            
+            return await ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, null);
+        }
+        /// <summary>
+        /// This API generate Email tokens and Email OTPs for Email verification, Add email, Forgot password, Delete user, Passwordless login, Forgot pin, One-touch login and Auto login.
+        /// </summary>
+        /// <param name="multiEmailToken">Model Class containing Definition of payload for Multipurpose Email Token Generation API</param>
+        /// <param name="tokentype">The identifier type for the token that we need to generate</param>
+        /// <returns>Response containing Definition for Complete MultiToken</returns>
+        /// 18.34
+
+        public async Task<ApiResponse<MultiToken>> MultipurposeEmailTokenGeneration(MultiEmailToken multiEmailToken, string tokentype)
+        {
+            if (multiEmailToken == null)
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(multiEmailToken));
+            }
+            if (string.IsNullOrWhiteSpace(tokentype))
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(tokentype));
+            }
+            var queryParameters = new QueryParameters
+            {
+                { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] },
+                { "apiSecret", ConfigDictionary[LRConfigConstants.LoginRadiusApiSecret] }
+            };
+
+            var resourcePath = $"identity/v2/manage/account/emailtoken/{tokentype}";
+            
+            return await ConfigureAndExecute<MultiToken>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(multiEmailToken));
+        }
+        /// <summary>
         /// Note: This is intended for specific workflows where an email may be associated to multiple UIDs. This API is used to retrieve all of the identities (UID and Profiles), associated with a specified email in Cloud Storage.
         /// </summary>
         /// <param name="email">Email of the user</param>
@@ -737,5 +794,33 @@ namespace LoginRadiusSDK.V2.Api.Account
             
             return await ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(updateUidModel));
         }
+
+        /// <summary>
+        /// This API generates SMS OTP for Add phone, Phone Id verification, Forgot password, Forgot pin, One-touch login, smart login and Passwordless login.
+        /// </summary>
+        /// <param name="MultiSmsOtp"></param>
+        /// <param name="smsotptype">The identifier type for the OTP that we need to generate</param>
+        /// <returns>Response containing Definition for Complete MultiToken</returns>
+        /// 18.44
+
+        public async Task<ApiResponse<MultiToken>> MultipurposeSMSOTPGeneration(MultiSmsOtp multiSmsOtp, string smsotptype)
+        {
+            if (multiSmsOtp == null)
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(multiSmsOtp));
+            }
+            if (string.IsNullOrWhiteSpace(smsotptype))
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(smsotptype));
+            }
+            var queryParameters = new QueryParameters();
+            queryParameters.Add("apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey]);
+            queryParameters.Add("apiSecret", ConfigDictionary[LRConfigConstants.LoginRadiusApiSecret]);
+
+            var resourcePath = $"identity/v2/manage/account/smsotp/{smsotptype}";
+            
+            return await ConfigureAndExecute<MultiToken>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(multiSmsOtp));
+        }
+        
     }
 }

@@ -68,7 +68,7 @@ namespace LoginRadiusSDK.V2.Models.ResponseModels
 		///	OTP status
 		/// </summary>
 		[JsonProperty(PropertyName = "OTPStatus")]
-        public  SMSResponseData OTPStatus {get;set;}
+        public  SmsResponseData OTPStatus {get;set;}
 
 		/// <summary>
 		///	QR code

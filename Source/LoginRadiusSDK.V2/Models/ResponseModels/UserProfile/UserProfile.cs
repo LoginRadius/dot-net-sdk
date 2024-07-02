@@ -20,7 +20,7 @@ namespace LoginRadiusSDK.V2.Models.ResponseModels.UserProfile
     public class UserProfile:SocialUserProfile
     {
 		/// <summary>
-		///	Response containing consent profile
+		///	List of Consents
 		/// </summary>
 		[JsonProperty(PropertyName = "ConsentProfile")]
         public  ConsentProfile ConsentProfile {get;set;}
@@ -155,7 +155,7 @@ namespace LoginRadiusSDK.V2.Models.ResponseModels.UserProfile
 		///	PIN of user
 		/// </summary>
 		[JsonProperty(PropertyName = "PIN")]
-        public  PINInformation PIN {get;set;}
+        public  PinInformation PIN {get;set;}
 
 		/// <summary>
 		///	Object type by default false, string represents Version, AcceptSource and datetime represents AcceptDateTime

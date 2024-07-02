@@ -13,7 +13,7 @@ namespace LoginRadiusSDK.V2.Models.RequestModels
     /// <summary>
     ///	Model Class containing Definition of payload for PinInfo
     /// </summary>
-    public class PINModel
+    public class PinModel
     {
 		/// <summary>
 		///	PIN of user

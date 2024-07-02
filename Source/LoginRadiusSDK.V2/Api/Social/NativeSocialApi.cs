@@ -120,7 +120,7 @@ namespace LoginRadiusSDK.V2.Api.Social
         /// <summary>
         /// This API is used to Get LoginRadius Access Token using google jwt id token for google native mobile login/registration.
         /// </summary>
-        /// <param name="idToken">Google JWT id_token</param>
+        /// <param name="idToken">Custom JWT Token</param>
         /// <returns>Response containing Definition of Complete Token data</returns>
         /// 20.6
 
@@ -242,6 +242,7 @@ namespace LoginRadiusSDK.V2.Api.Social
             
             return await ConfigureAndExecute<AccessToken>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
+        
         /// <summary>
         /// The API is used to get LoginRadius access token by sending Google's AuthCode. It will be valid for the specific duration of time specified in the response.
         /// </summary>
@@ -267,6 +268,35 @@ namespace LoginRadiusSDK.V2.Api.Social
             }
 
             var resourcePath = "api/v2/access_token/google";
+            
+            return await ConfigureAndExecute<AccessToken>(HttpMethod.GET, resourcePath, queryParameters, null);
+        }
+        /// <summary>
+        /// This API is used to retrieve a LoginRadius access token by passing in a valid custom JWT token.
+        /// </summary>
+        /// <param name="idToken">Custom JWT Token</param>
+        /// <param name="providername">JWT Provider Name</param>
+        /// <returns>Response containing Definition of Complete Token data</returns>
+        /// 44.3
+
+        public async Task<ApiResponse<AccessToken>> AccessTokenViaCustomJWTToken(string idToken, string providername)
+        {
+            if (string.IsNullOrWhiteSpace(idToken))
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(idToken));
+            }
+            if (string.IsNullOrWhiteSpace(providername))
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(providername));
+            }
+            var queryParameters = new QueryParameters
+            {
+                { "id_Token", idToken },
+                { "key", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] },
+                { "providername", providername }
+            };
+
+            var resourcePath = "api/v2/access_token/jwt";
             
             return await ConfigureAndExecute<AccessToken>(HttpMethod.GET, resourcePath, queryParameters, null);
         }

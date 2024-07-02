@@ -321,11 +321,14 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <param name="fields">The fields parameter filters the API response so that the response only includes a specific set of fields</param>
         /// <param name="smsTemplate">SMS Template name</param>
         /// <param name="verificationUrl">Email verification url</param>
+        /// <param name="isVoiceOtp">Boolean, pass true if you wish to trigger voice OTP</param>
+        /// <param name="options">PreventVerificationEmail (Specifying this value prevents the verification email from being sent. Only applicable if you have the optional email verification flow)</param>
         /// <returns>Response containing Definition of Complete Validation and UserProfile data</returns>
         /// 5.4
 
         public async Task<ApiResponse<UserProfilePostResponse<Identity>>> UpdateProfileByAccessToken(string accessToken, UserProfileUpdateModel userProfileUpdateModel,
-        string emailTemplate = null, string fields = "", string smsTemplate = null, string verificationUrl = null)
+        string emailTemplate = null, string fields = "", string smsTemplate = null, string verificationUrl = null,
+        bool isVoiceOtp = false, string options = "")
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -355,6 +358,14 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             if (!string.IsNullOrWhiteSpace(verificationUrl))
             {
                queryParameters.Add("verificationUrl", verificationUrl);
+            }
+            if (isVoiceOtp != false)
+            {
+               queryParameters.Add("isVoiceOtp", isVoiceOtp.ToString());
+            }
+            if (!string.IsNullOrWhiteSpace(options))
+            {
+               queryParameters.Add("options", options);
             }
 
             var resourcePath = "identity/v2/auth/account";
@@ -520,11 +531,12 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <param name="fields">The fields parameter filters the API response so that the response only includes a specific set of fields</param>
         /// <param name="url">Mention URL to log the main URL(Domain name) in Database.</param>
         /// <param name="welcomeEmailTemplate">Name of the welcome email template</param>
+        /// <param name="uuid">The uuid received in the response</param>
         /// <returns>Response containing Definition of Complete Validation, UserProfile data and Access Token</returns>
         /// 8.2
 
         public async Task<ApiResponse<UserProfilePostResponse<AccessToken<Identity>>>> VerifyEmail(string verificationToken, string fields = "",
-        string url = null, string welcomeEmailTemplate = null)
+        string url = null, string welcomeEmailTemplate = null, string uuid = null)
         {
             if (string.IsNullOrWhiteSpace(verificationToken))
             {
@@ -546,6 +558,10 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             if (!string.IsNullOrWhiteSpace(welcomeEmailTemplate))
             {
                queryParameters.Add("welcomeEmailTemplate", welcomeEmailTemplate);
+            }
+            if (!string.IsNullOrWhiteSpace(uuid))
+            {
+               queryParameters.Add("uuid", uuid);
             }
 
             var resourcePath = "identity/v2/auth/email";
@@ -1190,14 +1206,16 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <param name="sott">LoginRadius Secured One Time Token</param>
         /// <param name="emailTemplate">Email template name</param>
         /// <param name="fields">The fields parameter filters the API response so that the response only includes a specific set of fields</param>
-        /// <param name="options">PreventVerificationEmail (Specifying this value prevents the verification email from being sent. Only applicable if you have the optional email verification flow)</param>
         /// <param name="verificationUrl">Email verification url</param>
         /// <param name="welcomeEmailTemplate">Name of the welcome email template</param>
+        /// <param name="isVoiceOtp">Boolean, pass true if you wish to trigger voice OTP</param>
+        /// <param name="options">PreventVerificationEmail (Specifying this value prevents the verification email from being sent. Only applicable if you have the optional email verification flow)</param>
         /// <returns>Response containing Definition of Complete Validation, UserProfile data and Access Token</returns>
         /// 17.1.1
 
         public async Task<ApiResponse<UserProfilePostResponse<AccessToken<Identity>>>> UserRegistrationByEmail(AuthUserRegistrationModel authUserRegistrationModel, string sott,
-        string emailTemplate = null, string fields = "", string options = "", string verificationUrl = null, string welcomeEmailTemplate = null)
+        string emailTemplate = null, string fields = "", string options = "", string verificationUrl = null, string welcomeEmailTemplate = null,
+        bool isVoiceOtp = false)
         {
             if (authUserRegistrationModel == null)
             {
@@ -1232,6 +1250,10 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             {
                queryParameters.Add("welcomeEmailTemplate", welcomeEmailTemplate);
             }
+            if (isVoiceOtp != false)
+            {
+               queryParameters.Add("isVoiceOtp", isVoiceOtp.ToString());
+            }
 
             var resourcePath = "identity/v2/auth/register";
             
@@ -1247,11 +1269,13 @@ namespace LoginRadiusSDK.V2.Api.Authentication
         /// <param name="smsTemplate">SMS Template name</param>
         /// <param name="verificationUrl">Email verification url</param>
         /// <param name="welcomeEmailTemplate">Name of the welcome email template</param>
+        /// <param name="isVoiceOtp">Boolean, pass true if you wish to trigger voice OTP</param>
         /// <returns>Response containing Definition of Complete Validation, UserProfile data and Access Token</returns>
         /// 17.2
 
         public async Task<ApiResponse<UserProfilePostResponse<AccessToken<Identity>>>> UserRegistrationByCaptcha(AuthUserRegistrationModelWithCaptcha authUserRegistrationModelWithCaptcha, string emailTemplate = null,
-        string fields = "", string options = "", string smsTemplate = null, string verificationUrl = null, string welcomeEmailTemplate = null)
+        string fields = "", string options = "", string smsTemplate = null, string verificationUrl = null, string welcomeEmailTemplate = null,
+        bool isVoiceOtp = false)
         {
             if (authUserRegistrationModelWithCaptcha == null)
             {
@@ -1284,6 +1308,10 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             if (!string.IsNullOrWhiteSpace(welcomeEmailTemplate))
             {
                queryParameters.Add("welcomeEmailTemplate", welcomeEmailTemplate);
+            }
+            if (isVoiceOtp != false)
+            {
+               queryParameters.Add("isVoiceOtp", isVoiceOtp.ToString());
             }
 
             var resourcePath = "identity/v2/auth/register/captcha";
@@ -1327,6 +1355,35 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             var resourcePath = "identity/v2/auth/register";
             
             return await ConfigureAndExecute<PostResponse>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(bodyParameters));
+        }
+        /// <summary>
+        /// This API is used to Send verification email to the unverified email of the social profile. This API can be used only incase of optional verification workflow.
+        /// </summary>
+        /// <param name="accessToken">Uniquely generated identifier key by LoginRadius that is activated after successful authentication.</param>
+        /// <param name="clientguid">Unique string used in the Smart Login request</param>
+        /// <returns>Response containing Definition for Complete AuthSendVerificationEmailForLinkingSocialProfiles API Response</returns>
+        /// 44.9
+
+        public async Task<ApiResponse<PostResponseResendEmailVerification>> AuthSendVerificationEmailForLinkingSocialProfiles(string accessToken, string clientguid)
+        {
+            if (string.IsNullOrWhiteSpace(accessToken))
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(accessToken));
+            }
+            if (string.IsNullOrWhiteSpace(clientguid))
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(clientguid));
+            }
+            var queryParameters = new QueryParameters
+            {
+                { "access_token", accessToken },
+                { "apiKey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] },
+                { "clientguid", clientguid }
+            };
+
+            var resourcePath = "identity/v2/auth/email/sendverificationemail";
+            
+            return await ConfigureAndExecute<PostResponseResendEmailVerification>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
     }
 }

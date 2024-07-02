@@ -11,27 +11,27 @@ namespace LoginRadiusSDK.V2.Models.RequestModels
 {
 
     /// <summary>
-    ///	Model Class containing Definition for EmailVerificationByOtpModel API
+    ///	
     /// </summary>
-    public class EmailVerificationByOtpModel:LockoutModel
+    public class MultiSmsOtp
     {
 		/// <summary>
-		///	user's email
+		///	
 		/// </summary>
-		[JsonProperty(PropertyName = "Email")]
-        public  string Email {get;set;}
+		[JsonProperty(PropertyName = "Name")]
+        public  string Name {get;set;}
 
 		/// <summary>
-		///	The Verification Code
+		///	
 		/// </summary>
-		[JsonProperty(PropertyName = "Otp")]
-        public  string Otp {get;set;}
+		[JsonProperty(PropertyName = "Phone")]
+        public  string Phone {get;set;}
 
 		/// <summary>
-		///	The uuid received in the response
+		///	
 		/// </summary>
-		[JsonProperty(PropertyName = "uuid")]
-        public  string Uuid {get;set;}
+		[JsonProperty(PropertyName = "Uid")]
+        public  string Uid {get;set;}
 
     }
 }

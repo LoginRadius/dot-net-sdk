@@ -14,7 +14,7 @@ namespace LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects
     /// <summary>
     ///	Response Model Class containing Definition of PIN Information
     /// </summary>
-    public class PINInformation
+    public class PinInformation
     {
 		/// <summary>
 		///	Last PIN Change Date

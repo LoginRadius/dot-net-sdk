@@ -69,9 +69,10 @@ namespace dot_net_demo.Controllers
             return Json(apiresponse.Response);
         }
 
-        public IActionResult LRMfaAuth([FromBody] GoogleAuthenticatorModel googleAuth, [FromQuery(Name = "multi_factor_auth_token")] String secondFactorAuthToken)
+        public IActionResult LRMfaAuth([FromBody] MultiFactorAuthModelByAuthenticatorCode multiFactorAuthModelByAuthenticatorCode, [FromQuery(Name = "multi_factor_auth_token")] String secondFactorAuthToken)
         {
-            var apiresponse = new MultiFactorAuthenticationApi().MFAValidateGoogleAuthCode(googleAuth.googleauthenticatorcode, secondFactorAuthToken).Result;
+            var apiresponse = new MultiFactorAuthenticationApi().MFAValidateAuthenticatorCode(multiFactorAuthModelByAuthenticatorCode, secondFactorAuthToken).Result;
+            
             if (apiresponse.RestException != null)
             {
                 return StatusCode(400, Json(apiresponse.RestException));
@@ -234,7 +235,7 @@ namespace dot_net_demo.Controllers
 
         public IActionResult LRMfaResetGoogle([FromQuery(Name = "auth")] String accessToken)
         {
-            var apiresponse = new MultiFactorAuthenticationApi().MFAResetGoogleAuthByToken(accessToken, true).Result;
+            var apiresponse = new MultiFactorAuthenticationApi().MFAResetAuthenticatorByToken(accessToken, true).Result;
 
             if (apiresponse.RestException != null)
             {
@@ -245,7 +246,7 @@ namespace dot_net_demo.Controllers
 
         public IActionResult LRMfaValidate([FromQuery(Name = "auth")] String accessToken)
         {
-            var apiresponse = new MultiFactorAuthenticationApi().MFAConfigureByAccessToken(accessToken).Result;
+            var apiresponse = new MultiFactorAuthenticationApi().MFAConfigureByAccessToken(accessToken,false).Result;
 
             if (apiresponse.RestException != null)
             {
@@ -254,9 +255,9 @@ namespace dot_net_demo.Controllers
             return Json(apiresponse.Response);
         }
 
-        public IActionResult LRMfaEnableGoogle([FromBody] GoogleAuthenticatorModel googleAuthenticatorCode, [FromQuery(Name = "auth")] String accessToken)
+        public IActionResult LRMfaEnableGoogle([FromBody] MultiFactorAuthModelByAuthenticatorCodeSecurityAnswer multiFactorAuthModelByAuthenticatorCodeSecurityAnswer, [FromQuery(Name = "auth")] String accessToken)
         {
-            var apiresponse = new MultiFactorAuthenticationApi().MFAValidateGoogleAuthCode(accessToken, googleAuthenticatorCode.googleauthenticatorcode).Result;
+            var apiresponse = new MultiFactorAuthenticationApi().MFAVerifyAuthenticatorCode(accessToken, multiFactorAuthModelByAuthenticatorCodeSecurityAnswer).Result;
 
             if (apiresponse.RestException != null)
             {
