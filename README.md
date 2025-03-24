@@ -3876,68 +3876,136 @@ var apiResponse = new NativeSocialApi().AccessTokenViaCustomJWTToken(idToken, pr
 
 
 List of APIs in this Section:<br>
-[POST : Webhook Subscribe](#WebHookSubscribe-post-)<br>
-[GET : Webhook Subscribed URLs](#GetWebHookSubscribedURLs-get-)<br>
-[GET : Webhook Test](#WebhookTest-get-)<br>
-[DELETE : WebHook Unsubscribe](#WebHookUnsubscribe-delete-)<br>
+[PUT : Update Webhook Subscription](#UpdateWebhookSubscription-put-)<br>
+[POST : Create Webhook Subscription](#CreateWebhookSubscription-post-)<br>
+[GET : Get Webhook Subscription Detail](#GetWebhookSubscriptionDetail-get-)<br>
+[GET : List All Webhooks](#ListAllWebhooks-get-)<br>
+[GET : Get Webhook Events](#GetWebhookEvents-get-)<br>
+[DELETE : Delete Webhook Subscription](#DeleteWebhookSubscription-delete-)<br>
 
 
 
-<h6 id="WebHookSubscribe-post-">Webhook Subscribe (POST)</h6>
+<h6 id="UpdateWebhookSubscription-put-">Update Webhook Subscription (PUT)</h6>
 
-API can be used to configure a WebHook on your LoginRadius site. Webhooks also work on subscribe and notification model, subscribe your hook and get a notification. Equivalent to RESThook but these provide security on basis of signature and RESThook work on unique URL. Following are the events that are allowed by LoginRadius to trigger a WebHook service call. [More Info](https://www.loginradius.com/docs/api/v2/integrations/webhooks/webhook-subscribe)
+This API is used to update a webhook subscription [More Info](https://www.loginradius.com/docs/api/v2/integrations/webhooks/webhook-update)
 
 
 
 ```c#
 
-WebHookSubscribeModel webHookSubscribeModel = new WebHookSubscribeModel{
-Event ="<Event>",
-TargetUrl ="<TargetUrl>"
+var hookId = "hookId"; //Required
+WebHookSubscriptionUpdateModel webHookSubscriptionUpdateModel = new WebHookSubscriptionUpdateModel
+{
+    
+        Headers = new Dictionary<string, string>
+        {
+            { "header1", "value1" },
+            { "header2", "value2" }
+        },
+        QueryParams = new Dictionary<string, string>
+        {
+            { "param1", "value1" },
+            { "param2", "value2" }
+        },
+        Authentication = new WebhookAuthenticationModel
+        {
+            AuthType = "Bearer", // Ensure the AuthType is set correctly
+            BearerToken = new WebhookBearerToken
+            {
+                Token = "ssss"
+            }
+        }
 }; //Required
-var apiResponse = new WebHookApi().WebHookSubscribe(webHookSubscribeModel).Result;
+var apiResponse = new WebHookApi().UpdateWebhookSubscription(hookId, webHookSubscriptionUpdateModel);
 ```
 
 
-<h6 id="GetWebHookSubscribedURLs-get-">Webhook Subscribed URLs (GET)</h6>
+<h6 id="CreateWebhookSubscription-post-">Create Webhook Subscription (POST)</h6>
 
-This API is used to fatch all the subscribed URLs, for particular event [More Info](https://www.loginradius.com/docs/api/v2/integrations/webhooks/webhook-subscribed-urls)
+This API is used to create a new webhook subscription on your LoginRadius site. [More Info](https://www.loginradius.com/docs/api/v2/integrations/webhooks/webhook-subscribe)
 
 
 
 ```c#
 
-var @event = "@event"; //Required
-var apiResponse = new WebHookApi().GetWebHookSubscribedURLs(@event).Result;
-```
-
-
-<h6 id="WebhookTest-get-">Webhook Test (GET)</h6>
-
-API can be used to test a subscribed WebHook. [More Info](https://www.loginradius.com/docs/api/v2/integrations/webhooks/webhook-test)
-
-
-
-```c#
-
-var apiResponse = new WebHookApi().WebhookTest().Result;
-```
-
-
-<h6 id="WebHookUnsubscribe-delete-">WebHook Unsubscribe (DELETE)</h6>
-
-API can be used to unsubscribe a WebHook configured on your LoginRadius site. [More Info](https://www.loginradius.com/docs/api/v2/integrations/webhooks/webhook-unsubscribe)
-
-
-
-```c#
-
-WebHookSubscribeModel webHookSubscribeModel = new WebHookSubscribeModel{
-Event ="<Event>",
-TargetUrl ="<TargetUrl>"
+WebHookSubscribeModel webHookSubscribeModel = new WebHookSubscribeModel
+{
+    Event = "<Event>",
+    Name = "<Name>",
+    TargetUrl = "<TargetUrl>",
+    Headers = new Dictionary<string, string>
+    {
+        { "header1", "value1" },
+        { "header2", "value2" }
+    },
+    QueryParams = new Dictionary<string, string>
+    {
+        { "param1", "value1" },
+        { "param2", "value2" }
+    },
+    Authentication = new WebhookAuthenticationModel
+    {
+        AuthType = "Basic", // Ensure the AuthType is set correctly
+        BasicAuth = new WebhookAuthCredentials
+        {
+            Username = "",
+            Password = ""
+        }
+    },
 }; //Required
-var apiResponse = new WebHookApi().WebHookUnsubscribe(webHookSubscribeModel).Result;
+var apiResponse = new WebHookApi().CreateWebhookSubscription(webHookSubscribeModel);
 ```
+
+
+<h6 id="GetWebhookSubscriptionDetail-get-">Get Webhook Subscription Detail (GET)</h6>
+
+This API is used to get details of a webhook subscription by Id [More Info](https://www.loginradius.com/docs/api/v2/integrations/webhooks/webhook-subscribed-urls)
+
+
+
+```c#
+
+var hookId = "hookId"; //Required
+var apiResponse = new WebHookApi().GetWebhookSubscriptionDetail(hookId);
+```
+
+
+<h6 id="ListAllWebhooks-get-">List All Webhooks (GET)</h6>
+
+This API is used to get the list of all the webhooks [More Info](https://www.loginradius.com/docs/api/v2/integrations/webhooks/webhook-list)
+
+
+
+```c#
+
+var apiResponse = new WebHookApi().ListAllWebhooks();
+```
+
+
+<h6 id="GetWebhookEvents-get-">Get Webhook Events (GET)</h6>
+
+This API is used to retrieve all the webhook events. [More Info](https://www.loginradius.com/docs/api/v2/integrations/webhooks/webhook-events)
+
+
+
+```c#
+
+var apiResponse = new WebHookApi().GetWebhookEvents();
+```
+
+
+<h6 id="DeleteWebhookSubscription-delete-">Delete Webhook Subscription (DELETE)</h6>
+
+This API is used to delete webhook subscription [More Info](https://www.loginradius.com/docs/api/v2/integrations/webhooks/webhook-unsubscribe)
+
+
+
+```c#
+
+var hookId = "hookId"; //Required
+var apiResponse = new WebHookApi().DeleteWebhookSubscription(hookId);
+```
+
 
 ### SlidingToken API
 
