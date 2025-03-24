@@ -3886,7 +3886,7 @@ List of APIs in this Section:<br>
 
 
 <h6 id="UpdateWebhookSubscription-put-">Update Webhook Subscription (PUT)</h6>
-This API is used to update a webhook subscription [More Info](/api/v2/integrations/webhooks/webhook-update)
+This API is used to update a webhook subscription [More Info](https://www.loginradius.com/docs/api/v2/integrations/webhooks/webhook-update)
 
 
 
@@ -3920,7 +3920,7 @@ var apiResponse = new WebHookApi().UpdateWebhookSubscription(hookId, webHookSubs
 
 
 <h6 id="CreateWebhookSubscription-post-">Create Webhook Subscription (POST)</h6>
-This API is used to create a new webhook subscription on your LoginRadius site. [More Info](/api/v2/integrations/webhooks/webhook-subscribe)
+This API is used to create a new webhook subscription on your LoginRadius site. [More Info](https://www.loginradius.com/docs/api/v2/integrations/webhooks/webhook-subscribe)
 
 
 
@@ -3956,7 +3956,7 @@ var apiResponse = new WebHookApi().CreateWebhookSubscription(webHookSubscribeMod
 
 
 <h6 id="GetWebhookSubscriptionDetail-get-">Get Webhook Subscription Detail (GET)</h6>
-This API is used to get details of a webhook subscription by Id [More Info](/api/v2/integrations/webhooks/webhook-subscribed-urls)
+This API is used to get details of a webhook subscription by Id [More Info](https://www.loginradius.com/docs/api/v2/integrations/webhooks/webhook-subscribed-urls)
 
 
 
@@ -3968,7 +3968,7 @@ var apiResponse = new WebHookApi().GetWebhookSubscriptionDetail(hookId);
 
 
 <h6 id="ListAllWebhooks-get-">List All Webhooks (GET)</h6>
-This API is used to get the list of all the webhooks [More Info](/api/v2/integrations/webhooks/webhook-list)
+This API is used to get the list of all the webhooks [More Info](https://www.loginradius.com/docs/api/v2/integrations/webhooks/webhook-list)
 
 
 
@@ -3979,7 +3979,7 @@ var apiResponse = new WebHookApi().ListAllWebhooks();
 
 
 <h6 id="GetWebhookEvents-get-">Get Webhook Events (GET)</h6>
-This API is used to retrieve all the webhook events. [More Info](/api/v2/integrations/webhooks/webhook-events)
+This API is used to retrieve all the webhook events. [More Info](https://www.loginradius.com/docs/api/v2/integrations/webhooks/webhook-events)
 
 
 
@@ -3990,7 +3990,7 @@ var apiResponse = new WebHookApi().GetWebhookEvents();
 
 
 <h6 id="DeleteWebhookSubscription-delete-">Delete Webhook Subscription (DELETE)</h6>
-This API is used to delete webhook subscription [More Info](/api/v2/integrations/webhooks/webhook-unsubscribe)
+This API is used to delete webhook subscription [More Info](https://www.loginradius.com/docs/api/v2/integrations/webhooks/webhook-unsubscribe)
 
 
 
