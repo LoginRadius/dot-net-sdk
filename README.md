@@ -3893,7 +3893,28 @@ This API is used to update a webhook subscription [More Info](/api/v2/integratio
 ```c#
 
 var hookId = "hookId"; //Required
-WebHookSubscriptionUpdateModel webHookSubscriptionUpdateModel = new WebHookSubscriptionUpdateModel{}; //Required
+WebHookSubscriptionUpdateModel webHookSubscriptionUpdateModel = new WebHookSubscriptionUpdateModel
+{
+    
+        Headers = new Dictionary<string, string>
+        {
+            { "header1", "value1" },
+            { "header2", "value2" }
+        },
+        QueryParams = new Dictionary<string, string>
+        {
+            { "param1", "value1" },
+            { "param2", "value2" }
+        },
+        Authentication = new WebhookAuthenticationModel
+        {
+            AuthType = "Bearer", // Ensure the AuthType is set correctly
+            BearerToken = new WebhookBearerToken
+            {
+                Token = "ssss"
+            }
+        }
+}; //Required
 var apiResponse = new WebHookApi().UpdateWebhookSubscription(hookId, webHookSubscriptionUpdateModel);
 ```
 
@@ -3905,10 +3926,30 @@ This API is used to create a new webhook subscription on your LoginRadius site. 
 
 ```c#
 
-WebHookSubscribeModel webHookSubscribeModel = new WebHookSubscribeModel{
-Event ="<Event>",
-Name ="<Name>",
-TargetUrl ="<TargetUrl>"
+WebHookSubscribeModel webHookSubscribeModel = new WebHookSubscribeModel
+{
+    Event = "<Event>",
+    Name = "<Name>",
+    TargetUrl = "<TargetUrl>",
+    Headers = new Dictionary<string, string>
+    {
+        { "header1", "value1" },
+        { "header2", "value2" }
+    },
+    QueryParams = new Dictionary<string, string>
+    {
+        { "param1", "value1" },
+        { "param2", "value2" }
+    },
+    Authentication = new WebhookAuthenticationModel
+    {
+        AuthType = "Basic", // Ensure the AuthType is set correctly
+        BasicAuth = new WebhookAuthCredentials
+        {
+            Username = "",
+            Password = ""
+        }
+    },
 }; //Required
 var apiResponse = new WebHookApi().CreateWebhookSubscription(webHookSubscribeModel);
 ```
