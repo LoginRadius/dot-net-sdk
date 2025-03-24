@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------
 // <copyright file="WebHookApi.cs" company="LoginRadius">
 //     Created by LoginRadius Development Team
-//     Copyright 2019 LoginRadius Inc. All rights reserved.
+//     Copyright 2025 LoginRadius Inc. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
 
@@ -9,100 +9,133 @@ using System;
 using LoginRadiusSDK.V2.Common;
 using System.Threading.Tasks;
 using LoginRadiusSDK.V2.Util;
-using LoginRadiusSDK.V2.Models.ResponseModels;
 using LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects;
-
+using LoginRadiusSDK.V2.Models.RequestModels;
+using LoginRadiusSDK.V2.Models.ResponseModels;
 namespace LoginRadiusSDK.V2.Api.Advanced
 {
     public class WebHookApi : LoginRadiusResource
     {
         /// <summary>
-        /// This API is used to fatch all the subscribed URLs, for particular event
+        /// This API is used to get details of a webhook subscription by Id
         /// </summary>
-        /// <param name="@event">Allowed events: Login, Register, UpdateProfile, ResetPassword, ChangePassword, emailVerification, AddEmail, RemoveEmail, BlockAccount, DeleteAccount, SetUsername, AssignRoles, UnassignRoles, SetPassword, LinkAccount, UnlinkAccount, UpdatePhoneId, VerifyPhoneNumber, CreateCustomObject, UpdateCustomobject, DeleteCustomObject</param>
-        /// <returns>Response Containing List of Webhhook Data</returns>
+        /// <param name="hookId">Unique ID of the webhook</param>
+        /// <returns>Response containing Definition for Complete WebHook data</returns>
         /// 40.1
 
-        public async Task<ApiResponse<ListData<LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects.WebHookSubscribeModel>>> GetWebHookSubscribedURLs(string @event)
+        public async Task<ApiResponse<Models.ResponseModels.OtherObjects.WebHookSubscribeModel>> GetWebhookSubscriptionDetail(string hookId)
         {
-            if (string.IsNullOrWhiteSpace(@event))
+            if (string.IsNullOrWhiteSpace(hookId))
             {
-               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(@event));
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(hookId));
             }
-            var queryParameters = new QueryParameters
-            {
-                { "apikey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] },
-                { "apisecret", ConfigDictionary[LRConfigConstants.LoginRadiusApiSecret] },
-                { "event", @event }
-            };
+            var queryParameters = new QueryParameters();
+            queryParameters.Add("apikey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey]);
+            queryParameters.Add("apisecret", ConfigDictionary[LRConfigConstants.LoginRadiusApiSecret]);
 
-            var resourcePath = "api/v2/webhook";
+            var resourcePath = $"v2/manage/webhooks/{hookId}";
             
-            return await ConfigureAndExecute<ListData<LoginRadiusSDK.V2.Models.ResponseModels.OtherObjects.WebHookSubscribeModel>>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<Models.ResponseModels.OtherObjects.WebHookSubscribeModel>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
-        /// API can be used to configure a WebHook on your LoginRadius site. Webhooks also work on subscribe and notification model, subscribe your hook and get a notification. Equivalent to RESThook but these provide security on basis of signature and RESThook work on unique URL. Following are the events that are allowed by LoginRadius to trigger a WebHook service call.
+        /// This API is used to create a new webhook subscription on your LoginRadius site.
         /// </summary>
         /// <param name="webHookSubscribeModel">Model Class containing Definition of payload for Webhook Subscribe API</param>
-        /// <returns>Response containing Definition of Complete Validation data</returns>
+        /// <returns>Response containing Definition for Complete WebHook data</returns>
         /// 40.2
 
-        public async Task<ApiResponse<PostResponse>> WebHookSubscribe(LoginRadiusSDK.V2.Models.RequestModels.WebHookSubscribeModel webHookSubscribeModel)
+        public async Task<ApiResponse<Models.ResponseModels.OtherObjects.WebHookSubscribeModel>> CreateWebhookSubscription(LoginRadiusSDK.V2.Models.RequestModels.WebHookSubscribeModel webHookSubscribeModel)
         {
             if (webHookSubscribeModel == null)
             {
                throw new ArgumentException(BaseConstants.ValidationMessage, nameof(webHookSubscribeModel));
             }
-            var queryParameters = new QueryParameters
-            {
-                { "apikey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] },
-                { "apisecret", ConfigDictionary[LRConfigConstants.LoginRadiusApiSecret] }
-            };
+            var queryParameters = new QueryParameters();
+            queryParameters.Add("apikey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey]);
+            queryParameters.Add("apisecret", ConfigDictionary[LRConfigConstants.LoginRadiusApiSecret]);
 
-            var resourcePath = "api/v2/webhook";
+            var resourcePath = "v2/manage/webhooks";
             
-            return await ConfigureAndExecute<PostResponse>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(webHookSubscribeModel));
+            return await ConfigureAndExecute<Models.ResponseModels.OtherObjects.WebHookSubscribeModel>(HttpMethod.POST, resourcePath, queryParameters, ConvertToJson(webHookSubscribeModel));
         }
         /// <summary>
-        /// API can be used to test a subscribed WebHook.
+        /// This API is used to delete webhook subscription
         /// </summary>
-        /// <returns>Response containing Definition of Complete Validation data</returns>
+        /// <param name="hookId">Unique ID of the webhook</param>
+        /// <returns>Response containing Definition of Delete Request</returns>
         /// 40.3
 
-        public async Task<ApiResponse<EntityPermissionAcknowledgement>> WebhookTest()
+        public async Task<ApiResponse<DeleteResponse>> DeleteWebhookSubscription(string hookId)
         {
-            var queryParameters = new QueryParameters
+            if (string.IsNullOrWhiteSpace(hookId))
             {
-                { "apikey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] },
-                { "apisecret", ConfigDictionary[LRConfigConstants.LoginRadiusApiSecret] }
-            };
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(hookId));
+            }
+            var queryParameters = new QueryParameters();
+            queryParameters.Add("apikey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey]);
+            queryParameters.Add("apisecret", ConfigDictionary[LRConfigConstants.LoginRadiusApiSecret]);
 
-            var resourcePath = "api/v2/webhook/test";
+            var resourcePath = $"v2/manage/webhooks/{hookId}";
             
-            return await ConfigureAndExecute<EntityPermissionAcknowledgement>(HttpMethod.GET, resourcePath, queryParameters, null);
+            return await ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, null);
         }
         /// <summary>
-        /// API can be used to unsubscribe a WebHook configured on your LoginRadius site.
+        /// This API is used to update a webhook subscription
         /// </summary>
-        /// <param name="webHookSubscribeModel">Model Class containing Definition of payload for Webhook Subscribe API</param>
-        /// <returns>Response containing Definition of Delete Request</returns>
+        /// <param name="hookId">Unique ID of the webhook</param>
+        /// <param name="webHookSubscriptionUpdateModel">Model Class containing Definition for WebHookSubscriptionUpdateModel Property</param>
+        /// <returns>Response containing Definition for Complete WebHook data</returns>
         /// 40.4
 
-        public async Task<ApiResponse<DeleteResponse>> WebHookUnsubscribe(LoginRadiusSDK.V2.Models.RequestModels.WebHookSubscribeModel webHookSubscribeModel)
+        public async Task<ApiResponse<Models.ResponseModels.OtherObjects.WebHookSubscribeModel>> UpdateWebhookSubscription(string hookId, WebHookSubscriptionUpdateModel webHookSubscriptionUpdateModel)
         {
-            if (webHookSubscribeModel == null)
+            if (string.IsNullOrWhiteSpace(hookId))
             {
-               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(webHookSubscribeModel));
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(hookId));
             }
-            var queryParameters = new QueryParameters
+            if (webHookSubscriptionUpdateModel == null)
             {
-                { "apikey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey] },
-                { "apisecret", ConfigDictionary[LRConfigConstants.LoginRadiusApiSecret] }
-            };
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(webHookSubscriptionUpdateModel));
+            }
+            var queryParameters = new QueryParameters();
+            queryParameters.Add("apikey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey]);
+            queryParameters.Add("apisecret", ConfigDictionary[LRConfigConstants.LoginRadiusApiSecret]);
 
-            var resourcePath = "api/v2/webhook";
+            var resourcePath = $"v2/manage/webhooks/{hookId}";
             
-            return await ConfigureAndExecute<DeleteResponse>(HttpMethod.DELETE, resourcePath, queryParameters, ConvertToJson(webHookSubscribeModel));
+            return await ConfigureAndExecute<Models.ResponseModels.OtherObjects.WebHookSubscribeModel>(HttpMethod.PUT, resourcePath, queryParameters, ConvertToJson(webHookSubscriptionUpdateModel));
+        }
+        /// <summary>
+        /// This API is used to get the list of all the webhooks
+        /// </summary>
+        /// <returns>Response Containing List of Webhhook Data</returns>
+        /// 40.5
+
+        public async Task<ApiResponse<ListReturn<Models.ResponseModels.OtherObjects.WebHookSubscribeModel>>> ListAllWebhooks()
+        {
+            var queryParameters = new QueryParameters();
+            queryParameters.Add("apikey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey]);
+            queryParameters.Add("apisecret", ConfigDictionary[LRConfigConstants.LoginRadiusApiSecret]);
+
+            var resourcePath = "v2/manage/webhooks";
+            
+            return await ConfigureAndExecute<ListReturn<Models.ResponseModels.OtherObjects.WebHookSubscribeModel>>(HttpMethod.GET, resourcePath, queryParameters, null);
+        }
+        /// <summary>
+        /// This API is used to retrieve all the webhook events.
+        /// </summary>
+        /// <returns>Model Class containing Definition for WebHookEventModel Property</returns>
+        /// 40.6
+
+        public async Task<ApiResponse<WebHookEventModel>> GetWebhookEvents()
+        {
+            var queryParameters = new QueryParameters();
+            queryParameters.Add("apikey", ConfigDictionary[LRConfigConstants.LoginRadiusApiKey]);
+            queryParameters.Add("apisecret", ConfigDictionary[LRConfigConstants.LoginRadiusApiSecret]);
+
+            var resourcePath = "v2/manage/webhooks/events";
+            
+            return await ConfigureAndExecute<WebHookEventModel>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
     }
 }
