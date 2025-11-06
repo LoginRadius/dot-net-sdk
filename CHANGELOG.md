@@ -1,6 +1,15 @@
 > **LoginRadius .NET SDK Change Log** provides information regarding what has changed, more specifically what changes, improvements and bug fix has been made to the SDK. For more details please refer to the [LoginRadius API Documention](https://docs.loginradius.com/api/v2/sdk-libraries/aspnet)
 
 
+
+# Version 11.7.1
+
+**Release Date:** November 06, 2025
+
+## Enhancements
+
+- Updated internal .NET dependencies.
+
 # Version 11.7.0
 
 **Release Date:** March 24, 2025
