@@ -162,6 +162,39 @@ namespace LoginRadiusSDK.V2.Api.Authentication
             return await ConfigureAndExecute<VerifiedResponse>(HttpMethod.GET, resourcePath, queryParameters, null);
         }
         /// <summary>
+        /// This API verifies the provided token for One Touch Login and retrieves the access token
+        /// by combining OneTouchEmailVerification and OneTouchLoginPing into a single call.
+        /// </summary>
+        /// <param name="verificationToken">Verification token received in the email</param>
+        /// <param name="clientGuid">Unique string used in the One Touch Login request</param>
+        /// <param name="fields">The fields parameter filters the API response so that the response only includes a specific set of fields</param>
+        /// <param name="welcomeEmailTemplate">Name of the welcome email template</param>
+        /// <returns>Response containing User Profile Data and access token</returns>
+
+        public async Task<ApiResponse<AccessToken<Identity>>> OneTouchEmailVerificationWithToken(string verificationToken, string clientGuid,
+        string fields = "", string welcomeEmailTemplate = null)
+        {
+            if (string.IsNullOrWhiteSpace(verificationToken))
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(verificationToken));
+            }
+            if (string.IsNullOrWhiteSpace(clientGuid))
+            {
+               throw new ArgumentException(BaseConstants.ValidationMessage, nameof(clientGuid));
+            }
+
+            var verificationResponse = await OneTouchEmailVerification(verificationToken, welcomeEmailTemplate);
+            if (verificationResponse.Response != null && verificationResponse.Response.IsPosted)
+            {
+               return await OneTouchLoginPing(clientGuid, fields);
+            }
+
+            return new ApiResponse<AccessToken<Identity>>
+            {
+               RestException = verificationResponse.RestException
+            };
+        }
+        /// <summary>
         /// This API is used to check if the One Touch Login link has been clicked or not.
         /// </summary>
         /// <param name="clientGuid">Unique string used in the Smart Login request</param>
