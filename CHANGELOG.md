@@ -2,6 +2,18 @@
 
 
 
+# Version 11.8.0
+
+**Release Date:** February 06, 2026
+
+## Enhancements
+
+- Made captcha fields explicitly optional in `ReCaptchaBodyModel` by adding `NullValueHandling.Ignore` to all captcha-related `JsonProperty` attributes, ensuring they are omitted from the request payload when not set.
+
+## Newly Added APIs
+
+- `OneTouchEmailVerificationWithToken` - Convenience method that combines `OneTouchEmailVerification` and `OneTouchLoginPing` into a single call, returning the access token and user profile after email verification.
+
 # Version 11.7.1
 
 **Release Date:** November 06, 2025
