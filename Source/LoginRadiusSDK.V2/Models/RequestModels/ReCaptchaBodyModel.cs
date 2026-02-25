@@ -24,6 +24,12 @@ namespace LoginRadiusSDK.V2.Models.RequestModels
 		/// <summary>
 		///	the value of the user's random string retrieved from the QQ captcha
 		/// </summary>
+		/// <summary>
+		///	The acknowledgement received by hCaptcha in hCaptcha authorisation process.
+		/// </summary>
+		[JsonProperty(PropertyName = "h-captcha-response", NullValueHandling = NullValueHandling.Ignore)]
+        public  string H_captcha_response {get;set;}
+
 		[JsonProperty(PropertyName = "qq_captcha_randstr", NullValueHandling = NullValueHandling.Ignore)]
         public  string Qq_captcha_randstr {get;set;}
 

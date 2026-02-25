@@ -9,6 +9,7 @@
 ## Enhancements
 
 - Made captcha fields explicitly optional in `ReCaptchaBodyModel` by adding `NullValueHandling.Ignore` to all captcha-related `JsonProperty` attributes, ensuring they are omitted from the request payload when not set.
+- Added missing `h-captcha-response` property to `ReCaptchaBodyModel`
 
 ## Newly Added APIs
 
