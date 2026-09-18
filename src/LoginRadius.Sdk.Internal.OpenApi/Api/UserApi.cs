@@ -2770,7 +2770,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/account/passkey";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -3111,7 +3111,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/account/passkey/{passkeyId}";
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7BpasskeyId%7D", Uri.EscapeDataString(passkeyId.ToString()));
 
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -3482,7 +3482,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/email";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -3912,7 +3912,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/phone";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -4389,7 +4389,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/email";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -4829,7 +4829,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/account/delete";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -5263,7 +5263,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/account/delete";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -5662,7 +5662,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/account";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -6047,7 +6047,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/email";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -6452,7 +6452,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/account";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -6904,7 +6904,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/consent/logs";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -7235,7 +7235,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/invitations/{invitation_token}";
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Binvitation_token%7D", Uri.EscapeDataString(invitationToken.ToString()));
 
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -7599,7 +7599,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/v2/manage/invitations/{invitationid}";
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Binvitationid%7D", Uri.EscapeDataString(invitationid.ToString()));
 
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -8029,7 +8029,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/privacypolicy/accept";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -8364,7 +8364,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/privacypolicy/history";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -8709,7 +8709,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/consent/verify";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -9063,7 +9063,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/socialidentity";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -9422,7 +9422,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/socialidentity/ping";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -9777,7 +9777,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/phone";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -10170,7 +10170,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/register";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -10579,7 +10579,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/phone/otp";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -10988,7 +10988,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/account/otp";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -11391,7 +11391,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/email/sendverificationemail";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -11815,7 +11815,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/account/sendwelcomeemail";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -12207,7 +12207,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/username";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -12578,7 +12578,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/consent/profile";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -12948,7 +12948,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/consent";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -13317,7 +13317,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/socialidentity";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -13728,7 +13728,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/account/unlock";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -14240,7 +14240,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/account";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -14678,7 +14678,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/consent";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -15108,7 +15108,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/email";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -15605,7 +15605,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/auth/phone/otp";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,

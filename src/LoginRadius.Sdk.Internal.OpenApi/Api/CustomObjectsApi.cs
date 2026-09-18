@@ -515,7 +515,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
-                    // sdk-factory override. For an operation the spec pins to
+                    // Generator override. For an operation the spec pins to
                     // its own server, upstream constructed the Uri straight from
                     // the pinned template, assigned Authority to Host, and set
                     // Path to the server's path. That is wrong in three ways:
@@ -537,7 +537,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = urlLocalVar.Port;
                     uriBuilderLocalVar.Scheme = urlLocalVar.Scheme;
                     uriBuilderLocalVar.Path = urlLocalVar.AbsolutePath.TrimEnd('/') + "/customobject";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -896,7 +896,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
-                    // sdk-factory override. For an operation the spec pins to
+                    // Generator override. For an operation the spec pins to
                     // its own server, upstream constructed the Uri straight from
                     // the pinned template, assigned Authority to Host, and set
                     // Path to the server's path. That is wrong in three ways:
@@ -918,7 +918,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = urlLocalVar.Port;
                     uriBuilderLocalVar.Scheme = urlLocalVar.Scheme;
                     uriBuilderLocalVar.Path = urlLocalVar.AbsolutePath.TrimEnd('/') + "/identity/customobject";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -1315,7 +1315,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
-                    // sdk-factory override. For an operation the spec pins to
+                    // Generator override. For an operation the spec pins to
                     // its own server, upstream constructed the Uri straight from
                     // the pinned template, assigned Authority to Host, and set
                     // Path to the server's path. That is wrong in three ways:
@@ -1337,7 +1337,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = urlLocalVar.Port;
                     uriBuilderLocalVar.Scheme = urlLocalVar.Scheme;
                     uriBuilderLocalVar.Path = urlLocalVar.AbsolutePath.TrimEnd('/') + "/customobject";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -1744,7 +1744,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
-                    // sdk-factory override. For an operation the spec pins to
+                    // Generator override. For an operation the spec pins to
                     // its own server, upstream constructed the Uri straight from
                     // the pinned template, assigned Authority to Host, and set
                     // Path to the server's path. That is wrong in three ways:
@@ -1766,7 +1766,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = urlLocalVar.Port;
                     uriBuilderLocalVar.Scheme = urlLocalVar.Scheme;
                     uriBuilderLocalVar.Path = urlLocalVar.AbsolutePath.TrimEnd('/') + "/identity/customobject";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,

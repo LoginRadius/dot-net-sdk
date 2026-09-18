@@ -702,7 +702,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Buid%7D", Uri.EscapeDataString(uid.ToString()));
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7BorgId%7D", Uri.EscapeDataString(orgId.ToString()));
 
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -1173,7 +1173,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/v2/manage/account/{uid}/orgcontext/roles";
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Buid%7D", Uri.EscapeDataString(uid.ToString()));
 
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -1631,7 +1631,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/v2/manage/account/{uid}/orgcontext";
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Buid%7D", Uri.EscapeDataString(uid.ToString()));
 
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -2024,7 +2024,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Buid%7D", Uri.EscapeDataString(uid.ToString()));
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7BorgId%7D", Uri.EscapeDataString(orgId.ToString()));
 
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -2444,7 +2444,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/v2/manage/account/{uid}/orgcontext";
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Buid%7D", Uri.EscapeDataString(uid.ToString()));
 
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -2837,7 +2837,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Buid%7D", Uri.EscapeDataString(uid.ToString()));
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7BorgId%7D", Uri.EscapeDataString(orgId.ToString()));
 
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,

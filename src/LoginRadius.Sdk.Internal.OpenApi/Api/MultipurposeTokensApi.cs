@@ -555,7 +555,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/manage/account/forgot/token";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -1031,7 +1031,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/manage/account/vtoken";
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -1458,7 +1458,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/manage/account/emailtoken/{tokentype}";
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Btokentype%7D", Uri.EscapeDataString(tokentype.ToString()));
 
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -1879,7 +1879,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/identity/v2/manage/account/smsotp/{smsotptype}";
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bsmsotptype%7D", Uri.EscapeDataString(smsotptype.ToString()));
 
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,

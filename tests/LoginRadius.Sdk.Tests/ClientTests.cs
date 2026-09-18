@@ -14,7 +14,7 @@ public class ClientTests
     [Fact]
     public void ResolveBaseUrlPrecedence()
     {
-        // Declared in manifest/sdk.yaml as an ordered list; the order is the
+        // Declared in the shared SDK manifest as an ordered list; the order is the
         // contract, so assert each level beats the ones below it.
         Assert.Equal(
             "https://staging.internal",

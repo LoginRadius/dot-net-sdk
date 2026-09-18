@@ -17,7 +17,7 @@ namespace LoginRadius.Sdk.Tests;
 /// port matches the known-working algorithm rather than merely matching itself.</para>
 ///
 /// <para>If this fails, fix the implementation, not the expectation. The shared
-/// parameters live in sdk-factory's manifest/sdk.yaml.</para>
+/// parameters live in the SDK generator's shared configuration.</para>
 /// </summary>
 public class CryptoParityTests
 {

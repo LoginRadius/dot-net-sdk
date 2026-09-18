@@ -10,7 +10,7 @@ namespace LoginRadius.Sdk.Tests;
 /// <para>Every case here mirrors one in the Go suite
 /// (<c>loginradius_test.go</c>) and the Node suite
 /// (<c>__tests__/request-options.test.ts</c>), asserting the same concrete
-/// values from <c>manifest/sdk.yaml</c>. The manifest is the contract; these
+/// values from the shared SDK manifest. The manifest is the contract; these
 /// are what stop one language drifting away from it quietly.</para>
 ///
 /// <para>A manifest change is <em>supposed</em> to break these. Update every

@@ -13,7 +13,7 @@ So the pipeline packs and inspects the result rather than trusting the build.
 Usage: python3 scripts/check-package.py <path to .nupkg, or a directory>
 
 A directory is resolved to the single .nupkg inside it. The verify step passes
-one because languages/dotnet/lang.yaml is parsed as plain YAML and never
+one because the SDK generator configuration is parsed as plain YAML and never
 rendered, so it cannot interpolate the version into a filename.
 """
 

@@ -67,7 +67,7 @@ public class ErrorTests
     [Fact]
     public void CarriesAHintForStatusesWithoutAnEnvelope()
     {
-        // The hints come from manifest/sdk.yaml so all four SDKs say the same
+        // The hints come from the shared SDK manifest so all four SDKs say the same
         // thing for a bare 401 or 403.
         Assert.NotEmpty(LoginRadiusException.From(401, "").Description);
         Assert.NotEmpty(LoginRadiusException.From(403, "").Description);

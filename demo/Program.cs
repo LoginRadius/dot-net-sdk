@@ -68,7 +68,7 @@ var app = builder.Build();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-// The API surface comes from DemoRoutes, generated from manifest/sdk.yaml,
+// The API surface comes from DemoRoutes, generated from the shared SDK manifest,
 // plus ExtendedDemoRoutes (hand-written, not part of the shared contract — see
 // its header comment). Registering from the table (rather than by hand) is
 // what keeps every language's demo on the same endpoints: method checking and

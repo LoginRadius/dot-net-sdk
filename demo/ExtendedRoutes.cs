@@ -1,5 +1,5 @@
 // Hand-written — unlike Routes.generated.cs, this is NOT part of the shared
-// manifest contract in manifest/sdk.yaml `demo.routes`. It extends the .NET
+// manifest contract in the shared SDK manifest `demo.routes`. It extends the .NET
 // demo with endpoints the other SDKs' demos also expose ad hoc, on top of the
 // 9 routes every language's demo shares.
 

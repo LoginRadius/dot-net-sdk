@@ -1205,7 +1205,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
-                    // sdk-factory override. For an operation the spec pins to
+                    // Generator override. For an operation the spec pins to
                     // its own server, upstream constructed the Uri straight from
                     // the pinned template, assigned Authority to Host, and set
                     // Path to the server's path. That is wrong in three ways:
@@ -1230,7 +1230,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7BOIDCAppName%7D", Uri.EscapeDataString(oIDCAppName.ToString()));
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7BclientID%7D", Uri.EscapeDataString(clientID.ToString()));
 
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -1567,7 +1567,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7BOIDCAppName%7D", Uri.EscapeDataString(oIDCAppName.ToString()));
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7BclientID%7D", Uri.EscapeDataString(clientID.ToString()));
 
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -1919,7 +1919,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
-                    // sdk-factory override. For an operation the spec pins to
+                    // Generator override. For an operation the spec pins to
                     // its own server, upstream constructed the Uri straight from
                     // the pinned template, assigned Authority to Host, and set
                     // Path to the server's path. That is wrong in three ways:
@@ -1943,7 +1943,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Path = urlLocalVar.AbsolutePath.TrimEnd('/') + "/service/oidc/{OIDCAppName}/.well-known/oauth-authorization-server";
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7BOIDCAppName%7D", Uri.EscapeDataString(oIDCAppName.ToString()));
 
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -2273,7 +2273,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
-                    // sdk-factory override. For an operation the spec pins to
+                    // Generator override. For an operation the spec pins to
                     // its own server, upstream constructed the Uri straight from
                     // the pinned template, assigned Authority to Host, and set
                     // Path to the server's path. That is wrong in three ways:
@@ -2297,7 +2297,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Path = urlLocalVar.AbsolutePath.TrimEnd('/') + "/api/oidc/{OIDCAppName}/device";
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7BOIDCAppName%7D", Uri.EscapeDataString(oIDCAppName.ToString()));
 
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -2669,7 +2669,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
-                    // sdk-factory override. For an operation the spec pins to
+                    // Generator override. For an operation the spec pins to
                     // its own server, upstream constructed the Uri straight from
                     // the pinned template, assigned Authority to Host, and set
                     // Path to the server's path. That is wrong in three ways:
@@ -2693,7 +2693,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Path = urlLocalVar.AbsolutePath.TrimEnd('/') + "/service/oidc/{OIDCAppName}/.well-known/openid-configuration";
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7BOIDCAppName%7D", Uri.EscapeDataString(oIDCAppName.ToString()));
 
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -3013,7 +3013,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
-                    // sdk-factory override. For an operation the spec pins to
+                    // Generator override. For an operation the spec pins to
                     // its own server, upstream constructed the Uri straight from
                     // the pinned template, assigned Authority to Host, and set
                     // Path to the server's path. That is wrong in three ways:
@@ -3037,7 +3037,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Path = urlLocalVar.AbsolutePath.TrimEnd('/') + "/service/oidc/{OIDCAppName}/jwks";
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7BOIDCAppName%7D", Uri.EscapeDataString(oIDCAppName.ToString()));
 
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -3367,7 +3367,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
-                    // sdk-factory override. For an operation the spec pins to
+                    // Generator override. For an operation the spec pins to
                     // its own server, upstream constructed the Uri straight from
                     // the pinned template, assigned Authority to Host, and set
                     // Path to the server's path. That is wrong in three ways:
@@ -3391,7 +3391,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Path = urlLocalVar.AbsolutePath.TrimEnd('/') + "/api/oidc/{OIDCAppName}/token";
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7BOIDCAppName%7D", Uri.EscapeDataString(oIDCAppName.ToString()));
 
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -3769,7 +3769,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Path = ClientUtils.CONTEXT_PATH + "/service/oidc/{OIDCAppName}/userinfo";
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7BOIDCAppName%7D", Uri.EscapeDataString(oIDCAppName.ToString()));
 
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -4100,7 +4100,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
-                    // sdk-factory override. For an operation the spec pins to
+                    // Generator override. For an operation the spec pins to
                     // its own server, upstream constructed the Uri straight from
                     // the pinned template, assigned Authority to Host, and set
                     // Path to the server's path. That is wrong in three ways:
@@ -4124,7 +4124,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Path = urlLocalVar.AbsolutePath.TrimEnd('/') + "/service/oidc/{OIDCAppName}/userinfo";
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7BOIDCAppName%7D", Uri.EscapeDataString(oIDCAppName.ToString()));
 
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -4469,7 +4469,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
-                    // sdk-factory override. For an operation the spec pins to
+                    // Generator override. For an operation the spec pins to
                     // its own server, upstream constructed the Uri straight from
                     // the pinned template, assigned Authority to Host, and set
                     // Path to the server's path. That is wrong in three ways:
@@ -4493,7 +4493,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Path = urlLocalVar.AbsolutePath.TrimEnd('/') + "/api/oidc/{OIDCAppName}/introspect";
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7BOIDCAppName%7D", Uri.EscapeDataString(oIDCAppName.ToString()));
 
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -4875,7 +4875,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
-                    // sdk-factory override. For an operation the spec pins to
+                    // Generator override. For an operation the spec pins to
                     // its own server, upstream constructed the Uri straight from
                     // the pinned template, assigned Authority to Host, and set
                     // Path to the server's path. That is wrong in three ways:
@@ -4899,7 +4899,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Path = urlLocalVar.AbsolutePath.TrimEnd('/') + "/api/oidc/{OIDCAppName}/register";
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7BOIDCAppName%7D", Uri.EscapeDataString(oIDCAppName.ToString()));
 
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -5242,7 +5242,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
-                    // sdk-factory override. For an operation the spec pins to
+                    // Generator override. For an operation the spec pins to
                     // its own server, upstream constructed the Uri straight from
                     // the pinned template, assigned Authority to Host, and set
                     // Path to the server's path. That is wrong in three ways:
@@ -5266,7 +5266,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Path = urlLocalVar.AbsolutePath.TrimEnd('/') + "/api/oidc/{OIDCAppName}/par";
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7BOIDCAppName%7D", Uri.EscapeDataString(oIDCAppName.ToString()));
 
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -5610,7 +5610,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
-                    // sdk-factory override. For an operation the spec pins to
+                    // Generator override. For an operation the spec pins to
                     // its own server, upstream constructed the Uri straight from
                     // the pinned template, assigned Authority to Host, and set
                     // Path to the server's path. That is wrong in three ways:
@@ -5634,7 +5634,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Path = urlLocalVar.AbsolutePath.TrimEnd('/') + "/api/oidc/{OIDCAppName}/revoke";
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7BOIDCAppName%7D", Uri.EscapeDataString(oIDCAppName.ToString()));
 
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
@@ -6001,7 +6001,7 @@ namespace LoginRadius.Sdk.Internal.OpenApi.Api
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7BOIDCAppName%7D", Uri.EscapeDataString(oIDCAppName.ToString()));
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7BclientID%7D", Uri.EscapeDataString(clientID.ToString()));
 
-                    // sdk-factory override: this local is declared exactly once.
+                    // Generator override: this local is declared exactly once.
                     // Upstream declares it once per apiKey-in-query security
                     // scheme for operations that have no query parameters, and
                     // the LoginRadius spec declares six of them (AccessToken,
