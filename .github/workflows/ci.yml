@@ -1,10 +1,11 @@
-# Maintained in SDK-FACTORY: languages/dotnet/static/.github/workflows/ci.yml.mustache
-# An edit made in this repository is overwritten by the next sync — change it there.
+# GENERATED FILE — do not edit it in this repository.
+# This workflow is produced alongside the rest of this SDK and is overwritten
+# whenever the SDK is regenerated. Raise changes where the SDK is generated.
 #
-# The steps mirror languages/dotnet/lang.yaml `verify:` (the factory's own
-# gate), with the pinned `docker run mcr.microsoft.com/dotnet/sdk:8.0` wrapper
-# replaced by setup-dotnet. Read the comments on the test step before
-# "tidying" it — both of those flags were bugs once.
+# These steps mirror this SDK's own build verification, with the pinned
+# `docker run mcr.microsoft.com/dotnet/sdk:8.0` wrapper replaced by
+# setup-dotnet. Read the comments on the test step before "tidying" it —
+# both of those flags were bugs once.
 name: CI
 
 on:
@@ -28,8 +29,8 @@ jobs:
 
       - uses: actions/setup-dotnet@v4
         with:
-          # Tracks lang.targetFramework (net8.0) in
-          # manifest/sdk.yaml. Bump both together.
+          # Tracks this SDK's target framework (net8.0).
+          # Bump both together.
           dotnet-version: '8.0.x'
 
       - name: Restore
