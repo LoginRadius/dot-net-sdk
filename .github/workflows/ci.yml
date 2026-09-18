@@ -1,0 +1,74 @@
+# Maintained in SDK-FACTORY: languages/dotnet/static/.github/workflows/ci.yml.mustache
+# An edit made in this repository is overwritten by the next sync — change it there.
+#
+# The steps mirror languages/dotnet/lang.yaml `verify:` (the factory's own
+# gate), with the pinned `docker run mcr.microsoft.com/dotnet/sdk:8.0` wrapper
+# replaced by setup-dotnet. Read the comments on the test step before
+# "tidying" it — both of those flags were bugs once.
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build, test and pack
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          # Tracks lang.targetFramework (net8.0) in
+          # manifest/sdk.yaml. Bump both together.
+          dotnet-version: '8.0.x'
+
+      - name: Restore
+        run: dotnet restore LoginRadius.Sdk.sln
+
+      - name: Build
+        run: dotnet build LoginRadius.Sdk.sln --no-restore -c Release -v q --nologo
+
+      # Two things here are deliberate, and both were bugs once:
+      #
+      #   * No `--no-build`. With it, `dotnet test` against a solution exits 0
+      #     having run nothing at all — indistinguishable from a green run.
+      #   * No `-v q`. Quiet also silences the pass/fail summary, so a run that
+      #     executed zero tests again looks identical to a passing one.
+      #
+      # The trailing grep is the guard: no summary line means no tests ran, and
+      # a failing grep fails the step.
+      - name: Test
+        run: |
+          set -o pipefail
+          dotnet test LoginRadius.Sdk.sln --nologo | grep -E "Passed!|Failed!|error"
+
+      # Building and testing both pass on a package that cannot be restored —
+      # they never pack. `dotnet pack` is no guard either: it reports
+      # "Successfully created" for a nupkg whose only assembly is missing and
+      # whose nuspec depends on a package published nowhere. Only reading the
+      # archive catches that, which is what scripts/check-package.py does.
+      - name: Pack
+        run: |
+          set -o pipefail
+          dotnet pack src/LoginRadius.Sdk/LoginRadius.Sdk.csproj -c Release --nologo -o _pack \
+            | grep -E "Successfully created|error"
+
+      - name: Inspect the package
+        run: python3 scripts/check-package.py _pack
+
+      - name: Upload the package
+        uses: actions/upload-artifact@v4
+        with:
+          name: nupkg
+          path: _pack/*.nupkg
+          if-no-files-found: error
