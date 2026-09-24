@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- The examples are their own project so their code never ships inside the
+       published SDK package, but they build with the solution so they stay
+       verified against the current facade. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>LoginRadius.Sdk.Examples</RootNamespace>
+    <AssemblyName>LoginRadius.Sdk.Examples</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- The facade references the generated client with PrivateAssets="all" so
+         the published nupkg stays self-contained (see its .csproj). That makes
+         the reference non-transitive inside the solution, so in-repo projects
+         that touch generated types must reference it themselves. A NuGet
+         consumer needs no equivalent: the assembly ships inside the package. -->
+    <ProjectReference Include="..\src\LoginRadius.Sdk\LoginRadius.Sdk.csproj" />
+    <ProjectReference Include="..\src\LoginRadius.Sdk.Internal.OpenApi\LoginRadius.Sdk.Internal.OpenApi.csproj" />
+  </ItemGroup>
+
+</Project>

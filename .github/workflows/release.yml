@@ -1,0 +1,115 @@
+# GENERATED FILE — do not edit it in this repository.
+# This workflow is produced alongside the rest of this SDK and is overwritten
+# whenever the SDK is regenerated. Raise changes where the SDK is generated.
+#
+# Replaces the previous main.yml, which built Source/LoginRadiusSDK.V2/ — a
+# path the v12 tree does not have — and pushed to nuget.org on EVERY push to
+# master. Publishing is now a tagged, approved action.
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing tag to publish (e.g. v12.0.0-rc.1)'
+        required: true
+        type: string
+      dry_run:
+        description: 'Pack and validate only — do not push to nuget.org'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish LoginRadiusSDK.NET to NuGet
+    runs-on: ubuntu-latest
+    # Requires a human approval on the 'release' environment. NUGET_API_KEY
+    # belongs on that environment rather than on the repository, so no other
+    # workflow can reach it.
+    environment: release
+    permissions:
+      contents: write   # create the GitHub Release
+    steps:
+      - name: Resolve tag
+        id: tag
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "name=${{ inputs.tag }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "name=${{ github.ref_name }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.tag.outputs.name }}
+          fetch-depth: 0
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      # A version pushed to nuget.org cannot be replaced, only unlisted. The
+      # csproj <Version>, the tag and the generated SDK version are three
+      # independent facts until something compares them.
+      - name: Tag matches the SDK version
+        run: |
+          expected='v12.0.0-rc.1'
+          actual='${{ steps.tag.outputs.name }}'
+          if [ "${actual}" != "${expected}" ]; then
+            echo "::error::tag ${actual} does not match the generated SDK version ${expected}"
+            exit 1
+          fi
+
+      - name: Build
+        run: dotnet build LoginRadius.Sdk.sln -c Release -v q --nologo
+
+      - name: Test
+        run: |
+          set -o pipefail
+          dotnet test LoginRadius.Sdk.sln --nologo | grep -E "Passed!|Failed!|error"
+
+      - name: Pack
+        run: |
+          set -o pipefail
+          dotnet pack src/LoginRadius.Sdk/LoginRadius.Sdk.csproj -c Release --nologo -o _pack \
+            | grep -E "Successfully created|error"
+
+      # The last thing standing between a broken nupkg and nuget.org: asserts
+      # the facade assembly is present in lib/ and that the internal generated
+      # client was folded in rather than left as a dependency published nowhere.
+      - name: Inspect the package
+        run: python3 scripts/check-package.py _pack
+
+      - name: Push to nuget.org
+        if: ${{ github.event_name == 'push' || inputs.dry_run == false }}
+        # --skip-duplicate: re-running the workflow for a version already
+        # pushed must be a no-op, not a failure.
+        run: |
+          dotnet nuget push '_pack/*.nupkg' \
+            --api-key '${{ secrets.NUGET_API_KEY }}' \
+            --source https://api.nuget.org/v3/index.json \
+            --skip-duplicate
+
+      - name: Create the GitHub Release
+        if: ${{ github.event_name == 'push' || inputs.dry_run == false }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.tag.outputs.name }}
+        run: |
+          if gh release view "${TAG}" >/dev/null 2>&1; then
+            echo "release ${TAG} already exists — nothing to do"
+            exit 0
+          fi
+          PRERELEASE='--prerelease'
+          gh release create "${TAG}" --verify-tag --title "${TAG}" \
+            --notes-file CHANGELOG.md ${PRERELEASE}

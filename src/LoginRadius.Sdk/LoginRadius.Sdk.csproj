@@ -1,0 +1,95 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- The customer-facing facade. It references the generated client project,
+       which is the .NET equivalent of Go's internal/ boundary: consumers get
+       LoginRadius.Sdk and never reach into LoginRadius.Sdk.Internal.OpenApi. -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+
+    <!-- Publish identity only — matches the live LoginRadius/dot-net-sdk
+         repo's own PackageId, so a release lands as a new version of the
+         existing nuget.org listing. The actual namespace stays
+         LoginRadius.Sdk; see the manifest's languages.dotnet comment. -->
+    <PackageId>LoginRadiusSDK.NET</PackageId>
+    <Version>12.0.0-rc.1</Version>
+    <Authors>LoginRadius</Authors>
+    <Company>LoginRadius Inc.</Company>
+    <Description>LoginRadius .NET SDK — a portable class library for the LoginRadius V2 APIs.</Description>
+    <Copyright>Copyright 2026</Copyright>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+    <!-- Metadata NuGet renders on the package page. Without these the listing
+         has no licence, no source link and nothing to search on.
+         The URLs and tags come from the manifest rather than being spelled
+         here: they are publish identity, which belongs with the rest of it.
+         Do NOT reintroduce hardcoded copies — duplicate MSBuild properties do
+         not merge, the last one wins, so a stray literal silently overrides
+         the manifest. -->
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/LoginRadius/dot-net-sdk</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/LoginRadius/dot-net-sdk</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>UserRegistration SocialLogin SDK CustomerRegistration V2SDK</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+
+    <!-- The generated client is packed INTO this assembly's package rather
+         than referenced as one. See the ProjectReference below. -->
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);IncludeGeneratedClientInPackage</TargetsForTfmSpecificBuildOutput>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <!-- PrivateAssets="all" is load-bearing, not tidiness.
+
+       Without it NuGet turns this ProjectReference into a package DEPENDENCY:
+       the nuspec gains `<dependency id="LoginRadius.Sdk.Internal.OpenApi" version="1.0.0" />`,
+       which is not published anywhere, and the assembly is left out of the
+       nupkg entirely. `dotnet add package LoginRadius.Sdk` then fails to
+       restore — the package is unusable as published.
+
+       So the reference is private, and the target below copies the generated
+       assembly (and its XML docs) into lib/ alongside the facade. Consumers get
+       one self-contained package; the generated client stays an implementation
+       detail, exactly as internal/ is for Go. -->
+  <ItemGroup>
+    <ProjectReference Include="..\LoginRadius.Sdk.Internal.OpenApi\LoginRadius.Sdk.Internal.OpenApi.csproj"
+                      PrivateAssets="all" />
+  </ItemGroup>
+
+  <Target Name="IncludeGeneratedClientInPackage">
+    <ItemGroup>
+      <BuildOutputInPackage Include="$(OutputPath)LoginRadius.Sdk.Internal.OpenApi.dll" />
+      <BuildOutputInPackage Include="$(OutputPath)LoginRadius.Sdk.Internal.OpenApi.xml"
+                            Condition="Exists('$(OutputPath)LoginRadius.Sdk.Internal.OpenApi.xml')" />
+    </ItemGroup>
+  </Target>
+
+  <!-- The credential handler is internal: it is not part of the supported
+       surface. The test project asserts on it directly, the same way Go's
+       suite tests its unexported transport. -->
+  <ItemGroup>
+    <InternalsVisibleTo Include="LoginRadius.Sdk.Tests" />
+  </ItemGroup>
+
+  <!-- Local JWT validation.
+
+       .NET can do HMAC and RSA from the BCL, but ECDSA JWT signatures are raw
+       R||S while the BCL's default is DER — converting between them by hand is
+       exactly the kind of fiddly, security-critical code not to write.
+       Microsoft's own JWT handler covers all three and is the same library the
+       legacy LoginRadius .NET SDK used. -->
+  <ItemGroup>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.1.2" />
+  </ItemGroup>
+
+  <!-- No PackageReference for System.Web.HttpUtility: on net8.0 HttpUtility
+       ships in the shared framework, and the NuGet package of that name does
+       not exist. AuthHandler's `using System.Web;` resolves without it. -->
+
+</Project>
